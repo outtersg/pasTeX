@@ -21,7 +21,6 @@
  * SOFTWARE.
  */
 
-require_once('util/html.inc');
 require_once('util/module.inc');
 
 class De_Liste

@@ -133,6 +133,8 @@ class De_Xml extends CompoAProprietes
 		return array('chemin' => $argv[$position - 1]);
 	}
 	
+	function analyserChamps($champs) { return $champs; }
+	
 	function pondreAide()
 	{
 		fprintf(STDERR, <<<TERMINE
@@ -140,6 +142,13 @@ Utilisation: xml <fichier source>
 
 TERMINE
 		);
+	}
+	
+	function pondreInterface($champ)
+	{
+?>
+	Fichier: <input type="text" name="<?php echo($champ); ?>[chemin]"></input>
+<?php
 	}
 	
 	function composer($params)
