@@ -122,7 +122,7 @@ class De_Xml extends CompoAProprietes
 {
 	function De_Xml()
 	{
-		$this->CompoAProprietes(array('perso' => 1, 'formation' => 1, 'expérience' => 1, 'langues' => 1, 'connaissances' => 1, 'intérêts' => 1, 'loisirs' => 1), array());
+		$this->CompoAProprietes(array('perso' => 1, 'titre' => 0, 'formation' => 1, 'expérience' => 1, 'langues' => 1, 'connaissances' => 1, 'intérêts' => 1, 'loisirs' => 1), array());
 		$this->chargeur = new Chargeur();
 	}
 	
