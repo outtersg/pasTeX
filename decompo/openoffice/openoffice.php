@@ -27,7 +27,18 @@ require_once('util/periode.inc');
 
 class OpenOffice
 {
-	function OpenOffice($donnees)
+	function OpenOffice()
+	{
+	
+	}
+	
+	function analyserParams($argv, &$position)
+	{
+		 /* À FAIRE: oh ben si, il doit bien y avoir quelqu'un qui finira par
+		  * avoir besoin de cette emplacement libre. */
+	}
+	
+	function decomposer($params, $donnees)
 	{
 		$nomTemp = tempnam('/tmp', 'temp.openoffice.');
 		$dossierTemp = $nomTemp.'.contenu';

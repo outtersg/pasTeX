@@ -114,11 +114,24 @@ class CompoADatesRepetees extends CompoADates
 
 class Xml extends CompoAProprietes
 {
-	function Xml($chemin)
+	function Xml()
 	{
 		$this->CompoAProprietes(array('formation' => 1, 'expérience' => 1, 'langues' => 1, 'connaissances' => 1, 'intérêts' => 1, 'loisirs' => 1), array());
 		$this->chargeur = new Chargeur();
-		$this->chargeur->charger($chemin, 'cv', &$this);
+	}
+	
+	function analyserParams($argv, &$position)
+	{
+		if(count($argv) <= $position) die;
+		++$position; // Pour le bien-être de notre appelant.
+		return array('chemin' => $argv[$position - 1]);
+	}
+	
+	function composer($params)
+	{
+		if(!array_key_exists('chemin', $params)) { /* À FAIRE: au secours, au secours, qu'est-ce que je fais, là? */ die; }
+		$this->chargeur->charger($params['chemin'], 'cv', &$this);
+		return $this;
 	}
 	
 	protected $chargeur;

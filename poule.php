@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright (c) 2004 Guillaume Outters
+ * Copyright (c) 2004-2005 Guillaume Outters
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -39,15 +39,70 @@
  * encodé UTF-8, et tout ce votre fertile imagination aura cru bon d'ajouter).
  */
 
-/* La première version est bien entendu minimaliste, prototype et codée en dur. */
+$etPuisQuoiEncore = 1; // Paramètre à partir duquel la chose peut analyser ses paramètres.
 
-require_once('compo/xml.php');
-require_once('decompo/openoffice/openoffice.php');
+/* À FAIRE: les modules devraient pouvoir d'une manière ou d'une autre sortir
+ * une liste de compléments de ligne de commande, pour par exemple servir dans
+ * un bash_completion. On pourrait dire qu'un paramètre spécial serait passé à
+ * la fonction pour qu'elle balance toutes ces possibilités. */
 
-$donnees = new Xml($argv[1]);
+/*- Recherche du compositeur -------------------------------------------------*/
+
+if(isset($argv)) // Appel en ligne de commande
+{
+	if(count($argv) == $etPuisQuoiEncore)
+		$compo = 'liste'; /* À FAIRE: créer le compositeur Liste, qui établit la liste des autres compositeurs du même répertoire. S'inspirer d'ALbum->listeRessources() dans l'alboretum. Vivement une unification. */
+	else
+		$compo = $argv[$etPuisQuoiEncore];
+}
+else
+{
+	/* À FAIRE */
+}
+
+/* À FAIRE: vérifier que les modules à charger ne contiennent pas de .. */
+
+require_once('compo/'.$compo.'.php');
+$compo = new $compo();
+if(isset($argv))
+{
+	++$etPuisQuoiEncore;
+	$paramsCompo = $compo->analyserParams($argv, &$etPuisQuoiEncore); // On se demande bien combien il sera capable de nous bouffer de paramètres sur la ligne de commande.
+}
+
+/*- Chargement du filtre -----------------------------------------------------*/
+
+/* À FAIRE: si (en CLI) le compo s'est arrêté sur le mot 'par' ou 'filtre' ou
+ * ce que vous voulez, on charge un filtre avant d'attaquer la sortie. Et même
+ * plusieurs filtres, pourquoi pas. */
+
+/*- Chargement du cul-de-poule -----------------------------------------------*/
+
+if(isset($argv)) // Appel en ligne de commande
+{
+	if(count($argv) == $etPuisQuoiEncore)
+		$decompo = 'liste';
+	else
+		$decompo = $argv[$etPuisQuoiEncore];
+}
+else
+{
+	/* À FAIRE */
+}
+
+/* À FAIRE: vérifier que les modules à charger ne contiennent pas de .. */
+
+require_once('decompo/'.$decompo.'/'.$decompo.'.php');
+$decompo = new $decompo();
+if(isset($argv))
+{
+	++$etPuisQuoiEncore;
+	$paramsDecompo = $decompo->analyserParams($argv, &$etPuisQuoiEncore);
+}
+
+$donnees = $compo->composer($paramsCompo);
 #print_r($donnees);
 #return;
-new OpenOffice($donnees);
-#new OpenOffice(new Xml($argv[1]));
+$decompo->decomposer($paramsDecompo, $donnees);
 
 ?>
