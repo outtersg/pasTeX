@@ -73,6 +73,7 @@ else
 	{
 		$machins = array_keys($GLOBALS['params']['compo']); // Ce PHP est vraiment un abruti fini! On aime les variables intermédiaires!
 		$compo = $machins[0];
+		$paramsCompo = $params['compo'][$compo];
 	}
 }
 
@@ -86,6 +87,8 @@ if(isset($argv))
 	++$etPuisQuoiEncore;
 	$paramsCompo = $compo->analyserParams($argv, &$etPuisQuoiEncore); // On se demande bien combien il sera capable de nous bouffer de paramètres sur la ligne de commande.
 }
+else
+	$paramsCompo = $compo->analyserChamps($paramsCompo);
 
 /*- Chargement du filtre -----------------------------------------------------*/
 
@@ -113,6 +116,7 @@ else
 	{
 		$machins = array_keys($GLOBALS['params']['decompo']);
 		$decompo = $machins[0];
+		$paramsDecompo = $params['decompo'][$decompo];
 	}
 }
 
@@ -127,6 +131,8 @@ if(isset($argv))
 	++$etPuisQuoiEncore;
 	$paramsDecompo = $decompo->analyserParams($argv, &$etPuisQuoiEncore);
 }
+else
+	$paramsDecompo = $decompo->analyserChamps($paramsDecompo);
 
 if($paramsCompo)
 	$donnees = $compo->composer($paramsCompo);

@@ -21,6 +21,7 @@
  * SOFTWARE.
  */
 
+require_once('util/html.inc');
 require_once('util/module.inc');
 
 class De_Liste
@@ -35,6 +36,16 @@ class De_Liste
 			if($module != 'de_liste' && substr($module, 0, 3) == 'de_')
 				echo '  '.substr($module, 3)."\n";
 		return null;
+	}
+	
+	function analyserChamps($params)
+	{
+		html_enTete();
+?>
+	<title>Génération de CV</title>
+<?php
+		html_corps();
+		html_fin();
 	}
 	
 	function composer($params) { return $this; }
