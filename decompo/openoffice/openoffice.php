@@ -66,8 +66,11 @@ fprintf($fichier, <<<TERMINE
 TERMINE
 );
 		
-		fprintf($fichier, "<text:p text:style-name=\"Nom CV\">{$donnees->perso->prénom} {$donnees->perso->nom}</text:p>");
-		fprintf($fichier, "<text:p text:style-name=\"En-tête CV\">{$donnees->titre}</text:p>");
+		$prénom = htmlspecialchars($donnees->perso->prénom, ENT_NOQUOTES);
+		$nom = htmlspecialchars($donnees->perso->nom, ENT_NOQUOTES);
+		$titre = htmlspecialchars($donnees->perso->titre, ENT_NOQUOTES);
+		fprintf($fichier, "<text:p text:style-name=\"Nom CV\">{$prénom} {$nom}</text:p>");
+		fprintf($fichier, "<text:p text:style-name=\"En-tête CV\">{$titre}</text:p>");
 		fprintf($fichier, "</text:section>");
 	}
 	
@@ -87,7 +90,7 @@ fprintf($fichier, <<<TERMINE
 		<text:p text:style-name="Texte CV, dates">
 TERMINE
 );
-			fprintf($fichier, periode_aff($périodeHeureuse->date->d, $périodeHeureuse->date->f).'<text:tab-stop/>'.$périodeHeureuse->diplôme);
+			fprintf($fichier, periode_aff($périodeHeureuse->date->d, $périodeHeureuse->date->f).'<text:tab-stop/>'.htmlspecialchars($périodeHeureuse->diplôme, ENT_NOQUOTES));
 fprintf($fichier, <<<TERMINE
 		</text:p>
 TERMINE
@@ -121,17 +124,20 @@ TERMINE
 			$desChoses = true;
 			$sociétés = null;
 			if(isset($francheRigolade->société))
-				$sociétés = $francheRigolade->société[count($francheRigolade->société) - 1]; // Seul le client final nous intéresse.
+				$sociétés = htmlspecialchars($francheRigolade->société[count($francheRigolade->société) - 1], ENT_NOQUOTES); // Seul le client final nous intéresse.
 				//foreach(array_slice($francheRigolade->société, 1) as $société)
+				//{
+				//	$société = htmlspecialchars($société, ENT_NOQUOTES);
 				//	$sociétés = $sociétés === null ? $société : $sociétés.', '.$société;
-			if(isset($francheRigolade->nom)) fprintf($fichier, '%s%s', $francheRigolade->nom, $sociétés === null ? '' : ' ('.$sociétés.')');
+				//}
+			if(isset($francheRigolade->nom)) fprintf($fichier, '%s%s', htmlspecialchars($francheRigolade->nom, ENT_NOQUOTES), $sociétés === null ? '' : ' ('.$sociétés.')');
 			else if($sociétés != null) fprintf($fichier, $sociétés);
 			else $desChoses = false;
 			
-			if(isset($francheRigolade->description)) { fprintf($fichier, ($desChoses ? ': ' : '').$francheRigolade->description); $desChoses = true; }
+			if(isset($francheRigolade->description)) { fprintf($fichier, ($desChoses ? ': ' : '').htmlspecialchars($francheRigolade->description, ENT_NOQUOTES)); $desChoses = true; }
 			foreach($francheRigolade->tâche as $tâche)
 			{
-				fprintf($fichier, ($desChoses ? '<text:line-break/>' : '').$tâche);
+				fprintf($fichier, ($desChoses ? '<text:line-break/>' : '').htmlspecialchars($tâche, ENT_NOQUOTES));
 				$desChoses = true;
 			}
 fprintf($fichier, <<<TERMINE
@@ -155,12 +161,12 @@ TERMINE
 		{
 		
 
-			fprintf($fichier, '<text:p text:style-name="Texte CV, dates">'.$chat->nom.'<text:tab-stop/>'.$chat->niveau);
+			fprintf($fichier, '<text:p text:style-name="Texte CV, dates">'.htmlspecialchars($chat->nom, ENT_NOQUOTES).'<text:tab-stop/>'.htmlspecialchars($chat->niveau, ENT_NOQUOTES));
 			$qqc = false;
 			if(count($chat->certificat) > 0)
 			{
 				foreach($chat->certificat as $certif)
-					fprintf($fichier, ($qqc ? ', ' : ' (').$certif);
+					fprintf($fichier, ($qqc ? ', ' : ' (').htmlspecialchars($certif, ENT_NOQUOTES));
 				fprintf($fichier, ')');
 			}
 			fprintf($fichier, '</text:p>');
@@ -183,7 +189,7 @@ TERMINE
 );
 		foreach($donnees->connaissances->catégorie as $catégorie)
 		{
-			fprintf($fichier, '<text:p text:style-name="Groupe CV">'.$catégorie->nom.'</text:p>');
+			fprintf($fichier, '<text:p text:style-name="Groupe CV">'.htmlspecialchars($catégorie->nom, ENT_NOQUOTES).'</text:p>');
 			for($i = count($seuils) - 1; --$i >= 0;)
 			{
 				$qqc = false;
@@ -200,7 +206,7 @@ TERMINE
 						}
 						else
 							fprintf($fichier, ', ');
-						fprintf($fichier, $nom);
+						fprintf($fichier, htmlspecialchars($nom, ENT_NOQUOTES));
 					}
 				if($qqc)
 					fprintf($fichier, '</text:p>');
@@ -222,12 +228,12 @@ TERMINE
 		foreach($donnees->intérêts->domaine as $latechniqueamusante)
 		{
 			fprintf($fichier, '<text:p text:style-name="Texte CV">');
-			fprintf($fichier, $latechniqueamusante->nom);
+			fprintf($fichier, htmlspecialchars($latechniqueamusante->nom, ENT_NOQUOTES));
 			$qqc = false;
 			if(isset($latechniqueamusante->techno))
 				foreach($latechniqueamusante->techno as $aquoicasert)
 				{
-					fprintf($fichier, ($qqc ? ', ' : ' (').$aquoicasert);
+					fprintf($fichier, ($qqc ? ', ' : ' (').htmlspecialchars($aquoicasert, ENT_NOQUOTES));
 					$qqc = true;
 				}
 			if($qqc) fprintf($fichier, ')');
@@ -247,7 +253,7 @@ fprintf($fichier, <<<TERMINE
 TERMINE
 );
 		foreach($donnees->loisirs->activité as $ouf)
-			fprintf($fichier, '<text:p text:style-name="Texte CV">'.$ouf.'</text:p>');
+			fprintf($fichier, '<text:p text:style-name="Texte CV">'.htmlspecialchars($ouf, ENT_NOQUOTES).'</text:p>');
 	}
 }
 ?>
