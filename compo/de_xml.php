@@ -122,9 +122,18 @@ class De_Xml extends CompoAProprietes
 	
 	function analyserParams($argv, &$position)
 	{
-		if(count($argv) <= $position) die;
+		if(count($argv) <= $position) { pondreAide(); return null; }
 		++$position; // Pour le bien-être de notre appelant.
 		return array('chemin' => $argv[$position - 1]);
+	}
+	
+	function pondreAide()
+	{
+		fprintf(STDERR, <<<TERMINE
+Utilisation: xml <fichier source>
+
+TERMINE
+		);
 	}
 	
 	function composer($params)
