@@ -30,11 +30,9 @@ class De_Liste
 	
 	function analyserParams($argv, &$position)
 	{
-		$modules = module_liste(dirname(__FILE__), 0, '.php');
 		echo 'Modules de chargement installés:'."\n";
-		foreach($modules as $module)
-			if($module != 'de_liste' && substr($module, 0, 3) == 'de_')
-				echo '  '.substr($module, 3)."\n";
+		foreach($this->modules() as $module)
+			echo '  '.$module."\n";
 		return null;
 	}
 	
@@ -49,6 +47,16 @@ class De_Liste
 	}
 	
 	function composer($params) { return $this; }
+	
+	function modules()
+	{
+		$retour = array();
+		$modules = module_liste(dirname(__FILE__), 0, '.php');
+		foreach($modules as $module)
+			if($module != 'de_liste' && substr($module, 0, 3) == 'de_')
+				$retour[] = substr($module, 3);
+		return $retour;
+	}
 }
 
 ?>
