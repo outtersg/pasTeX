@@ -32,7 +32,7 @@ class De_Liste
 		$modules = module_liste(dirname(__FILE__), 0, '.php');
 		echo 'Modules de chargement installés:'."\n";
 		foreach($modules as $module)
-			if(substr($module, 0, 3) == 'de_')
+			if($module != 'de_liste' && substr($module, 0, 3) == 'de_')
 				echo '  '.substr($module, 3)."\n";
 		return array();
 	}

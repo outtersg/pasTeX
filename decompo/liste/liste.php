@@ -32,7 +32,8 @@ class Liste
 		$modules = module_liste(dirname(dirname(__FILE__)), 1, '.php');
 		echo 'Modules d\'export installés:'."\n";
 		foreach($modules as $module)
-			echo '  '.$module."\n";
+			if($module != 'liste')
+				echo '  '.$module."\n";
 		return array();
 	}
 	
