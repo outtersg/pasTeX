@@ -84,7 +84,7 @@ if(isset($argv))
 
 if(isset($argv)) // Appel en ligne de commande
 {
-	if(count($argv) == $etPuisQuoiEncore)
+	if(count($argv) <= $etPuisQuoiEncore)
 		$decompo = 'liste';
 	else
 		$decompo = $argv[$etPuisQuoiEncore];
