@@ -112,9 +112,9 @@ class CompoADatesRepetees extends CompoADates
 	}
 }
 
-class Xml extends CompoAProprietes
+class De_Xml extends CompoAProprietes
 {
-	function Xml()
+	function De_Xml()
 	{
 		$this->CompoAProprietes(array('formation' => 1, 'expérience' => 1, 'langues' => 1, 'connaissances' => 1, 'intérêts' => 1, 'loisirs' => 1), array());
 		$this->chargeur = new Chargeur();

@@ -45,6 +45,9 @@ $etPuisQuoiEncore = 1; // Paramètre à partir duquel la chose peut analyser ses
  * une liste de compléments de ligne de commande, pour par exemple servir dans
  * un bash_completion. On pourrait dire qu'un paramètre spécial serait passé à
  * la fonction pour qu'elle balance toutes ces possibilités. */
+/* À FAIRE: ces modules devront être préfixés par par_, de même que les chargeurs le
+ * sont par de_, afin d'éviter les conflits avec les filtres d'export.
+ */
 
 /*- Recherche du compositeur -------------------------------------------------*/
 
@@ -62,6 +65,7 @@ else
 
 /* À FAIRE: vérifier que les modules à charger ne contiennent pas de .. */
 
+$compo = 'de_'.$compo; // Bravo, encore un langage qui ne supporte pas les espaces de nommage et oblige donc à, par exemple, préfixer tous les compositeurs de la même manière afin de s'assurer qu'ils n'entrent pas en conflit avec les décompositeurs!
 require_once('compo/'.$compo.'.php');
 $compo = new $compo();
 if(isset($argv))
