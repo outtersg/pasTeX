@@ -1,0 +1,47 @@
+LICENCE
+
+Ce logiciel, majoritairement sous licence BSD, demande à ce que vous respectiez
+les règles suivantes:
+- La réutilisation de son code, ne serait-ce qu'un algorithme qui vous a
+  inspiré, doit contenir une référence à l'auteur original du code. À moins que
+  l'auteur, peu fier de son travail, ait explicitement mentionné le contraire.
+- Ne vous appropriez pas le code si vous ne l'avez pas fait. Ceci est valable
+  aussi pour les documents générés: quelqu'un a passé du temps à composer une
+  présentation agréable à l'œil, quelqu'un a passé du temps a faire en sorte que
+  tous les documents générés par pasτεχ profitent de cette présentation,
+  respectez leur travail. La mise en page est un art, la programmation est un
+  art: que je sache, la réputation d'Euterpe n'a jamais été ternie malgré les
+  hordes de collégiens qui chaque jour en France s'acharnent à extirper de leur
+  flûte fournie par le collège (moyennant contribution des parents, cela va de
+  soi) toute la gamme des hurlements et sifflements de l'enfer.
+- Tout envoi de code, données, modèle ou idées à un développeur de pasτεχ est
+  considéré comme acceptation de sa diffusion sous une licence BSD ou
+  équivalente; le projet ne peut pas se permettre d'accepter du code, d'évoluer
+  autour de ce code, puis de devoir revenir en arrière à cause d'une saute
+  d'humeur du contributeur original.
+- S'il-vous-plaît, ne soumettez rien dont vous ne possédiez pas tous les droits.
+  Le principe évoqué ci-dessus est bien entendu caduque si l'apport a été volé à
+  une tierce personne, qui serait naturellement dans son droit (légal et moral)
+  de réclamer que son travail lui soit rendu. En particulier, je rappelle que la
+  législation Française stipule que le travail que vous avez fait pour votre
+  société lui appartient intégralement, à moins qu'elle ne vous cède les droits
+  dessus. Non tant à cause du matériel mis à votre disposition,
+  puisqu'aujourd'hui pratiquement tout le monde peut avoir la même chose chez
+  soi, que du salaire qu'elle a payé pour que vous travailliez exclusivement
+  pour elle.
+- Si vous représentez une société, rien ne vous empêche de jouer le jeu. Des
+  volontaires ont consacré de leur temps libre des journées, parfois des nuits*,
+  pour que vous disposiez d'un outil aussi agréable et pratique que possible.
+  Alors ils trouveraient tout naturel qu'en retour vous leur donniez un peu du
+  temps de vos employés pour améliorer pasτεχ.
+- Le développement de pasτεχ est pour le moment centralisé par Guillaume
+  Outters, que vous saurez bien retrouver sous Google si besoin est. La version
+  officielle la plus récente se trouve sur son disque dur, qui est sauvegardé
+  deux fois par semaine ce qui est largement insuffisant (réfléchissez, si
+  maintenant, là, vous perdiez vos trois derniers jours de travail, de quelle
+  humeur seriez-vous? Vous êtes en vacances? Bon, je n'ai rien dit, alors).
+
+* la première version fonctionnelle de pasτεχ a été constituée en partant de
+  pas grand chose par une belle nuit de 12 janvier, entre 21 h et 7 h 30. Après
+  quoi l'auteur est allé dormir un quart d'heure, puis s'est rendu, comme à son
+  habitude, au travail.
