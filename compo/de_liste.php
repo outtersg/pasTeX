@@ -34,7 +34,7 @@ class De_Liste
 		foreach($modules as $module)
 			if($module != 'de_liste' && substr($module, 0, 3) == 'de_')
 				echo '  '.substr($module, 3)."\n";
-		return array();
+		return null;
 	}
 	
 	function composer($params) { return $this; }

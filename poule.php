@@ -104,9 +104,9 @@ if(isset($argv))
 	$paramsDecompo = $decompo->analyserParams($argv, &$etPuisQuoiEncore);
 }
 
-$donnees = $compo->composer($paramsCompo);
-#print_r($donnees);
-#return;
-$decompo->decomposer($paramsDecompo, $donnees);
+if($paramsCompo)
+	$donnees = $compo->composer($paramsCompo);
+if($paramsDecompo)
+	$decompo->decomposer($paramsDecompo, $donnees);
 
 ?>
