@@ -281,7 +281,7 @@ TERMINE
 	
 	function pondreInteret($fichier, $donnees)
 	{
-		if(!array_key_exists('connaissances', $donnees)) return;
+		if(!array_key_exists('intérêts', $donnees)) return;
 		
 fprintf($fichier, <<<TERMINE
 		<text:p text:style-name="Section CV">Domaines d&apos;intérêts
