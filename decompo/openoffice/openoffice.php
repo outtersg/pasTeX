@@ -34,16 +34,43 @@ class OpenOffice
 	
 	function analyserParams($argv, &$position)
 	{
-		 /* À FAIRE: oh ben si, il doit bien y avoir quelqu'un qui finira par
-		  * avoir besoin de cette emplacement libre. */
+		$retour = array();
+		while($position < count($argv))
+		{
+			switch($argv[$position])
+			{
+				case 'un':
+				case 'une':
+				case 'le':
+				case 'la':
+				case 'joli':
+				case 'avec':
+				case 'sorte':
+				case 'de':
+				case 'espèce': // UTF-8 NFD
+				case 'espèce': // UTF-8 NFC. Maintenant si PHP est capable de reconnaître les deux dans la même chaîne, je ne demande pas mieux.
+					break;
+				case 'logo':
+				case 'truc':
+					if(++$position >= count($argv)) { /* À FAIRE: aide en ligne sur la sortie d'erreur. D'ailleurs, passer toutes les aides dessus (Liste, en particulier). */return null; };
+					$retour['logo'] = $argv[$position];
+					break;
+				default:
+					break 2;
+			}
+			++$position;
+		}
+		return $retour;
 	}
 	
 	function decomposer($params, $donnees)
 	{
+		$this->_params = $params;
 		$nomTemp = tempnam('/tmp', 'temp.openoffice.');
 		$dossierTemp = $nomTemp.'.contenu';
 		$modele = dirname(__FILE__).'/modele';
 		system("cp -R '{$modele}' '{$dossierTemp}'");
+		if($this->_params['logo']) system("cp '{$this->_params['logo']}' '{$dossierTemp}/ObjBFFFC666'");
 		system("cat '{$dossierTemp}/content.pre.xml' > '{$dossierTemp}/content.xml'");
 		$fichier = popen("tr -d '\\011\\012' >> '{$dossierTemp}/content.xml'", 'w');
 		$this->pondreEntete($fichier, $donnees);
@@ -68,6 +95,9 @@ fprintf($fichier, <<<TERMINE
 			<text:sequence-decl text:display-outline-level="0" text:name="Text"/>
 			<text:sequence-decl text:display-outline-level="0" text:name="Drawing"/>
 		</text:sequence-decls>
+TERMINE
+);
+if($this->_params['logo']) fprintf($fichier, <<<TERMINE
 		<text:section text:style-name="Sect1" text:name="En-tête">
 			<text:p text:style-name="Texte CV">
 				<text:bookmark-start text:name="_9978858911"/>
@@ -82,7 +112,7 @@ TERMINE
 		$titre = htmlspecialchars($donnees->perso->titre, ENT_NOQUOTES);
 		fprintf($fichier, "<text:p text:style-name=\"Nom CV\">{$prénom} {$nom}</text:p>");
 		fprintf($fichier, "<text:p text:style-name=\"En-tête CV\">{$titre}</text:p>");
-		fprintf($fichier, "</text:section>");
+		if($this->_params['logo']) fprintf($fichier, "</text:section>");
 	}
 	
 	function pondreEtudes($fichier, $donnees)
@@ -278,5 +308,7 @@ TERMINE
 			return 'depuis '.periode_affDate($d);
 		return periode_aff($d, $f);
 	}
+	
+	protected $_params;
 }
 ?>
