@@ -128,7 +128,7 @@ class De_Xml extends CompoAProprietes
 	
 	function analyserParams($argv, &$position)
 	{
-		if(count($argv) <= $position) { pondreAide(); return null; }
+		if(count($argv) <= $position) { $this->pondreAide(); return null; }
 		++$position; // Pour le bien-être de notre appelant.
 		return array('chemin' => $argv[$position - 1]);
 	}
