@@ -242,7 +242,7 @@ class Html
 	
 	function pondreInteret($donnees)
 	{
-		if(!array_key_exists('connaissances', $donnees)) return;
+		if(!array_key_exists('intérêts', $donnees)) return;
 		
 		$this->commencerSection('Domaines d\'intérêts');
 		$pasLePremier = false;
