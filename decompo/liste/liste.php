@@ -29,15 +29,23 @@ class Liste
 	
 	function analyserParams($argv, &$position)
 	{
-		$modules = module_liste(dirname(dirname(__FILE__)), 1, '.php');
 		echo 'Modules d\'export installés:'."\n";
-		foreach($modules as $module)
-			if($module != 'liste' && $module != 'rien')
-				echo '  '.$module."\n";
-		return array();
+		foreach($this->modules() as $module)
+			echo '  '.$module."\n";
+		return null;
 	}
 	
 	function decomposer($params, $donnees) { return $this; }
+	
+	function modules()
+	{
+		$retour = array();
+		$modules = module_liste(dirname(dirname(__FILE__)), 1, '.php');
+		foreach($modules as $module)
+			if($module != 'liste' && $module != 'rien')
+				$retour[] = $module;
+		return $retour;
+	}
 }
 
 ?>
