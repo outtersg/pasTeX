@@ -24,6 +24,7 @@
 /* À FAIRE: savoir ne pas planter quand des champs sont absents. */
 
 require_once('pasTeX.inc');
+require_once('commun/ooo/ooo.inc');
 
 class OpenOffice
 {
@@ -39,6 +40,7 @@ class OpenOffice
 		{
 			switch($argv[$position])
 			{
+				case 'en':
 				case 'un':
 				case 'une':
 				case 'le':
@@ -55,6 +57,9 @@ class OpenOffice
 					if(++$position >= count($argv)) { /* À FAIRE: aide en ligne sur la sortie d'erreur. D'ailleurs, passer toutes les aides dessus (Liste, en particulier). */return null; };
 					$retour['logo'] = $argv[$position];
 					break;
+				case 'pdf':
+					$retour['pdf'] = 1;
+					break;
 				default:
 					break 2;
 			}
@@ -68,13 +73,20 @@ class OpenOffice
 	{
 		/* Préparation du retour */
 		
-		header("Content-Disposition: attachment; filename=cv.sxw");
-		header("Content-Type: application/x-starwriter");
+		$suffixe = $champs['pdf'] ? 'pdf' : 'sxw';
+		$type = $champs['pdf'] ? 'pdf' : 'x-starwriter';
+		header("Content-Disposition: attachment; filename=cv.".$suffixe);
+		header("Content-Type: application/".$type);
 		
-		return array();
+		return $champs;
 	}
 	
-	function pondreInterface($champ) {}
+	function pondreInterface($champ)
+	{
+?>
+	<input type="checkbox" name="<?php echo($champ); ?>[pdf]"></input>Sortie PDF
+<?php
+	}
 	
 	function decomposer($params, $donnees)
 	{
@@ -95,8 +107,10 @@ class OpenOffice
 		$this->pondreAutres($fichier, $donnees);
 		pclose($fichier);
 		system("cat '{$dossierTemp}/content.post.xml' >> '{$dossierTemp}/content.xml'");
-		system("( cd '{$dossierTemp}' && zip -r -q - . )");
-		system("rm -R '{$dossierTemp}'");
+		$sortie = $this->_params['pdf'] ? $nomTemp.'.sortie' : '-';
+		system("( cd '{$dossierTemp}' && zip -r -q {$sortie} . )");
+		if($this->_params['pdf']) ooo_enPDF($sortie);
+		system("rm -R '{$dossierTemp}' '{$nomTemp}' '{$nomTemp}.sortie'");
 	}
 	
 	function pondreEnTete($fichier, $donnees)
