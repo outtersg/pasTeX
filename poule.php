@@ -141,9 +141,9 @@ if(isset($argv))
 else
 	$paramsDecompo = $decompo->analyserChamps($paramsDecompo);
 
-if($paramsCompo)
+if($paramsCompo !== null)
 	$donnees = $compo->composer($paramsCompo);
-if($paramsDecompo)
+if($paramsDecompo !== null)
 	$decompo->decomposer($paramsDecompo, $donnees);
 
 ?>
