@@ -64,14 +64,14 @@ if(isset($argv)) // Appel en ligne de commande
 }
 else
 {
-	if(!is_array($GLOBALS['params']['compo']) || count(array_keys($GLOBALS['params']['compo'])) < 1)
+	if(!is_array($params['compo']) || count(array_keys($params['compo'])) < 1)
 	{
 		$compo = 'liste';
 		$decompo = 'rien';
 	}
 	else
 	{
-		$machins = array_keys($GLOBALS['params']['compo']); // Ce PHP est vraiment un abruti fini! On aime les variables intermédiaires!
+		$machins = array_keys($params['compo']); // Ce PHP est vraiment un abruti fini! On aime les variables intermédiaires!
 		$compo = $machins[0];
 		$paramsCompo = $params['compo'][$compo];
 	}
@@ -110,11 +110,11 @@ if(isset($argv)) // Appel en ligne de commande
 }
 else
 {
-	if(!is_array($GLOBALS['params']['decompo']) || count(array_keys($GLOBALS['params']['decompo'])) < 1)
+	if(!is_array($params['decompo']) || count(array_keys($params['decompo'])) < 1)
 		$decompo = 'liste';
 	else
 	{
-		$machins = array_keys($GLOBALS['params']['decompo']);
+		$machins = array_keys($params['decompo']);
 		$decompo = $machins[0];
 		$paramsDecompo = $params['decompo'][$decompo];
 	}
