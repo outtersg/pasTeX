@@ -21,41 +21,17 @@
  * SOFTWARE.
  */
 
-require_once('util/html.inc');
-require_once('util/module.inc');
-
-class De_Liste
+class De_Session
 {
-	function De_Liste() {}
+	function De_Session() {}
 	
-	function analyserParams($argv, &$position)
+	function analyserParams($argv, &$position) { return array(); }
+	function analyserChamps($params) { return $params; }
+	
+	function composer($params)
 	{
-		echo 'Modules de chargement installés:'."\n";
-		foreach($this->modules() as $module)
-			echo '  '.$module."\n";
-		return null;
-	}
-	
-	function analyserChamps($params)
-	{
-		html_enTete();
-?>
-	<title>Génération de CV</title>
-<?php
-		html_corps();
-		html_fin();
-	}
-	
-	function composer($params) { return $this; }
-	
-	function modules()
-	{
-		$retour = array();
-		$modules = module_liste(dirname(__FILE__), 0, '.php');
-		foreach($modules as $module)
-			if($module != 'de_liste' && $module != 'de_session' && substr($module, 0, 3) == 'de_')
-				$retour[] = substr($module, 3);
-		return $retour;
+		session_start();
+		return $_SESSION['donnees'];
 	}
 }
 

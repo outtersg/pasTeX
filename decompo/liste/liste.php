@@ -35,7 +35,27 @@ class Liste
 		return null;
 	}
 	
-	function decomposer($params, $donnees) { return $this; }
+	function analyserChamps($params)
+	{
+		/* On aura besoin de ça pour la suite (cf. decomposer()). */
+		
+		session_start();
+		
+		/* Génération de la page d'interface pour le choix du décompositeur. */
+		
+		pasTeX_interfaceModules(array('id' => 'decompo', 'aff' => 'Modèle', 'modules' => $this->modules(), 'chargeur' => pasTeX_chargerDecompo, 'champs' => array('compo[session]', 1), 'bouton' => 'Pondre'));
+		
+		return array();
+	}
+	
+	function decomposer($params, $donnees)
+	{
+		/* On garde en mémoire les données, afin que, le formulaire validé, le
+		 * décompositeur choisi par l'utilisateur puisse les retrouver. */
+		
+		$_SESSION['donnees'] = $donnees;
+		return $this;
+	}
 	
 	function modules()
 	{
