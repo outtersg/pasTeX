@@ -21,6 +21,8 @@
  * SOFTWARE.
  */
 
+require_once('pasTeX.inc');
+
 /* La Poule pond un CV comme elle pondrait un œuf. La ponte est sa raison de vivre,
  * ce n'est pas une telle bassesse du destin qui la détournerait de sa vocation. Et
  * puis, pour ce qu'elle a de cerveau, le temps qu'elle se rende compte du
@@ -86,9 +88,7 @@ else
 
 /* À FAIRE: vérifier que les modules à charger ne contiennent pas de .. */
 
-$compo = 'de_'.$compo; // Bravo, encore un langage qui ne supporte pas les espaces de nommage et oblige donc à, par exemple, préfixer tous les compositeurs de la même manière afin de s'assurer qu'ils n'entrent pas en conflit avec les décompositeurs!
-require_once('compo/'.$compo.'.php');
-$compo = new $compo();
+$compo = pasTeX_chargerCompo($compo);
 if(isset($argv))
 {
 	++$etPuisQuoiEncore;
@@ -131,8 +131,7 @@ else
 
 /* À FAIRE: vérifier que les modules à charger ne contiennent pas de .. */
 
-require_once('decompo/'.$decompo.'/'.$decompo.'.php');
-$decompo = new $decompo();
+$decompo = pasTeX_chargerDecompo($decompo);
 if(isset($argv))
 {
 	++$etPuisQuoiEncore;
