@@ -60,8 +60,21 @@ class OpenOffice
 			}
 			++$position;
 		}
+		
 		return $retour;
 	}
+	
+	function analyserChamps($champs)
+	{
+		/* Préparation du retour */
+		
+		header("Content-Disposition: attachment; filename=cv.sxw");
+		header("Content-Type: application/x-starwriter");
+		
+		return array();
+	}
+	
+	function pondreInterface($champ) {}
 	
 	function decomposer($params, $donnees)
 	{
