@@ -29,7 +29,7 @@
  * avec des droits réservés CS.*/
 /* À FAIRE: savoir ne pas planter quand des champs sont absents. */
 
-require_once('util/periode.inc');
+require_once('pasTeX.inc');
 
 class BTP
 {
@@ -111,7 +111,7 @@ fprintf($fichier, <<<TERMINE
 TERMINE
 );
 		foreach($donnees->formation->études as $périodeHeureuse)
-			fprintf($fichier, '<text:p text:style-name="CV Formation">'.$this->periode($périodeHeureuse->date->d, $périodeHeureuse->date->f, 2).'<text:tab-stop/>'.htmlspecialchars($périodeHeureuse->diplôme, ENT_NOQUOTES).'</text:p>');
+			fprintf($fichier, '<text:p text:style-name="CV Formation">'.pasTeX_descriptionPeriode($périodeHeureuse->date->d, $périodeHeureuse->date->f, 2).'<text:tab-stop/>'.htmlspecialchars($périodeHeureuse->diplôme, ENT_NOQUOTES).'</text:p>');
 	}
 	
 	function pondreProjets($fichier, $donnees)
@@ -125,11 +125,8 @@ TERMINE
 
 			/* Ce modèle-ci ne nous permet pas d'afficher plusieurs périodes
 			 * pour le même projet, on fait donc la période englobante du tout. */
-			$moments = array();
-			foreach($francheRigolade->date as $moment)
-				$moments[] = array($moment->d, $moment->f);
-			$moments = periode_union($moments);
-			fprintf($fichier, '<text:span text:style-name="CV Date">'.$this->periode($moments[0], $moments[1], 2).'</text:span><text:tab-stop/>');
+			$moments = pasTeX_unionPeriodes($francheRigolade->date);
+			fprintf($fichier, '<text:span text:style-name="CV Date">'.pasTeX_descriptionPeriode($moments[0], $moments[1], 2).'</text:span><text:tab-stop/>');
 			
 			$desChoses = false;
 			if(isset($francheRigolade->rôle))
@@ -268,18 +265,6 @@ TERMINE
 			if($qqc) fprintf($fichier, ')');
 			fprintf($fichier, '</text:p>');
 		}
-	}
-	
-	function periode($d, $f, $mode)
-	{
-		if($d === null)
-			if($f === null)
-				return null;
-			else
-				return 'jusqu\'à'; /* À FAIRE: jusqu'au éventuellement */
-		if($f === null)
-			return periode_affDate($d, $mode).' - à ce jour';
-		return periode_aff($d, $f, $mode);
 	}
 }
 ?>

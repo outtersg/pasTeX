@@ -23,7 +23,7 @@
 
 /* À FAIRE: savoir ne pas planter quand des champs sont absents. */
 
-require_once('util/periode.inc');
+require_once('pasTeX.inc');
 
 class OpenOffice
 {
@@ -144,7 +144,7 @@ fprintf($fichier, <<<TERMINE
 		<text:p text:style-name="Texte CV, dates">
 TERMINE
 );
-			fprintf($fichier, $this->periode($périodeHeureuse->date->d, $périodeHeureuse->date->f).'<text:tab-stop/>'.htmlspecialchars($périodeHeureuse->diplôme, ENT_NOQUOTES));
+			fprintf($fichier, pasTeX_descriptionPeriode($périodeHeureuse->date->d, $périodeHeureuse->date->f).'<text:tab-stop/>'.htmlspecialchars($périodeHeureuse->diplôme, ENT_NOQUOTES));
 fprintf($fichier, <<<TERMINE
 		</text:p>
 TERMINE
@@ -170,11 +170,8 @@ TERMINE
 );
 			/* Ce modèle-ci ne nous permet pas d'afficher plusieurs périodes
 			 * pour le même projet, on fait donc la période englobante du tout. */
-			$moments = array();
-			foreach($francheRigolade->date as $moment)
-				$moments[] = array($moment->d, $moment->f);
-			$moments = periode_union($moments);
-			fprintf($fichier, $this->periode($moments[0], $moments[1]).'<text:tab-stop/>');
+			$moments = pasTeX_unionPeriodes($francheRigolade->date);
+			fprintf($fichier, pasTeX_descriptionPeriode($moments[0], $moments[1]).'<text:tab-stop/>');
 			$desChoses = true;
 			$sociétés = null;
 			if(isset($francheRigolade->société))
@@ -308,18 +305,6 @@ TERMINE
 );
 		foreach($donnees->loisirs->activité as $ouf)
 			fprintf($fichier, '<text:p text:style-name="Texte CV">'.htmlspecialchars($ouf, ENT_NOQUOTES).'</text:p>');
-	}
-	
-	function periode($d, $f)
-	{
-		if($d === null)
-			if($f === null)
-				return null;
-			else
-				return 'jusqu\'à'; /* À FAIRE: jusqu'au éventuellement */
-		if($f === null)
-			return 'depuis '.periode_affDate($d);
-		return periode_aff($d, $f);
 	}
 	
 	protected $_params;

@@ -22,6 +22,7 @@
  */
 
 require_once('util/html.inc');
+require_once('util/periode.inc');
 
 function pasTeX_chargerCompo($compo)
 {
@@ -109,6 +110,26 @@ function pasTeX_interfaceModules($params)
 	</div>
 <?php
 	html_fin();
+}
+
+function pasTeX_unionPeriodes($dates)
+{
+	$moments = array();
+	foreach($dates as $moment)
+		$moments[] = array($moment->d, $moment->f);
+	return periode_union($moments);
+}
+
+function pasTeX_descriptionPeriode($d, $f)
+{
+	if($d === null)
+		if($f === null)
+			return null;
+		else
+			return 'jusqu\'à'; /* À FAIRE: jusqu'au éventuellement */
+	if($f === null)
+		return 'depuis '.periode_affDate($d);
+	return periode_aff($d, $f);
 }
 
 ?>
