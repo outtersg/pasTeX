@@ -21,6 +21,8 @@
  * SOFTWARE.
  */
 
+require_once('util/html.inc');
+
 function pasTeX_chargerCompo($compo)
 {
 	$compo = 'de_'.$compo; // Bravo, encore un langage qui ne supporte pas les espaces de nommage et oblige donc à, par exemple, préfixer tous les compositeurs de la même manière afin de s'assurer qu'ils n'entrent pas en conflit avec les décompositeurs!
@@ -34,6 +36,79 @@ function pasTeX_chargerDecompo($decompo)
 	require_once('decompo/'.$decompo.'/'.$decompo.'.php');
 	$decompo = new $decompo();
 	return $decompo;
+}
+
+function pasTeX_interfaceModules($params)
+{
+	html_enTete();
+?>
+	<title>Génération de CV</title>
+	<script language="javascript">
+		g_compoAffiche = null;
+		function choisir(chose)
+		{
+			if(g_compoAffiche) g_compoAffiche.style.setProperty('display', 'none', null);
+			g_compoAffiche = document.getElementById(chose);
+			g_compoAffiche.style.setProperty('display', null, null);
+		}
+	</script>
+<?php
+	$modules = $params['modules'];
+	html_corps('style="background: #7F7FFF;" onload="choisir(\''.$modules[0].'\')"');
+?>
+	<div style="border: 1px blue solid; margin: 8px; padding: 8px; background: #BFBFFF;">
+		<form action="bidon" method="post">
+			<?php echo $params['aff'] ?>: 
+			<select name="choix" onchange="choisir(this.value);">
+<?php
+	foreach($modules as $module)
+	{
+?>
+				<option value="<?php echo($module) ?>"><?php echo($module) ?></option>
+<?php
+	}
+?>
+			</select>
+		</form>
+<?php
+	foreach($modules as $module)
+	{
+		$momo = $params['chargeur']($module);
+?>
+			<form action="poule.php" method="post" style="display: none;" id="<?php echo($module); ?>">
+				<div>
+<?php
+		if(array_key_exists('champs', $params))
+		{
+			$champ = null;
+			foreach($params['champs'] as $bidule)
+			{
+				if($champ)
+				{
+?>
+					<input type="hidden" name="<?php echo $champ ?>" value="<?php echo $bidule ?>"></input>
+<?php
+				}
+				else
+					$champ = $bidule;
+			}
+		}
+		
+		$prefixe = $params['id'].'['.$module.']';
+?>
+					<input type="hidden" name="<?php echo $prefixe ?>" value="1"></input>
+<?php
+		$momo->pondreInterface($prefixe);
+?>
+					<input type="submit" value="<?php echo $params['bouton'] ?>"></input>
+				</div>
+			</form>
+<?php
+	}
+?>
+	</div>
+<?php
+	html_fin();
 }
 
 ?>

@@ -37,12 +37,7 @@ class De_Liste
 	
 	function analyserChamps($params)
 	{
-		html_enTete();
-?>
-	<title>Génération de CV</title>
-<?php
-		html_corps();
-		html_fin();
+		pasTeX_interfaceModules(array('id' => 'compo', 'aff' => 'Source', 'modules' => $this->modules(), 'chargeur' => pasTeX_chargerCompo, 'bouton' => 'Charger'));
 	}
 	
 	function composer($params) { return $this; }
