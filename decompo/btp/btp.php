@@ -33,10 +33,19 @@ require_once('util/periode.inc');
 
 class BTP
 {
-	function analyserParams($argv, &$position)
+	function analyserParams($argv, &$position) { return array(); }
+	
+	function analyserChamps($champs)
 	{
+		/* Préparation du retour */
 		
+		header("Content-Disposition: attachment; filename=cv.sxw");
+		header("Content-Type: application/x-starwriter");
+		
+		return array();
 	}
+	
+	function pondreInterface($champ) {}
 	
 	function decomposer($params, $donnees)
 	{
