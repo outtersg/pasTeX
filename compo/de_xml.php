@@ -33,9 +33,10 @@ class CompoAProprietes extends Compo
 	 * propriété => nom de classe, pour que la propriété soit gérée par la
 	 * classe ainsi nommée, propriété => 1 pour qu'elle soit gérée par une
 	 * classe du même nom qu'elle (la propriété XML), ou n'importe quoi d'autre
-	 * pour qu'elle soit gérée comme une Chose. */
+	 * pour qu'elle soit gérée comme une Donnee. */
 	function CompoAProprietes($proprietesNormales, $proprietesEnTableau)
 	{
+		$this->données = new Donnee();
 		$this->enTableau = $proprietesEnTableau;
 		$this->normal = $proprietesNormales;
 		$this->classes = array();
@@ -48,24 +49,28 @@ class CompoAProprietes extends Compo
 
 	function &entrerDans(&$depuis, $nom, $attributs)
 	{
-		if(is_string($depuis)) $depuis = new Chose(); // Tant pis pour ceux qui font du HTML (mélange de balises et texte)!
+		if(is_string($depuis)) $depuis = new Donnee(); // Tant pis pour ceux qui font du HTML (mélange de balises et texte)! Ici, si on avait une feuille (string) à laquelle est demandée l'adjonction d'un nœud, on détruit le texte pour préparer le terrain au nœud.
 		if(array_key_exists($nom, $this->classes))
 		{
 			$nouveau = $this->classes[$nom];
 			$nouveau = new $nouveau();
+			$donnee = &$nouveau->données;
 		}
 		else
+		{
 			$nouveau = null;
+			$donnee = &$nouveau;
+		}
 		if(array_key_exists($nom, $this->enTableau)) // On est en train de nous constituer un tableau de ces propriétés (propriété multi-valuée).
-			$depuis->{$nom}[] = &$nouveau;
+			$depuis->données->{$nom}[] = &$donnee;
 		else // Sinon c'est une propriété unique de l'objet.
-			$depuis->{$nom} = &$nouveau;
+			$depuis->données->{$nom} = &$donnee;
 		return $nouveau;
 	}
 	
 	function contenuPour(&$objet, $contenu)
 	{
-		if(is_a($objet, Chose))
+		if(is_a($objet, Donnee))
 		{
 			if(count(get_object_vars($objet)) > 0) return; // Une fois qu'il est devenu un object complet, on ne change pas sa nature. Tant pis pour les données!
 			$objet = null;
@@ -76,6 +81,7 @@ class CompoAProprietes extends Compo
 	protected $enTableau; // Liste des sous-éléments XML agrégeables en tableau dans cet objet.
 	protected $normal; // Liste des sous-éléments XML qui doivent donner une propriété unique de cet objet.
 	protected $classes; // Association d'une classe de Compo à un élément XML.
+	protected $données;
 }
 
 /* CompoAProprietes connaissant les propriétés particulières 'date' et 'période' */
@@ -116,7 +122,7 @@ class De_Xml extends CompoAProprietes
 {
 	function De_Xml()
 	{
-		$this->CompoAProprietes(array('formation' => 1, 'expérience' => 1, 'langues' => 1, 'connaissances' => 1, 'intérêts' => 1, 'loisirs' => 1), array());
+		$this->CompoAProprietes(array('perso' => 1, 'formation' => 1, 'expérience' => 1, 'langues' => 1, 'connaissances' => 1, 'intérêts' => 1, 'loisirs' => 1), array());
 		$this->chargeur = new Chargeur();
 	}
 	
@@ -140,7 +146,7 @@ TERMINE
 	{
 		if(!array_key_exists('chemin', $params)) { /* À FAIRE: au secours, au secours, qu'est-ce que je fais, là? */ die; }
 		$this->chargeur->charger($params['chemin'], 'cv', &$this);
-		return $this;
+		return $this->données;
 	}
 	
 	protected $chargeur;
@@ -178,7 +184,7 @@ class Catégorie extends CompoAProprietes
 	function sortirDe(&$objet)
 	{
 		if($objet === $this->courant)
-			$this->connaissances[$this->courant] = hexdec($this->niveauCourant);
+			$this->données->connaissances[$this->courant] = hexdec($this->niveauCourant);
 	}
 	
 	protected $courant;
@@ -191,34 +197,35 @@ class CompoDate extends Compo
 	
 	function contenuPour(&$objet, $contenu)
 	{
-		$this->date = $this->date === null ? $contenu : $this->date.$contenu;
+		$this->données = $this->données === null ? $contenu : $this->données.$contenu;
 	}
 	
 	function sortir()
 	{
-		$this->date = decouper_datation($this->date);
+		$this->données = decouper_datation($this->données);
 	}
 	
-	public $date;
+	public $données;
 }
 
 class MaDate extends CompoDate
 {
+	function MaDate()  { $this->CompoDate(); }
+	
 	function sortir()
 	{
 		parent::sortir();
-		$this->d = $this->date;
-		$this->f = $this->date;
+		$données = $this->données;
+		$this->données = new Donnee();
+		$this->données->d = $données;
+		$this->données->f = $données;
 	}
-	
-	public $d;
-	public $f;
 }
 
 class Période extends CompoSimple
 {
-	function Période() { $this->CompoSimple(array('entre' => &$this->d, 'et' => &$this->f)); }
-
+	function Période() { $this->données = new Donnee(); $this->CompoSimple(array('entre' => &$this->données->d, 'et' => &$this->données->f)); }
+	
 	function contenuPour(&$objet, $contenu)
 	{
 		$objet = $objet === null ? $contenu : $objet.$contenu;
@@ -226,13 +233,9 @@ class Période extends CompoSimple
 	
 	function sortir()
 	{
-		$this->d = decouper_datation($this->d);
-		$this->f = decouper_datation($this->f);
+		$this->données->d = decouper_datation($this->données->d);
+		$this->données->f = decouper_datation($this->données->f);
 	}
-	
-	
-	public $d;
-	public $f;
 }
 
 ?>
