@@ -122,7 +122,7 @@ TERMINE
 		
 		$prénom = htmlspecialchars($donnees->perso->prénom, ENT_NOQUOTES);
 		$nom = htmlspecialchars($donnees->perso->nom, ENT_NOQUOTES);
-		$titre = htmlspecialchars($donnees->perso->titre, ENT_NOQUOTES);
+		$titre = htmlspecialchars($donnees->titre, ENT_NOQUOTES);
 		fprintf($fichier, "<text:p text:style-name=\"Nom CV\">{$prénom} {$nom}</text:p>");
 		fprintf($fichier, "<text:p text:style-name=\"En-tête CV\">{$titre}</text:p>");
 		if($this->_params['logo']) fprintf($fichier, "</text:section>");
