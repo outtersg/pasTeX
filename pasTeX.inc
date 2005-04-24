@@ -50,7 +50,7 @@ function pasTeX_interfaceModules($params)
 		{
 			if(g_compoAffiche) g_compoAffiche.style.setProperty('display', 'none', null);
 			g_compoAffiche = document.getElementById(chose);
-			g_compoAffiche.style.setProperty('display', null, null);
+			g_compoAffiche.style.removeProperty('display');
 		}
 	</script>
 <?php
