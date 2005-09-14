@@ -87,7 +87,7 @@ function pasTeX_interfaceModules($params)
 				if($champ)
 				{
 ?>
-					<input type="hidden" name="<?php echo $champ ?>" value="<?php echo $bidule ?>"></input>
+					<input type="hidden" name="<?php echo $champ ?>[]" value="<?php echo $bidule ?>"></input>
 <?php
 				}
 				else
@@ -97,7 +97,7 @@ function pasTeX_interfaceModules($params)
 		
 		$prefixe = $params['id'].'['.$module.']';
 ?>
-					<input type="hidden" name="<?php echo $prefixe ?>" value="1"></input>
+					<input type="hidden" name="<?php echo $prefixe ?>[]" value="1"></input>
 <?php
 		$momo->pondreInterface($prefixe);
 ?>
