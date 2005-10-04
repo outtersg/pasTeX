@@ -133,7 +133,30 @@ class De_Xml extends CompoAProprietes
 		return array('chemin' => $argv[$position - 1]);
 	}
 	
-	function analyserChamps($champs) { return $champs; }
+	function analyserChamps($champs)
+	{
+		$machin = $_FILES;
+		/* Alors voilà, j'avais quelque chose de propre où la poule se chargeait
+		 * de ne refiler de $_POST que ce qui pouvait intéresser notre module,
+		 * dans $params, mais cet abruti de PHP décide, pour les fichiers
+		 * balancés au serveur, de passer par un $_FILES. Donc on fait un
+		 * ignoble codage en dur pour récupérer nos données. */
+		foreach(array('compo', 'tmp_name', 'xml', 'fichier') as $bidule) // On rentre dans _FILES à la recherche de notre truc.
+			if(array_key_exists($bidule, $machin))
+				$machin = $machin[$bidule];
+			else
+			{
+				$machin = null;
+				break;
+			}
+		if($machin) // Un fichier arrivé par HTTP.
+		{
+			$champs['chemin'] = $_FILES['compo']['tmp_name']['xml']['fichier']; // Mais que ce langage est con! Avec un peu de logique ils auraient fait un compo.xml.fichier contenant un tmp_name, un name, un type, mais non, ils me donnent un compo avec son tmp_name, son name, son type, chacun d'eux ayant un xml.fichier.
+			move_uploaded_file($champs['chemin'], $champs['chemin'].'.1'); // Qu'il ne nous l'efface pas en sortant du script!
+			$champs['chemin'] = $champs['chemin'].'.1'; /* À FAIRE: il faudra l'effacer quand on aura fini avec. */
+		}
+		return $champs;
+	}
 	
 	function pondreAide()
 	{
@@ -147,7 +170,7 @@ TERMINE
 	function pondreInterface($champ)
 	{
 ?>
-	Fichier: <input type="text" name="<?php echo($champ); ?>[chemin]"></input>
+	Fichier: <input type="file" name="<?php echo($champ); ?>[fichier]"></input>
 <?php
 	}
 	
