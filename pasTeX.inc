@@ -76,7 +76,7 @@ function pasTeX_interfaceModules($params)
 	{
 		$momo = $params['chargeur']($module);
 ?>
-			<form action="poule.php" method="post" style="display: none;" id="<?php echo($module); ?>">
+			<form action="poule.php" method="post" style="display: none;" id="<?php echo($module); ?>" enctype="multipart/form-data">
 				<div>
 <?php
 		if(array_key_exists('champs', $params))
