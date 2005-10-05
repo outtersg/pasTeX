@@ -44,13 +44,14 @@ function pasTeX_interfaceModules($params)
 	html_enTete();
 ?>
 	<title>Génération de CV</title>
+	<script type="text/javascript" src="js/html.js"></script>
 	<script language="javascript">
 		g_compoAffiche = null;
 		function choisir(chose)
 		{
-			if(g_compoAffiche) g_compoAffiche.style.setProperty('display', 'none', null);
+			if(g_compoAffiche) html_planquer(g_compoAffiche);
 			g_compoAffiche = document.getElementById(chose);
-			g_compoAffiche.style.removeProperty('display');
+			html_montrer(g_compoAffiche);
 		}
 	</script>
 <?php
