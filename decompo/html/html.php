@@ -103,7 +103,7 @@ class Html
 		<div class="audessus">
 			<div class="titresection">
 				<?php echo $nom ?>
-				<img style="position: absolute; left: 0px; width: 100%; right: 0px; bottom: 0px; height: 40%; z-index: 1;" src="decompo/html/degrade.ocre.png" alt=""/>
+				<img style="position: absolute; left: 0px; width: 100%; right: 0px; bottom: 0px; height: 50%; z-index: 1;" src="decompo/html/degrade.ocre.png" alt=""/>
 			</div>
 <?php
 	}
