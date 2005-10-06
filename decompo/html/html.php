@@ -120,7 +120,7 @@ class Html
 	{
 		if(!array_key_exists('formation', $donnees)) return;
 		
-		$this->commencerSection('Études');
+		$this->commencerSection('Études');
 ?>
 		<table>
 <?php
@@ -143,7 +143,7 @@ class Html
 	{
 		if(!array_key_exists('expérience', $donnees)) return;
 		
-		$this->commencerSection('Culture informatique, Expérience et Projets');
+		$this->commencerSection('Expérience et Projets');
 		$pasLePremier = false;
 		foreach($donnees->expérience->projet as $francheRigolade)
 		{
@@ -232,7 +232,7 @@ class Html
 		
 		$seuils = array(0x0, 0x4, 0x8, 0x10);
 		
-		$this->commencerSection('Connaissances Informatique');
+		$this->commencerSection('Connaissances Informatiques');
 		$prems = true;
 		foreach($donnees->connaissances->catégorie as $catégorie)
 		{
@@ -264,7 +264,7 @@ class Html
 	{
 		if(!array_key_exists('intérêts', $donnees)) return;
 		
-		$this->commencerSection('Domaines d\'intérêts');
+		$this->commencerSection('Domaines d\'intérêt');
 		$pasLePremier = false;
 		foreach($donnees->intérêts->domaine as $latechniqueamusante)
 		{
