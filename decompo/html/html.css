@@ -39,12 +39,14 @@ div.audessus
 	padding: 8px;
 	position: relative;
 	z-index: 2;
+	overflow: hidden;
 }
 
 div.titresection
 {
 	position: absolute;
-	color: #BFBFFF;
+	background: #cf9f00;
+	color: #FFFF7F;
 	font-size: 400%;
 	z-index: -1;
 	text-align: center;

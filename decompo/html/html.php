@@ -73,6 +73,29 @@ class Html
 		 * couleur de fond, faire un masque tout noir sur lequel on trace un disque
 		 * de 30x30 en blanc; sur l'image, tracer par-dessus un cercle couleur de
 		 * bordure de 32x32. Récupérer les 16x16 pixels intéressants. */
+		/* Emmerdements pour faire un dégradé propre:
+		 * - des bandes à la transparence diminuant, les unes sur les autres.
+		 *   Mais avec un positionnement relatif, ça merde, car les arrondis CSS
+		 *   font que parfois la bande de largeur n% posée en n%, ne touchera
+		 *   la bande de largeur n% commençant en 0 (un pixel entre les deux).
+		 * - la même chose avec un positionnement par JS: quand on agrandit la
+		 *   police, je JS n'est pas rappelé.
+		 * - image en bg: on ne peut pas dire que le bg est étiré pour faire n%
+		 *   de son conteneur.
+		 * - image pas en bg: IE est censé avoir des problèmes avec la
+		 *   transparence. On va voir avec le forçage à la GoogleMaps. De plus
+		 *   ça nous force à créer une image par couleur de fond. Solution
+		 *   envisagée.
+		 * - bandes de largeur n%, 2*n%, 3*n%, …, commençant toutes en 0. On
+		 *   calcule leur transparence pour qu'en s'accumulant, elles fassent
+		 *   comme si on avait une bande de transparence voulue. Solution
+		 *   envisagée.
+		 * Le monsieur à http://forum.hardware.fr/hardwarefr/Programmation/Recherche-code-html-pour-fondu-sujet-75035-1.htm
+		 * connaît le moyen de faire faire de la transparence à tout les
+		 * navigateurs.
+		 * Un jour on aura les CSS3. Enfin si c'est pour avoir quelque chose
+		 * d'encore plus tordu que les 2.1…
+		 */
 ?>
 	<div class="section">
 		<img src="decompo/html/hd.ocre.png" style="position: absolute; right: 0px; top: 0px; z-index: 3;" alt="décoration"/>
@@ -80,10 +103,7 @@ class Html
 		<div class="audessus">
 			<div class="titresection">
 				<?php echo $nom ?>
-				<!-- En attendant les CSS3… -->
-				<div style="position: absolute; right: 0px; left: 0px; top: 55%; height: 16%; background: url('decompo/html/BF.ocre.png') repeat; z-index: 1;"> </div>
-				<div style="position: absolute; right: 0px; left: 0px; top: 70%; height: 16%; background: url('decompo/html/7F.ocre.png') repeat; z-index: 1;"> </div>
-				<div style="position: absolute; right: 0px; left: 0px; top: 85%; height: 14%; background: url('decompo/html/3F.ocre.png') repeat; z-index: 1;"> </div>
+				<img style="position: absolute; left: 0px; width: 100%; right: 0px; bottom: 0px; height: 40%; z-index: 1;" src="decompo/html/degrade.ocre.png" alt=""/>
 			</div>
 <?php
 	}
