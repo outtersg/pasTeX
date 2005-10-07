@@ -70,6 +70,12 @@ div.titreexp
 	font-style: bold;
 }
 
+div.descrexp
+{
+	margin-left: 40px;
+	font-style: italic;
+}
+
 div.exp
 {
 	margin-left: 24px;

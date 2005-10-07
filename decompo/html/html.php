@@ -175,7 +175,7 @@ class Html
 			echo '</div>'."\n";
 			
 			if(isset($francheRigolade->description))
-				echo '<div class="exp">'.htmlspecialchars(maj($francheRigolade->description), ENT_NOQUOTES).'</div>'."\n";
+				echo '<div class="descrexp">'.htmlspecialchars(maj($francheRigolade->description), ENT_NOQUOTES).'</div>'."\n";
 			echo '<div class="exp">';
 			$desChoses = false;
 			foreach($francheRigolade->tâche as $tâche)
