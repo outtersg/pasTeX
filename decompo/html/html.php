@@ -21,6 +21,12 @@
  * SOFTWARE.
  */
 
+ /* Eh oui, messieurs-dames, un langage des années 2000 qui ne gère pas en natif
+  * l'UTF-8! */
+//function maj($chaine) { return mb_strtoupper($chaine{0}).substr($chaine, 1); }
+//function maj($chaine) { $r = iconv('UTF-8', 'UTF-8-MAC', $chaine); return iconv('UTF-8-MAC', 'UTF-8', strtoupper($r{0}).substr($r, 1)); }
+function maj($chaine) { return strtoupper($chaine{0}).substr($chaine, 1); }
+
 /* À FAIRE: inclure un lien, si module il y a, vers la génération d'un PDF
  * correspondant. */
 
@@ -169,14 +175,16 @@ class Html
 			echo '</div>'."\n";
 			
 			if(isset($francheRigolade->description))
-				echo '<div class="exp">'.htmlspecialchars($francheRigolade->description, ENT_NOQUOTES).'</div>'."\n";
+				echo '<div class="exp">'.htmlspecialchars(maj($francheRigolade->description), ENT_NOQUOTES).'</div>'."\n";
 			echo '<div class="exp">';
 			$desChoses = false;
 			foreach($francheRigolade->tâche as $tâche)
 			{
+				if(!$desChoses) $tâche = maj($tâche);
 				echo ($desChoses ? '; ' : '').htmlspecialchars($tâche, ENT_NOQUOTES); /* À FAIRE: ne garder la majuscule en début que pour la première; virer les points sauf celui de la dernière. */
 				$desChoses = true;
 			}
+			if($desChoses) echo '.';
 			echo '</div>'."\n";
 			
 			/* À FAIRE: un machin qui fait que quand on passe la souris par dessus
