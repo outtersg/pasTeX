@@ -147,8 +147,6 @@ TERMINE
 		if(!array_key_exists('formation', $donnees)) return;
 fprintf($fichier, <<<TERMINE
 		<text:p text:style-name="Section CV">Études
-			<text:line-break/>
-			<draw:line text:anchor-type="as-char" svg:y="0cm" draw:z-index="6" draw:style-name="gr1" draw:text-style-name="P1" svg:x2="17cm" svg:y2="0cm"/>
 		</text:p>
 TERMINE
 );
@@ -158,7 +156,7 @@ fprintf($fichier, <<<TERMINE
 		<text:p text:style-name="Texte CV, dates">
 TERMINE
 );
-			fprintf($fichier, pasTeX_descriptionPeriode($périodeHeureuse->date->d, $périodeHeureuse->date->f).'<text:tab-stop/>'.htmlspecialchars($périodeHeureuse->diplôme, ENT_NOQUOTES));
+			fprintf($fichier, pasTeX_descriptionPeriode($périodeHeureuse->date->d, $périodeHeureuse->date->f).' <text:tab-stop/>'.htmlspecialchars($périodeHeureuse->diplôme, ENT_NOQUOTES));
 fprintf($fichier, <<<TERMINE
 		</text:p>
 TERMINE
@@ -171,21 +169,23 @@ TERMINE
 		if(!array_key_exists('expérience', $donnees)) return;
 fprintf($fichier, <<<TERMINE
 		<text:p text:style-name="Section CV">Culture informatique, Expérience et Projets
-			<text:line-break/>
-			<draw:line text:anchor-type="as-char" svg:y="0cm" draw:z-index="5" draw:style-name="gr1" draw:text-style-name="P1" svg:x2="17cm" svg:y2="0cm"/>
 		</text:p>
 TERMINE
 );
 		foreach($donnees->expérience->projet as $francheRigolade)
 		{
-fprintf($fichier, <<<TERMINE
-		<text:p text:style-name="Texte CV, dates">
-TERMINE
-);
+			/* Dans les styles OpenOffice, on a demandé à ce que les titres de
+			 * mission et les points de détails ne soient pas coupés. On aurait
+			 * bien voulu un keep-with-previous pour les points, mais OOo 1.1 ne
+			 * le comprend pas; on utilise donc des keep-with-next, sauf pour le
+			 * dernier paragraphe. Ça devient compliqué. */
+			 $cesure = count($francheRigolade->tâche) ? 1 : 0;
+			 
+			fprintf($fichier, '<text:p text:style-name="Texte CV, dates, titre'.($cesure == 0 ? ', césure' : '').'">');
 			/* Ce modèle-ci ne nous permet pas d'afficher plusieurs périodes
 			 * pour le même projet, on fait donc la période englobante du tout. */
 			$moments = pasTeX_unionPeriodes($francheRigolade->date);
-			fprintf($fichier, pasTeX_descriptionPeriode($moments[0], $moments[1]).'<text:tab-stop/>');
+			fprintf($fichier, pasTeX_descriptionPeriode($moments[0], $moments[1]).' <text:tab-stop/>');
 			$desChoses = true;
 			$sociétés = null;
 			if(isset($francheRigolade->société))
@@ -200,15 +200,21 @@ TERMINE
 			else $desChoses = false;
 			
 			if(isset($francheRigolade->description)) { fprintf($fichier, ($desChoses ? ': ' : '').htmlspecialchars($francheRigolade->description, ENT_NOQUOTES)); $desChoses = true; }
-			foreach($francheRigolade->tâche as $tâche)
-			{
-				fprintf($fichier, ($desChoses ? '<text:line-break/>' : '').htmlspecialchars($tâche, ENT_NOQUOTES));
-				$desChoses = true;
-			}
 fprintf($fichier, <<<TERMINE
 		</text:p>
 TERMINE
-);
+			);
+			
+			for($i = -1, $n = count($francheRigolade->tâche); ++$i < $n;)
+			{
+				if(!$i)
+					fprintf($fichier, '<text:unordered-list text:style-name="Texte CV, petite puce">');
+				fprintf($fichier, '<text:list-item><text:p text:style-name="Texte CV, dates, points'.($cesure == 1 && $i == $n - 1 ? ', césure' : '').'">');
+				fprintf($fichier, htmlspecialchars($francheRigolade->tâche[$i], ENT_NOQUOTES));
+				fprintf($fichier, '</text:p></text:list-item>');
+			}
+			if($n)
+				fprintf($fichier, '</text:unordered-list>');
 		}
 	}
 	
@@ -217,8 +223,6 @@ TERMINE
 		if(!array_key_exists('langues', $donnees)) return;
 fprintf($fichier, <<<TERMINE
 		<text:p text:style-name="Section CV">Langues
-			<text:line-break/>
-			<draw:line text:anchor-type="as-char" svg:y="0cm" draw:z-index="1" draw:style-name="gr1" draw:text-style-name="P1" svg:x2="17cm" svg:y2="0cm"/>
 		</text:p>
 TERMINE
 );
@@ -246,8 +250,6 @@ TERMINE
 		
 fprintf($fichier, <<<TERMINE
 		<text:p text:style-name="Section CV">Connaissances Informatiques
-			<text:line-break/>
-			<draw:line text:anchor-type="as-char" svg:y="0cm" draw:z-index="2" draw:style-name="gr1" draw:text-style-name="P1" svg:x2="17cm" svg:y2="0cm"/>
 		</text:p>
 		<text:p text:style-name="Texte CV">(dans chacune de ces catégories, les éléments sont groupés par degré de connaissance: ***: maîtrise de l&apos;outil; **: bonne connaissance, utilisation courante; *: notions)</text:p>
 TERMINE
@@ -285,8 +287,6 @@ TERMINE
 		
 fprintf($fichier, <<<TERMINE
 		<text:p text:style-name="Section CV">Domaines d&apos;intérêts
-			<text:line-break/>
-			<draw:line text:anchor-type="as-char" svg:y="0cm" draw:z-index="3" draw:style-name="gr1" draw:text-style-name="P1" svg:x2="17cm" svg:y2="0cm"/>
 		</text:p>
 TERMINE
 );
@@ -312,8 +312,6 @@ TERMINE
 		
 fprintf($fichier, <<<TERMINE
 		<text:p text:style-name="Section CV">Autres activités et intérêts
-			<text:line-break/>
-			<draw:line text:anchor-type="as-char" svg:y="0cm" draw:z-index="4" draw:style-name="gr1" draw:text-style-name="P1" svg:x2="17cm" svg:y2="0cm"/>
 		</text:p>
 TERMINE
 );
