@@ -21,6 +21,8 @@
  * SOFTWARE.
  */
 
+ require_once('util/params.inc');
+ 
  /* Eh oui, messieurs-dames, un langage des années 2000 qui ne gère pas en natif
   * l'UTF-8! */
 //function maj($chaine) { return mb_strtoupper($chaine{0}).substr($chaine, 1); }
@@ -55,6 +57,8 @@ class Html
 		$this->pondreConnaissances($donnees);
 		$this->pondreInteret($donnees);
 		$this->pondreAutres($donnees);
+		if(array_key_exists('liens', $params))
+			$this->pondreLiens($donnees, $params['liens']);
 		html_fin();
 		
 		return $this;
@@ -301,6 +305,32 @@ class Html
 			echo '<div class="paraindependant">'.htmlspecialchars($ouf, ENT_NOQUOTES).'</div>'."\n";
 		$this->terminerSection();
 		
+	}
+	
+	function pondreLiens($donnees, $voulus)
+	{
+		$this->commencerSection('…');
+		echo '<div><table style="text-align: center; margin-left: auto; margin-right: auto;"><tr>';
+		foreach($voulus as $voulu)
+		{
+			if(array_key_exists('p', $voulu)) // Lien vers du pasτεχ.
+			{
+				$url = ereg_replace('[^a-zA-Z]', '', $voulu['p'][0]); // Le module choisi doit se trouver en 0.
+				$params = $GLOBALS['params'];
+				unset($params['decompo']);
+				$params['decompo'][$url] = $voulu['p'];
+				$params['decompo'][$url][] = 1;
+				$url = params_decomposer(null, $params, 0);
+				if($url{0} == '&') $url = substr($url, 1);
+				$url = basename($_SERVER['PHP_SELF']).'?'.$url;
+			}
+			else if(array_key_exists('u', $voulu))
+				$url = $voulu['u'];
+			$url = htmlspecialchars($url);
+			echo '<td><div><a href="'.$url.'"><img src="'.htmlspecialchars($voulu['i']).'" alt=""/></a></div><div><a href="'.$url.'">'.htmlspecialchars($voulu['n']).'</a></div></td>';
+		}
+		echo '</tr></table></div>';
+		$this->terminerSection();
 	}
 }
 
