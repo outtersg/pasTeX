@@ -44,6 +44,8 @@ class Html
 	
 	function decomposer($params, $donnees)
 	{
+		$this->params = $params;
+		
 		html_enTete();
 	?>
 		<title>CV</title>
@@ -332,6 +334,8 @@ class Html
 		echo '</tr></table></div>';
 		$this->terminerSection();
 	}
+	
+	protected $params;
 }
 
 ?>
