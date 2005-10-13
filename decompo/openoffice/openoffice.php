@@ -98,7 +98,7 @@ class OpenOffice
 		if($this->_params['logo']) system("cp '{$this->_params['logo']}' '{$dossierTemp}/ObjBFFFC666'");
 		system("cat '{$dossierTemp}/content.pre.xml' > '{$dossierTemp}/content.xml'");
 		$fichier = popen("tr -d '\\011\\012' >> '{$dossierTemp}/content.xml'", 'w');
-		$this->pondreEntete($fichier, $donnees);
+		$this->pondreEntete($fichier, $donnees, $params['boite']);
 		$this->pondreEtudes($fichier, $donnees);
 		$this->pondreProjets($fichier, $donnees);
 		$this->pondreLangues($fichier, $donnees);
@@ -113,7 +113,10 @@ class OpenOffice
 		system("rm -R '{$dossierTemp}' '{$nomTemp}' '{$nomTemp}.sortie'");
 	}
 	
-	function pondreEnTete($fichier, $donnees)
+	/* Paramètres:
+	 *   enBoite: si true, l'en-tête ne contient que le nom et le rôle.
+	 */
+	function pondreEnTete($fichier, $donnees, $enBoite)
 	{
 fprintf($fichier, <<<TERMINE
 		<text:sequence-decls>
@@ -137,8 +140,41 @@ TERMINE
 		$prénom = htmlspecialchars($donnees->perso->prénom, ENT_NOQUOTES);
 		$nom = htmlspecialchars($donnees->perso->nom, ENT_NOQUOTES);
 		$titre = htmlspecialchars($donnees->titre, ENT_NOQUOTES);
-		fprintf($fichier, "<text:p text:style-name=\"Nom CV\">{$prénom} {$nom}</text:p>");
-		fprintf($fichier, "<text:p text:style-name=\"En-tête CV\">{$titre}</text:p>");
+		if($enBoite)
+		{
+			fprintf($fichier, "<text:p text:style-name=\"Nom CV\">{$prénom} {$nom}</text:p>");
+			fprintf($fichier, "<text:p text:style-name=\"En-tête CV\">{$titre}</text:p>");
+		}
+		else
+		{
+			fprintf($fichier, "<text:p text:style-name=\"En-tête CV\">{$prénom} {$nom}</text:p>");
+			if($donnees->perso->naissance)
+			{
+				$maintenant = obtenir_datation(time());
+				$âge = $maintenant[0] - $donnees->perso->naissance[0];
+				for($i = 1; $i < 6; ++$i) // Si l'on est avant la date d'anniversaire, on retire un an.
+					if(($j = $maintenant[$i] - $donnees->perso->naissance[i]) != 0)
+					{
+						if($j < 0)
+							--$âge;
+						break;
+					}
+				fprintf($fichier, "<text:p text:style-name=\"Texte CV\">{$âge} ans</text:p>");// On espère qu'il a un âge positif et supérieur à 1.
+			}
+			if($donnees->perso->adresse)
+			{
+				$adresse = '';
+				foreach($donnees->perso->adresse->données as $chose)
+					$adresse .= ($adresse === '' ? '' : '<text:line-break/>').htmlspecialchars($chose, ENT_NOQUOTES);
+				fprintf($fichier, "<text:p text:style-name=\"Texte CV\">{$adresse}</text:p>");
+			}
+			if($donnees->perso->mél)
+			{
+				$adrél = htmlspecialchars($donnees->perso->mél);
+				fprintf($fichier, "<text:p text:style-name=\"Texte CV\">{$adrél}</text:p>");
+			}
+			fprintf($fichier, "<text:p text:style-name=\"En-tête CV centré\">{$titre}</text:p>");
+		}
 		if($this->_params['logo']) fprintf($fichier, "</text:section>");
 	}
 	
