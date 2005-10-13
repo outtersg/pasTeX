@@ -347,7 +347,10 @@ class Html
 			else if(array_key_exists('u', $voulu))
 				$url = $voulu['u'];
 			$url = htmlspecialchars($url);
-			echo '<td><div><a href="'.$url.'"><img src="'.htmlspecialchars($voulu['i']).'" alt=""/></a></div><div><a href="'.$url.'">'.htmlspecialchars($voulu['n']).'</a></div></td>';
+			echo '<td><div><a href="';
+			if(array_key_exists('i', $voulu))
+				echo $url.'"><img src="'.htmlspecialchars($voulu['i']).'" alt=""/></a></div><div><a href="';
+			echo $url.'">'.htmlspecialchars($voulu['n']).'</a></div></td>';
 		}
 		echo '</tr></table></div>';
 		$this->terminerSection();
