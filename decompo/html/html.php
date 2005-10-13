@@ -36,7 +36,7 @@ class Html
 	
 	function analyserParams($argv, &$position) { return array(); }
 	
-	function analyserChamps($params) { return array(); }
+	function analyserChamps($params) { return $params; }
 	
 	function pondreInterface($champ) {}
 	
