@@ -21,6 +21,21 @@
  * SOFTWARE.
  */
 
+/* NOTE: travailler sur du OOo
+ * Le fichier OOo est un simple zip contenant plusieurs fichiers XML. Créer un
+ * répertoire, y aller, faire un unzip du fichier à étudier.
+ * Le XML est tassé, il ne comporte donc qu'un retour à la ligne après la balise
+ * <?xml … ?>. On peut le rendre plus lisible avec mon script xmlpropre.
+ * Pour retasser un XML passé par xmlpropre:
+bind 'set disable-completion on' # Une tabulation gênante un peu en dessous.
+empaqueter()
+{
+echo '<?xml version="1.0" encoding="UTF-8"?>'
+sed -e 's/^	\{1,\}//' -e '/<?xml/d' | tr -d '\012'
+}
+bind 'set disable-completion off'
+ */
+
 function ooo_enPDF($source, $dest = null)
 {
 	$ooo = '/Apps/Bureautique/NeoOfficeJ.app/Contents/MacOS'; /* À FAIRE: récupérer ça dans un fichier de conf */
