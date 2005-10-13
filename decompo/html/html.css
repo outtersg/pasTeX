@@ -51,6 +51,7 @@ div.titresection
 	text-align: center;
 	left: 0px;
 	right: 0px;
+	width: 100%;
 	top: 0px;
 }
 
@@ -96,4 +97,9 @@ div.soussection
 div.paraindependant
 {
 	margin: 16px;
+}
+
+img
+{
+	border: none;
 }

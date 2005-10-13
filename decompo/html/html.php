@@ -38,7 +38,20 @@ class Html
 	
 	function analyserParams($argv, &$position) { return array(); }
 	
-	function analyserChamps($params) { return $params; }
+	function analyserChamps($params)
+	{
+		/* Marre de devoir m'adapter à cet incapable. Au fur et à mesure que je
+		 * découvrirai des trucs qui ne marchent pas, je virerai. Pour le
+		 * moment, avec un IE 6.0.2800.1106 (c'est pas des blagues!):
+		 * - un position: absolute dans un position: relative sait repérer son
+		 *   top et son left, mais pas son right ni son bottom (il prend ceux
+		 *   duposition: absolute encore au-dessus).
+		 * - le PNG, comme d'hab
+		 */
+		if(!array_key_exists('ie', $params))
+			$params['ie'] = array_key_exists('HTTP_USER_AGENT', $_SERVER) && strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE') !== false;
+		return $params;
+	}
 	
 	function pondreInterface($champ) {}
 	
@@ -110,8 +123,10 @@ class Html
 		 */
 ?>
 	<div class="section">
+		<?php if(!$this->params['ie']) { ?>
 		<img src="decompo/html/hd.ocre.png" style="position: absolute; right: 0px; top: 0px; z-index: 3;" alt="décoration"/>
 		<img src="decompo/html/bg.ocre.png" style="position: absolute; left: 0px; bottom: 0px; z-index: 3;" alt="décoration"/>
+		<?php } ?>
 		<div class="audessus">
 			<div class="titresection">
 				<?php echo $nom ?>
@@ -312,7 +327,7 @@ class Html
 	function pondreLiens($donnees, $voulus)
 	{
 		$this->commencerSection('…');
-		echo '<div><table style="text-align: center; margin-left: auto; margin-right: auto;"><tr>';
+		echo '<div style="text-align: center;"><table style="text-align: center; margin-left: auto; margin-right: auto;"><tr>';
 		foreach($voulus as $voulu)
 		{
 			if(array_key_exists('p', $voulu)) // Lien vers du pasτεχ.
