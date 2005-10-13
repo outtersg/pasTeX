@@ -42,6 +42,7 @@ function pasTeX_chargerDecompo($decompo)
 function pasTeX_interfaceModules($params)
 {
 	html_enTete();
+	html_meta('meta http-equiv="Content-Type" content="text/html; charset=UTF-8"'); // IE
 ?>
 	<title>Génération de CV</title>
 	<script type="text/javascript" src="js/html.js"></script>
