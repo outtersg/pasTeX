@@ -60,9 +60,12 @@ class Html
 		$this->params = $params;
 		
 		html_enTete();
-	?>
-		<title>CV</title>
-	<?php
+		html_meta('meta http-equiv="Content-Type" content="text/html; charset=UTF-8"'); // IE
+		if($donnees->perso->nom)
+			$titre = htmlspecialchars($donnees->perso->prénom, ENT_NOQUOTES).' '.htmlspecialchars($donnees->perso->nom, ENT_NOQUOTES);
+		else
+			$titre = 'CV';
+		echo '<title>'.$titre.'</title>';
 		html_meta('link rel="stylesheet" type="text/css" href="decompo/html/html.css"');
 		html_corps();
 		$this->pondreEntete($donnees);
