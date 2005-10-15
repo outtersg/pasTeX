@@ -1,0 +1,68 @@
+#!/bin/bash
+
+echo "Virez ces deux lignes, chmod a+x sur ce fichier, puis exécutez-le." >&2
+exit 0
+
+set -e
+
+SCRIPTS="`command -v "$0"`" ; SCRIPTS="`dirname "$SCRIPTS"`" ; echo "$SCRIPTS" | grep -q "^/" || SCRIPTS=`pwd`/"$SCRIPTS"
+ORIGINE="`pwd`"
+
+GUILLAUME=http://82.240.30.31/gui
+PHP="$SCRIPTS/php/util"
+FPHP=chemin.inc
+RPHP="$GUILLAUME/util/php"
+JS="$SCRIPTS/php/js"
+FJS=html.js
+RJS="$GUILLAUME/util/js"
+
+auSecours()
+{
+	nom=`basename "$0"`
+	cat >&2 << TERMINE
+# $nom
+# Récupère le nécessaire pour avoir un albo fonctionnel
+# © Guillaume Outters 2005
+
+Utilisation: $nom [-p <utilitaires PHP>] [-j <utilitaires JS>] [.]
+  -p <utilitaires PHP>:         chemin vers les utilitaires PHP. Devrait par
+                                exemple contenir un $FPHP. Par défaut,
+                                téléchargé dans l'alboretum.
+  -j <utilitaires JS>:          pareil pour les JS, avec un $FJS.
+  .:                            juste pour ne pas être emmerdé par cette aide,
+                                qui s'affiche si vous n'avez pas d'autre
+                                argument.
+TERMINE
+	exit 1
+}
+
+analyserParametres()
+{
+	SPHP="$PHP"
+	SJS="$JS"
+	while [ $# -gt 0 ] ; do
+		case "$1" in
+			-p) shift ; SPHP="$1" ;;
+			-j) shift ; SJS="$1" ;;
+		esac
+		shift
+	done
+	[[ "$SPHP" = /* ]] || SPHP="$ORIGINE/$SPHP"
+	[[ "$SJS" = /* ]] || SJS="$ORIGINE/$SJS"
+}
+
+[ $# -lt 1 ] && auSecours
+analyserParametres "$@"
+
+choper()
+{
+	if [ ! -f "$3/$4" ]
+	then
+		[ -f "$2/$4" ] || darcs get "$1" "$2"
+		[ -f "$2/$4" ] || ( echo "Impossible de récupérer $2/$4" >&2 ; exit 1 )
+		[ "$2" = "$3" ] || ln -s "$2" "$3"
+	fi
+}
+
+choper "$RPHP" "$SPHP" "$PHP" "$FPHP"
+choper "$RJS" "$SJS" "$JS" "$FJS"
