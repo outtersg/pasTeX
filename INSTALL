@@ -9,10 +9,10 @@ SCRIPTS="`command -v "$0"`" ; SCRIPTS="`dirname "$SCRIPTS"`" ; echo "$SCRIPTS" |
 ORIGINE="`pwd`"
 
 GUILLAUME=http://82.240.30.31/gui
-PHP="$SCRIPTS/php/util"
+PHP="$SCRIPTS/util"
 FPHP=chemin.inc
 RPHP="$GUILLAUME/util/php"
-JS="$SCRIPTS/php/js"
+JS="$SCRIPTS/js"
 FJS=html.js
 RJS="$GUILLAUME/util/js"
 
@@ -21,13 +21,13 @@ auSecours()
 	nom=`basename "$0"`
 	cat >&2 << TERMINE
 # $nom
-# Récupère le nécessaire pour avoir un albo fonctionnel
+# Récupère le nécessaire pour avoir une bonne pasτεχ
 # © Guillaume Outters 2005
 
 Utilisation: $nom [-p <utilitaires PHP>] [-j <utilitaires JS>] [.]
   -p <utilitaires PHP>:         chemin vers les utilitaires PHP. Devrait par
                                 exemple contenir un $FPHP. Par défaut,
-                                téléchargé dans l'alboretum.
+                                téléchargé dans pasτεχ.
   -j <utilitaires JS>:          pareil pour les JS, avec un $FJS.
   .:                            juste pour ne pas être emmerdé par cette aide,
                                 qui s'affiche si vous n'avez pas d'autre
