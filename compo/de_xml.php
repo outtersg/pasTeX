@@ -193,7 +193,7 @@ class Domaine extends CompoAProprietes { function Domaine() { $this->CompoAPropr
 class Loisirs extends CompoAProprietes { function Loisirs() { $this->CompoAProprietes(array(), array('activité' => 0)); } }
 class Formation extends CompoAProprietes { function Formation() { $this->CompoAProprietes(array(), array('études' => 'CompoADates')); } }
 class Expérience extends CompoAProprietes { function Expérience() { $this->CompoAProprietes(array(), array('projet' => 1)); } }
-class Projet extends CompoADatesRepetees { function Projet() { $this->CompoADatesRepetees(array(), array('techno' => 0, 'société' => 0, 'tâche' => 0)); } }
+class Projet extends CompoADatesRepetees { function Projet() { $this->CompoADatesRepetees(array(), array('rôle' => 0, 'lieu' => 0, 'techno' => 0, 'société' => 0, 'tâche' => 0)); } }
 class Langues extends CompoAProprietes { function Langues() { $this->CompoAProprietes(array(), array('langue' => 1)); } }
 class Langue extends CompoAProprietes { function Langue() { $this->CompoAProprietes(array(), array('certificat' => 0)); } }
 class Connaissances extends CompoAProprietes { function Connaissances() { $this->CompoAProprietes(array(), array('catégorie' => 1)); } }
