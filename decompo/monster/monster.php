@@ -291,7 +291,11 @@ class Monster
 		
 		/* Encore quelques réglages nécessaires. */
 		
-		pasTeX_interfaceModules(array('id' => 'decompo', 'aff' => 'Modèle', 'modules' => array('monster'), 'chargeur' => monster_chargerDecompo, 'champs' => array('compo[session]', 1), 'bouton' => 'Pondre'));
+		pasTeX_debutInterface('monster: derniers réglages');
+		$prefixe = pasTeX_debutFormu('monster', array('id' => 'decompo', 'champs' => array('compo[session]', 1)));
+		$this->pondreInterface($prefixe);
+		echo '</form>';
+		pasTeX_finInterface();
 	}
 	
 	function conc($bidules, $limite, $separateur = ', ', $inverse = false)
