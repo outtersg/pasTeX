@@ -232,6 +232,7 @@ class Monster
 	</script>
 	<div onclick="return monster_hop(event);">
 		<input name="<?php echo($champ); ?>[num]" id="monster-num" type="hidden" value="0"/>
+		<div><input type="checkbox" name="<?php echo($champ); ?>[touteffacer]"/>remplacer (supprime l'existant)</div>
 <?php
 					for($z = count($reponses[0]); --$z >= 0;)
 					{
@@ -251,7 +252,7 @@ class Monster
 			case 0:
 ?>
 	<div>Le module Monster ajoute à un de vos CV Monster les expériences de votre CV pasτεχ. ATTENTION! Pour le moment expérimental. Pensez à mettre hors-ligne votre CV auparavant, et à en avoir une copie de secours.</div>
-	<div>Les items ne sont (pour le moment) qu'ajoutés, vous devrez donc manuellement retirer les anciens sous peine de vous retrouver avec des doublons. Concernant les infos transposées, il y aura des pertes, c'est inévitable; en particulier, ce foutu Monster ne prend que de l'ISO-8859-1. Adieu donc les caractères sympathiques, décoratifs, ou orientaux (pour l'ISO-8859-1, l'orient commence en Grèce). À l'heure actuelle les champs suivants sont remplis:<ul><li>Expérience</li></ul></div>
+	<div>Concernant les infos transposées, il y aura des pertes, c'est inévitable; en particulier, ce foutu Monster ne prend que de l'ISO-8859-1. Adieu donc les caractères sympathiques, décoratifs, ou orientaux (pour l'ISO-8859-1, l'orient commence en Grèce). À l'heure actuelle les champs suivants sont remplis:<ul><li>Expérience</li></ul></div>
 	<div>
 		Identifiant Monster: <input type="id" name="<?php echo($champ); ?>[id]"></input> Mot de passe: <input type="password" name="<?php echo($champ); ?>[mdp]"></input>
 	</div>
@@ -272,19 +273,29 @@ class Monster
 	{
 		$this->preparerSession();
 		$this->nouvelles = &$derniersParams;
+		$params = &$_SESSION['monster'];
 		$this->etape = 2;
-		if(!$this->verifPresence('num') || !array_key_exists($_SESSION['monster']['num'], $_SESSION['monster']['cv'])) $this->etape = 1;
+		if(!$this->verifPresence('num') || !array_key_exists($params['num'], $params['cv'])) $this->etape = 1;
+		else $this->verifPresence('touteffacer'); // On ne fait que le mettre en mémoire de session.
 		if(!$this->verifPresence('id') || !$this->verifPresence('mdp')) $this->etape = 0;
 		
 		/* Peut-être arrive-t-on au bout. */
 		
 		if($this->etape == 2)
 		{
-			$r = $this->navigo->aller($_SESSION['monster']['cv'][$_SESSION['monster']['num']].'&mode=edit');
+			$r = $this->navigo->aller($params['cv'][$params['num']].'&mode=edit');
 			preg_match('/<a href="([^"]*experience.asp[^"]*)">/', $r, $reponses, 0);
 			if(count($reponses[0]) > 0)
 			{
-				$this->pondreProjets($donnees, strtr($reponses[1], array('&amp;' => '&')));
+				$this->explo = clone $this->navigo; // Celui-ci s'aventure un peu plus loin que le navigo (qui s'arrête à la page du CV, commune à toutes les sections): il entre dans la section spécifique à remplir (ici, expérience).
+				$r = $this->explo->aller(strtr($reponses[1], array('&amp;' => '&')));
+				if($params['touteffacer'])
+				{
+					preg_match_all('/<a href="([^"]*&action=delete[^"]*)"/', $r, $reponses, 0);
+					for($z = count($reponses[0]); --$z >= 0;)
+						$this->explo->aller($reponses[1][$z]);
+				}
+				$this->pondreProjets($donnees, $r);
 				return;
 			}
 		}
@@ -314,7 +325,7 @@ class Monster
 		return '-';
 	}
 	
-	function pondreProjets($donnees, $url)
+	function pondreProjets($donnees, $page)
 	{
 		if(!array_key_exists('expérience', $donnees)) return;
 		
@@ -324,8 +335,7 @@ class Monster
 			
 			/* Récup de la page, et préparation des input type="hidden". */
 			
-			$r = $this->navigo->obtenir($url);
-			preg_match_all('/<input type="hidden" name="([^"]*)" value="([^"]*)">/', $r, $reponses, 0);
+			preg_match_all('/<input type="hidden" name="([^"]*)" value="([^"]*)">/', $page, $reponses, 0);
 			for($z = count($reponses[0]); --$z >= 0;)
 				$champs[$reponses[1][$z]] = $reponses[2][$z];
 			
@@ -372,9 +382,7 @@ class Monster
 				$champs['endmonth'] = $moments[1][1] > 0 ? $moments[1][1] : 12;
 			}
 			
-			$champs['SaveExit'] = 'SaveExit';
-			
-			$this->navigo->obtenir('/experience.asp', $champs); // Bon, je code en dur, pour une fois.
+			$this->explo->obtenir('/experience.asp', $champs); // Bon, je code en dur, pour une fois.
 		}
 	}
 }
