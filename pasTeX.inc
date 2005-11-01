@@ -39,12 +39,60 @@ function pasTeX_chargerDecompo($decompo)
 	return $decompo;
 }
 
-function pasTeX_interfaceModules($params)
+function pasTeX_debutInterface($titre, $dansLEnTete = null, $onload = null)
 {
 	html_enTete();
 	html_meta('meta http-equiv="Content-Type" content="text/html; charset=UTF-8"'); // IE
 ?>
 	<title>Génération de CV</title>
+<?php
+	if($dansLEnTete !== null) print($dansLEnTete);
+	html_corps('style="background: #7F7FFF;"'.($onload !== null ? 'onload="'.$onload.'"' : ''));
+?>
+	<div style="border: 1px blue solid; margin: 8px; padding: 8px; background: #BFBFFF;">
+<?php
+}
+
+/* Prépare un formulaire HTML pour un module.
+ * Paramètres:
+ *  $moduleDestinataireDuFormulaire: nom du module qui devra être appelé en
+ *    réponse au formulaire.
+ *  $params: options du formulaire.
+ *  $supplément: attributs du <form>.
+ * Renvoie le préfixe que devra avoir chaque input destiné au module.
+ */
+function pasTeX_debutFormu($moduleDestinataireDuFormulaire, $params, $supplément = null)
+{
+	$prefixe = $params['id'].'['.$moduleDestinataireDuFormulaire.']';
+?>
+	<form action="poule.php" method="post"<?php if($supplément !== null) echo ' '.$supplément;?> enctype="multipart/form-data">
+	<input type="hidden" name="<?php echo $prefixe ?>[]" value="1"></input>
+<?php
+	if(array_key_exists('champs', $params))
+	{
+		$champ = null;
+		foreach($params['champs'] as $bidule)
+		{
+			if($champ)
+				echo('<input type="hidden" name="'.$champ.'[]" value="'.$bidule.'"></input>');
+			else
+				$champ = $bidule;
+		}
+	}
+	
+	return $prefixe;
+}
+
+function pasTeX_finInterface()
+{
+	print('</div>');
+	html_fin();
+}
+
+function pasTeX_interfaceModules($params)
+{
+	$modules = $params['modules'];
+	pasTeX_debutInterface('Génération de CV', <<<TERMINE
 	<script type="text/javascript" src="js/html.js"></script>
 	<script language="javascript">
 		g_compoAffiche = null;
@@ -55,11 +103,9 @@ function pasTeX_interfaceModules($params)
 			html_montrer(g_compoAffiche);
 		}
 	</script>
-<?php
-	$modules = $params['modules'];
-	html_corps('style="background: #7F7FFF;" onload="choisir(\''.$modules[0].'\')"');
+TERMINE
+	, 'choisir(\''.$modules[0].'\')');
 ?>
-	<div style="border: 1px blue solid; margin: 8px; padding: 8px; background: #BFBFFF;">
 		<form action="bidon" method="post">
 			<?php echo $params['aff'] ?>: 
 			<select name="choix" onchange="choisir(this.value);">
@@ -77,30 +123,8 @@ function pasTeX_interfaceModules($params)
 	foreach($modules as $module)
 	{
 		$momo = $params['chargeur']($module);
-?>
-			<form action="poule.php" method="post" style="display: none;" id="<?php echo($module); ?>" enctype="multipart/form-data">
-				<div>
-<?php
-		if(array_key_exists('champs', $params))
-		{
-			$champ = null;
-			foreach($params['champs'] as $bidule)
-			{
-				if($champ)
-				{
-?>
-					<input type="hidden" name="<?php echo $champ ?>[]" value="<?php echo $bidule ?>"></input>
-<?php
-				}
-				else
-					$champ = $bidule;
-			}
-		}
-		
-		$prefixe = $params['id'].'['.$module.']';
-?>
-					<input type="hidden" name="<?php echo $prefixe ?>[]" value="1"></input>
-<?php
+		$prefixe = pasTeX_debutFormu($module, $params, 'style="display: none;" id="'.$module.'"');
+		echo '<div>';
 		$momo->pondreInterface($prefixe);
 ?>
 					<input type="submit" value="<?php echo $params['bouton'] ?>"></input>
@@ -108,10 +132,8 @@ function pasTeX_interfaceModules($params)
 			</form>
 <?php
 	}
-?>
-	</div>
-<?php
-	html_fin();
+	
+	pasTeX_finInterface();
 }
 
 function pasTeX_unionPeriodes($dates)
