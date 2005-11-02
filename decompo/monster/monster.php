@@ -344,7 +344,7 @@ class Monster
 			$champs['company'] = $this->conc($francheRigolade->société, 100, ' / ', true);
 			$champs['monsterindustryid'] = 0; /* À FAIRE: mais pour le moment on laisse ce choix (« Tous »), parce que je viens d'une SSII, donc informatique, mais qui bossait pour différents domaines, alors Monster et leurs restrictions, ils m'embêtent. */
 			$champs['location'] = $this->conc($francheRigolade->lieu, 100);
-			$champs['title'] = $this->conc($francheRigolade->rôle, 70, '; ');
+			$champs['title'] = pasTeX_maj($this->conc($francheRigolade->rôle, 70, '; '));
 			
 			$description = null;
 			if(isset($francheRigolade->nom))
