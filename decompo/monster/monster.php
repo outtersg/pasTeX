@@ -158,7 +158,8 @@ function monster_chargerDecompo($module)
 
 class Monster
 {
-	protected $navigo;
+	protected $navigo; // Pile de Navigateurs
+	protected $explo; // Pointeur sur le petit dernier de $navigo.
 	protected $etape;
 	
 	function Monster() { $this->etape = -1; }
@@ -181,32 +182,62 @@ class Monster
 		return $champs;
 	}
 	
-	function preparerSession()
+	function ajouterOuRecupérerDernierNavigo()
 	{
-		session_start();
-		if(!array_key_exists('monster', $_SESSION))
-			$_SESSION['monster'] = array();
-		$this->navigo = new Navigateur(); // PHP outrepassant tout ce qu'un esprit malade pourrait concevoir en matière de langage merdique à souhait, on ne peut pas sérialiser notre Navigateur dans la sessions car celle-ci est déroulée par un truc (de_session) qui y cherche ses réglages, alors que ce fichier (et donc la classe Navigateur) n'a pas encore été chargée, ce qui vautre PHP. On ne sérialise donc que le contenu du Navigateur, qu'on se fait chier ensuite à remettre en place à la main ici. Mais qu'est-ce qu'ils sont cons, alors!
-		$this->navigo->rattacherALaSession($_SESSION['monster']['navigo']);
-		$GLOBALS['monster_monstre'] = &$this;
+		$i = count($this->navigo);
+		$this->navigo[$i] = $i == 0 ? new Navigateur() : $this->navigo[$i - 1]->cloner();
+		$this->explo = &$this->navigo[$i];
+		$this->explo->données['pos'] = 0;
+		$this->explo->rattacherALaSession($_SESSION['monster']['navigo'][$i]);
 	}
 	
-	function pondreInterface($champ)
+	function supprimerDernierNavigo()
 	{
-		switch($this->etape)
+		$i = count($this->navigo) - 1;
+		if($i > 0)
+			$this->explo = &$this->navigo[$i - 1];
+		else
+			$this->explo = null;
+		array_splice($this->navigo, $i);
+		array_splice($_SESSION['monster']['navigo'], $i);
+	}
+	
+	function preparerSession()
+	{
+		html_session();
+		$GLOBALS['monster_monstre'] = &$this;
+		if(!array_key_exists('monster', $_SESSION))
+			$_SESSION['monster'] = array();
+		$this->navigo = array(); // PHP outrepassant tout ce qu'un esprit malade pourrait concevoir en matière de langage merdique à souhait, on ne peut pas sérialiser notre Navigateur dans la session car celle-ci est déroulée par un truc (de_session) qui y cherche ses réglages, alors que ce fichier (et donc la classe Navigateur) n'a pas encore été chargée, ce qui vautre PHP. On ne sérialise donc que le contenu du Navigateur, qu'on se fait chier ensuite à remettre en place à la main ici. Mais qu'est-ce qu'ils sont cons, alors!
+		if(!array_key_exists('navigo', $_SESSION['monster']))
+			$_SESSION['monster']['navigo'] = array();
+		$i = count($_SESSION['monster']['navigo']);
+		if($i <= 0) $i = 1;
+		while(--$i >= 0)
+			$this->ajouterOuRecupérerDernierNavigo();
+	}
+	
+	/* Génère l'interface pour demander au client un renseignement nous
+	 * permettant d'avancer (ex.: identifiant/mdp, numéro du CV à modifier, …).
+	 * Paramètres:
+	 *   $numéroInterface: machin à pondre.
+	 *   $params: propres à chaque $numéroInterface. */
+	function pondrePage($numéroInterface, $params = null)
+	{
+		$champ = pasTeX_debutFormu('monster', array('id' => 'decompo', 'champs' => array('compo[session]', 1)));
+		
+		if($this->interfaceIndépendante) // Si on doit générer nous-même la page.
+			pasTeX_debutInterface('monster: derniers réglages');
+		
+		switch($numéroInterface)
 		{
 			/* Les cas sont ordonnés du dernier au premier, pour que l'on
 			 * puisse se rabattre sur le précédent si celui voulu ne marche pas
 			 * (session expirée, etc.). */
 			case 2:
 			case 1:
-				$params = &$_SESSION['monster'];
-				$r = $this->navigo->aller('http://mon.monster.fr/login.asp', array('user' => $params['id'], 'password' => $params['mdp']));
-				/* Récupération des liens vers les CV dans la page obtenue. */
-				preg_match_all('/<a href="([^"]*resumeid=([0-9]*)[^"]*)"> *([^<]*)<\/a>/', $r, $reponses, 0);
-				if(count($reponses[0]) != 0) // Sinon, c'est qu'on a dû se faire expirer la session Monster au nez.
+				if(count($params) != 0) // Sinon, c'est qu'on a dû se faire expirer la session Monster au nez.
 				{
-					$_SESSION['monster']['cv'] = array();
 ?>
 	<script type="text/javascript">
 		<!--
@@ -237,21 +268,17 @@ class Monster
 		<input name="<?php echo($champ); ?>[num]" id="monster-num" type="hidden" value="0"/>
 		<div><input type="checkbox" name="<?php echo($champ); ?>[touteffacer]"/>remplacer (supprime l'existant)</div>
 <?php
-					for($z = count($reponses[0]); --$z >= 0;)
-					{
-						$_SESSION['monster']['cv'][$reponses[2][$z]] = $reponses[1][$z]; // Le numéro du CV sert d'indice, son URL est la donnée enregistrée.
-						echo '<a href="#" id="'.$reponses[2][$z].'">'.htmlspecialchars($reponses[3][$z], ENT_NOQUOTES).'</a>';
-					}
+					foreach($params as $num => $aff)
+						echo '<a href="#" id="'.$num.'">'.htmlspecialchars($aff, ENT_NOQUOTES).'</a>';
 					echo '</div>';
 					break;
 				}
+			case -2:
+				break;
 			case -1:
-				if($this->etape < 0) // On n'est pas passé par la ponte pour obtenir cette interface: c'est donc le premier écran qui présente les interfaces, on part avec une session propre.
-				{
 					$this->preparerSession();
-					$this->navigo->effacerCookies();
+					$this->explo->effacerCookies();
 					unset($_SESSION['monster']['num']);
-				}
 			case 0:
 ?>
 	<div>Le module Monster ajoute à un de vos CV Monster les expériences de votre CV pasτεχ. ATTENTION! Pour le moment expérimental. Pensez à mettre hors-ligne votre CV auparavant, et à en avoir une copie de secours.</div>
@@ -262,6 +289,12 @@ class Monster
 <?php
 				break;
 		}
+		
+		if($this->interfaceIndépendante)
+		{
+			echo '</form>';
+			pasTeX_finInterface();
+		}
 	}
 	
 	function verifPresence($nomParam)
@@ -271,45 +304,213 @@ class Monster
 		if(!array_key_exists($nomParam, $_SESSION['monster'])) return false;
 		return true;
 	}
+	
+	/* Envoie au client une info de l'étape en cours. */
+	function signaler($étape, $chose)
+	{
+	}
+	
+	function avancerUnCoup($données)
+	{
+		$params = &$_SESSION['monster'];
 		
-	function decomposer($derniersParams, $donnees)
+		/* On simule le parcours du site de façon hiérarchique. */
+		
+		$étapes = array(0, 1, 2, array(3, 4, 5));
+		
+		$this->explo = &$this->navigo[count($this->navigo) - 1];
+		$mouvement = 0; // Sans autre info, on reste sur place (même étape) au prochain tour.
+		
+		$tableau = &$étapes;
+		for($i = -1; ++$i < count($this->navigo);)
+		{
+			$pos = $this->navigo[$i]->données['pos'];
+			if(is_array($tableau[$pos]))
+				$tableau = &$tableau[$pos];
+			else
+				$étape = $tableau[$pos];
+		}
+		
+		/* Code de l'étape. Le boulot se fait en deux fois: interprétation
+		 * de la page courante, et chargement de la nouvelle page (par
+		 * exemple par POST pour les nouvelles données). Pour optimiser, les
+		 * étapes sont tenues d'être civiques: lorsqu'elles chargent la
+		 * nouvelle, elles sont priées d'en stocker le contenu dans $page;
+		 * ainsi la suivante aura déjà sa page de départ en mémoire.
+		 * Le travail de POST se fait dans ce switch-ci, l'interprétation
+		 * dans le suivant; le passage de données entre les deux peut se
+		 * faire par $this->explo->données[…], enregistré en session. On
+		 * peut au pire y stocker $page pour que l'interprétation se fasse
+		 * aussi ici, mais ça n'est pas élégant.
+		 * L'étape indique qu'elle a fini en passant $mouvement à 1.
+		 */
+		
+		switch($étape)
+		{
+			case 0: // Connexion.
+				if(!$this->verifPresence('id') || !$this->verifPresence('mdp')) // Si on n'a pas les renseignements pour s'authentifier, on les demande à l'utilisateur et on reprendra la connexion au coup suivant.
+				{
+					$this->pondrePage(0);
+					return false;
+				}
+				$page = $this->explo->aller('http://mon.monster.fr/login.asp', array('user' => $params['id'], 'password' => $params['mdp']));
+				$mouvement = 1;
+				break;
+			case 1: // Accès au CV.
+				if(!$this->verifPresence('num') || !array_key_exists($params['num'], $this->explo->données['cv']))
+				{
+					$this->pondrePage(1, $this->explo->données['affcv']);
+					return false;
+				}
+				$this->verifPresence('touteffacer'); // On ne fait que le mettre en mémoire de session.
+				$mouvement = 1;
+				break;
+			case 2: // Récupération de la page de modification du CV.
+				$page = $this->explo->aller($this->explo->données['cv'][$params['num']].'&mode=edit');
+				$params['liens'] = array();
+				preg_match('/<a href="([^"]*experience.asp[^"]*)">/', $page, $reponses, 0);
+				if(count($reponses[0]) > 0)
+					$params['liens']['exp'] = strtr($reponses[1], array('&amp;' => '&'));
+				else
+					$this->explo->données['pos'] = -1; // On a perdu la session, retour en arrière.
+				$mouvement = 1;
+				break;
+			case 3: // Récupération de la page de modification des projets.
+				if($données === null) // Si notre session a déjà tous les renseignements nécessaires, mais qu'on est encore dans l'interface de paramétrage, il nous faut laisser au compo le temps de charger le CV.
+				{
+					$this->pondrePage(-2);
+					return false;
+				}
+				$page = $this->récupérer($params['liens']['exp']);
+				$mouvement = 1;
+				break;
+			case 4: // Suppression d'un projet.
+				$mouvement = 1;
+				if($params['touteffacer'])
+					if(($z = $this->explo->données['à effacer']) !== null)
+					{
+						$page = $this->explo->aller($z);
+						$mouvement = 0;
+					}
+				break;
+			case 5: // Ajout d'un projet.
+				$mouvement = 1;
+				if(array_key_exists('exp', $params['liens']))
+				{
+					if(array_key_exists('expérience', $données))
+					{
+						if(!array_key_exists('numExp', $this->explo->données))
+							$this->explo->données['numExp'] = count($données->expérience->projet);
+						--$this->explo->données['numExp'];
+						$this->pondreProjet($données, $this->explo->données['numExp']);
+						if($this->explo->données['numExp'] > 0) // Encore des projets à rentrer, on ne laisse pas encore la main à l'étape suivante.
+							$mouvement = 0;
+					}
+				}
+				break;
+		}
+		
+		if($mouvement)
+		{
+			/* On incrémente la position dans le dernier navigo. */
+			++$this->explo->données['pos'];
+			$this->signaler('incrémente le niveau '.(count($this->navigo) - 1).' à', $this->explo->données['pos']);
+			/* On vérifie qu'ainsi augmenté, on tombe toujours sur une
+			 * étape; sinon on remonte au navigo du dessus, dont on
+			 * incrémente l'étape, et ainsi de suite jusqu'à stabilisation. */
+			do
+			{
+				$this->signaler('==== Nouveau mouvement', null);
+				$this->signaler('mise au propre', null);
+				$tableau = &$étapes;
+				$retenue = false;
+				for($i = -1; ++$i < count($this->navigo);)
+				{
+					$pos = $this->navigo[$i]->données['pos'];
+					$this->signaler('étage '.$i, 'n°'.$pos.' sur '.count($tableau));
+					if($pos >= count($tableau))
+					{
+						while(count($this->navigo) > $i)
+							$this->supprimerDernierNavigo();
+						$this->signaler('remonte', $i);
+						if($i == 0) // On a fini de parcourir $étapes, donc tout est fait.
+						{
+							/* On réinitialise pour que le client, en
+							 * rechargeant la page, ait quelque chose qui se
+							 * passe. */
+							$this->ajouterOuRecupérerDernierNavigo();
+							return false;
+						}
+						else
+						{
+							++$this->navigo[$i - 1]->données['pos'];
+							$retenue = true;
+						}
+					}
+					else if(is_array($tableau[$pos]))
+					{
+						$this->signaler('rentre', $i.' / '.count($this->navigo));
+						if($i == count($this->navigo) - 1)
+						{
+							$this->ajouterOuRecupérerDernierNavigo();
+							$this->signaler('ajout', 'déjà à '.$this->navigo[count($this->navigo) - 1]->données['pos']);
+							$retenue = true; // Des fois qu'il faille après ça encore rentrer dans un tableau.
+						}
+						$tableau = &$tableau[$pos];
+					}
+					else
+						$étape = $tableau[$pos]; // La dernière sera conservée comme étape courante.
+				}
+			} while($retenue);
+			$this->signaler('==== Mouvement fini', null);
+		}
+		
+		/* On prépare la nouvelle étape: la précédente ayant peut-être
+		 * récupéré une page, on laisse une chance à celle-ci de
+		 * l'interpréter dès maintenant (cf. le long commentaire au-dessus
+		 * du précédent switch). */
+		
+		switch($étape)
+		{
+			case 0: $this->signaler('Connexion', null); break; // Connexion.
+			case 1: // Accès au CV.
+				$this->signaler('Accès au CV', null);
+				preg_match_all('/<a href="([^"]*resumeid=([0-9]*)[^"]*)"> *([^<]*)<\/a>/', $page, $réponses, 0);
+				if(count($réponses[0]) != 0) // Sinon, c'est qu'on a dû se faire expirer la session Monster au nez.
+				{
+					$this->explo->données['cv'] = array();
+					$this->explo->données['affcv'] = array();
+					for($z = count($réponses[0]); --$z >= 0;)
+					{
+						$this->explo->données['cv'][$réponses[2][$z]] = $réponses[1][$z]; // Le numéro du CV sert d'indice, son URL est la donnée enregistrée.
+						$this->explo->données['affcv'][$réponses[2][$z]] = $réponses[3][$z];
+					}
+				}
+				break;
+			case 2: $this->signaler('Obtention de la page de modification du CV', null); break; // Récupération de la page de modification du CV.
+			case 3: $this->signaler('Obtention de la page d\'ajout de projets', null); break; // Récupération de la page de modification des projets.
+			case 4: // Suppression d'un projet.
+				if($params['touteffacer'])
+				{
+					$r = preg_match('/<a href="([^"]*&action=delete[^"]*)"/', $page, $réponses, 0);
+					$this->explo->données['à effacer'] = $r ? $réponses[1] : null;
+					$this->signaler('Suppression des anciens projets', $r ? 'encore un!' : 'terminé');
+				}
+				break;
+			case 5: $this->signaler('Ajout d\'un projet', null); break; // Ajout d'un projet.
+		}
+		
+		return true;
+	}
+	
+	function pondreInterface($champ) { $this->decomposer(array(), null); } // L'interface, c'est comme une de nos étapes, sauf qu'on n'a pas encore les données et les paramètres utilisateur. Notre avancerUnCoup() s'en rendra compte tout seul pour générer l'interface sur mesure.
+	
+	function decomposer($derniersParams, $données)
 	{
 		$this->preparerSession();
 		$this->nouvelles = &$derniersParams;
-		$params = &$_SESSION['monster'];
-		$this->etape = 2;
-		if(!$this->verifPresence('num') || !array_key_exists($params['num'], $params['cv'])) $this->etape = 1;
-		else $this->verifPresence('touteffacer'); // On ne fait que le mettre en mémoire de session.
-		if(!$this->verifPresence('id') || !$this->verifPresence('mdp')) $this->etape = 0;
-		
-		/* Peut-être arrive-t-on au bout. */
-		
-		if($this->etape == 2)
-		{
-			$r = $this->navigo->aller($params['cv'][$params['num']].'&mode=edit');
-			preg_match('/<a href="([^"]*experience.asp[^"]*)">/', $r, $reponses, 0);
-			if(count($reponses[0]) > 0)
-			{
-				$this->explo = clone $this->navigo; // Celui-ci s'aventure un peu plus loin que le navigo (qui s'arrête à la page du CV, commune à toutes les sections): il entre dans la section spécifique à remplir (ici, expérience).
-				$r = $this->explo->aller(strtr($reponses[1], array('&amp;' => '&')));
-				if($params['touteffacer'])
-				{
-					preg_match_all('/<a href="([^"]*&action=delete[^"]*)"/', $r, $reponses, 0);
-					for($z = count($reponses[0]); --$z >= 0;)
-						$this->explo->aller($reponses[1][$z]);
-				}
-				$this->pondreProjets($donnees, $r);
-				return;
-			}
-		}
-		
-		/* Encore quelques réglages nécessaires. */
-		
-		pasTeX_debutInterface('monster: derniers réglages');
-		$prefixe = pasTeX_debutFormu('monster', array('id' => 'decompo', 'champs' => array('compo[session]', 1)));
-		$this->pondreInterface($prefixe);
-		echo '</form>';
-		pasTeX_finInterface();
+		if($données !== null) $this->interfaceIndépendante = true; // Sinon c'est qu'on veut pondre une interface dans le cadre de pasτεχ.
+		while($this->avancerUnCoup($données)) {}
 	}
 	
 	function conc($bidules, $limite, $separateur = ', ', $inverse = false)
@@ -328,65 +529,69 @@ class Monster
 		return '-';
 	}
 	
-	function pondreProjets($donnees, $page)
+	/* Récupère une page et stocke ses hidden pour permettre au prochain de
+	 * continuer. Utilise $this->explo pour ça, et $_SESSION['champs'] pour les
+	 * champs à poster. */
+	function récupérer($url)
 	{
-		if(!array_key_exists('expérience', $donnees)) return;
+		$page = $this->explo->aller($url, $_SESSION['champs']); // Bon, je code en dur, pour une fois.
 		
-		foreach($donnees->expérience->projet as $francheRigolade)
-		{
-			$champs = array();
-			
-			/* Récup de la page, et préparation des input type="hidden". */
-			
-			preg_match_all('/<input type="hidden" name="([^"]*)" value="([^"]*)">/', $page, $reponses, 0);
-			for($z = count($reponses[0]); --$z >= 0;)
-				$champs[$reponses[1][$z]] = $reponses[2][$z];
-			
-			/* Remplissage des autres champs. */
-			
-			$champs['company'] = $this->conc($francheRigolade->société, 100, ' / ', true);
-			$champs['monsterindustryid'] = 0; /* À FAIRE: mais pour le moment on laisse ce choix (« Tous »), parce que je viens d'une SSII, donc informatique, mais qui bossait pour différents domaines, alors Monster et leurs restrictions, ils m'embêtent. */
-			$champs['location'] = $this->conc($francheRigolade->lieu, 100);
-			$champs['title'] = pasTeX_maj($this->conc($francheRigolade->rôle, 70, '; '));
-			
-			$description = null;
-			if(isset($francheRigolade->nom))
-				$description = pasTeX_maj($francheRigolade->nom);
-			if(isset($francheRigolade->description))
-				if($description === null)
-					$description = pasTeX_maj($francheRigolade->description);
-				else
-					$description .= ': '.$francheRigolade->description;
-			if(strlen($description) > 2000)
-				$description = substr($description, 0, 1994).' [...]';
-			for($i = -1, $n = count($francheRigolade->tâche); ++$i < $n;)
-				if(strlen($ajout = ($i > 0 ? "\n" : ($description !== null ? "\n\n" : '')).'- '.$francheRigolade->tâche[$i]) + strlen($description) > 1994)
-				{
-					$description .= "\n- ...";
-					break;
-				}
-				else
-					$description .= $ajout;
-			$champs['description'] = $description; // 2000 car. maxi.
-			
-			/* Ce modèle-ci ne nous permet pas d'afficher plusieurs périodes
-			 * pour le même projet, on fait donc la période englobante du tout. */
-			$moments = pasTeX_unionPeriodes($francheRigolade->date);
-			$champs['startyear'] = $moments[0][0];
-			$champs['startmonth'] = $moments[0][1] > 0 ? $moments[0][1] : 1;
-			if($moments[1] === null)
+		preg_match_all('/<input type="hidden" name="([^"]*)" value="([^"]*)">/', $page, $reponses, 0);
+		for($z = count($reponses[0]); --$z >= 0;)
+			$_SESSION['champs'][$reponses[1][$z]] = $reponses[2][$z];
+		
+		return $page;
+	}
+	
+	function pondreProjet($donnees, $numéro)
+	{
+		$francheRigolade = $donnees->expérience->projet[$numéro];
+		$champs = &$_SESSION['champs'];
+		
+		/* Remplissage des autres champs. */
+		
+		$champs['company'] = $this->conc($francheRigolade->société, 100, ' / ', true);
+		$champs['monsterindustryid'] = 0; /* À FAIRE: mais pour le moment on laisse ce choix (« Tous »), parce que je viens d'une SSII, donc informatique, mais qui bossait pour différents domaines, alors Monster et leurs restrictions, ils m'embêtent. */
+		$champs['location'] = $this->conc($francheRigolade->lieu, 100);
+		$champs['title'] = pasTeX_maj($this->conc($francheRigolade->rôle, 70, '; '));
+		
+		$description = null;
+		if(isset($francheRigolade->nom))
+			$description = pasTeX_maj($francheRigolade->nom);
+		if(isset($francheRigolade->description))
+			if($description === null)
+				$description = pasTeX_maj($francheRigolade->description);
+			else
+				$description .= ': '.$francheRigolade->description;
+		if(strlen($description) > 2000)
+			$description = substr($description, 0, 1994).' [...]';
+		for($i = -1, $n = count($francheRigolade->tâche); ++$i < $n;)
+			if(strlen($ajout = ($i > 0 ? "\n" : ($description !== null ? "\n\n" : '')).'- '.$francheRigolade->tâche[$i]) + strlen($description) > 1994)
 			{
-				$champs['endyear'] = '';
-				$champs['endmonth'] = '';
+				$description .= "\n- ...";
+				break;
 			}
 			else
-			{
-				$champs['endyear'] = $moments[1][0];
-				$champs['endmonth'] = $moments[1][1] > 0 ? $moments[1][1] : 12;
-			}
-			
-			$this->explo->obtenir('/experience.asp', $champs); // Bon, je code en dur, pour une fois.
+				$description .= $ajout;
+		$champs['description'] = $description; // 2000 car. maxi.
+		
+		/* Ce modèle-ci ne nous permet pas d'afficher plusieurs périodes
+		 * pour le même projet, on fait donc la période englobante du tout. */
+		$moments = pasTeX_unionPeriodes($francheRigolade->date);
+		$champs['startyear'] = $moments[0][0];
+		$champs['startmonth'] = $moments[0][1] > 0 ? $moments[0][1] : 1;
+		if($moments[1] === null)
+		{
+			$champs['endyear'] = '';
+			$champs['endmonth'] = '';
 		}
+		else
+		{
+			$champs['endyear'] = $moments[1][0];
+			$champs['endmonth'] = $moments[1][1] > 0 ? $moments[1][1] : 12;
+		}
+		
+		$this->récupérer('/experience.asp'); // Bon, je code en dur, pour une fois.
 	}
 }
 
