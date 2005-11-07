@@ -30,7 +30,7 @@ class De_Session
 	
 	function composer($params)
 	{
-		session_start();
+		html_session();
 		return $_SESSION['donnees'];
 	}
 }

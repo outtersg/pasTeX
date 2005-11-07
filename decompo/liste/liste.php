@@ -39,7 +39,7 @@ class Liste
 	{
 		/* On aura besoin de ça pour la suite (cf. decomposer()). */
 		
-		session_start();
+		html_session();
 		
 		/* Génération de la page d'interface pour le choix du décompositeur. */
 		
