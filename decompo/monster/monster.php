@@ -33,7 +33,7 @@ if (!function_exists('iconv') && function_exists('libiconv')) { function iconv($
 class Navigateur
 {
 	function effacerCookies() { $this->cookies = array(); $this->cookiesTasses = null; }
-	function Navigateur() { $this->derniere = null; $this->effacerCookies(); }
+	function Navigateur() { $this->derniere = null; $this->effacerCookies(); $this->données = array(); }
 	
 	function tasserCookies()
 	{
@@ -128,17 +128,20 @@ class Navigateur
 		{
 			$this->derniere = &$session['derniere'];
 			$this->cookies = &$session['cookies'];
+			$this->données = &$session['données'];
 			$this->tasserCookies();
 		}
 		else
 		{
 			$session['derniere'] = &$this->derniere;
 			$session['cookies'] = &$this->cookies;
+			$session['données'] = &$this->données;
 		}
 	}
 	
 	protected $derniere;
 	protected $cookies;
+	public $données; // Données supplémentaires attachées à la session, laissées à la discrétion de l'utilisateur (ex.: résultat de l'interprétation de la page chargée).
 	protected $suivre; // État: a-t-on reçu un Location: dans la dernière réponse?
 }
 
