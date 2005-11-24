@@ -359,11 +359,27 @@ class Monster
 	</script>
 	<div onclick="return monster_hop(event);">
 		<input name="<?php echo($champ); ?>[num]" id="monster-num" type="hidden" value="0"/>
-		<div><input type="checkbox" name="<?php echo($champ); ?>[touteffacer]"/>remplacer (supprime l'existant)</div>
 <?php
 					foreach($params as $num => $aff)
 						echo '<a href="#" id="'.$num.'">'.htmlspecialchars($aff, ENT_NOQUOTES).'</a>';
-					echo '</div>';
+?>
+		<table style="text-align: center;">
+			<tr><td></td><td>-</td><td>A</td><td>R</td></tr>
+<?php
+					foreach(array('exp' => 'Expérience et projets') as $cat => $libellé)
+					{
+						echo '<tr><td>'.$libellé.'</td>';
+						foreach(array(0, 1, 2) as $num)
+							echo '<td><input type="radio" '.($num == 2 ? ' checked="checked"' : '').'name="'.$champ.'[faire]['.$cat.']" value="'.$num.'"/></td>';
+						echo '</tr>';
+					}
+?>
+		</table>
+		<div>-: ne pas modifier la catégorie</div>
+		<div>A: ajouter le contenu du CV Pasτεχ</div>
+		<div>R: remplacer par le contenu du CV Pasτεχ</div>
+	</div>
+<?php
 					break;
 				}
 			case -1:
@@ -479,7 +495,7 @@ class Monster
 			case 1: // Accès au CV.
 				if($manquant <= 1)
 					return $this->retourAvancéeUnCoup($manquant);
-				$this->verifPresence('touteffacer'); // On ne fait que le mettre en mémoire de session.
+				$this->verifPresence('faire'); // On ne fait que le mettre en mémoire de session.
 				$mouvement = 1;
 				break;
 			case 2: // Récupération de la page de modification du CV.
@@ -501,7 +517,7 @@ class Monster
 				break;
 			case 4: // Suppression d'un projet.
 				$mouvement = 1;
-				if($params['touteffacer'])
+				if($params['faire']['exp'] == 2)
 					if(($z = $this->explo->données['à effacer']) !== null)
 					{
 						$page = $this->explo->aller($z);
@@ -511,7 +527,7 @@ class Monster
 				break;
 			case 5: // Ajout d'un projet.
 				$mouvement = 1;
-				if(array_key_exists('exp', $params['liens']))
+				if($params['faire']['exp'] >= 1 && array_key_exists('exp', $params['liens']))
 				{
 					if(array_key_exists('expérience', $données))
 					{
@@ -612,7 +628,7 @@ class Monster
 			case 2: $this->signaler('Obtention de la page de modification du CV', null); break; // Récupération de la page de modification du CV.
 			case 3: /*$this->signaler('Obtention de la page d\'ajout de projets', null);*/ break; // Récupération de la page de modification des projets.
 			case 4: // Suppression d'un projet.
-				if($params['touteffacer'])
+				if($params['faire']['exp'] == 2)
 				{
 					$r = preg_match('/<a href="([^"]*&action=delete[^"]*)"/', $page, $réponses, 0);
 					$this->explo->données['à effacer'] = $r ? $réponses[1] : null;
