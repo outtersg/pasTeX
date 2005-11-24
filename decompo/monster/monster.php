@@ -289,7 +289,7 @@ class Monster
 			case -1:
 					$this->preparerSession();
 					$this->explo->effacerCookies();
-					unset($_SESSION['monster']['num']);
+					unset($_SESSION['monster']);
 			case 0:
 ?>
 	<div>Le module Monster ajoute à un de vos CV Monster les expériences de votre CV pasτεχ. ATTENTION! Pour le moment expérimental. Pensez à mettre hors-ligne votre CV auparavant, et à en avoir une copie de secours.</div>
