@@ -435,25 +435,24 @@ class Monster
 		{
 			/* On incrémente la position dans le dernier navigo. */
 			++$this->explo->données['pos'];
-			$this->signaler('incrémente le niveau '.(count($this->navigo) - 1).' à', $this->explo->données['pos']);
 			/* On vérifie qu'ainsi augmenté, on tombe toujours sur une
 			 * étape; sinon on remonte au navigo du dessus, dont on
 			 * incrémente l'étape, et ainsi de suite jusqu'à stabilisation. */
 			do
 			{
-				$this->signaler('==== Nouveau mouvement', null);
-				$this->signaler('mise au propre', null);
+				//$this->blater('==== Nouveau mouvement');
+				//$this->blater('mise au propre');
 				$tableau = &$étapes;
 				$retenue = false;
 				for($i = -1; ++$i < count($this->navigo);)
 				{
 					$pos = $this->navigo[$i]->données['pos'];
-					$this->signaler('étage '.$i, 'n°'.$pos.' sur '.count($tableau));
+					//$this->blater('étage '.$i.': n°'.$pos.' sur '.count($tableau));
 					if($pos >= count($tableau))
 					{
 						while(count($this->navigo) > $i)
 							$this->supprimerDernierNavigo();
-						$this->signaler('remonte', $i);
+						//$this->blater('remonte: '.$i);
 						if($i == 0) // On a fini de parcourir $étapes, donc tout est fait.
 						{
 							/* On réinitialise pour que le client, en
@@ -470,11 +469,11 @@ class Monster
 					}
 					else if(is_array($tableau[$pos]))
 					{
-						$this->signaler('rentre', $i.' / '.count($this->navigo));
+						//$this->blater('rentre: '.$i.' / '.count($this->navigo));
 						if($i == count($this->navigo) - 1)
 						{
 							$this->ajouterOuRecupérerDernierNavigo();
-							$this->signaler('ajout', 'déjà à '.$this->navigo[count($this->navigo) - 1]->données['pos']);
+							//$this->blater('ajout; déjà à '.$this->navigo[count($this->navigo) - 1]->données['pos']);
 							$retenue = true; // Des fois qu'il faille après ça encore rentrer dans un tableau.
 						}
 						$tableau = &$tableau[$pos];
@@ -483,7 +482,7 @@ class Monster
 						$étape = $tableau[$pos]; // La dernière sera conservée comme étape courante.
 				}
 			} while($retenue);
-			$this->signaler('==== Mouvement fini', null);
+			//$this->blater('==== Mouvement fini');
 		}
 		
 		/* On prépare la nouvelle étape: la précédente ayant peut-être
