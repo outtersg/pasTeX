@@ -22,7 +22,10 @@
  */
 
 require_once('pasTeX.inc');
+require_once('util/params.inc');
 
+/* À FAIRE: désolidariser réellement affichage et dialogue avec Monster: on a
+ * encore des cas trop limite. */
 
 /* Merci aux notes de bas de page sur php.net! */
 if (!function_exists('iconv') && function_exists('libiconv')) { function iconv($input_encoding, $output_encoding, $string) { return libiconv($input_encoding, $output_encoding, $string); } }
@@ -173,7 +176,7 @@ class Monster
 	protected $explo; // Pointeur sur le petit dernier de $navigo.
 	protected $etape;
 	
-	function Monster() { $this->etape = -1; }
+	function Monster() { $this->etape = -1; $this->petitÀPetit = true; $this->rienPondu = true; }
 	
 	function analyserParams($argv, &$position)
 	{
@@ -228,12 +231,18 @@ class Monster
 			$this->ajouterOuRecupérerDernierNavigo();
 	}
 	
+	function paramsVersParamsUrl($params)
+	{
+		$params[session_name()] = session_id();
+		return substr(params_decomposer(null, $params, 0), 1);
+	}
+	
 	/* Génère l'interface pour demander au client un renseignement nous
 	 * permettant d'avancer (ex.: identifiant/mdp, numéro du CV à modifier, …).
 	 * Paramètres:
 	 *   $numéroInterface: machin à pondre.
-	 *   $params: propres à chaque $numéroInterface. */
-	function pondrePage($numéroInterface, $params = null)
+	 */
+	function pondrePage($numéroInterface)
 	{
 		if($this->interfaceIndépendante) // Si on doit générer nous-même la page.
 			pasTeX_debutInterface('monster: derniers réglages');
@@ -293,8 +302,6 @@ class Monster
 					echo '</div>';
 					break;
 				}
-			case -2:
-				break;
 			case -1:
 					$this->preparerSession();
 					$this->explo->effacerCookies();
@@ -307,6 +314,9 @@ class Monster
 		Identifiant Monster: <input type="id" name="<?php echo($champ); ?>[id]"></input> Mot de passe: <input type="password" name="<?php echo($champ); ?>[mdp]"></input>
 	</div>
 <?php
+				break;
+			default: // Rien, attente.
+				header('Location: '.$_SERVER['PHP_SELF'].'?'.$this->paramsVersParamsUrl($args));
 				break;
 		}
 		
@@ -328,6 +338,21 @@ class Monster
 	/* Envoie au client une info de l'étape en cours. */
 	function signaler($étape, $chose)
 	{
+		if(array_key_exists('clientdemandeur', $_SESSION['monster']))
+		{
+			print $étape.':'.$chose."\n";
+			$this->rienPondu = false;
+		}
+	}
+	
+	function retourAvancéeUnCoup($manquant)
+	{
+		if($this->rienPondu && $manquant >= 0)
+		{
+			$this->pondrePage($manquant);
+			$this->rienPondu = false;
+		}
+		return false;
 	}
 	
 	function avancerUnCoup($données)
@@ -337,10 +362,11 @@ class Monster
 		
 		/* On simule le parcours du site de façon hiérarchique. */
 		
-		$étapes = array(0, 1, 2, array(3, 4, 5));
+		$étapes = array(0, 1, 2, array(3, 4, 5), 6);
 		
 		$this->explo = &$this->navigo[count($this->navigo) - 1];
 		$mouvement = 0; // Sans autre info, on reste sur place (même étape) au prochain tour.
+		$cestdéjàpasmal = 0; // S'il passe à 1, on ressort de la fonction en mode « au coup par coup »: c'est que l'on a passé pas mal de temps dans la procédure, et il est temps de donner un retour à l'utilisateur (or il n'en aura que si on clôt le transfert).
 		
 		$tableau = &$étapes;
 		for($i = -1; ++$i < count($this->navigo);)
@@ -351,6 +377,15 @@ class Monster
 			else
 				$étape = $tableau[$pos];
 		}
+		
+		/* Y a-t-il des données qui nous manquent pour la suite? On génère les
+		 * interfaces pour les obtenir. */
+		
+		$manquant = 0x1000;
+		if(!$this->verifPresence('id') || !$this->verifPresence('mdp')) $manquant = 0;
+		else if(!$this->verifPresence('num')) $manquant = 1;
+		else if($données === null) $manquant = 3;
+		else if($this->petitÀPetit && !$this->verifPresence('clientdemandeur')) $manquant = 4;
 		
 		/* Code de l'étape. Le boulot se fait en deux fois: interprétation
 		 * de la page courante, et chargement de la nouvelle page (par
@@ -364,25 +399,22 @@ class Monster
 		 * peut au pire y stocker $page pour que l'interprétation se fasse
 		 * aussi ici, mais ça n'est pas élégant.
 		 * L'étape indique qu'elle a fini en passant $mouvement à 1.
+		 * Le tracé de l'interface générée à cette étape DOIT être provoqué, en
+		 * appelant $this->retourAvancéeUnCoup($manquant) juste avant le return.
 		 */
 		
 		switch($étape)
 		{
 			case 0: // Connexion.
-				if(!$this->verifPresence('id') || !$this->verifPresence('mdp')) // Si on n'a pas les renseignements pour s'authentifier, on les demande à l'utilisateur et on reprendra la connexion au coup suivant.
-				{
-					$this->pondrePage(0);
-					return false;
-				}
+				if($manquant <= 0) // Si on n'a pas les renseignements pour s'authentifier, on les demande à l'utilisateur et on reprendra la connexion au coup suivant.
+					return $this->retourAvancéeUnCoup($manquant);
 				$page = $this->explo->aller('http://mon.monster.fr/login.asp', array('user' => $params['id'], 'password' => $params['mdp']));
+				$cestdéjàpasmal = 1;
 				$mouvement = 1;
 				break;
 			case 1: // Accès au CV.
-				if(!$this->verifPresence('num') || !array_key_exists($params['num'], $this->explo->données['cv']))
-				{
-					$this->pondrePage(1, $this->explo->données['affcv']);
-					return false;
-				}
+				if($manquant <= 1)
+					return $this->retourAvancéeUnCoup($manquant);
 				$this->verifPresence('touteffacer'); // On ne fait que le mettre en mémoire de session.
 				$mouvement = 1;
 				break;
@@ -394,14 +426,12 @@ class Monster
 					$params['liens']['exp'] = strtr($reponses[1], array('&amp;' => '&'));
 				else
 					$this->explo->données['pos'] = -1; // On a perdu la session, retour en arrière.
+				$cestdéjàpasmal = 1;
 				$mouvement = 1;
 				break;
 			case 3: // Récupération de la page de modification des projets.
-				if($données === null) // Si notre session a déjà tous les renseignements nécessaires, mais qu'on est encore dans l'interface de paramétrage, il nous faut laisser au compo le temps de charger le CV.
-				{
-					$this->pondrePage(-2);
-					return false;
-				}
+				if($manquant <= 3) // Si notre session a déjà tous les renseignements nécessaires, mais qu'on est encore dans l'interface de paramétrage, il nous faut laisser au compo le temps de charger le CV.
+					return $this->retourAvancéeUnCoup($manquant);
 				$page = $this->récupérer($params['liens']['exp']);
 				$mouvement = 1;
 				break;
@@ -411,6 +441,7 @@ class Monster
 					if(($z = $this->explo->données['à effacer']) !== null)
 					{
 						$page = $this->explo->aller($z);
+						$cestdéjàpasmal = 1;
 						$mouvement = 0;
 					}
 				break;
@@ -424,17 +455,21 @@ class Monster
 							$this->explo->données['numExp'] = count($données->expérience->projet);
 						--$this->explo->données['numExp'];
 						$this->pondreProjet($données, $this->explo->données['numExp']);
+						$cestdéjàpasmal = 1;
 						if($this->explo->données['numExp'] > 0) // Encore des projets à rentrer, on ne laisse pas encore la main à l'étape suivante.
 							$mouvement = 0;
 					}
 				}
+				break;
+			case 6: // Fin.
+				return false;
 				break;
 		}
 		
 		if($mouvement)
 		{
 			/* On incrémente la position dans le dernier navigo. */
-			++$this->explo->données['pos'];
+			++$this->explo->données['pos']; /* À FAIRE: je ne sais pas, mais l'inconvénient de cette solution, c'est que le rechargement de la page par le client ne le fait pas retomber sur la même page puisque la session a enregistré cette augmentation. */
 			/* On vérifie qu'ainsi augmenté, on tombe toujours sur une
 			 * étape; sinon on remonte au navigo du dessus, dont on
 			 * incrémente l'étape, et ainsi de suite jusqu'à stabilisation. */
@@ -459,7 +494,7 @@ class Monster
 							 * rechargeant la page, ait quelque chose qui se
 							 * passe. */
 							$this->ajouterOuRecupérerDernierNavigo();
-							return false;
+							return $this->retourAvancéeUnCoup($manquant);
 						}
 						else
 						{
@@ -488,13 +523,16 @@ class Monster
 		/* On prépare la nouvelle étape: la précédente ayant peut-être
 		 * récupéré une page, on laisse une chance à celle-ci de
 		 * l'interpréter dès maintenant (cf. le long commentaire au-dessus
-		 * du précédent switch). */
+		 * du précédent switch).
+		 * On prévient aussi via signaler() ce qu'on va faire… si on le fait
+		 * (c'est pourquoi on effectue avant de l'appeler les mêmes tests que
+		 * plus haut). */
 		
 		switch($étape)
 		{
-			case 0: $this->signaler('Connexion', null); break; // Connexion.
+			case 0: if($manquant > 0) $this->signaler('Connexion', null); break; // Connexion.
 			case 1: // Accès au CV.
-				$this->signaler('Accès au CV', null);
+				if($manquant > 1) $this->signaler('Accès au CV', null);
 				preg_match_all('/<a href="([^"]*resumeid=([0-9]*)[^"]*)"> *([^<]*)<\/a>/', $page, $réponses, 0);
 				if(count($réponses[0]) != 0) // Sinon, c'est qu'on a dû se faire expirer la session Monster au nez.
 				{
@@ -508,18 +546,22 @@ class Monster
 				}
 				break;
 			case 2: $this->signaler('Obtention de la page de modification du CV', null); break; // Récupération de la page de modification du CV.
-			case 3: $this->signaler('Obtention de la page d\'ajout de projets', null); break; // Récupération de la page de modification des projets.
+			case 3: /*$this->signaler('Obtention de la page d\'ajout de projets', null);*/ break; // Récupération de la page de modification des projets.
 			case 4: // Suppression d'un projet.
 				if($params['touteffacer'])
 				{
 					$r = preg_match('/<a href="([^"]*&action=delete[^"]*)"/', $page, $réponses, 0);
 					$this->explo->données['à effacer'] = $r ? $réponses[1] : null;
-					$this->signaler('Suppression des anciens projets', $r ? 'encore un!' : 'terminé');
+					if($r) $this->signaler('Suppression de projet', null);
+					else $cestdéjàpasmal = false; // Si on ne dit pas ça (qu'on compte encore faire quelque chose), la fin de la procédure va se croire obligée de sortir n'importe quoi pour rassurer l'utilisateur; or ce n'importe quoi va faire perdre les infos de session.
 				}
 				break;
-			case 5: $this->signaler('Ajout d\'un projet', null); break; // Ajout d'un projet.
+			case 5: /* Trop chiant de tester s'il faut signaler ou non. */ $this->signaler('Ajout d\'un projet', null); break; // Ajout d'un projet.
+			case 6: $this->signaler('Fin', ''); break; // Fin.
 		}
 		
+		if($this->petitÀPetit && $cestdéjàpasmal) // Si on en a déjà trop fait…
+			return $this->retourAvancéeUnCoup($manquant); // … on quitte, en donnant un minimum d'affichage.
 		return true;
 	}
 	
@@ -529,7 +571,7 @@ class Monster
 	{
 		$this->preparerSession();
 		$this->nouvelles = &$derniersParams;
-		if($données !== null) $this->interfaceIndépendante = true; // Sinon c'est qu'on veut pondre une interface dans le cadre de pasτεχ.
+		if($données !== null && !array_key_exists('clientdemandeur', $_SESSION['monster'])) $this->interfaceIndépendante = true; // Sinon c'est qu'on veut pondre une interface dans le cadre de pasτεχ, ou dans le cadre HTML créé par une précédente requête (en AJAX).
 		while($this->avancerUnCoup($données)) {}
 	}
 	
@@ -613,6 +655,9 @@ class Monster
 		
 		$this->récupérer('/experience.asp'); // Bon, je code en dur, pour une fois.
 	}
+	
+	protected $petitÀPetit; // Si true, on n'essaie pas de tout faire en une fois; on fonctionne en AJAX, permettant à chaque appel PHP de ne faire qu'un appel au site Monster, et donc de donner un retour à l'utilisateur dans un délai raisonnable, tout en évitant que PHP ne coupe le script brutalement en considérant qu'il a vécu trop longtemps. 
+	protected $rienPondu;
 }
 
 ?>
