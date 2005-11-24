@@ -255,6 +255,7 @@ class Monster
 			 * (session expirée, etc.). */
 			case 2:
 			case 1:
+				$params = $this->explo->données['affcv'];
 				if(count($params) != 0) // Sinon, c'est qu'on a dû se faire expirer la session Monster au nez.
 				{
 ?>
