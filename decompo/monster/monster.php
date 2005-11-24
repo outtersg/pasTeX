@@ -139,6 +139,17 @@ class Navigateur
 		}
 	}
 	
+	function cloner()
+	{
+		$nouveau = clone $this;
+		
+		unset($nouveau->données); $nouveau->données = array(); // C'est une référence (sur un objet de session), donc en clonant c'est toujours une référence sur le même; seul l'unset permettra à chacun des deux objets de poursuivre son bonhomme de chemin.
+		unset($nouveau->cookies); $nouveau->cookies = $this->cookies;
+		unset($nouveau->derniere); $nouveau->derniere = $this->derniere;
+		
+		return $nouveau;
+	}
+	
 	protected $derniere;
 	protected $cookies;
 	public $données; // Données supplémentaires attachées à la session, laissées à la discrétion de l'utilisateur (ex.: résultat de l'interprétation de la page chargée).
