@@ -43,7 +43,7 @@ class Liste
 		
 		/* Génération de la page d'interface pour le choix du décompositeur. */
 		
-		pasTeX_interfaceModules(array('id' => 'decompo', 'aff' => 'Modèle', 'modules' => $this->modules(), 'chargeur' => pasTeX_chargerDecompo, 'champs' => array('compo[session]', 1), 'bouton' => 'Pondre'));
+		pasTeX_interfaceModules(array('id' => 'decompo', 'aff' => 'Modèle', 'modules' => $this->modules(), 'chargeur' => pasTeX_chargerDecompo, 'champs' => array('compo[session][]' => 1), 'bouton' => 'Pondre'));
 		
 		return array();
 	}
