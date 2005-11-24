@@ -259,10 +259,74 @@ class Monster
 		
 		switch($numéroInterface)
 		{
-			/* Les cas sont ordonnés du dernier au premier, pour que l'on
-			 * puisse se rabattre sur le précédent si celui voulu ne marche pas
-			 * (session expirée, etc.). */
-			case 2:
+			case 4: // Interface de chargement en AJAX.
+				if($this->petitÀPetit)
+				{
+					$args[$champ.'[clientdemandeur]'] = 1; // Si on reçoit par la suite ce paramètre, on sait que le client ne souhaite qu'un peu de XML pour alimenter la page qu'il a déjà, et non pas une page complète.
+?>
+	<div id="monster_conteneur"/>
+	<script type="text/javascript" src="js/ajax.js"></script>
+	<script type="text/javascript">
+		<!--
+			var g_req = ajax_chargeur();
+			var g_params = '<?php echo $this->paramsVersParamsUrl($args); ?>';
+			
+			function initSuivants()
+			{
+				var r;
+				r = document.createElement('table');
+				document.getElementById('monster_conteneur').appendChild(r);
+				return r;
+			}
+			
+			var g_table = initSuivants();
+			var g_derniereEtape = null;
+			var g_nDerniereEtape;
+			var g_affDerniereEtape;
+			
+			function suivantRecu()
+			{
+				if (g_req.readyState == 4)
+				{
+					var t1, t2;
+					if(g_req.responseText && (t1 = g_req.responseText.indexOf(':')) > 0)
+					{
+						t2 = g_req.responseText.substr(t1 + 1);
+						t1 = g_req.responseText.substr(0, t1);
+						if(t1 != g_derniereEtape)
+						{
+							g_nDerniereEtape = 0;
+							g_derniereEtape = t1;
+							var l, e;
+							l = document.createElement('tr');
+							e = document.createElement('td');
+							e.appendChild(document.createTextNode(t1));
+							l.appendChild(e);
+							e = document.createElement('td');
+							e.appendChild(g_affDerniereEtape = document.createTextNode());
+							l.appendChild(e);
+							g_table.appendChild(l);
+						}
+						++g_nDerniereEtape;
+						g_affDerniereEtape.data = ''+g_nDerniereEtape;
+					}
+					if(g_req.responseText) suivant();
+				}
+			}
+			
+			function suivant()
+			{
+				g_req.onreadystatechange = suivantRecu;
+				g_req.open("GET", document.location+'?'+g_params, true);
+				g_req.send("");
+			}
+			
+			suivant();
+		-->
+	</script>
+<?php
+				}
+				break;
 			case 1:
 				$params = $this->explo->données['affcv'];
 				if(count($params) != 0) // Sinon, c'est qu'on a dû se faire expirer la session Monster au nez.
