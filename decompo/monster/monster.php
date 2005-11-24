@@ -235,10 +235,18 @@ class Monster
 	 *   $params: propres à chaque $numéroInterface. */
 	function pondrePage($numéroInterface, $params = null)
 	{
-		$champ = pasTeX_debutFormu('monster', array('id' => 'decompo', 'champs' => array('compo[session]', 1)));
-		
 		if($this->interfaceIndépendante) // Si on doit générer nous-même la page.
 			pasTeX_debutInterface('monster: derniers réglages');
+		
+		/* Comme on bosse en plusieurs étapes, il faut qu'on puisse récupérer
+		 * les données plus tard; on a un compo spécial pour ça, et il n'est pas
+		 * trop compliqué à utiliser. */
+		
+		$args = array('compo[session][]' => 1);
+		if($this->données !== null && !array_key_exists('donnees', $_SESSION))
+			$_SESSION['donnees'] = &$this->données;
+		
+		$champ = pasTeX_debutFormu('monster', array('id' => 'decompo', 'champs' => $args));
 		
 		switch($numéroInterface)
 		{
@@ -324,6 +332,7 @@ class Monster
 	function avancerUnCoup($données)
 	{
 		$params = &$_SESSION['monster'];
+		$this->données = &$données;
 		
 		/* On simule le parcours du site de façon hiérarchique. */
 		
