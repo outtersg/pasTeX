@@ -22,6 +22,7 @@
  */
 
 require_once('util/html.inc');
+require_once('util/params.inc');
 require_once('util/periode.inc');
 
 function pasTeX_chargerCompo($compo)
@@ -69,16 +70,7 @@ function pasTeX_debutFormu($moduleDestinataireDuFormulaire, $params, $supplémen
 	<input type="hidden" name="<?php echo $prefixe ?>[]" value="1"></input>
 <?php
 	if(array_key_exists('champs', $params))
-	{
-		$champ = null;
-		foreach($params['champs'] as $bidule)
-		{
-			if($champ)
-				echo('<input type="hidden" name="'.$champ.'[]" value="'.$bidule.'"></input>');
-			else
-				$champ = $bidule;
-		}
-	}
+		echo params_decomposer(null, $params['champs'], 3);
 	
 	return $prefixe;
 }
