@@ -443,6 +443,7 @@ class Monster
 		/* On simule le parcours du site de façon hiérarchique. */
 		
 		$étapes = array(0, 1, 2, array(3, 4, 5), 6);
+		$modules = array(null, null, null, 'exp', 'exp', 'exp', null); // Pour chacune des listes de bidules, le comportement est similaire (accès à la page de modification, suppressions, ajouts); on va donc passer par le même code, avec ce tableau qui dira pour chaque étape sur quel module elle bosse.
 		
 		$this->explo = &$this->navigo[count($this->navigo) - 1];
 		$mouvement = 0; // Sans autre info, on reste sur place (même étape) au prochain tour.
@@ -501,23 +502,26 @@ class Monster
 			case 2: // Récupération de la page de modification du CV.
 				$page = $this->explo->aller($this->explo->données['cv'][$params['num']].'&mode=edit');
 				$params['liens'] = array();
-				preg_match('/<a href="([^"]*experience.asp[^"]*)">/', $page, $reponses, 0);
-				if(count($reponses[0]) > 0)
-					$params['liens']['exp'] = strtr($reponses[1], array('&amp;' => '&'));
-				else
-					$this->explo->données['pos'] = -1; // On a perdu la session, retour en arrière.
+				foreach(array('exp' => 'experience') as $cat => $lien)
+				{
+					preg_match('/<a href="([^"]*'.$lien.'.asp[^"]*)">/', $page, $reponses, 0);
+					if(count($reponses[0]) > 0)
+						$params['liens'][$cat] = strtr($reponses[1], array('&amp;' => '&'));
+					else
+						$this->explo->données['pos'] = -1; // On a perdu la session, retour en arrière.
+				}
 				$cestdéjàpasmal = 1;
 				$mouvement = 1;
 				break;
 			case 3: // Récupération de la page de modification des projets.
 				if($manquant <= 3) // Si notre session a déjà tous les renseignements nécessaires, mais qu'on est encore dans l'interface de paramétrage, il nous faut laisser au compo le temps de charger le CV.
 					return $this->retourAvancéeUnCoup($manquant);
-				$page = $this->récupérer($params['liens']['exp']);
+				$page = $this->récupérer($params['liens'][$modules[$étape]]);
 				$mouvement = 1;
 				break;
 			case 4: // Suppression d'un projet.
 				$mouvement = 1;
-				if($params['faire']['exp'] == 2)
+				if($params['faire'][$modules[$étape]] == 2)
 					if(($z = $this->explo->données['à effacer']) !== null)
 					{
 						$page = $this->explo->aller($z);
@@ -527,14 +531,23 @@ class Monster
 				break;
 			case 5: // Ajout d'un projet.
 				$mouvement = 1;
-				if($params['faire']['exp'] >= 1 && array_key_exists('exp', $params['liens']))
+				if($params['faire'][$modules[$étape]] >= 1 && array_key_exists($modules[$étape], $params['liens']))
 				{
-					if(array_key_exists('expérience', $données))
+					if(!array_key_exists('numExp', $this->explo->données))
 					{
-						if(!array_key_exists('numExp', $this->explo->données))
-							$this->explo->données['numExp'] = count($données->expérience->projet);
-						--$this->explo->données['numExp'];
-						$this->pondreProjet($données, $this->explo->données['numExp']);
+						$n = 0;
+						switch($étape)
+						{
+							case 5: if(array_key_exists('expérience', $données)) $n = count($données->expérience->projet); break;
+						}
+						$this->explo->données['numExp'] = $n;
+					}
+					if(--$this->explo->données['numExp'] >= 0)
+					{
+						switch($étape)
+						{
+							case 5: $this->pondreProjet($données, $this->explo->données['numExp']); break;
+						}
 						$cestdéjàpasmal = 1;
 						if($this->explo->données['numExp'] > 0) // Encore des projets à rentrer, on ne laisse pas encore la main à l'étape suivante.
 							$mouvement = 0;
@@ -626,17 +639,30 @@ class Monster
 				}
 				break;
 			case 2: $this->signaler('Obtention de la page de modification du CV', null); break; // Récupération de la page de modification du CV.
-			case 3: /*$this->signaler('Obtention de la page d\'ajout de projets', null);*/ break; // Récupération de la page de modification des projets.
+			case 3: // Récupération de la page de modification des projets.
+				/*$this->signaler('Obtention de la page d\'ajout de projets', null);*/
+				break;
 			case 4: // Suppression d'un projet.
-				if($params['faire']['exp'] == 2)
+				if($params['faire'][$modules[$étape]] == 2)
 				{
 					$r = preg_match('/<a href="([^"]*&action=delete[^"]*)"/', $page, $réponses, 0);
 					$this->explo->données['à effacer'] = $r ? $réponses[1] : null;
-					if($r) $this->signaler('Suppression de projet', null);
+					switch($étape)
+					{
+						case 4: $machin = 'de projet'; break;
+					}
+					if($r) $this->signaler('Suppression '.$machin, null);
 					else $cestdéjàpasmal = false; // Si on ne dit pas ça (qu'on compte encore faire quelque chose), la fin de la procédure va se croire obligée de sortir n'importe quoi pour rassurer l'utilisateur; or ce n'importe quoi va faire perdre les infos de session.
 				}
 				break;
-			case 5: /* Trop chiant de tester s'il faut signaler ou non. */ $this->signaler('Ajout d\'un projet', null); break; // Ajout d'un projet.
+			case 5: // Ajout d'un projet.
+				/* Trop chiant de tester s'il faut signaler ou non. */
+				switch($étape)
+				{
+					case 5: $machin = 'd\'un projet'; break;
+				}
+				$this->signaler('Ajout '.$machin, null);
+				break;
 			case 6: $this->signaler('Fin', ''); break; // Fin.
 		}
 		
