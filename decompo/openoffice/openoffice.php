@@ -287,7 +287,7 @@ TERMINE
 fprintf($fichier, <<<TERMINE
 		<text:p text:style-name="Section CV">Connaissances Informatiques
 		</text:p>
-		<text:p text:style-name="Texte CV">(dans chacune de ces catégories, les éléments sont groupés par degré de connaissance: ***: maîtrise de l&apos;outil; **: bonne connaissance, utilisation courante; *: notions)</text:p>
+		<text:p text:style-name="Texte CV">(dans chacune de ces catégories, les éléments sont groupés par degré de connaissance: ***: maîtrise de l&apos;outil; **: bonne connaissance, utilisation courante; *: notions)</text:p>
 TERMINE
 );
 		foreach($donnees->connaissances->catégorie as $catégorie)
