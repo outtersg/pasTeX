@@ -551,6 +551,8 @@ class Monster
 						$cestdéjàpasmal = 1;
 						if($this->explo->données['numExp'] > 0) // Encore des projets à rentrer, on ne laisse pas encore la main à l'étape suivante.
 							$mouvement = 0;
+						else
+							unset($this->explo->données['numExp']); // Tout le monde s'en sert: il ne faudrait pas que le prochain pondeur de liste croit avoir fini dès son lancement.
 					}
 				}
 				break;
