@@ -366,7 +366,7 @@ class Monster
 		<table style="text-align: center;">
 			<tr><td></td><td>-</td><td>A</td><td>R</td></tr>
 <?php
-					foreach(array('exp' => 'Expérience et projets') as $cat => $libellé)
+					foreach(array('exp' => 'Expérience et projets', 'conn' => 'Compétences') as $cat => $libellé)
 					{
 						echo '<tr><td>'.$libellé.'</td>';
 						foreach(array(0, 1, 2) as $num)
@@ -442,8 +442,8 @@ class Monster
 		
 		/* On simule le parcours du site de façon hiérarchique. */
 		
-		$étapes = array(0, 1, 2, array(3, 4, 5), 6);
-		$modules = array(null, null, null, 'exp', 'exp', 'exp', null); // Pour chacune des listes de bidules, le comportement est similaire (accès à la page de modification, suppressions, ajouts); on va donc passer par le même code, avec ce tableau qui dira pour chaque étape sur quel module elle bosse.
+		$étapes = array(0, 1, 2, array(3, 4, 5), array(7, 8, 9), 6);
+		$modules = array(null, null, null, 'exp', 'exp', 'exp', null, 'conn', 'conn', 'conn'); // Pour chacune des listes de bidules, le comportement est similaire (accès à la page de modification, suppressions, ajouts); on va donc passer par le même code, avec ce tableau qui dira pour chaque étape sur quel module elle bosse.
 		
 		$this->explo = &$this->navigo[count($this->navigo) - 1];
 		$mouvement = 0; // Sans autre info, on reste sur place (même étape) au prochain tour.
@@ -502,7 +502,7 @@ class Monster
 			case 2: // Récupération de la page de modification du CV.
 				$page = $this->explo->aller($this->explo->données['cv'][$params['num']].'&mode=edit');
 				$params['liens'] = array();
-				foreach(array('exp' => 'experience') as $cat => $lien)
+				foreach(array('exp' => 'experience', 'conn' => 'skills') as $cat => $lien)
 				{
 					preg_match('/<a href="([^"]*'.$lien.'.asp[^"]*)">/', $page, $reponses, 0);
 					if(count($reponses[0]) > 0)
@@ -514,12 +514,14 @@ class Monster
 				$mouvement = 1;
 				break;
 			case 3: // Récupération de la page de modification des projets.
+			case 7: // Récupération de la page de modification des connaissances.
 				if($manquant <= 3) // Si notre session a déjà tous les renseignements nécessaires, mais qu'on est encore dans l'interface de paramétrage, il nous faut laisser au compo le temps de charger le CV.
 					return $this->retourAvancéeUnCoup($manquant);
 				$page = $this->récupérer($params['liens'][$modules[$étape]]);
 				$mouvement = 1;
 				break;
 			case 4: // Suppression d'un projet.
+			case 8: // Suppression d'une connaissance.
 				$mouvement = 1;
 				if($params['faire'][$modules[$étape]] == 2)
 					if(($z = $this->explo->données['à effacer']) !== null)
@@ -530,6 +532,7 @@ class Monster
 					}
 				break;
 			case 5: // Ajout d'un projet.
+			case 9: // Ajout d'une connaissance.
 				$mouvement = 1;
 				if($params['faire'][$modules[$étape]] >= 1 && array_key_exists($modules[$étape], $params['liens']))
 				{
@@ -539,6 +542,7 @@ class Monster
 						switch($étape)
 						{
 							case 5: if(array_key_exists('expérience', $données)) $n = count($données->expérience->projet); break;
+							case 9: if(array_key_exists('connaissances', $données)) { $n = 0; foreach($données->connaissances->catégorie as $cat) $n += 1 + count($cat->connaissances); } break;
 						}
 						$this->explo->données['numExp'] = $n;
 					}
@@ -547,6 +551,7 @@ class Monster
 						switch($étape)
 						{
 							case 5: $this->pondreProjet($données, $this->explo->données['numExp']); break;
+							case 9: $this->pondreConnaissance($données, $this->explo->données['numExp']); break;
 						}
 						$cestdéjàpasmal = 1;
 						if($this->explo->données['numExp'] > 0) // Encore des projets à rentrer, on ne laisse pas encore la main à l'étape suivante.
@@ -642,9 +647,11 @@ class Monster
 				break;
 			case 2: $this->signaler('Obtention de la page de modification du CV', null); break; // Récupération de la page de modification du CV.
 			case 3: // Récupération de la page de modification des projets.
+			case 7: // Récupération de la page de modification des connaissances.
 				/*$this->signaler('Obtention de la page d\'ajout de projets', null);*/
 				break;
 			case 4: // Suppression d'un projet.
+			case 8: // Suppression d'une connaissance.
 				if($params['faire'][$modules[$étape]] == 2)
 				{
 					$r = preg_match('/<a href="([^"]*&action=delete[^"]*)"/', $page, $réponses, 0);
@@ -652,16 +659,19 @@ class Monster
 					switch($étape)
 					{
 						case 4: $machin = 'de projet'; break;
+						case 8: $machin = 'de connaissance'; break;
 					}
 					if($r) $this->signaler('Suppression '.$machin, null);
 					else $cestdéjàpasmal = false; // Si on ne dit pas ça (qu'on compte encore faire quelque chose), la fin de la procédure va se croire obligée de sortir n'importe quoi pour rassurer l'utilisateur; or ce n'importe quoi va faire perdre les infos de session.
 				}
 				break;
 			case 5: // Ajout d'un projet.
+			case 9: // Ajout d'une connaissance.
 				/* Trop chiant de tester s'il faut signaler ou non. */
 				switch($étape)
 				{
 					case 5: $machin = 'd\'un projet'; break;
+					case 9: $machin = 'd\'une connaissance'; break;
 				}
 				$this->signaler('Ajout '.$machin, null);
 				break;
@@ -767,6 +777,47 @@ class Monster
 		}
 		
 		$this->récupérer('/experience.asp'); // Bon, je code en dur, pour une fois.
+	}
+	
+	function pondreConnaissance($données, $numéro)
+	{
+		/* Reprenons connaissance parmi les catégories. $numéro est donné en
+		 * partant de la fin. */
+		
+		for($m = count($données->connaissances->catégorie); --$m >= 0;)
+		{
+			$cat = $données->connaissances->catégorie[$m];
+			if($numéro >= ($n = count($cat->connaissances) + 1))
+				$numéro -= $n;
+			else
+			{
+				$numéro = $n - $numéro - 2;
+				break;
+			}
+		}
+		
+		$noms = $cat->connaissances;
+		arsort($noms);
+		$noms = array_keys($noms);
+		$champs = &$_SESSION['champs'];
+		
+		/* Remplissage des autres champs. */
+		
+		$champs['name'] = $this->tronque($numéro >= 0 ? $noms[$numéro] : '=== '.$cat->nom.' ===', 50);
+		$champs['years'] = $this->tronque(0, 2);
+		$champs['usedid'] = 1;
+		if($numéro >= 0)
+		{
+			$niveau = $cat->connaissances[$noms[$numéro]];
+			$champs['levelid'] = ($niveau <= 0x4) ? 1 : (($niveau < 0x9) ? 2 : 3);
+		}
+		else
+			$champs['levelid'] = 1;
+		
+		/* À FAIRE: utiliser des dates dans le modèle, et les appliquer aux
+		 * années d'expérience. */
+		
+		$this->récupérer('/skills.asp');
 	}
 	
 	protected $petitÀPetit; // Si true, on n'essaie pas de tout faire en une fois; on fonctionne en AJAX, permettant à chaque appel PHP de ne faire qu'un appel au site Monster, et donc de donner un retour à l'utilisateur dans un délai raisonnable, tout en évitant que PHP ne coupe le script brutalement en considérant qu'il a vécu trop longtemps. 
