@@ -683,6 +683,11 @@ class Monster
 		while($this->avancerUnCoup($données)) {}
 	}
 	
+	function tronque($bidule, $limite)
+	{
+		return strlen($bidule) > $limite ? substr($bidule, 0, $limite - 5).'[...]' : $bidule;
+	}
+	
 	function conc($bidules, $limite, $separateur = ', ', $inverse = false)
 	{
 		if(isset($bidules) && ($n = count($bidules)) > 0)
