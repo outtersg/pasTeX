@@ -251,7 +251,7 @@ class Monster
 		 * les données plus tard; on a un compo spécial pour ça, et il n'est pas
 		 * trop compliqué à utiliser. */
 		
-		$args = array('compo[session][]' => 1);
+		$args = array('compo[session][]' => 1, 'decompo[monster][]' => 1);
 		if($this->données !== null && !array_key_exists('donnees', $_SESSION))
 			$_SESSION['donnees'] = &$this->données;
 		
