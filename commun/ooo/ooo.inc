@@ -44,4 +44,16 @@ function ooo_enPDF($source, $dest = null)
 	system('"'.$ooo.'/python" commun/ooo/ooo.py "'.$source.'"'.$dest);
 }
 
+function ooo_pondreInterface($champ)
+{
+	$r = -1;
+	@system('command -v soffice.bin > /dev/null 2>&1', $r);
+	if($r == 0)
+	{
+?>
+	<input type="checkbox" name="<?php echo($champ); ?>[pdf]"></input>Sortie PDF
+<?php
+	}
+}
+
 ?>
