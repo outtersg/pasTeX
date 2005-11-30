@@ -83,9 +83,7 @@ class OpenOffice
 	
 	function pondreInterface($champ)
 	{
-?>
-	<input type="checkbox" name="<?php echo($champ); ?>[pdf]"></input>Sortie PDF
-<?php
+		ooo_pondreInterface($champ);
 	}
 	
 	function decomposer($params, $donnees)
