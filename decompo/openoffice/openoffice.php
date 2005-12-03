@@ -213,7 +213,7 @@ TERMINE
 			 * bien voulu un keep-with-previous pour les points, mais OOo 1.1 ne
 			 * le comprend pas; on utilise donc des keep-with-next, sauf pour le
 			 * dernier paragraphe. Ça devient compliqué. */
-			 $cesure = count($francheRigolade->tâche) ? 1 : 0;
+			 $cesure = count($francheRigolade->techno) ? 2 : (count($francheRigolade->tâche) ? 1 : 0);
 			 
 			fprintf($fichier, '<text:p text:style-name="Texte CV, dates, titre'.($cesure == 0 ? ', césure' : '').'">');
 			/* Ce modèle-ci ne nous permet pas d'afficher plusieurs périodes
@@ -249,6 +249,9 @@ TERMINE
 			}
 			if($n)
 				fprintf($fichier, '</text:unordered-list>');
+			
+			if(count($francheRigolade->techno))
+				fprintf($fichier, '<text:p text:style-name="Texte CV, dates, technos'.($cesure == 2 ? ', césure' : '').'">'.implode(', ', $francheRigolade->techno).'</text:p>');
 		}
 	}
 	
