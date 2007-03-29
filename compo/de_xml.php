@@ -260,7 +260,7 @@ class Période extends CompoSimple
 	
 	function contenuPour(&$objet, $contenu)
 	{
-		$objet = $objet === null ? $contenu : $objet.$contenu;
+		$objet = $objet === $this ? $contenu : $objet.$contenu;
 	}
 	
 	function sortir()
