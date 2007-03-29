@@ -267,7 +267,7 @@ class Émetteur extends NavigateurHiérarchique
 		 * appelant $this->retourAvancéeUnCoup($manquant) juste avant le return.
 		 */
 		
-		$this->gérerÉtape($étape, $manquant, &$page, &$cestdéjàpasmal, &$mouvement, &$params);
+		$this->gérerÉtape($étape, $manquant, $this->explo->page, &$cestdéjàpasmal, &$mouvement, &$params);
 		if($cestdéjàpasmal == 2)
 			return $this->retourAvancéeUnCoup($manquant);
 		
@@ -333,6 +333,13 @@ class Émetteur extends NavigateurHiérarchique
 		 * (c'est pourquoi on effectue avant de l'appeler les mêmes tests que
 		 * plus haut). */
 		
+		/* À FAIRE: adapter les deux premiers modèles (Viaduc et Monster) à ce
+		 * nouveau fonctionnement de $page, où l'on utilise celui de l'explo
+		 * précédent logiquement et non absolument (différence dans le cas où
+		 * les explo ont la forme (1, (2, 3), (4, 5)): à l'ancienne, 4 recevait
+		 * la page calculée par 3; à la nouvelle, elle reçoit celle en sortie de
+		 * 1, ce qui est plus logique). */
+		$page = $this->explo->données['pos'] === 0 && count($this->navigo) > 1 ? $this->navigo[count($this->navigo) - 2]->page : $this->explo->page; // Si on est chef de file, la page nous est procurée par le père; sinon par le précédent dans la file des étapes, qui travaille sur le même navigo.
 		$this->préparerÉtape($étape, $manquant, &$page, &$cestdéjàpasmal, &$mouvement, &$params);
 		if($this->petitÀPetit && $cestdéjàpasmal) // Si on en a déjà trop fait…
 			return $this->retourAvancéeUnCoup($manquant); // … on quitte, en donnant un minimum d'affichage.
