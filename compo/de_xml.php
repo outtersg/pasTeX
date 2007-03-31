@@ -100,8 +100,9 @@ class CompoADates extends CompoAProprietes
 		{
 			$autre = $this->classes['date'];
 			$this->classes['date'] = 'période';
-			return parent::entrerDans(&$depuis, 'date', $attributs);
+			$r = &parent::entrerDans(&$depuis, 'date', $attributs);
 			$this->classes['date'] = $autre;
+			return $r;
 		}
 		else
 			return parent::entrerDans(&$depuis, $nom, $attributs);
