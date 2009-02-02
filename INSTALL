@@ -8,10 +8,10 @@ ORIGINE="`pwd`"
 GUILLAUME=http://ks31107.kimsufi.com/gui
 PHP="$SCRIPTS/util"
 FPHP=chemin.inc
-RPHP="$GUILLAUME/util/php"
+RPHP="$GUILLAUME/pasTeX/util"
 JS="$SCRIPTS/js"
 FJS=html.js
-RJS="$GUILLAUME/util/js"
+RJS="$GUILLAUME/pasTeX/js"
 
 auSecours()
 {
