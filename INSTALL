@@ -1,8 +1,5 @@
 #!/bin/bash
 
-echo "Virez ces deux lignes, chmod a+x sur ce fichier, puis exécutez-le." >&2
-exit 0
-
 set -e
 
 SCRIPTS="`command -v "$0"`" ; SCRIPTS="`dirname "$SCRIPTS"`" ; echo "$SCRIPTS" | grep -q "^/" || SCRIPTS=`pwd`/"$SCRIPTS"
