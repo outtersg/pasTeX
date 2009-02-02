@@ -5,7 +5,7 @@ set -e
 SCRIPTS="`command -v "$0"`" ; SCRIPTS="`dirname "$SCRIPTS"`" ; echo "$SCRIPTS" | grep -q "^/" || SCRIPTS=`pwd`/"$SCRIPTS"
 ORIGINE="`pwd`"
 
-GUILLAUME=http://82.240.30.31/gui
+GUILLAUME=http://ks31107.kimsufi.com/gui
 PHP="$SCRIPTS/util"
 FPHP=chemin.inc
 RPHP="$GUILLAUME/util/php"
