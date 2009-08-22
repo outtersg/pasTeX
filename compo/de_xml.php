@@ -70,7 +70,7 @@ class CompoAProprietes extends Compo
 	
 	function contenuPour(&$objet, $contenu)
 	{
-		if(is_a($objet, Donnee))
+		if($objet instanceof Donnee)
 		{
 			if(count(get_object_vars($objet)) > 0) return; // Une fois qu'il est devenu un object complet, on ne change pas sa nature. Tant pis pour les données!
 			$objet = null;
@@ -214,7 +214,7 @@ class Catégorie extends CompoAProprietes
 			return parent::entrerDans(&$depuis, $nom, $attributs);
 	}
 	
-	function sortirDe(&$objet)
+	function sortirDe(&$objet, $nom)
 	{
 		if($objet === $this->courant)
 			$this->données->connaissances[$this->courant] = hexdec($this->niveauCourant);
