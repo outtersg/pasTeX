@@ -93,10 +93,10 @@ class OpenOffice
 		$dossierTemp = $nomTemp.'.contenu';
 		$modele = dirname(__FILE__).'/modele';
 		system("cp -R '{$modele}' '{$dossierTemp}'");
-		if($this->_params['logo']) system("cp '{$this->_params['logo']}' '{$dossierTemp}/ObjBFFFC666'");
+		if(@$this->_params['logo']) system("cp '{$this->_params['logo']}' '{$dossierTemp}/ObjBFFFC666'");
 		system("cat '{$dossierTemp}/content.pre.xml' > '{$dossierTemp}/content.xml'");
 		$fichier = popen("tr -d '\\011\\012' >> '{$dossierTemp}/content.xml'", 'w');
-		$this->pondreEntete($fichier, $donnees, $params['boite']);
+		$this->pondreEntete($fichier, $donnees, @$params['boite']);
 		$this->pondreEtudes($fichier, $donnees);
 		$this->pondreProjets($fichier, $donnees);
 		$this->pondreLangues($fichier, $donnees);
@@ -105,9 +105,9 @@ class OpenOffice
 		$this->pondreAutres($fichier, $donnees);
 		pclose($fichier);
 		system("cat '{$dossierTemp}/content.post.xml' >> '{$dossierTemp}/content.xml'");
-		$sortie = $this->_params['pdf'] ? $nomTemp.'.sortie' : '-';
+		$sortie = @$this->_params['pdf'] ? $nomTemp.'.sortie' : '-';
 		system("( cd '{$dossierTemp}' && zip -r -q {$sortie} . )");
-		if($this->_params['pdf']) { ooo_enPDF($sortie); system("rm '{$sortie}'"); }
+		if(@$this->_params['pdf']) { ooo_enPDF($sortie); system("rm '{$sortie}'"); }
 		system("rm -R '{$dossierTemp}' '{$nomTemp}'");
 	}
 	
@@ -125,7 +125,7 @@ fprintf($fichier, <<<TERMINE
 		</text:sequence-decls>
 TERMINE
 );
-if($this->_params['logo']) fprintf($fichier, <<<TERMINE
+if(@$this->_params['logo']) fprintf($fichier, <<<TERMINE
 		<text:section text:style-name="Sect1" text:name="En-tête">
 			<text:p text:style-name="Texte CV">
 				<text:bookmark-start text:name="_9978858911"/>
@@ -151,7 +151,7 @@ TERMINE
 				$maintenant = obtenir_datation(time());
 				$âge = $maintenant[0] - $donnees->perso->naissance[0];
 				for($i = 1; $i < 6; ++$i) // Si l'on est avant la date d'anniversaire, on retire un an.
-					if(($j = $maintenant[$i] - $donnees->perso->naissance[i]) != 0)
+					if(($j = $maintenant[$i] - $donnees->perso->naissance[$i]) != 0)
 					{
 						if($j < 0)
 							--$âge;
@@ -173,7 +173,7 @@ TERMINE
 			}
 			fprintf($fichier, "<text:p text:style-name=\"En-tête CV centré\">{$titre}</text:p>");
 		}
-		if($this->_params['logo']) fprintf($fichier, "</text:section>");
+		if(@$this->_params['logo']) fprintf($fichier, "</text:section>");
 	}
 	
 	function pondreEtudes($fichier, $donnees)
@@ -269,7 +269,7 @@ TERMINE
 
 			fprintf($fichier, '<text:p text:style-name="Texte CV, dates">'.htmlspecialchars($chat->nom, ENT_NOQUOTES).'<text:tab-stop/>'.htmlspecialchars($chat->niveau, ENT_NOQUOTES));
 			$qqc = false;
-			if(count($chat->certificat) > 0)
+			if(isset($chat->certificat) && count($chat->certificat) > 0)
 			{
 				foreach($chat->certificat as $certif)
 					fprintf($fichier, ($qqc ? ', ' : ' (').htmlspecialchars($certif, ENT_NOQUOTES));
