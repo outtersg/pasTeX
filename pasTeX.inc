@@ -138,6 +138,9 @@ function pasTeX_unionPeriodes($dates)
 
 function pasTeX_descriptionPeriode($d, $f)
 {
+	$null = array(-1, -1, -1, -1, -1, -1);
+	$d == $null && $d = null;
+	$f == $null && $f = null;
 	if($d === null)
 		if($f === null)
 			return null;
