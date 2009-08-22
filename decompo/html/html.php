@@ -120,7 +120,7 @@ class Html
 		 */
 ?>
 	<div class="section">
-		<?php if(!$this->params['ie']) { ?>
+		<?php if(!@$this->params['ie']) { ?>
 		<img src="decompo/html/hd.ocre.png" style="position: absolute; right: 0px; top: 0px; z-index: 3;" alt="décoration"/>
 		<img src="decompo/html/bg.ocre.png" style="position: absolute; left: 0px; bottom: 0px; z-index: 3;" alt="décoration"/>
 		<?php } ?>
@@ -227,7 +227,7 @@ class Html
 <?php
 			echo htmlspecialchars($chat->niveau, ENT_NOQUOTES);
 			$qqc = false;
-			if(count($chat->certificat) > 0)
+			if(isset($chat->certificat) && count($chat->certificat) > 0)
 			{
 				foreach($chat->certificat as $certif)
 					echo ($qqc ? ', ' : ' (').htmlspecialchars($certif, ENT_NOQUOTES);
