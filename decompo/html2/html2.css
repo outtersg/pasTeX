@@ -1,0 +1,128 @@
+body
+{
+	background: #7F7F00;
+}
+
+div
+{
+	border: 0px;
+	margin: 0px;
+}
+
+div.enTete
+{
+	margin: 16px;
+}
+
+div.titre
+{
+	color: #1F1F00;
+	font-size: 200%;
+}
+
+div.nom
+{
+	color: #1F1F00;
+	font-size: 200%;
+}
+
+div.section
+{
+	background: #FFFF7F;
+	margin: 16px;
+	position: relative;
+}
+
+div.audessus
+{
+	border: 1px solid #1F1F00;
+	padding: 8px;
+	position: relative;
+	z-index: 2;
+	overflow: hidden;
+}
+
+div.titresection
+{
+	position: absolute;
+	color: #BFBFFF;
+	font-size: 400%;
+	z-index: -1;
+	text-align: center;
+	left: 0px;
+	right: 0px;
+	width: 100%;
+	top: 0px;
+}
+
+td.categorie
+{
+	padding-right: 24px;
+}
+
+.afftemps
+{
+	position: absolute;
+	width: 0.5em;
+	background: rgba(0, 0, 255, .5);
+	border: 1px solid #FFFFFF;
+}
+
+.projet:hover .afftemps
+{
+	background: rgba(255, 63, 0, .5);
+}
+
+.jonction
+{
+	fill: rgba(0, 0, 255, 0.125);
+}
+
+.projet:hover .jonction
+{
+	fill: rgba(255, 63, 0, 0.125);
+}
+
+div.dateexp
+{
+	font-size: 75%;
+}
+
+div.titreexp
+{
+	font-size: 150%;
+	font-style: bold;
+}
+
+div.descrexp
+{
+	margin-left: 40px;
+	font-style: italic;
+}
+
+div.exp
+{
+	margin-left: 24px;
+}
+
+div.delair
+{
+	margin: 16px;
+}
+
+div.soussection
+{
+	margin-top: 24px;
+	margin-bottom: 12px;
+	font-size: 150%;
+}
+
+div.paraindependant
+{
+	margin: 16px;
+}
+
+img
+{
+	border: none;
+}
