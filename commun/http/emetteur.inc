@@ -164,7 +164,7 @@ class Émetteur extends NavigateurHiérarchique
 	 */
 	function pondrePage($numéroInterface)
 	{
-		if($this->interfaceIndépendante) // Si on doit générer nous-même la page.
+		if(@$this->interfaceIndépendante) // Si on doit générer nous-même la page.
 			pasTeX_debutInterface('emetteur: derniers réglages');
 		
 		/* Comme on bosse en plusieurs étapes, il faut qu'on puisse récupérer
@@ -188,7 +188,7 @@ class Émetteur extends NavigateurHiérarchique
 			if(!$this->pondreContenuPage($champ, $numéroInterface, $args))
 				header('Location: '.$_SERVER['PHP_SELF'].'?'.formu_paramsVersParamsUrl($args));
 		
-		if($this->interfaceIndépendante)
+		if(@$this->interfaceIndépendante)
 		{
 			echo '</form>';
 			pasTeX_finInterface();
