@@ -73,7 +73,7 @@ if(isset($argv)) // Appel en ligne de commande
 }
 else
 {
-	if(!is_array($params['compo']) || count(array_keys($params['compo'])) < 1)
+	if(!is_array(@$params['compo']) || count(array_keys($params['compo'])) < 1)
 	{
 		$compo = 'liste';
 		$decompo = 'rien';
@@ -95,7 +95,7 @@ if(isset($argv))
 	$paramsCompo = $compo->analyserParams($argv, &$etPuisQuoiEncore); // On se demande bien combien il sera capable de nous bouffer de paramètres sur la ligne de commande.
 }
 else
-	$paramsCompo = $compo->analyserChamps($paramsCompo);
+	$paramsCompo = $compo->analyserChamps(@$paramsCompo);
 
 /*- Chargement du filtre -----------------------------------------------------*/
 
@@ -117,7 +117,7 @@ if(isset($argv)) // Appel en ligne de commande
 }
 else
 {
-	if(!is_array($params['decompo']) || count(array_keys($params['decompo'])) < 1)
+	if(!is_array(@$params['decompo']) || count(array_keys($params['decompo'])) < 1)
 		$decompo = 'liste';
 	else
 	{
@@ -138,11 +138,11 @@ if(isset($argv))
 	$paramsDecompo = $decompo->analyserParams($argv, &$etPuisQuoiEncore);
 }
 else
-	$paramsDecompo = $decompo->analyserChamps($paramsDecompo);
+	$paramsDecompo = $decompo->analyserChamps(@$paramsDecompo);
 
 if($paramsCompo !== null)
 	$donnees = $compo->composer($paramsCompo);
 if($paramsDecompo !== null)
-	$decompo->decomposer($paramsDecompo, $donnees);
+	$decompo->decomposer($paramsDecompo, @$donnees);
 
 ?>
