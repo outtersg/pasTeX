@@ -38,10 +38,24 @@ bind 'set disable-completion off'
 
 function ooo_enPDF($source, $dest = null)
 {
+	if(0)
+	{
 	$ooo = '/Apps/Bureautique/NeoOfficeJ.app/Contents/MacOS'; /* À FAIRE: récupérer ça dans un fichier de conf */
+	$ooo = '/Applications/LibreOffice.app/Contents/MacOS';
 	if($dest) $dest = '"'.$dest.'"';
 	system('netstat -an | grep -q "\.2002.*LISTEN" || "'.$ooo.'/soffice" -headless "-accept=socket,host=localhost,port=2002;urp;" &');
 	system('"'.$ooo.'/python" commun/ooo/ooo.py "'.$source.'"'.$dest);
+	}
+	else
+	{
+		$script = '/Applications/LibreOffice.app/Contents/MacOS/soffice --headless --convert-to pdf --outdir /tmp/ "'.$source.'" > /dev/null';
+		$sortie = '/tmp/'.preg_replace('/.odt$/', '.pdf', basename($source));
+		if($dest)
+			$script .= ' && mv "'.$sortie.'" "'.$dest.'"';
+		else
+			$script .= ' && cat "'.$sortie.'"';
+		system($script);
+	}
 }
 
 function ooo_pondreInterface($champ)
