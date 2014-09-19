@@ -36,7 +36,7 @@ class Émetteur extends NavigateurHiérarchique
 	
 	function preparerSession()
 	{
-		html_session();
+		html_session(true);
 		$this->préparerSession(array('emetteur','navigo')); // NavigateurHiérarchique.
 	}
 	
