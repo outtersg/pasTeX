@@ -336,12 +336,12 @@ $affs[] = implode(', ', $aff);
 					<img style="position: absolute; left: 0px; width: 100%; right: 0px; bottom: 0px; height: 50%; z-index: 1;" src="decompo/html/degrade.ocre.png" alt=""/>
 				</div>
 <?php
-		echo '<svg id="jonctionlignestemps" style="position: absolute; width: '.($nGroupes + 5).'em; height: 100%; position: absolute;"></svg>'."\n";
+		echo '<svg id="jonctionlignestemps" style="position: absolute; width: '.(1.5 * $nGroupes + 1).'em; height: 100%; position: absolute;"></svg>'."\n";
 		$pasLePremier = false;
 		foreach($donnees->expérience->projet as $numProjet => $francheRigolade)
 		{
 			if($pasLePremier) echo '<div class="delair"> </div>'."\n"; else $pasLePremier = true;
-			echo '<div id="p'.$numProjet.'" class="projet" style="margin-left: '.($nGroupes + 5).'em;">'."\n";
+			echo '<div id="p'.$numProjet.'" class="projet" style="margin-left: '.(1.5 * $nGroupes + 1).'em;">'."\n";
 			/* Ce modèle-ci ne nous permet pas d'afficher plusieurs périodes
 			 * pour le même projet, on fait donc la période englobante du tout. */
 			$moments = array();
@@ -377,7 +377,7 @@ $affs[] = implode(', ', $aff);
 			foreach($lignesDeTemps as $numSegment => $segmentDeTemps)
 				if($segmentDeTemps['moment'] == $numProjet)
 				{
-					echo '<div id="p'.$numProjet.'s'.$numSegment.'" class="afftemps" style="top: '.(($maxTemps - $segmentDeTemps['fin']) / ($maxTemps - $minTemps) * 100).'%; height: '.(($segmentDeTemps['fin'] - $segmentDeTemps['debut']) / ($maxTemps - $minTemps) * 100).'%; left: '.$segmentDeTemps['groupe'].'em;">&nbsp;</div>';
+					echo '<div id="p'.$numProjet.'s'.$numSegment.'" class="afftemps" style="top: '.(($maxTemps - $segmentDeTemps['fin']) / ($maxTemps - $minTemps) * 100).'%; height: '.(($segmentDeTemps['fin'] - $segmentDeTemps['debut']) / ($maxTemps - $minTemps) * 100).'%; left: '.(1.5 * $segmentDeTemps['groupe']).'em;">&nbsp;</div>';
 				}
 			
 			echo '</div>'."\n";
