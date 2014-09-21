@@ -108,7 +108,7 @@ LignesTemps.calculer = function()
 		for(j = this.blocs[i].length; --j >= 1;) // Le bloc 0 est le texte, à lier à tous les autres qui sont la représentation graphique.
 		{
 			pBloc = p(this.blocs[i][j], true);
-			d += this.jointureSimple(pTexte, pBloc);
+			d += this.jointurePotDEchap(pTexte, pBloc);
 		}
 		courbe.setAttributeNS(null, 'd', d);
 		svg.appendChild(courbe);
