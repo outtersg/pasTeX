@@ -37,6 +37,14 @@ LignesTemps.preparer = function()
 	LignesTemps.calculer();
 };
 
+LignesTemps.jointureSimple = function(pTexte, pBloc)
+{
+	var d = '';
+	d += ' M '+pTexte.x+','+pTexte.y1+' C '+(0.5 * pTexte.x + 0.5 * pBloc.x)+','+pTexte.y1+' '+(0.5 * pTexte.x + 0.5 * pBloc.x)+','+pBloc.y1+' '+pBloc.x+' '+pBloc.y1;
+	d += ' L '+pBloc.x+','+pBloc.y1+' L '+pBloc.x+','+pBloc.y0+' C '+(0.5 * pBloc.x + 0.5 * pTexte.x)+','+pBloc.y0+' '+(0.5 * pBloc.x + 0.5 * pTexte.x)+','+pTexte.y0+' '+pTexte.x+' '+pTexte.y0+' z';
+	return d;
+};
+
 LignesTemps.calculer = function()
 {
 	var svg = document.getElementById('jonctionlignestemps');
@@ -56,8 +64,7 @@ LignesTemps.calculer = function()
 		for(j = this.blocs[i].length; --j >= 1;) // Le bloc 0 est le texte, à lier à tous les autres qui sont la représentation graphique.
 		{
 			pBloc = p(this.blocs[i][j], true);
-			d += ' M '+pTexte.x+','+pTexte.y1+' C '+(0.5 * pTexte.x + 0.5 * pBloc.x)+','+pTexte.y1+' '+(0.5 * pTexte.x + 0.5 * pBloc.x)+','+pBloc.y1+' '+pBloc.x+' '+pBloc.y1;
-			d += ' L '+pBloc.x+','+pBloc.y1+' L '+pBloc.x+','+pBloc.y0+' C '+(0.5 * pBloc.x + 0.5 * pTexte.x)+','+pBloc.y0+' '+(0.5 * pBloc.x + 0.5 * pTexte.x)+','+pTexte.y0+' '+pTexte.x+' '+pTexte.y0+' z';
+			d += this.jointureSimple(pTexte, pBloc);
 		}
 		courbe.setAttributeNS(null, 'd', d);
 		svg.appendChild(courbe);
