@@ -338,8 +338,27 @@ $affs[] = implode(', ', $aff);
 <?php
 		echo '<svg id="jonctionlignestemps" style="position: absolute; width: '.(1.5 * $nGroupes + 1).'em; height: 100%; position: absolute;"></svg>'."\n";
 		$pasLePremier = false;
-		foreach($donnees->expérience->projet as $numProjet => $francheRigolade)
+		
+		/* Tri par milieu de moment. En effet, nos Bézier font un peu bazar, on va donc essayer d'en mettre le maximum en face de leur ligne de temps. Idéalement, un JS replacerait les blocs de texte en fonction (en partant des plus ténus, et en tablant sur le fait que ceux qui couvrent une immense période finiront par trouver un petit trou où se caser). */
+		
+		$milieux = array();
+		foreach($donnees->expérience->projet as $numProjet => $projet)
 		{
+			$moments = array();
+			foreach($projet->date as $moment)
+				$moments[] = array($moment->d, $moment->f);
+			$moments = periode_union($moments);
+			$debut = Date::calculerAvecIndefinis(Date::mef($moments[0]), false);
+			$fin = Date::calculerAvecIndefinis(Date::mef($moments[1]), true);
+			$milieu = ($debut + $fin) / 2;
+			$milieux[$numProjet] = $milieu;
+		}
+		
+		arsort($milieux, SORT_NUMERIC);
+		
+		foreach($milieux as $numProjet => $milieu)
+		{
+			$francheRigolade = $projet = $donnees->expérience->projet[$numProjet];
 			if($pasLePremier) echo '<div class="delair"> </div>'."\n"; else $pasLePremier = true;
 			echo '<div id="p'.$numProjet.'" class="projet" style="margin-left: '.(1.5 * $nGroupes + 1).'em;">'."\n";
 			/* Ce modèle-ci ne nous permet pas d'afficher plusieurs périodes
