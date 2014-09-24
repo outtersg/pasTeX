@@ -51,7 +51,7 @@ LignesTemps.jointurePotDEchap = function(pTexte, pBloc)
 	var courbeB = 30;
 	var courbeT = 30;
 	var embouchureT = 30;
-	var demieLargeurTube = 5;
+	var demieLargeurTube = 1;
 	
 	var d = '';
 	// Le tube central est composé de deux lignes parallèles à a * x + y = b (chacune avec un offset de n pixels par rapport à cette ligne centrale).
