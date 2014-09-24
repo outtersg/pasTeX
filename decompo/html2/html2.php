@@ -269,7 +269,6 @@ $affs[] = implode(', ', $aff);
 		<div class="audessus">
 			<div class="titresection">
 				<?php echo $nom ?>
-				<img style="position: absolute; left: 0px; width: 100%; right: 0px; bottom: 0px; height: 50%; z-index: 1;" src="decompo/html/degrade.ocre.png" alt=""/>
 			</div>
 <?php
 	}
@@ -333,7 +332,6 @@ $affs[] = implode(', ', $aff);
 			<div class="" style="position: relative;">
 				<div class="titresection">
 					<?php echo $nom ?>
-					<img style="position: absolute; left: 0px; width: 100%; right: 0px; bottom: 0px; height: 50%; z-index: 1;" src="decompo/html/degrade.ocre.png" alt=""/>
 				</div>
 <?php
 		echo '<svg id="jonctionlignestemps" style="position: absolute; width: '.(1.5 * $nGroupes + 1).'em; height: 100%; position: absolute;"></svg>'."\n";
