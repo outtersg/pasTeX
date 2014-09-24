@@ -72,18 +72,18 @@ LignesTemps.jointurePotDEchap = function(pTexte, pBloc)
 	var lthaut = { b: lt.a * ptMhaut.x + ptMhaut.y };
 	var ltbas = { b: lt.a * ptMbas.x + ptMbas.y };
 	// Et l'intersection de ces mêmes droites avec le bout de tuyau horizontal partant qui du texte, qui du carreau.
-	var pcTbas = { x: (ltbas.b - (ptT.y + demieLargeurTube)) / lt.a, y: ptT.y + demieLargeurTube }; // c: coude.
-	var pcThaut = { x: (lthaut.b - (ptT.y - demieLargeurTube)) / lt.a, y: ptT.y - demieLargeurTube };
-	var pcBbas = { x: (ltbas.b - (ptB.y + demieLargeurTube)) / lt.a, y: ptB.y + demieLargeurTube }; // c: coude.
-	var pcBhaut = { x: (lthaut.b - (ptB.y - demieLargeurTube)) / lt.a, y: ptB.y - demieLargeurTube };
+	var pcTbas = { x: (ltbas.b - (viseeT.y + demieLargeurTube)) / lt.a, y: viseeT.y + demieLargeurTube }; // c: coude.
+	var pcThaut = { x: (lthaut.b - (viseeT.y - demieLargeurTube)) / lt.a, y: viseeT.y - demieLargeurTube };
+	var pcBbas = { x: (ltbas.b - (viseeB.y + demieLargeurTube)) / lt.a, y: viseeB.y + demieLargeurTube }; // c: coude.
+	var pcBhaut = { x: (lthaut.b - (viseeB.y - demieLargeurTube)) / lt.a, y: viseeB.y - demieLargeurTube };
 	// Nos points de contrôle vont se trouver à l'intersection 
 	d += ' M '+pTexte.x+','+pTexte.y1+' C '+(pTexte.x - embouchureT)+','+pTexte.y1+' '+pTexte.x+','+pcTbas.y+' '+(pTexte.x - embouchureT)+','+pcTbas.y; // Accolade texte bas.
-	d += ' C '+(pcTbas.x - embouchureT)+','+pcTbas.y+' '+(pcTbas.x - embouchureT)+','+pcTbas.y+' '+ptMbas.x+','+ptMbas.y; // Coude, et remontée jusqu'au pivot.
-	d += ' C '+(pcBbas.x + embouchureB)+','+pcBbas.y+' '+(pcBbas.x + embouchureB)+','+pcBbas.y+' '+(pBloc.x + embouchureB)+','+pcBbas.y;
+	d += ' C '+pcTbas.x+','+pcTbas.y+' '+pcTbas.x+','+pcTbas.y+' '+ptMbas.x+','+ptMbas.y; // Coude, et remontée jusqu'au pivot.
+	d += ' C '+pcBbas.x+','+pcBbas.y+' '+pcBbas.x+','+pcBbas.y+' '+(pBloc.x + embouchureB)+','+pcBbas.y;
 	d += ' C '+pBloc.x+','+pcBbas.y+' '+(pBloc.x + embouchureB)+','+pBloc.y1+' '+pBloc.x+' '+pBloc.y1;
 	d += ' L '+pBloc.x+','+pBloc.y0+' C '+(pBloc.x + embouchureB)+','+pBloc.y0+' '+pBloc.x+','+pcBhaut.y+' '+(pBloc.x + embouchureB)+','+pcBhaut.y; // Longement bloc + accolade bloc haute.
-	d += ' C '+(pcBhaut.x + embouchureB)+','+pcBhaut.y+' '+(pcBhaut.x + embouchureB)+','+pcBhaut.y+' '+ptMhaut.x+','+ptMhaut.y;
-	d += ' C '+(pcThaut.x - embouchureT)+','+pcThaut.y+' '+(pcThaut.x - embouchureT)+','+pcThaut.y+' '+(pTexte.x - embouchureT)+','+pcThaut.y;
+	d += ' C '+pcBhaut.x+','+pcBhaut.y+' '+pcBhaut.x+','+pcBhaut.y+' '+ptMhaut.x+','+ptMhaut.y;
+	d += ' C '+pcThaut.x+','+pcThaut.y+' '+pcThaut.x+','+pcThaut.y+' '+(pTexte.x - embouchureT)+','+pcThaut.y;
 	d += ' C '+pTexte.x+','+pcThaut.y+' '+(pTexte.x - embouchureT)+','+pTexte.y0+' '+pTexte.x+','+pTexte.y0;
 	d += ' z';
 	return d;
