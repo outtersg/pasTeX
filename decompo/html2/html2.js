@@ -66,6 +66,11 @@ LignesTemps.jointurePotDEchap = function(pTexte, pBloc)
 	var racinea2plus1 = Math.sqrt(lt.a * lt.a + 1);
 	var dx = demieLargeurTube * lt.a / racinea2plus1;
 	var dy = demieLargeurTube / racinea2plus1;
+	if(viseeT.x < viseeB.x) // Courbe renversée, façon serpent.
+	{
+		dx = -dx;
+		dy = -dy;
+	}
 	var ptMbas = { x: ptM.x + dx, y: ptM.y + dy }; // p: point; t: tube; M: milieu; bas: bah…
 	var ptMhaut = { x: ptM.x - dx, y: ptM.y - dy };
 	// On cherche le 'b' des droites du haut et du bas du tube (le 'a' est identique, puisque les droites sont parallèles).
