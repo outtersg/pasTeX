@@ -47,6 +47,7 @@ LignesTemps.jointureSimple = function(pTexte, pBloc)
 
 LignesTemps.jointurePotDEchap = function(pTexte, pBloc)
 {
+	var enFace = true;
 	var embouchureB = 10
 	var courbeB = 30;
 	var courbeT = 30;
@@ -55,9 +56,10 @@ LignesTemps.jointurePotDEchap = function(pTexte, pBloc)
 	
 	var d = '';
 	// Le tube central est composé de deux lignes parallèles à a * x + y = b (chacune avec un offset de n pixels par rapport à cette ligne centrale).
-	var ptB = { x: pBloc.x + embouchureB, y: pBloc.ym };
+	var yPtB = pBloc.y1 - pBloc.y0 < 20 || ! enFace ? pBloc.ym : (pTexte.ym < pBloc.y0 + 10 ? pBloc.y0 + 10 : (pTexte.ym > pBloc.y1 - 10 ? pBloc.y1 - 10 : pTexte.ym)); // On essaie de placer le point d'arrivée au bloc le plus en face possible de celui de départ du texte.
+	var ptB = { x: pBloc.x + embouchureB, y: yPtB };
 	var ptT = { x: pTexte.x - embouchureT, y: pTexte.ym };
-	var viseeB = { x: pBloc.x + embouchureB + courbeB, y: pBloc.ym };
+	var viseeB = { x: pBloc.x + embouchureB + courbeB, y: yPtB };
 	var viseeT = { x: pTexte.x - embouchureB - courbeB, y: pTexte.ym };
 	var ptM = { x: .5 * (viseeB.x + viseeT.x), y: .5 * (viseeB.y + viseeT.y) };
 	var lt = { a: (viseeB.y - viseeT.y) / (viseeT.x - viseeB.x) };
@@ -66,7 +68,7 @@ LignesTemps.jointurePotDEchap = function(pTexte, pBloc)
 	var racinea2plus1 = Math.sqrt(lt.a * lt.a + 1);
 	var dx = demieLargeurTube * lt.a / racinea2plus1;
 	var dy = demieLargeurTube / racinea2plus1;
-	if(viseeT.x < viseeB.x) // Courbe renversée, façon serpent.
+	if(viseeT.x < viseeB.x && lt.a) // Courbe renversée, façon serpent. Mais si lt.a == 0 (ligne complètement horizontale), le calcul est différent, car pc[BT][haut|bas] seront calculés autrement.
 	{
 		dx = -dx;
 		dy = -dy;
@@ -77,10 +79,10 @@ LignesTemps.jointurePotDEchap = function(pTexte, pBloc)
 	var lthaut = { b: lt.a * ptMhaut.x + ptMhaut.y };
 	var ltbas = { b: lt.a * ptMbas.x + ptMbas.y };
 	// Et l'intersection de ces mêmes droites avec le bout de tuyau horizontal partant qui du texte, qui du carreau.
-	var pcTbas = { x: (ltbas.b - (viseeT.y + demieLargeurTube)) / lt.a, y: viseeT.y + demieLargeurTube }; // c: coude.
-	var pcThaut = { x: (lthaut.b - (viseeT.y - demieLargeurTube)) / lt.a, y: viseeT.y - demieLargeurTube };
-	var pcBbas = { x: (ltbas.b - (viseeB.y + demieLargeurTube)) / lt.a, y: viseeB.y + demieLargeurTube }; // c: coude.
-	var pcBhaut = { x: (lthaut.b - (viseeB.y - demieLargeurTube)) / lt.a, y: viseeB.y - demieLargeurTube };
+	var pcTbas = { x: lt.a ? (ltbas.b - (viseeT.y + demieLargeurTube)) / lt.a : ptT.x, y: viseeT.y + demieLargeurTube }; // c: coude.
+	var pcThaut = { x: lt.a ? (lthaut.b - (viseeT.y - demieLargeurTube)) / lt.a : ptT.x, y: viseeT.y - demieLargeurTube };
+	var pcBbas = { x: lt.a ? (ltbas.b - (viseeB.y + demieLargeurTube)) / lt.a : ptB.x, y: viseeB.y + demieLargeurTube }; // c: coude.
+	var pcBhaut = { x: lt.a ? (lthaut.b - (viseeB.y - demieLargeurTube)) / lt.a : ptB.x, y: viseeB.y - demieLargeurTube };
 	// Nos points de contrôle vont se trouver à l'intersection 
 	d += ' M '+pTexte.x+','+pTexte.y1+' C '+(pTexte.x - embouchureT)+','+pTexte.y1+' '+pTexte.x+','+pcTbas.y+' '+(pTexte.x - embouchureT)+','+pcTbas.y; // Accolade texte bas.
 	d += ' C '+pcTbas.x+','+pcTbas.y+' '+pcTbas.x+','+pcTbas.y+' '+ptMbas.x+','+ptMbas.y; // Coude, et remontée jusqu'au pivot.
