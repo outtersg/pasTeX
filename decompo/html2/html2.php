@@ -62,6 +62,7 @@ class Html2
 		/* Calcul des incompatibilités. */
 		
 		$moments = array();
+		$periodes = array(); // Un "moment" peut être constituée de plusieurs périodes disjointes; on se met aussi de côté pour chaque moment la période enveloppant l'ensemble de ses sous-périodes.
 		$incompatibilites = array();
 		$maintenant = obtenir_datation(time());
 		foreach($donnees->expérience->projet as $num => $francheRigolade)
@@ -73,6 +74,7 @@ class Html2
 					$f = $maintenant;
 				$moments[$num][] = array($plage->d, $f);
 			}
+			$periodes[$num] = periode_union($moments[$num]);
 			$incompatibilites[$num] = array();
 			for($i = $num; --$i >= 0;)
 				if(periode_seChevauchent($moments[$num], $moments[$i], 0.3))
@@ -106,7 +108,9 @@ $affs[] = implode(', ', $aff);
 				if($nIncompCases < $max[0])
 					continue;
 				$nIncompNonCases = count(array_diff_key($incomp, $casage));
-				if($nIncompNonCases <= $max[1])
+				if($nIncompNonCases < $max[1])
+					continue;
+				if($nIncompCases == $max[0] && $nIncompNonCases == $max[1] && $this->_duree($periodes[$num]) < $this->_duree($periodes[$numMax])) // En cas d'égalité, c'est le plus court moment qui cède la place au plus long (on case les plus longs en premier, donc à gauche si on affiche les groupes de gauche à droite).
 					continue;
 				$numMax = $num;
 				$max = array($nIncompCases, $nIncompNonCases);
