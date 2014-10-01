@@ -48,7 +48,7 @@ LignesTemps.jointureSimple = function(pTexte, pBloc)
 LignesTemps.jointurePotDEchap = function(pTexte, pBloc)
 {
 	var enFace = true;
-	var embouchureB = 10
+	var embouchureB = 2;
 	var courbeB = 30;
 	var courbeT = 30;
 	var embouchureT = 30;
