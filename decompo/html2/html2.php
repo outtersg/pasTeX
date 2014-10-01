@@ -49,6 +49,14 @@ class Html2
 	
 	function pondreInterface($champ) {}
 	
+	/**
+	 * Renvoie la durée d'une période, que l'on présuppose non totalement nulle.
+	 */
+	protected function _duree($periode)
+	{
+		return Date::calculerAvecIndefinis(Date::mef($periode[1]), true) - Date::calculerAvecIndefinis(Date::mef($periode[0]), true);
+	}
+	
 	protected function _lignesDeTemps($donnees)
 	{
 		/* Calcul des incompatibilités. */
