@@ -496,7 +496,7 @@ $affs[] = implode(', ', $aff);
 		
 		/* Tri. */
 		
-		$positions = $this->_positionsMilieux($donnees->expérience->projet, $lignesDeTemps);
+		$positions = $this->_positionsDebroussaillage($donnees->expérience->projet, $lignesDeTemps);
 		
 		arsort($positions, SORT_NUMERIC);
 		
