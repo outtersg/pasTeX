@@ -92,7 +92,7 @@ $compo = pasTeX_chargerCompo($compo);
 if(isset($argv))
 {
 	++$etPuisQuoiEncore;
-	$paramsCompo = $compo->analyserParams($argv, &$etPuisQuoiEncore); // On se demande bien combien il sera capable de nous bouffer de paramètres sur la ligne de commande.
+	$paramsCompo = $compo->analyserParams($argv, $etPuisQuoiEncore); // On se demande bien combien il sera capable de nous bouffer de paramètres sur la ligne de commande.
 }
 else
 	$paramsCompo = $compo->analyserChamps(@$paramsCompo);
@@ -135,7 +135,7 @@ $decompo = pasTeX_chargerDecompo($decompo);
 if(isset($argv))
 {
 	++$etPuisQuoiEncore;
-	$paramsDecompo = $decompo->analyserParams($argv, &$etPuisQuoiEncore);
+	$paramsDecompo = $decompo->analyserParams($argv, $etPuisQuoiEncore);
 }
 else
 	$paramsDecompo = $decompo->analyserChamps(@$paramsDecompo);
