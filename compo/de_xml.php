@@ -100,12 +100,12 @@ class CompoADates extends CompoAProprietes
 		{
 			$autre = $this->classes['date'];
 			$this->classes['date'] = 'période';
-			$r = &parent::entrerDans(&$depuis, 'date', $attributs);
+			$r = &parent::entrerDans($depuis, 'date', $attributs);
 			$this->classes['date'] = $autre;
 			return $r;
 		}
 		else
-			return parent::entrerDans(&$depuis, $nom, $attributs);
+			return parent::entrerDans($depuis, $nom, $attributs);
 	}
 }
 
@@ -178,7 +178,7 @@ TERMINE
 	function composer($params)
 	{
 		if(!array_key_exists('chemin', $params)) { /* À FAIRE: au secours, au secours, qu'est-ce que je fais, là? */ die; }
-		$this->chargeur->charger($params['chemin'], 'cv', &$this);
+		$this->chargeur->charger($params['chemin'], 'cv', $this);
 		return $this->données;
 	}
 	
@@ -211,7 +211,7 @@ class Catégorie extends CompoAProprietes
 			return $this->courant;
 		}
 		else
-			return parent::entrerDans(&$depuis, $nom, $attributs);
+			return parent::entrerDans($depuis, $nom, $attributs);
 	}
 	
 	function sortirDe(&$objet, $nom)
