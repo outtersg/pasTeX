@@ -82,13 +82,17 @@ td.categorie
 {
 	position: absolute;
 	width: 0.5em;
-	background: rgba(0, 0, 255, .5);
-	border: 1px solid #FFFFFF;
+	background: #DFDFFF;
+	background: radial-gradient(rgba(255, 255, 255, .25), rgba(0, 0, 255, .25));
+	border-top: 1px solid #FFFFFF;
+	border-bottom: 1px solid #FFFFFF;
+	border-radius: 0.5em;
 }
 
 .projet:hover .afftemps
 {
-	background: rgba(255, 63, 0, .5);
+	background: #FFDFBF;
+	background: rgba(255, 63, 0, .25);
 }
 
 .jonction
