@@ -193,6 +193,27 @@ $affs[] = implode(', ', $aff);
 		return $resultat;
 	}
 	
+	/**
+	 * Tri par milieu de moment.
+	 * En effet, nos Bézier font un peu bazar, on va donc essayer d'en mettre le maximum en face de leur ligne de temps. Idéalement, un JS replacerait les blocs de texte en fonction (en partant des plus ténus, et en tablant sur le fait que ceux qui couvrent une immense période finiront par trouver un petit trou où se caser).
+	 */
+	protected function _positionsMilieux($expériences, $lignesDeTemps)
+	{
+		$milieux = array();
+		foreach($expériences as $numProjet => $projet)
+		{
+			$moments = array();
+			foreach($projet->date as $moment)
+				$moments[] = array($moment->d, $moment->f);
+			$moments = periode_union($moments);
+			$debut = Date::calculerAvecIndefinis(Date::mef($moments[0]), false);
+			$fin = Date::calculerAvecIndefinis(Date::mef($moments[1]), true);
+			$milieu = $debut + 2 * $fin; // En fait à 1/3 de la fin. On donne plus d'importance à la fin de projet qu'au début, pour le classement.
+			$milieux[$numProjet] = $milieu;
+		}
+		return $milieux;
+	}
+	
 	public function trierSurCentreMoments($d0, $d1)
 	{
 		return $d0['centre'] - $d1['centre'];
@@ -345,24 +366,13 @@ $affs[] = implode(', ', $aff);
 		echo '<svg id="jonctionlignestemps" style="position: absolute; width: '.(1.5 * $nGroupes + 1).'em; height: 100%; position: absolute;"></svg>'."\n";
 		$pasLePremier = false;
 		
-		/* Tri par milieu de moment. En effet, nos Bézier font un peu bazar, on va donc essayer d'en mettre le maximum en face de leur ligne de temps. Idéalement, un JS replacerait les blocs de texte en fonction (en partant des plus ténus, et en tablant sur le fait que ceux qui couvrent une immense période finiront par trouver un petit trou où se caser). */
+		/* Tri. */
 		
-		$milieux = array();
-		foreach($donnees->expérience->projet as $numProjet => $projet)
-		{
-			$moments = array();
-			foreach($projet->date as $moment)
-				$moments[] = array($moment->d, $moment->f);
-			$moments = periode_union($moments);
-			$debut = Date::calculerAvecIndefinis(Date::mef($moments[0]), false);
-			$fin = Date::calculerAvecIndefinis(Date::mef($moments[1]), true);
-			$milieu = ($debut + $fin) / 2;
-			$milieux[$numProjet] = $milieu;
-		}
+		$positions = $this->_positionsMilieux($donnees->expérience->projet, $lignesDeTemps);
 		
-		arsort($milieux, SORT_NUMERIC);
+		arsort($positions, SORT_NUMERIC);
 		
-		foreach($milieux as $numProjet => $milieu)
+		foreach($positions as $numProjet => $position)
 		{
 			$francheRigolade = $projet = $donnees->expérience->projet[$numProjet];
 			if($pasLePremier) echo '<div class="delair"> </div>'."\n"; else $pasLePremier = true;
