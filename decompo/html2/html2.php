@@ -218,6 +218,130 @@ $affs[] = implode(', ', $aff);
 		return $milieux;
 	}
 	
+	protected function _positionsDebroussaillage($expériences, $lignesDeTemps)
+	{
+		$penaliteTraverseeCouche = 20; // Si la flèche joignant le bloc de texte à son segment temporel doit traverser les segments d'autres moments.
+		$penaliteVoisinGenant = 80; // Si le texte du moment, inséré ici, empiéterait sur un autre déjà placé pas loin.
+		
+		/* Calcul du poids du texte de chaque moment par rapport à l'ensemble. */
+		
+		// Pour le moment, 1 paragraphe = 1 unité de poids.
+		/* À FAIRE: affiner. Mais sur quel critère? Nombre de caractères? Nombre de lignes? Tout dépend du côté client (polices utilisées, etc.). Idéalement on réaffinerait côté Javascript, à partir de la hauteur réelle de chaque bloc, ce qu'on estime ici. */
+		$poids = array();
+		foreach($lignesDeTemps as $segment)
+			$poids[$segment['moment']] = 1;
+		$poidsTotal = count($poids);
+		
+		/* On repère l'ensemble des "plages". Une plage = une période commune à un ensemble défini de moments. C'est le découpillage de toutes les périodes par elles-mêmes. */
+		
+		$points = array();
+		$pointsPonctuels = array(); // On mettra là-dedans tous les points qui servent à la fois de début et de fin à une période: il leur faudra un traitement spécial, du genre une plage rien que pour lui de 0 seconde.
+		foreach($lignesDeTemps as $segment)
+		{
+			$points[] = $d = $segment['debut'];
+			$points[] = $f = $segment['fin'];
+			if($d === $f)
+				$pointsPonctuels[] = $d;
+		}
+		sort($points, SORT_NUMERIC);
+		$points = array_unique($points, SORT_NUMERIC);
+		
+		$plages = array();
+		$dernier = null;
+		foreach($points as $point)
+		{
+			if($dernier !== null)
+				$plages[] = array('d' => $dernier, 'f' => $point);
+			if(in_array($point, $pointsPonctuels))
+				$plages[] = array('d' => $point, 'f' => $point);
+			$dernier = $point;
+		}
+		
+		$tempsTotal = $point - $points[0];
+		
+		/* Quelle place (en équivalent secondes) prend chaque bloc de texte en face de la ligne de temps? */
+		
+		$equivalentsTemps = array();
+		foreach($poids as $numMoment => $poid)
+			$equivalentsTemps[$numMoment] = $tempsTotal * $poid / $poidsTotal;
+		
+		/* Remplissage des plages: on marque, segment par segment, l'ensemble des plages couvertes. */
+		
+		foreach($lignesDeTemps as $numSegment => $segment)
+			foreach($plages as & $ptrPlage)
+				if($ptrPlage['d'] == $ptrPlage['f'] && $ptrPlage['d'] == $segment['debut'] && $segment['fin'] == $segment['debut'])
+					$ptrPlage['segments'][$numSegment] = 0;
+				else if($ptrPlage['d'] < $segment['fin'] && $ptrPlage['f'] > $segment['debut'])
+					$ptrPlage['segments'][$numSegment] = 0;
+		
+		/* On donne maintenant à chaque moment une note pénalisante en fonction de sa place. */
+		
+		foreach($plages as & $ptrPlage)
+		{
+			$couches = array();
+			foreach($ptrPlage['segments'] as $numSegment => $penalite)
+				$couches[$lignesDeTemps[$numSegment]['groupe']][] = $numSegment;
+			krsort($couches, SORT_NUMERIC); // Chaque groupe qui possède un bloc constitue une couche à traverser pour les groupes de numéro inférieur (les groupes étant affichés par ordre croissant).
+			$nCouchesTraversees = 0;
+			foreach($couches as $numSegmentsCouche)
+			{
+				foreach($numSegmentsCouche as $numSegment)
+					$ptrPlage['segments'][$numSegment] += $penaliteTraverseeCouche * $nCouchesTraversees;
+				++$nCouchesTraversees;
+			}
+		}
+			
+		
+		/* Placement des segments (de texte) en face des plages. */
+		
+		$placements = array();
+		
+		while(count($placements) < count($equivalentsTemps))
+		{
+			/* On cherche le moment qui a le pire des meilleurs placements (on le place vite vite vite, de peur que ce qu'il a de meilleur, qui est déjà objectivement dégueulasse, devienne encore pire). */
+			
+			$meilleurs = array();
+			foreach($plages as $plage)
+				foreach($plage['segments'] as $numSegment => $penalite)
+				{
+					$numMoment = $lignesDeTemps[$numSegment]['moment'];
+					if(!isset($meilleurs[$numMoment]) || $meilleurs[$numMoment] > $penalite)
+					{
+						$meilleurs[$numMoment] = $penalite;
+						$meilleursTemps[$numMoment] = ($plage['d'] + $plage['f']) / 2;
+					}
+				}
+			
+			arsort($meilleurs, SORT_NUMERIC);
+			
+			foreach($meilleurs as $numMoment => $note)
+			{
+				$placements[$numMoment] = $meilleursTemps[$numMoment];
+				break;
+			}
+			
+			/* On retire notre élu des files d'attente (on ne reviendra pas en arrière). */
+			
+			foreach($plages as & $ptrPlage)
+				foreach($ptrPlage['segments'] as $numSegment => $penalite)
+					if($lignesDeTemps[$numSegment]['moment'] == $numMoment)
+						unset($ptrPlage['segments'][$numSegment]);
+			
+			/* On applique maintenant des pénalités aux voisins, histoire qu'ils ne viennent empiéter chez nous que si vraiment ils n'ont pas d'autre solution. */
+			/* À FAIRE: le calcul devrait être fait plus strictement: si on place un bloc de texte A qui empiète sur une plage 0 qu'occuperait volontiers un texte B, il faut découper la plage 0 en deux sous-plages 1 et 2, avec "si B était centré sur 1, il n'empiéterait pas sur A centré sur la plage choisie", et 2 étant le complément (B empiéterait). Du coup seule la partie 2 de B recevrait une pénalité. L'inconvénient est que ça demande d'aller voir chaque segment alentour, puisque chacun est potentiellement plus ou moins grand que les autres (donc il y aurait autant de placements possibles pour la frontière que de segments existant: bonjour le découpillage final!). */
+			
+			// Pour le moment on se contente d'affecter toutes les plages situées autour de nous.
+			$debutPenalite = $placements[$numMoment] - $equivalentsTemps[$numMoment] / 2 - ($tempsTotal / count($equivalentsTemps)) / 2; // Autour de notre point, 1/2 de notre bloc + 1/2 du "bloc moyen".
+			$finPenalite = $placements[$numMoment] + $equivalentsTemps[$numMoment] / 2 + ($tempsTotal / count($equivalentsTemps)) / 2;
+			foreach($plages as & $ptrPlage)
+				if(($milieuPlage = ($ptrPlage['d'] + $ptrPlage['f']) / 2) >= $debutPenalite && $milieuPlage <= $finPenalite)
+					foreach($ptrPlage['segments'] as $numSegment => $penalite)
+						$ptrPlage['segments'][$numSegment] += $penaliteVoisinGenant;
+		}
+		
+		return $placements;
+	}
+	
 	public function trierSurCentreMoments($d0, $d1)
 	{
 		return $d0['centre'] - $d1['centre'];
