@@ -105,6 +105,9 @@ LignesTemps.calculer = function()
 	var courbe;
 	
 	var p = function(elem, droite) { var y0 = elem.offsetTop; var y1 = y0 + elem.offsetHeight; return { x: elem.offsetLeft + (droite ? elem.offsetWidth : 0), y0: y0, y1: y1, ym: (y0 + y1) / 2.0 }; }
+
+	while (svg.lastChild)
+		svg.removeChild(svg.lastChild);
 	
 	for(i in this.blocs)
 	{
