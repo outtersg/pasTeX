@@ -48,6 +48,7 @@ LignesTemps.jointureSimple = function(pTexte, pBloc)
 LignesTemps.jointurePotDEchap = function(pTexte, pBloc)
 {
 	var enFace = true;
+	var bout = 1; // 0: accolade; 1: pique: 2: puce.
 	var embouchureB = 2;
 	var courbeB = 30;
 	var courbeT = 30;
@@ -84,14 +85,31 @@ LignesTemps.jointurePotDEchap = function(pTexte, pBloc)
 	var pcBbas = { x: lt.a ? (ltbas.b - (viseeB.y + demieLargeurTube)) / lt.a : ptB.x, y: viseeB.y + demieLargeurTube }; // c: coude.
 	var pcBhaut = { x: lt.a ? (lthaut.b - (viseeB.y - demieLargeurTube)) / lt.a : ptB.x, y: viseeB.y - demieLargeurTube };
 	// Nos points de contrôle vont se trouver à l'intersection 
+	var xCourburePointe = pTexte.x - embouchureT / 2 - demieLargeurTube;
+	switch(bout)
+	{
+		case 0:
 	d += ' M '+pTexte.x+','+pTexte.y1+' C '+(pTexte.x - embouchureT)+','+pTexte.y1+' '+pTexte.x+','+pcTbas.y+' '+(pTexte.x - embouchureT)+','+pcTbas.y; // Accolade texte bas.
+			break;
+		case 1:
+			d += ' M '+(pTexte.x - embouchureT / 2)+','+ptT.y+' C '+xCourburePointe+','+pcTbas.y+' '+xCourburePointe+','+pcTbas.y+' '+ptT.x+','+pcTbas.y;
+			break;
+	}
 	d += ' C '+pcTbas.x+','+pcTbas.y+' '+pcTbas.x+','+pcTbas.y+' '+ptMbas.x+','+ptMbas.y; // Coude, et remontée jusqu'au pivot.
 	d += ' C '+pcBbas.x+','+pcBbas.y+' '+pcBbas.x+','+pcBbas.y+' '+(pBloc.x + embouchureB)+','+pcBbas.y;
 	d += ' C '+pBloc.x+','+pcBbas.y+' '+(pBloc.x + embouchureB)+','+pBloc.y1+' '+pBloc.x+' '+pBloc.y1;
 	d += ' L '+pBloc.x+','+pBloc.y0+' C '+(pBloc.x + embouchureB)+','+pBloc.y0+' '+pBloc.x+','+pcBhaut.y+' '+(pBloc.x + embouchureB)+','+pcBhaut.y; // Longement bloc + accolade bloc haute.
 	d += ' C '+pcBhaut.x+','+pcBhaut.y+' '+pcBhaut.x+','+pcBhaut.y+' '+ptMhaut.x+','+ptMhaut.y;
 	d += ' C '+pcThaut.x+','+pcThaut.y+' '+pcThaut.x+','+pcThaut.y+' '+(pTexte.x - embouchureT)+','+pcThaut.y;
+	switch(bout)
+	{
+		case 0:
 	d += ' C '+pTexte.x+','+pcThaut.y+' '+(pTexte.x - embouchureT)+','+pTexte.y0+' '+pTexte.x+','+pTexte.y0;
+			break;
+		case 1:
+			d += ' C '+xCourburePointe+','+pcThaut.y+' '+xCourburePointe+','+pcThaut.y+' '+(pTexte.x - embouchureT / 2)+','+ptT.y;
+			break;
+	}
 	d += ' z';
 	return d;
 };
