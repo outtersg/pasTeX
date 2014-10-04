@@ -58,6 +58,8 @@ LignesTemps.jointurePotDEchap = function(pTexte, pBloc)
 	var d = '';
 	// Le tube central est composé de deux lignes parallèles à a * x + y = b (chacune avec un offset de n pixels par rapport à cette ligne centrale).
 	var yPtB = pBloc.y1 - pBloc.y0 < 20 || ! enFace ? pBloc.ym : (pTexte.ym < pBloc.y0 + 10 ? pBloc.y0 + 10 : (pTexte.ym > pBloc.y1 - 10 ? pBloc.y1 - 10 : pTexte.ym)); // On essaie de placer le point d'arrivée au bloc le plus en face possible de celui de départ du texte.
+	var yBbas = Math.min(yPtB + 20, Math.max(pBloc.y1 - 3, yPtB));
+	var yBhaut = Math.max(yPtB - 20, Math.min(pBloc.y0 + 3, yPtB));
 	var ptB = { x: pBloc.x + embouchureB, y: yPtB };
 	var ptT = { x: pTexte.x - embouchureT, y: pTexte.ym };
 	var viseeB = { x: pBloc.x + embouchureB + courbeB, y: yPtB };
@@ -97,8 +99,8 @@ LignesTemps.jointurePotDEchap = function(pTexte, pBloc)
 	}
 	d += ' C '+pcTbas.x+','+pcTbas.y+' '+pcTbas.x+','+pcTbas.y+' '+ptMbas.x+','+ptMbas.y; // Coude, et remontée jusqu'au pivot.
 	d += ' C '+pcBbas.x+','+pcBbas.y+' '+pcBbas.x+','+pcBbas.y+' '+(pBloc.x + embouchureB)+','+pcBbas.y;
-	d += ' C '+pBloc.x+','+pcBbas.y+' '+(pBloc.x + embouchureB)+','+pBloc.y1+' '+pBloc.x+' '+pBloc.y1;
-	d += ' L '+pBloc.x+','+pBloc.y0+' C '+(pBloc.x + embouchureB)+','+pBloc.y0+' '+pBloc.x+','+pcBhaut.y+' '+(pBloc.x + embouchureB)+','+pcBhaut.y; // Longement bloc + accolade bloc haute.
+	d += ' C '+pBloc.x+','+pcBbas.y+' '+(pBloc.x + embouchureB)+','+yBbas+' '+pBloc.x+' '+yBbas;
+	d += ' L '+pBloc.x+','+yBhaut+' C '+(pBloc.x + embouchureB)+','+yBhaut+' '+pBloc.x+','+pcBhaut.y+' '+(pBloc.x + embouchureB)+','+pcBhaut.y; // Longement bloc + accolade bloc haute.
 	d += ' C '+pcBhaut.x+','+pcBhaut.y+' '+pcBhaut.x+','+pcBhaut.y+' '+ptMhaut.x+','+ptMhaut.y;
 	d += ' C '+pcThaut.x+','+pcThaut.y+' '+pcThaut.x+','+pcThaut.y+' '+(pTexte.x - embouchureT)+','+pcThaut.y;
 	switch(bout)
