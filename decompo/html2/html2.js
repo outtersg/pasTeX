@@ -49,7 +49,7 @@ LignesTemps.jointurePotDEchap = function(pTexte, pBloc)
 {
 	var enFace = true;
 	var bout = 1; // 0: accolade; 1: pique: 2: puce.
-	var boutSegment = 0; // 0: accolade; 1: embouchure.
+	var boutSegment = 1; // 0: accolade; 1: embouchure.
 	var embouchureB = 2;
 	var courbeB = 30;
 	var courbeT = 30;
