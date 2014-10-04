@@ -55,6 +55,15 @@ LignesTemps.jointurePotDEchap = function(pTexte, pBloc)
 	var embouchureT = 30;
 	var demieLargeurTube = 1;
 	
+	if(pTexte.x - pBloc.x < embouchureB + courbeB + courbeT + embouchureT)
+	{
+		var proportion = (pTexte.x - pBloc.x) / (embouchureB + courbeB + courbeT + embouchureT);
+		embouchureB *= proportion;
+		courbeB *= proportion;
+		courbeT *= proportion;
+		embouchureT *= proportion;
+	}
+	
 	var d = '';
 	// Le tube central est composé de deux lignes parallèles à a * x + y = b (chacune avec un offset de n pixels par rapport à cette ligne centrale).
 	var yPtB = pBloc.y1 - pBloc.y0 < 20 || ! enFace ? pBloc.ym : (pTexte.ym < pBloc.y0 + 10 ? pBloc.y0 + 10 : (pTexte.ym > pBloc.y1 - 10 ? pBloc.y1 - 10 : pTexte.ym)); // On essaie de placer le point d'arrivée au bloc le plus en face possible de celui de départ du texte.
