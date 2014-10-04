@@ -49,6 +49,7 @@ LignesTemps.jointurePotDEchap = function(pTexte, pBloc)
 {
 	var enFace = true;
 	var bout = 1; // 0: accolade; 1: pique: 2: puce.
+	var boutSegment = 0; // 0: accolade; 1: embouchure.
 	var embouchureB = 2;
 	var courbeB = 30;
 	var courbeT = 30;
@@ -108,8 +109,8 @@ LignesTemps.jointurePotDEchap = function(pTexte, pBloc)
 	}
 	d += ' C '+pcTbas.x+','+pcTbas.y+' '+pcTbas.x+','+pcTbas.y+' '+ptMbas.x+','+ptMbas.y; // Coude, et remontée jusqu'au pivot.
 	d += ' C '+pcBbas.x+','+pcBbas.y+' '+pcBbas.x+','+pcBbas.y+' '+(pBloc.x + embouchureB)+','+pcBbas.y;
-	d += ' C '+pBloc.x+','+pcBbas.y+' '+(pBloc.x + embouchureB)+','+yBbas+' '+pBloc.x+' '+yBbas;
-	d += ' L '+pBloc.x+','+yBhaut+' C '+(pBloc.x + embouchureB)+','+yBhaut+' '+pBloc.x+','+pcBhaut.y+' '+(pBloc.x + embouchureB)+','+pcBhaut.y; // Longement bloc + accolade bloc haute.
+	d += ' C '+pBloc.x+','+pcBbas.y+' '+(boutSegment == 1 ? pBloc.x+' '+pcBbas.y : (pBloc.x + embouchureB)+','+yBbas)+' '+pBloc.x+' '+yBbas;
+	d += ' L '+pBloc.x+','+yBhaut+' C '+(boutSegment == 1 ? pBloc.x+' '+pcBhaut.y : (pBloc.x + embouchureB)+','+yBhaut)+' '+pBloc.x+','+pcBhaut.y+' '+(pBloc.x + embouchureB)+','+pcBhaut.y; // Longement bloc + accolade bloc haute.
 	d += ' C '+pcBhaut.x+','+pcBhaut.y+' '+pcBhaut.x+','+pcBhaut.y+' '+ptMhaut.x+','+ptMhaut.y;
 	d += ' C '+pcThaut.x+','+pcThaut.y+' '+pcThaut.x+','+pcThaut.y+' '+(pTexte.x - embouchureT)+','+pcThaut.y;
 	switch(bout)
