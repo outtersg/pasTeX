@@ -461,6 +461,11 @@ $affs[] = implode(', ', $aff);
 		$this->terminerSection();
 	}
 	
+	public function descriptionPeriode($entree)
+	{
+		return pasTeX_descriptionPeriode($entree->d, $entree->f);
+	}
+	
 	function pondreProjets($donnees)
 	{
 		if(!array_key_exists('expérience', $donnees)) return;
@@ -505,13 +510,7 @@ $affs[] = implode(', ', $aff);
 			$francheRigolade = $projet = $donnees->expérience->projet[$numProjet];
 			if($pasLePremier) echo '<div class="delair"> </div>'."\n"; else $pasLePremier = true;
 			echo '<div id="p'.$numProjet.'" class="projet" style="margin-left: '.(1.5 * $nGroupes + 1).'em;">'."\n";
-			/* Ce modèle-ci ne nous permet pas d'afficher plusieurs périodes
-			 * pour le même projet, on fait donc la période englobante du tout. */
-			$moments = array();
-			foreach($francheRigolade->date as $moment)
-				$moments[] = array($moment->d, $moment->f);
-			$moments = periode_union($moments);
-			echo '<div class="dateexp">'.pasTeX_descriptionPeriode($moments[0], $moments[1]).'</div>'."\n";
+			echo '<div class="dateexp">'.implode('; ', array_map(array($this, 'descriptionPeriode'), $projet->date)).'</div>'."\n";
 			$sociétés = null;
 			echo '<div class="titreexp">';
 			if(isset($francheRigolade->société))
