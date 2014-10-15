@@ -203,13 +203,37 @@ class Émetteur extends NavigateurHiérarchique
 		return true;
 	}
 	
-	/* Envoie au client une info de l'étape en cours. */
-	function signaler($étape, $chose)
+	protected function _demander($quoi)
 	{
+		if(isset($GLOBALS['argv']))
+		{
+			echo $quoi." ";
+			$r = fgets(STDIN);
+			return trim($r);
+		}
+		// À FAIRE: la version HTTP.
+	}
+	
+	protected function _signaler($chose, $complément = null)
+	{
+		return $this->signaler(0, $chose, $complément);
+	}
+	
+	/* Envoie au client une info de l'étape en cours. */
+	function signaler($étape, $chose, $complément = null)
+	{
+		if(isset($GLOBALS['argv']))
+		{
+			echo (isset($complément) && isset($this->_dernierSignalement) && $this->_dernierSignalement == $chose ? "\r" : "\n").$chose.(isset($complément) ? ' '.$complément : '');
+			$this->_dernierSignalement = $chose;
+		}
+		else
+		{
 		if(array_key_exists('clientdemandeur', $_SESSION['emetteur']))
 		{
 			print $étape.':'.$chose."\n";
 			$this->rienPondu = false;
+			}
 		}
 	}
 	
