@@ -291,7 +291,7 @@ class Émetteur extends NavigateurHiérarchique
 		 * appelant $this->retourAvancéeUnCoup($manquant) juste avant le return.
 		 */
 		
-		$this->gérerÉtape($étape, $manquant, $this->explo->page, &$cestdéjàpasmal, &$mouvement, &$params);
+		$this->gérerÉtape($étape, $manquant, $this->explo->page, /*&*/ $cestdéjàpasmal, /*&*/ $mouvement, /*&*/ $params);
 		if($cestdéjàpasmal == 2)
 			return $this->retourAvancéeUnCoup($manquant);
 		
@@ -364,7 +364,7 @@ class Émetteur extends NavigateurHiérarchique
 		 * la page calculée par 3; à la nouvelle, elle reçoit celle en sortie de
 		 * 1, ce qui est plus logique). */
 		$page = $this->explo->données['pos'] === 0 && count($this->navigo) > 1 ? $this->navigo[count($this->navigo) - 2]->page : $this->explo->page; // Si on est chef de file, la page nous est procurée par le père; sinon par le précédent dans la file des étapes, qui travaille sur le même navigo.
-		$this->préparerÉtape($étape, $manquant, &$page, &$cestdéjàpasmal, &$mouvement, &$params);
+		$this->préparerÉtape($étape, $manquant, /*&*/ $page, /*&*/ $cestdéjàpasmal, /*&*/ $mouvement, /*&*/ $params);
 		if($this->petitÀPetit && $cestdéjàpasmal) // Si on en a déjà trop fait…
 			return $this->retourAvancéeUnCoup($manquant); // … on quitte, en donnant un minimum d'affichage.
 		return true;
