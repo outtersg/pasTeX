@@ -97,8 +97,8 @@ class OpenOffice
 		system("cat '{$dossierTemp}/content.pre.xml' > '{$dossierTemp}/content.xml'");
 		$fichier = popen("tr -d '\\011\\012' >> '{$dossierTemp}/content.xml'", 'w');
 		$this->pondreEntete($fichier, $donnees, @$params['boite']);
-		$this->pondreEtudes($fichier, $donnees);
 		$this->pondreProjets($fichier, $donnees);
+		$this->pondreEtudes($fichier, $donnees);
 		$this->pondreLangues($fichier, $donnees);
 		$this->pondreConnaissances($fichier, $donnees);
 		$this->pondreInteret($fichier, $donnees);
