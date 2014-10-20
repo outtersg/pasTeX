@@ -106,7 +106,7 @@ class OpenOffice
 		pclose($fichier);
 		system("cat '{$dossierTemp}/content.post.xml' >> '{$dossierTemp}/content.xml'");
 		$sortie = @$this->_params['pdf'] ? $nomTemp.'.sortie.odt' : '-';
-		system("( cd '{$dossierTemp}' && zip -r -q {$sortie} . )");
+		system("( cd '{$dossierTemp}' && ( ( command -v zip && zip -r -q {$sortie} . ) || ( 7za a /tmp/temp.$$.zip . > /dev/null && cat /tmp/temp.$$.zip && rm /tmp/temp.$$.zip ) ) )");
 		if(@$this->_params['pdf']) { ooo_enPDF($sortie); system("rm '{$sortie}'"); }
 		system("rm -R '{$dossierTemp}' '{$nomTemp}'");
 	}
