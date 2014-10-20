@@ -110,15 +110,19 @@ div.dateexp
 	font-size: 75%;
 }
 
+.titreexp h3
+{
+	display: inline;
+}
+
 div.titreexp
 {
-	font-size: 150%;
 	font-style: bold;
 }
 
 div.descrexp
 {
-	margin-left: 40px;
+	display: inline;
 	font-style: italic;
 }
 

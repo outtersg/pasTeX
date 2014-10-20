@@ -466,6 +466,14 @@ $affs[] = implode(', ', $aff);
 		return pasTeX_descriptionPeriode($entree->d, $entree->f);
 	}
 	
+	/**
+	 * Pour ne pas <li>er les éléments d'une liste (liste horizontale, super mal gérée par le CSS, comme à peu près tout ce qui sort du strict minimum auquel les gars qui ont pondu le CSS ont pu songer d'ailleurs).
+	 */
+	public function _palier($ligne)
+	{
+		return '• '.htmlspecialchars($ligne, ENT_NOQUOTES).' ';
+	}
+	
 	function pondreProjets($donnees)
 	{
 		if(!array_key_exists('expérience', $donnees)) return;
@@ -485,7 +493,7 @@ $affs[] = implode(', ', $aff);
 		
 		$nom = 'Expérience et Projets';
 ?>
-	<div class="section .projets">
+	<div class="section projets">
 		<?php if(!@$this->params['ie']) { ?>
 		<img src="decompo/html/hd.ocre.png" style="position: absolute; right: 0px; top: 0px; z-index: 3;" alt="décoration"/>
 		<img src="decompo/html/bg.ocre.png" style="position: absolute; left: 0px; bottom: 0px; z-index: 3;" alt="décoration"/>
@@ -520,21 +528,13 @@ $affs[] = implode(', ', $aff);
 				//	$société = htmlspecialchars($société, ENT_NOQUOTES);
 				//	$sociétés = $sociétés === null ? $société : $sociétés.', '.$société;
 				//}
-			if(isset($francheRigolade->nom)) echo htmlspecialchars($francheRigolade->nom, ENT_NOQUOTES).($sociétés === null ? '' : ' ('.$sociétés.')');
-			else if($sociétés != null) echo($sociétés);
+			isset($projet->nom) && $sociétés = htmlspecialchars($projet->nom, ENT_NOQUOTES).($sociétés ? ' ('.$sociétés.')' : '');
+			if($sociétés) echo '<h3>'.$sociétés.'</h3>';
+			if(isset($projet->description)) echo '<div class="descrexp">'.htmlspecialchars($sociétés ? ': '.$projet->description : pasTeX_maj($projet->description), ENT_NOQUOTES).'</div>'."\n";
 			echo '</div>'."\n";
 			
-			if(isset($francheRigolade->description))
-				echo '<div class="descrexp">'.htmlspecialchars(pasTeX_maj($francheRigolade->description), ENT_NOQUOTES).'</div>'."\n";
 			echo '<div class="exp">';
-			$desChoses = false;
-			foreach($francheRigolade->tâche as $tâche)
-			{
-				if(!$desChoses) $tâche = pasTeX_maj($tâche);
-				echo ($desChoses ? '; ' : '').htmlspecialchars($tâche, ENT_NOQUOTES); /* À FAIRE: ne garder la majuscule en début que pour la première; virer les points sauf celui de la dernière. */
-				$desChoses = true;
-			}
-			if($desChoses) echo '.';
+			echo implode('', array_map(array($this, '_palier'), $projet->tâche));
 			
 			foreach($lignesDeTemps as $numSegment => $segmentDeTemps)
 				if($segmentDeTemps['moment'] == $numProjet)
