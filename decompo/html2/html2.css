@@ -99,7 +99,7 @@ td.categorie
 	fill: rgba(0, 0, 255, 0.125);
 }
 
-.projet:hover .jonction
+.projet:hover .jonction, .jonctionHover
 {
 	fill: #BFBFDF;
 }

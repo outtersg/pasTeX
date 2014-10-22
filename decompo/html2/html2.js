@@ -143,6 +143,7 @@ LignesTemps.calculer = function()
 	{
 		courbe = document.createElementNS(ensvg, 'path');
 		courbe.setAttributeNS(null, 'class', 'jonction');
+		courbe.setAttributeNS(null, 'id', 'jonction'+i);
 		d = '';
 		pTexte = p(this.blocs[i][0]);
 		for(j = this.blocs[i].length; --j >= 1;) // Le bloc 0 est le texte, à lier à tous les autres qui sont la représentation graphique.
@@ -154,3 +155,39 @@ LignesTemps.calculer = function()
 		svg.appendChild(courbe);
 	}
 };
+
+/*--- Coloriage dynamique des liens ---*/
+/* Une solution propre consisterait à embarquer chaque lien dans son propre SVG, inséré comme fils du <div> projet (tout comme l'est déjà le <div> barre de temps); on pourrait alors utiliser une simple règle CSS ".projet:hover .jonction". Néanmoins je ne suis pas certain qu'il soit très judicieux de créer une multitude de SVG, un par lien, qui se recouvrent les uns les autres (car les liens courent en se croisant). Du coup une solution Javascript (pour modifier la classe de la jonction) est un pis-aller acceptable. */
+
+LignesTemps.suivreSouris = function(e)
+{
+	// Une gymnastique pour essayer de convertir notre mouseout en mouseleave.
+	e || (e = window.event);
+	var els = [ e.target ? e.target : e.srcElement, e.relatedTarget ? e.relatedTarget : e.toElement ];
+	var i;
+	for(i = 2; --i >= 0;)
+		while(els[i] && els[i] !== els[i].parentNode && els[i].getAttributeNS && (' '+els[i].getAttributeNS(null, 'class')+' ').indexOf(' projet ') < 0)
+			els[i] = els[i].parentNode;
+	if(els[0] !== els[1] && els[0].id)
+	{
+		var jonction = document.getElementById('jonction'+els[0].id);
+		if(e.type == 'mouseover')
+			jonction.setAttributeNS(null, 'class', 'jonction jonctionHover');
+		else
+			jonction.setAttributeNS(null, 'class', 'jonction');
+	}
+	return false;
+};
+
+var sur = function(objet, evenement, abonne)
+{
+	if(objet.addEventListener)
+		objet.addEventListener(evenement, abonne, false);
+	else if(objet.attachEvent)
+		objet.attachEvent('on'+evenement, abonne);
+};
+sur(window, 'load', function()
+{
+	sur(document.getElementsByClassName('projets')[0], 'mouseover', LignesTemps.suivreSouris);
+	sur(document.getElementsByClassName('projets')[0], 'mouseout', LignesTemps.suivreSouris);
+});
