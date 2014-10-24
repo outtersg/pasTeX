@@ -129,9 +129,6 @@ class Smile extends Émetteur
 	
 	function gérerÉtape($étape, $manquant, &$page, &$cestdéjàpasmal, &$mouvement, &$params)
 	{
-$f = fopen('/tmp/h', 'a');
-fwrite($f, 'COUCOUCOU'.$étape.serialize($manquant)."\n");
-fclose($f);
 		switch($étape)
 		{
 			case 0: // Connexion.
@@ -228,9 +225,6 @@ fclose($f);
 				{
 					/* Champs HTML à remplir */
 					$attributs = $this->obtenirChampsAttributsEZ($this->explo->données['champs'], $page);
-$f = fopen('/tmp/f.html', 'a');
-fwrite($f, $page.print_r($this->explo->données['champs'], true).print_r($attributs, true)."\n");
-fclose($f);
 					preg_match_all('#<form[ >].*</form>#sU', $page, $réponses);
 					foreach($réponses[0] as $réponse)
 						if(preg_match('#<form[^>]*action="([^"]*)".*PublishButton.*</form>#sU', $réponse, $réponsePrécise))
@@ -250,15 +244,6 @@ fclose($f);
 							$champs[$aRemplir[1]] = $contenu[$nom];
 						}
 					$page = $this->explo->aller($réponsePrécise[1], $champs);
-if($étape == 4)
-{
-$f = fopen('/tmp/h', 'a');
-fwrite($f, $this->explo->données['numExp'].' '.$réponsePrécise[1]."\n");
-fclose($f);
-$f = fopen('/tmp/j'.$this->explo->données['numExp'], 'w');
-fwrite($f, $page);
-fclose($f);
-}
 					$cestdéjàpasmal = 1;
 					if($this->explo->données['numExp'] > 0) // Encore des projets à rentrer, on ne laisse pas encore la main à l'étape suivante.
 						$mouvement = 0;
@@ -402,11 +387,6 @@ fclose($f);
 		/* Ce modèle-ci ne nous permet pas d'afficher plusieurs périodes
 		 * pour le même projet, on fait donc la période englobante du tout. */
 		$moments = pasTeX_unionPeriodes($francheRigolade->date);
-$f = fopen('/tmp/h', 'a');
-fwrite($f, print_r($francheRigolade->date, true));
-fwrite($f, print_r($moments, true));
-fwrite($f, $champs['duree']."\n");
-fclose($f);
 		$champs['an'] = $moments[0][0];
 		$champs['mois'] = sprintf('%02.2d', $moments[0][1] > 0 ? $moments[0][1] : 1);
 		if(!$moments[1])
