@@ -35,14 +35,14 @@ class Smile extends Émetteur
 	{
 		$retour = array();
 		
-		if($argv[$position] && ($p = strpos($argv[$position], ':')) !== false)
+		if(@$argv[$position] && ($p = strpos($argv[$position], ':')) !== false)
 		{
 			$retour['id'] = substr($argv[$position], 0, $p);
 			$retour['mdp'] = substr($argv[$position], $p + 1);
 			++$position;
 		}
 		
-		if($argv[$position])
+		if(@$argv[$position])
 		{
 			$retour['chemincv'] = $argv[$position];
 			++$position;
@@ -75,7 +75,8 @@ class Smile extends Émetteur
 				$this->pondreContenuPageAjax($champ, $args);
 				break;
 			case 1:
-				$params = $this->explo->données['affcv'];
+				$params = @$this->explo->données['affcv'];
+				$params || $params = array();
 				if(count($params) != 0) // Sinon, c'est qu'on a dû se faire expirer la session Monster au nez.
 				{
 					$this->pondreContenuLiensÉmission($champ, $params);
@@ -362,7 +363,7 @@ class Smile extends Émetteur
 		
 		/* Remplissage des autres champs. */
 		
-		$champs['boite'] = formu_conc($francheRigolade->société, 100, ' / ', true);
+		$champs['boite'] = formu_conc(isset($francheRigolade->société) ? $francheRigolade->société : '-', 100, ' / ', true);
 		$champs['boiboite'] = '-'; /* À FAIRE */
 		
 		$description = null;
@@ -376,7 +377,7 @@ class Smile extends Émetteur
 		$champs['projet'] = $description;
 		
 		$description = '';
-		if($francheRigolade->rôle)
+		if(isset($francheRigolade->rôle))
 			$description = pasTeX_maj(formu_conc($francheRigolade->rôle, 0x100, '; '));
 		for($i = -1, $n = count($francheRigolade->tâche); ++$i < $n;)
 			$description .= ($i > 0 || $description ? "\n" : '').'- '.$francheRigolade->tâche[$i];
