@@ -158,12 +158,18 @@ class Smile extends Émetteur
 			case 7: // Récupération de la page de modification des connaissances.
 				if($manquant <= 3) // Si notre session a déjà tous les renseignements nécessaires, mais qu'on est encore dans l'interface de paramétrage, il nous faut laisser au compo le temps de charger le CV.
 					return $cestdéjàpasmal = 1;
-				$page = $this->récupérer($params['liens'][self::$modules[$étape]]);
+				$page = ''; // Au 2014-03-11, plus trace de la page d'ajout de connaissances.
+				//$page = $this->récupérer($params['liens'][self::$modules[$étape]]);
 				$mouvement = 1;
 				break;
 			case 5: // Suppression d'un projet.
 			case 8: // Suppression d'une connaissance.
 				$mouvement = 1;
+				if(!isset($this->explo->données['supprimable'])) // Pour des écrans qui ont été supprimés de l'interface (simplification), on passe.
+				{
+					$cestdéjàpasmal = 0;
+					break;
+				}
 				if(count($z = $this->explo->données['supprimable']))
 				{
 					if(!array_key_exists('numExp', $this->explo->données))
@@ -187,6 +193,11 @@ class Smile extends Émetteur
 			case 4: // Ajout d'un projet.
 			case 9: // Ajout d'une connaissance.
 				$mouvement = 1;
+				if(!isset($this->explo->données['adresse'])) // Certaines sections ont disparu du CV-type. On ne tente pas de les remplir si elles n'ont pas été détectées.
+				{
+					$cestdéjàpasmal = 1;
+					break;
+				}
 				$page = $this->explo->aller($this->explo->données['adresse'], $this->explo->données['formu']);
 				if(!array_key_exists('numExp', $this->explo->données))
 				{
@@ -200,8 +211,10 @@ class Smile extends Émetteur
 								$this->explo->données['champs'] = array
 								(
 									'boite' => 'Nom de la Soci.t.',
-									'an' => 'Ann.e de d.but',
-									'mois' => 'mois de d.but',
+									'an' => 'Ann.e de d.but <',
+									'an2' => 'Ann.e de d.but..OBSO',
+									'mois' => 'Mois de d.but <',
+									'mois2' => 'mois de d.but..OBSO',
 									'duree' => 'Dur.e',
 									'boiboite' => 'Description de la Soci.t.',
 									'projet' => 'Description du Projet',
@@ -288,9 +301,14 @@ class Smile extends Émetteur
 					case 5: $machin = 'de projet'; $liste = 'projets'; break;
 					case 8: $machin = 'de connaissance'; break;
 				}
+				if(isset($liste))
+				{
 				$this->explo->données['supprimable'] = $supp[$liste];
 				if(count($supp[$liste])) $this->signaler('Suppression '.$machin, null);
 				else $cestdéjàpasmal = false; // Si on ne dit pas ça (qu'on compte encore faire quelque chose), la fin de la procédure va se croire obligée de sortir n'importe quoi pour rassurer l'utilisateur; or ce n'importe quoi va faire perdre les infos de session.
+				}
+				else
+					$cestdéjàpasmal = false;
 				break;
 			case 9: // Ajout d'une connaissance.
 				/* Trop chiant de tester s'il faut signaler ou non. */
@@ -343,6 +361,8 @@ class Smile extends Émetteur
 		foreach($champs as $dest => $signal)
 		{
 			$r = preg_match('#'.$signal.'.*<(input|textarea).*name="([^"]*)".*<input.*hidden.*name="ContentObjectAttribute_id.*".*value="([^"]*)"#sU', $page, $réponses, 0);
+			if(!isset($réponses[3])) // Champ vraisemblablement supprimé par souci de simplification de l'interface. On n'en tient pas rigueur.
+				continue;
 			$retour[$dest] = array($réponses[3], $réponses[2]);
 		}
 		return $retour;
@@ -389,8 +409,10 @@ class Smile extends Émetteur
 		 * pour le même projet, on fait donc la période englobante du tout. */
 		$moments = pasTeX_unionPeriodes($francheRigolade->date);
 		$champs['an'] = $moments[0][0];
+		$champs['an2'] = $champs['an'];
 		$champs['mois'] = sprintf('%02.2d', $moments[0][1] > 0 ? $moments[0][1] : 1);
-		if(!$moments[1])
+		$champs['mois2'] = $champs['mois'];
+		if(!$moments[1] || $moments[1] == array(-1, -1, -1, -1, -1, -1))
 			$moments[1] = obtenir_datation(time());
 		$champs['duree'] = (Periode::duree(Date::mef($moments[0]), Date::mef($moments[1]), 1) + 1).' mois';
 		
