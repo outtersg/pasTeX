@@ -1,2 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE office:document-content PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "office.dtd"><office:document-content xmlns:office="http://openoffice.org/2000/office" xmlns:style="http://openoffice.org/2000/style" xmlns:text="http://openoffice.org/2000/text" xmlns:table="http://openoffice.org/2000/table" xmlns:draw="http://openoffice.org/2000/drawing" xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:number="http://openoffice.org/2000/datastyle" xmlns:svg="http://www.w3.org/2000/svg" xmlns:chart="http://openoffice.org/2000/chart" xmlns:dr3d="http://openoffice.org/2000/dr3d" xmlns:math="http://www.w3.org/1998/Math/MathML" xmlns:form="http://openoffice.org/2000/form" xmlns:script="http://openoffice.org/2000/script" office:class="text" office:version="1.0"><office:script/><office:font-decls></office:font-decls><office:automatic-styles><style:style style:name="P1" style:family="paragraph"><style:properties fo:text-align="center"/></style:style><style:style style:name="fr1" style:family="graphics" style:parent-style-name="OLE"><style:properties fo:margin-left="0cm" fo:margin-right="0cm" style:vertical-pos="top" style:vertical-rel="baseline" fo:padding-left="0.28cm" fo:padding-right="0.28cm" fo:padding-top="0.153cm" fo:padding-bottom="0.153cm" fo:border="none" draw:visible-area-left="0cm" draw:visible-area-top="0cm" draw:visible-area-width="5.824cm" draw:visible-area-height="2.436cm" draw:draw-aspect="content"/></style:style><style:style style:name="fr2" style:family="graphics"><style:properties style:run-through="foreground" style:wrap="run-through" style:vertical-pos="from-top"/></style:style><style:style style:name="Sect1" style:family="section"><style:properties text:dont-balance-text-columns="false"><style:columns fo:column-count="2"><style:column style:rel-width="2835*" fo:margin-left="0cm" fo:margin-right="0cm"/><style:column style:rel-width="6802*" fo:margin-left="0cm" fo:margin-right="0cm"/></style:columns></style:properties></style:style><style:style style:name="gr1" style:family="graphics"><style:properties draw:textarea-horizontal-align="center" draw:textarea-vertical-align="middle" style:run-through="foreground" style:wrap="run-through" style:vertical-pos="from-top"/></style:style></office:automatic-styles><office:body>
+<!DOCTYPE office:document-content PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "office.dtd">
+<office:document-content xmlns:office="http://openoffice.org/2000/office" xmlns:style="http://openoffice.org/2000/style" xmlns:text="http://openoffice.org/2000/text" xmlns:table="http://openoffice.org/2000/table" xmlns:draw="http://openoffice.org/2000/drawing" xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:number="http://openoffice.org/2000/datastyle" xmlns:svg="http://www.w3.org/2000/svg" xmlns:chart="http://openoffice.org/2000/chart" xmlns:dr3d="http://openoffice.org/2000/dr3d" xmlns:math="http://www.w3.org/1998/Math/MathML" xmlns:form="http://openoffice.org/2000/form" xmlns:script="http://openoffice.org/2000/script" office:class="text" office:version="1.0">
+	<office:script/>
+	<office:font-decls></office:font-decls>
+	<office:automatic-styles>
+		<style:style style:name="P1" style:family="paragraph">
+			<style:properties fo:text-align="center"/>
+		</style:style>
+		<style:style style:name="fr1" style:family="graphics" style:parent-style-name="OLE">
+			<style:properties fo:margin-left="0cm" fo:margin-right="0cm" style:vertical-pos="top" style:vertical-rel="baseline" fo:padding-left="0.28cm" fo:padding-right="0.28cm" fo:padding-top="0.153cm" fo:padding-bottom="0.153cm" fo:border="none" draw:visible-area-left="0cm" draw:visible-area-top="0cm" draw:visible-area-width="5.824cm" draw:visible-area-height="2.436cm" draw:draw-aspect="content"/>
+		</style:style>
+		<style:style style:name="fr2" style:family="graphics">
+			<style:properties style:run-through="foreground" style:wrap="run-through" style:vertical-pos="from-top"/>
+		</style:style>
+		<style:style style:name="Sect1" style:family="section">
+			<style:properties text:dont-balance-text-columns="false">
+				<style:columns fo:column-count="2">
+					<style:column style:rel-width="2835*" fo:margin-left="0cm" fo:margin-right="0cm"/>
+					<style:column style:rel-width="6802*" fo:margin-left="0cm" fo:margin-right="0cm"/>
+				</style:columns>
+			</style:properties>
+		</style:style>
+		<style:style style:name="gr1" style:family="graphics">
+			<style:properties draw:textarea-horizontal-align="center" draw:textarea-vertical-align="middle" style:run-through="foreground" style:wrap="run-through" style:vertical-pos="from-top"/>
+		</style:style>
+	</office:automatic-styles>
+	<office:body>
