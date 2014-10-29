@@ -322,6 +322,30 @@ class Catégorie extends CompoAProprietes
 	protected $niveauCourant;
 }
 
+class CompoImage extends Compo
+{
+	public $données;
+	
+	public function notifChargeur($chargeur)
+	{
+		require_once dirname(__FILE__).'/../util/chemin.inc';
+		$this->_cheminXml = new Chemin($chargeur->chemin);
+	}
+	
+	public function contenuPour(& $objet, $contenu)
+	{
+		$this->données = isset($this->données) ? $this->données.$contenu : $contenu;
+	}
+	
+	public function sortir()
+	{
+		$chemin = $this->_cheminXml->et($this->données)->cheminComplet();
+		if(!file_exists($chemin))
+			echo "# $chemin inexistant.\n";
+		$this->données = $chemin;
+	}
+}
+
 class CompoDate extends Compo
 {
 	function CompoDate() {}
