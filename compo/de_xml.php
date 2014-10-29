@@ -286,7 +286,7 @@ TERMINE
 /* À FAIRE: un constructeur qui prenne tout ce bazar en un seul tableau avec des
  * sous-tableaux de sous-tableaux, mais s'il-vous-plaît, pas tant de copier-
  * coller à la fois, c'est mauvais pour la crâne! */
-class Perso extends CompoAProprietes { function Perso() { $this->CompoAProprietes(array('naissance' => 'CompoDate'), array()); } }
+class Perso extends CompoAProprietes { function Perso() { $this->CompoAProprietes(array('naissance' => 'CompoDate', 'photo' => 'CompoImage'), array()); } }
 class Intérêts extends CompoAProprietes { function Intérêts() { $this->CompoAProprietes(array(), array('domaine' => 1)); } }
 class Domaine extends CompoAProprietes { function Domaine() { $this->CompoAProprietes(array(), array('techno' => 0)); } }
 class Loisirs extends CompoAProprietes { function Loisirs() { $this->CompoAProprietes(array(), array('activité' => 0)); } }
