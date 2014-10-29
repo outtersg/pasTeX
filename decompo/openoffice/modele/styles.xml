@@ -10,6 +10,9 @@
 					<style:tab-stops/>
 				</style:properties>
 			</style:default-style>
+			<style:style style:name="Graphics" style:family="graphics">
+				<style:graphic-properties text:anchor-type="paragraph" svg:x="0cm" svg:y="0cm" style:wrap="dynamic" style:number-wrapped-paragraphs="no-limit" style:wrap-contour="false" style:vertical-pos="top" style:vertical-rel="paragraph" style:horizontal-pos="center" style:horizontal-rel="paragraph"/>
+			</style:style>
 			<style:default-style style:family="paragraph">
 				<style:properties style:use-window-font-color="true" style:font-name="Linux Biolinum G" fo:font-size="12pt" fo:language="en" fo:country="US" style:font-name-asian="Linux Biolinum G" style:font-size-asian="12pt" style:language-asian="none" style:country-asian="none" style:font-name-complex="Linux Biolinum G" style:font-size-complex="12pt" style:language-complex="none" style:country-complex="none" fo:hyphenate="false" fo:hyphenation-remain-char-count="2" fo:hyphenation-push-char-count="2" fo:hyphenation-ladder-count="no-limit" style:text-autospace="ideograph-alpha" style:punctuation-wrap="hanging" style:line-break="strict" style:tab-stop-distance="1.251cm" style:writing-mode="page"/>
 			</style:default-style>

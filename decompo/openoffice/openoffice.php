@@ -94,6 +94,7 @@ class OpenOffice
 		$modele = dirname(__FILE__).'/modele';
 		system("cp -R '{$modele}' '{$dossierTemp}'");
 		if(@$this->_params['logo']) system("cp '{$this->_params['logo']}' '{$dossierTemp}/ObjBFFFC666'");
+		if(isset($donnees->perso->photo)) copy($donnees->perso->photo, $dossierTemp.'/Photo.jpg');
 		system("cat '{$dossierTemp}/content.pre.xml' > '{$dossierTemp}/content.xml'");
 		$fichier = popen("tr -d '\\011\\012' >> '{$dossierTemp}/content.xml'", 'w');
 		$this->pondreEntete($fichier, $donnees, @$params['boite']);
@@ -135,6 +136,14 @@ if(@$this->_params['logo']) fprintf($fichier, <<<TERMINE
 TERMINE
 );
 		
+		if(isset($donnees->perso->photo))
+		{
+			$image = imagecreatefromjpeg($donnees->perso->photo);
+			$l = imagesx($image);
+			$h = imagesy($image);
+			imagedestroy($image);
+			fprintf($fichier, '<draw:image draw:style-name="cadrephoto" draw:name="Photo" text:anchor-type="page" text:anchor-page-number="1" svg:x="'.(20 - $l * 3.5 / $h).'cm" svg:y="1cm" svg:width="'.($l * 3.5 / $h).'cm" svg:height="3.5cm" draw:z-index="0" xlink:href="Photo.jpg" xlink:type="simple" xlink:show="embed" xlink:actuate="onLoad"/>');
+		}
 		$prénom = htmlspecialchars($donnees->perso->prénom, ENT_NOQUOTES);
 		$nom = htmlspecialchars($donnees->perso->nom, ENT_NOQUOTES);
 		$titre = htmlspecialchars($donnees->titre, ENT_NOQUOTES);
