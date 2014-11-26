@@ -31,6 +31,23 @@ class Donnee extends Compo
 	
 }
 
+/**
+ * Texte enrichi.
+ * L'enrichissement est au gré des bourreau de l'objet: chacun décide les attributs dont il l'alourdira.
+ */
+class Texte
+{
+	public function __construct($chaîne)
+	{
+		$this->texte = $chaîne;
+	}
+	
+	public function __toString()
+	{
+		return $this->texte;
+	}
+}
+
 class CompoAProprietes extends Compo
 {
 	/* Prend en paramètre ses deux listes de propriétés (cf. la variable
@@ -54,6 +71,14 @@ class CompoAProprietes extends Compo
 
 	function &entrerDans(&$depuis, $nom, $attributs)
 	{
+		if($nom == 'm') // Marqueur / Méta: cas particulier qui peut être embarqué dans du texte, et auquel ne s'applique donc pas la règle qui suivra (« interdit d'avoir à la fois des sous-élements et du contenu textuel »).
+		{
+			if(!isset($this->marqueurs))
+				$this->marqueurs = array();
+			$marqueur = array($attributs['id'], is_string($depuis) ? strlen($depuis) : 0, null);
+			$this->marqueurs[] = $marqueur;
+			return $depuis;
+		}
 		if(is_string($depuis)) $depuis = new Donnee(); // Tant pis pour ceux qui font du HTML (mélange de balises et texte)! Ici, si on avait une feuille (string) à laquelle est demandée l'adjonction d'un nœud, on détruit le texte pour préparer le terrain au nœud.
 		if(array_key_exists($nom, $this->classes))
 		{
@@ -81,6 +106,36 @@ class CompoAProprietes extends Compo
 			$objet = null;
 		}
 		$objet = $objet === null ? $contenu : $objet.$contenu;
+	}
+	
+	public function sortirDe(&$objet, $nom)
+	{
+		if($nom == 'm')
+		{
+			// Recherche du marqueur ouvert.
+			
+			if(isset($this->marqueurs))
+				for($numMarqueur = count($this->marqueurs); --$numMarqueur >= 0;)
+					if(!isset($this->marqueurs[$numMarqueur][2])) // Ah, en voilà un qui n'a pas de fin.
+					{
+						$this->marqueurs[$numMarqueur][2] = is_string($objet) ? strlen($objet) : 0;
+						return;
+					}
+			throw new Exception('Fermeture d\'un marqueur jamais ouvert');
+		}
+		// Sinon une de nos sous-propriétés. Si l'on avait accumulé des marqueurs, on les y attache.
+		else if(isset($this->marqueurs))
+		{
+			if(is_string($objet))
+				$objet = new Texte($objet);
+			if(is_object($objet))
+			{
+				$objet->marqueurs = $this->marqueurs;
+				unset($this->marqueurs);
+			}
+			else
+				throw new Exception('Application de marqueurs à un truc inconnu');
+		}
 	}
 	
 	protected $enTableau; // Liste des sous-éléments XML agrégeables en tableau dans cet objet.
