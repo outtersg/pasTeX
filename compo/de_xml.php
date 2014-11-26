@@ -26,6 +26,11 @@ require_once('util/xml/chargeur.php');
 require_once('util/xml/compo.php');
 require_once('util/xml/composimple.php');
 
+class Donnee extends Compo
+{
+	
+}
+
 class CompoAProprietes extends Compo
 {
 	/* Prend en paramètre ses deux listes de propriétés (cf. la variable

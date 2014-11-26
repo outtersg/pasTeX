@@ -53,13 +53,6 @@ $etPuisQuoiEncore = 1; // Paramètre à partir duquel la chose peut analyser ses
 
 $params = array_merge($_GET, $_POST);
 
-/*- Stockage intermédiaire des données ---------------------------------------*/
-
-class Donnee
-{
-	
-}
-
 /*- Recherche du compositeur -------------------------------------------------*/
 
 $decompo = null;
