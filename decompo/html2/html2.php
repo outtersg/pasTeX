@@ -349,6 +349,8 @@ $affs[] = implode(', ', $aff);
 	
 	function decomposer($params, $donnees)
 	{
+		Texte::$Html = true;
+		
 		$this->params = $params;
 		
 		html_enTete();
@@ -471,7 +473,7 @@ $affs[] = implode(', ', $aff);
 	 */
 	public function _palier($ligne)
 	{
-		return '• '.htmlspecialchars($ligne, ENT_NOQUOTES).' ';
+		return '• '.($ligne instanceof Texte ? $ligne : htmlspecialchars($ligne, ENT_NOQUOTES)).' ';
 	}
 	
 	function pondreProjets($donnees)
