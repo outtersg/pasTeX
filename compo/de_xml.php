@@ -37,6 +37,8 @@ class Donnee extends Compo
  */
 class Texte
 {
+	public static $Html = false;
+	
 	public function __construct($chaîne)
 	{
 		$this->texte = $chaîne;
@@ -44,7 +46,43 @@ class Texte
 	
 	public function __toString()
 	{
+		if(self::$Html)
+		{
+			$marqueurs = array();
+			if(isset($this->marqueurs))
+			{
+				// On va mettre sur pied d'égalité débuts et fins de marqueurs, en faisant figurer ces dernières comme marqueurs false: on transforme le tableau [ [ id, début, fin ] ] en [ [ id, début, fin ], [ false, fin ] ].
+				$marqueurs = $this->marqueurs;
+				foreach($this->marqueurs as $marqueur)
+					$marqueurs[] = array(false, $marqueur[2], $marqueur[1]);
+				usort($marqueurs, array($this, 'comparePosMarqueurs'));
+			}
+			$html = '';
+			$pos = strlen($this->texte);
+			foreach($marqueurs as $marqueur)
+			{
+				$html = ($marqueur[0] === false ? '</span>' : '<span class="marque marque-'.$marqueur[0].'">').htmlspecialchars(substr($this->texte, $marqueur[1], $pos - $marqueur[1]), ENT_NOQUOTES).$html;
+				$pos = $marqueur[1];
+			}
+			$html = htmlspecialchars(substr($this->texte, 0, $pos), ENT_NOQUOTES).$html;
+			return $html;
+		}
 		return $this->texte;
+	}
+	
+	public function comparePosMarqueurs($a, $b)
+	{
+		// Notez qu'on renverra un résultat inversé par rapport à l'usage (a - b), afin d'obtenir un tri inverse (on partira de la fin).
+		// Si les début sont clairement différents, le cas est simple.
+		if(($diff = $b[1] - $a[1]))
+			return $diff;
+		
+		// Sinon, égalité de position. Une fin est toujours avant un début (pour éviter les chevauchements), sauf si c'est la fin d'un bloc de longueur 0 (qui est logiquement après son début). Pour deux fins, on s'en fiche, vu que ça donnera lieu à deux </span> indifférenciables.
+		if($a[0] === false) return $a[2] == $a[1] ? -1 : 1;
+		if($b[0] === false) return $b[2] == $b[1] ? 1 : -1;
+		
+		// Sinon, le plus petit est englobé dans le plus grand, donc commence après.
+		return $a[2] - $b[2];
 	}
 }
 
