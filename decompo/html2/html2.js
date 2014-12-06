@@ -31,7 +31,7 @@ LignesTemps.preparer = function()
 		for(j = this.blocs[i].length; --j >= 0;)
 			this.blocs[i][j] = document.getElementById(this.blocs[i][j]);
 
-	window.onresize = function(ev) { LignesTemps.calculer(); };
+	sur(window, 'resize', function(ev) { LignesTemps.calculer(); });
 	/* À FAIRE: aussi le changement de taille de police… tout ce qui change la hauteur de notre conteneur, en fait. */
 	
 	LignesTemps.calculer();
