@@ -362,7 +362,7 @@ $affs[] = implode(', ', $aff);
 			$titre = 'CV';
 		echo '<title>'.$titre.'</title>';
 		html_meta('link rel="stylesheet" type="text/css" href="decompo/html2/html2.css"');
-		html_corps('onload="LignesTemps.preparer();"');
+		html_corps('onload="LignesTemps.preparer(); Parcours.preparer();"');
 		$this->pondreEntete($donnees);
 		$this->pondreProjets($donnees);
 		$this->pondreEtudes($donnees);

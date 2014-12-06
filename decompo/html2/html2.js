@@ -179,6 +179,32 @@ LignesTemps.suivreSouris = function(e)
 	return false;
 };
 
+/*- Parcours thématique ------------------------------------------------------*/
+
+var Parcours =
+{
+	preparer: function()
+	{
+		// marque = marqué sans son accent. Nous reste à créer un marqueur par marqué.
+		var marques = document.getElementsByClassName('marque');
+		var marque;
+		var classes;
+		var i;
+		for(i = 0; i < marques.length; ++i)
+		{
+			marque = marques[i];
+			var centreMarqueur = document.createElement('span');
+			centreMarqueur.setAttributeNS(null, 'class', 'centre-marqueur');
+			var marqueur = document.createElement('span');
+			marqueur.setAttributeNS(null, 'class', 'marqueur');
+			centreMarqueur.appendChild(marqueur);
+			marque.appendChild(centreMarqueur);
+		}
+	}
+};
+
+/*- Branchement --------------------------------------------------------------*/
+
 var sur = function(objet, evenement, abonne)
 {
 	if(objet.addEventListener)

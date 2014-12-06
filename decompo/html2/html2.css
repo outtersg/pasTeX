@@ -104,6 +104,39 @@ td.categorie
 	fill: #BFBFDF;
 }
 
+/*- Marqués et marqueurs -----------------------------------------------------*/
+
+.marque
+{
+	position: relative;
+	white-space: nowrap; /* Le marqueur étant placé "au centre" de la marque, si cette dernière est multiligne ça nous ennuie car le placement paraîtra curieux. */
+}
+
+.centre-marqueur
+{
+	position: absolute;
+	display: inline-block;
+	left: 50%;
+	top: 50%;
+	width: 0;
+	height: 0;
+	z-index: -1;
+}
+
+.marqueur
+{
+	position: absolute;
+	display: inline-block;
+	left: -1em;
+	width: 2em;
+	top: -1em;
+	height: 2em;
+	border-radius: 1em;
+	background: rgba(0, 0, 255, 0.125);
+}
+
+/*- Le reste -----------------------------------------------------------------*/
+
 div.dateexp
 {
 	font-size: 75%;
