@@ -20,6 +20,8 @@
  * SOFTWARE.
  */
 
+var enxlink = 'http://www.w3.org/1999/xlink';
+
 var LignesTemps = {};
 
 LignesTemps.blocs = [];
@@ -171,10 +173,18 @@ LignesTemps.suivreSouris = function(e)
 	if(els[0] !== els[1] && els[0].id)
 	{
 		var jonction = document.getElementById('jonction'+els[0].id);
+		var jonctionAuDessus = document.getElementById('jonctionAuDessus');
 		if(e.type == 'mouseover')
+		{
 			jonction.setAttributeNS(null, 'class', 'jonction jonctionHover');
+			// http://stackoverflow.com/a/26277417/1346819
+			window.setTimeout(function() { jonctionAuDessus.setAttributeNS(enxlink, 'href', '#jonction'+els[0].id); }, 0);
+		}
 		else
+		{
 			jonction.setAttributeNS(null, 'class', 'jonction');
+			jonctionAuDessus.setAttributeNS(enxlink, 'href', '');
+		}
 	}
 	return false;
 };

@@ -556,6 +556,7 @@ $affs[] = implode(', ', $aff);
 		foreach($segmentsParLigne as $numProjet => & $refLibelleMoment)
 			$refLibelleMoment = "p$numProjet:['p$numProjet',".implode(',', $refLibelleMoment).']';
 		echo '<script type="text/javascript">LignesTemps.blocs = {'.implode(',', $segmentsParLigne).'};</script>';
+		echo '<svg style="pointer-events: none; position: absolute; top: 0; width: '.(1.5 * $nGroupes + 1).'em; height: 100%; position: absolute;"><use id="jonctionAuDessus"/></svg>'."\n";
 		echo '</div>'."\n";
 		$this->terminerSection();
 	}
