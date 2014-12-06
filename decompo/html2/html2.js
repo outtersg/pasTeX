@@ -199,10 +199,16 @@ var Parcours =
 		var marques = document.getElementsByClassName('marque');
 		var marque;
 		var classes;
-		var i;
+		var i, j;
+		var marquesPossibles = {};
+		var exprMarque = /^marque-/;
 		for(i = 0; i < marques.length; ++i)
 		{
 			marque = marques[i];
+			classes = marque.getAttributeNS(null, 'class').split(/ +/);
+			for(j = classes.length; --j >= 0;)
+				if(classes[j].match(exprMarque))
+					marquesPossibles[classes[j].replace(exprMarque, '')] = 1;
 			var centreMarqueur = document.createElement('span');
 			centreMarqueur.setAttributeNS(null, 'class', 'centre-marqueur');
 			var marqueur = document.createElement('span');
@@ -210,6 +216,26 @@ var Parcours =
 			centreMarqueur.appendChild(marqueur);
 			marque.appendChild(centreMarqueur);
 		}
+		var couleurs =
+		[
+			'255, 0, 0',
+			'0, 255, 0',
+			'255, 127, 0',
+			'255, 255, 0',
+			'255, 0, 255',
+			'255, 127, 127'
+		];
+		var cssMarques = '';
+		j = 0;
+		for(i in marquesPossibles)
+		{
+			cssMarques += '.marque-'+i+' .marqueur { background: rgba('+couleurs[j % couleurs.length]+', 0.25); }\n';
+			++j;
+		}
+		var style = document.createElement('style');
+		style.type = 'text/css';
+		style.innerHTML = cssMarques;
+		document.getElementsByTagName('head')[0].appendChild(style)
 	}
 };
 
