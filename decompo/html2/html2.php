@@ -356,6 +356,7 @@ $affs[] = implode(', ', $aff);
 		html_enTete();
 		html_meta('meta http-equiv="Content-Type" content="text/html; charset=UTF-8"'); // IE
 		echo '<script type="text/javascript" src="decompo/html2/html2.js"></script>'."\n";
+		echo '<script type="text/javascript" src="decompo/html2/bezier-spline.js"></script>'."\n";
 		if($donnees->perso->nom)
 			$titre = htmlspecialchars($donnees->perso->prénom, ENT_NOQUOTES).' '.htmlspecialchars($donnees->perso->nom, ENT_NOQUOTES);
 		else

@@ -12,119 +12,16 @@
  * please include a link/reference to the source article
  */ 
 
-var svg=document.documentElement /*svg object*/
-var S=new Array() /*splines*/
-var V=new Array() /*vertices*/
-var C 	/*current object*/
-var x0,y0	/*svg offset*/
-
-/*saves elements as global variables*/
-function init()
+var PiloteBezier =
 {
-	/*create splines*/
-	S[0] = createPath("blue");
-	S[1] = createPath("red");
-	S[2] = createPath("green");
-	S[3] = createPath("brown");
-
-	/*create control points*/
-	V[0] = createKnot(60,60);
-	V[1] = createKnot(220,300);
-	V[2] = createKnot(420,300);
-	V[3] = createKnot(700,240);
-	
-	updateSplines();
-}
-/*creates and adds an SVG circle to represent knots*/
-function createKnot(x,y)
-{
-	var C=document.createElementNS("http://www.w3.org/2000/svg","circle")
-	C.setAttributeNS(null,"r",22)
-	C.setAttributeNS(null,"cx",x)
-	C.setAttributeNS(null,"cy",y)
-	C.setAttributeNS(null,"fill","gold")
-	C.setAttributeNS(null,"stroke","black")
-	C.setAttributeNS(null,"stroke-width","6")
-	C.setAttributeNS(null,"onmousedown","startMove(evt)")
-	svg.appendChild(C)	
-	return C
-}
-
-/*creates and adds an SVG path without defining the nodes*/
-function createPath(color,width)
-{		
-	width = (typeof width == 'undefined' ? "8" : width);
-	var P=document.createElementNS("http://www.w3.org/2000/svg","path")
-	P.setAttributeNS(null,"fill","none")
-	P.setAttributeNS(null,"stroke",color)
-	P.setAttributeNS(null,"stroke-width",width)
-	svg.appendChild(P)
-	return P
-}
-
-/*from http://www.w3.org/Graphics/SVG/IG/resources/svgprimer.html*/
-function startMove(evt)
-{
-	/*SVG positions are relative to the element but mouse 
-	  positions are relative to the window, get offset*/
-	x0 = getOffset(svg).left; 
-	y0 = getOffset(svg).top; 
-	
-	C=evt.target
-	svg.setAttribute("onmousemove","move(evt)")
-	svg.setAttribute("onmouseup","drop()")	
-}
-
-/*called on mouse move, updates dragged circle and recomputes splines*/
-function move(evt)
-{
-	x = evt.clientX-x0;
-	y = evt.clientY-y0;
-	
-	/*move the current handle*/
-	C.setAttributeNS(null,"cx",x)
-	C.setAttributeNS(null,"cy",y)
-	updateSplines();
-}
-
-/*called on mouse up event*/
-function drop()
-{
-	svg  = document.getElementsByTagName('svg')[0];
-	svg.setAttributeNS(null, "onmousemove",null)
-}
-	
-/*computes spline control points*/
-function updateSplines()
-{	
-	/*grab (x,y) coordinates of the control points*/
-	x=new Array();
-	y=new Array();
-	for (i=0;i<4;i++)
-	{
-		/*use parseInt to convert string to int*/
-		x[i]=parseInt(V[i].getAttributeNS(null,"cx"))
-		y[i]=parseInt(V[i].getAttributeNS(null,"cy"))
-	}
-	
-	/*computes control points p1 and p2 for x and y direction*/
-	px = computeControlPoints(x);
-	py = computeControlPoints(y);
-	
-	/*updates path settings, the browser will draw the new spline*/
-	for (i=0;i<3;i++)
-		S[i].setAttributeNS(null,"d",
-			path(x[i],y[i],px.p1[i],py.p1[i],px.p2[i],py.p2[i],x[i+1],y[i+1]));
-}
-
 /*creates formated path string for SVG cubic path element*/
-function path(x1,y1,px1,py1,px2,py2,x2,y2)
+	path: function(x1,y1,px1,py1,px2,py2,x2,y2)
 {
 	return "M "+x1+" "+y1+" C "+px1+" "+py1+" "+px2+" "+py2+" "+x2+" "+y2;
-}
+	},
 
 /*computes control points given knots K, this is the brain of the operation*/
-function computeControlPoints(K)
+	computeControlPoints: function(K)
 {
 	p1=new Array();
 	p2=new Array();
@@ -176,17 +73,34 @@ function computeControlPoints(K)
 	p2[n-1]=0.5*(K[n]+p1[n-1]);
 	
 	return {p1:p1, p2:p2};
-}
+	},
 
-/*code from http://stackoverflow.com/questions/442404/dynamically-retrieve-html-element-x-y-position-with-javascript*/
-function getOffset( el ) 
-{
-    var _x = 0;
-    var _y = 0;
-    while( el && !isNaN( el.offsetLeft ) && !isNaN( el.offsetTop ) ) {
-        _x += el.offsetLeft - el.scrollLeft;
-        _y += el.offsetTop - el.scrollTop;
-        el = el.offsetParent;
-    }
-    return { top: _y, left: _x };
-}
+	courber: function(svg, etapes, couleur)
+	{
+		var ensvg = "http://www.w3.org/2000/svg";
+		var courbe;
+		var x = [];
+		var y = [];
+		var i, j;
+		var d;
+		
+		for(i = 0; i < etapes.length; ++i)
+		{
+			x.push(etapes[i].x);
+			y.push(etapes[i].y);
+		}
+		
+		px = PiloteBezier.computeControlPoints(x);
+		py = PiloteBezier.computeControlPoints(y);
+		
+		courbe = document.createElementNS(ensvg, 'path');
+		courbe.setAttributeNS(null, 'fill', 'none');
+		courbe.setAttributeNS(null, 'stroke', 'rgba('+couleur+')');
+		courbe.setAttributeNS(null, 'stroke-width', 5);
+		d = '';
+		for(i = 0; i < etapes.length - 1; ++i)
+			d += ' '+PiloteBezier.path(x[i],y[i],px.p1[i],py.p1[i],px.p2[i],py.p2[i],x[i+1],y[i+1]);
+		courbe.setAttributeNS(null, 'd', d);
+		svg.appendChild(courbe);
+	}
+};
