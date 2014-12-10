@@ -366,7 +366,9 @@ var Parcours =
 						courbe.setAttributeNS(null, 'x2', marqueurs[marque][y][k].x);
 						courbe.setAttributeNS(null, 'y2', marqueurs[marque][y][k].y);
 						svg.appendChild(courbe);
+						marqueurs[marque][y][k].setAttributeNS(null, 'class', 'marqueur marqueurSecondaire');
 					}
+				chemin[i].setAttributeNS(null, 'class', 'marqueur');
 				++i;
 			}
 			

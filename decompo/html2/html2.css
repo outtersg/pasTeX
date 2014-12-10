@@ -135,6 +135,15 @@ td.categorie
 	background: rgba(0, 0, 255, 0.125);
 }
 
+.marqueurSecondaire
+{
+	left: -.5em;
+	width: 1em;
+	top: -.5em;
+	height: 1em;
+	border-radius: .5em;
+}
+
 /*- Le reste -----------------------------------------------------------------*/
 
 div.dateexp
