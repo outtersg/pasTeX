@@ -265,21 +265,24 @@ var Parcours =
 			{
 				marqueur = Parcours.marqueursParMarque[marque][j];
 				x = marqueur.offsetWidth / 2.0;
+				y = marqueur.offsetHeight / 2.0;
 				// On remonte jusqu'au bloc conteneur.
 				for(elOffset = el = marqueur; el && el !== el.parentNode && el.getAttributeNS; el = el.parentNode)
 				{
 					if(el.getAttributeNS(null, 'class') == 'projet')
 					{
-						y = el.offsetTop;
-						if(!marqueurs[marque][y])
-							marqueurs[marque][y] = [];
+						yBloc = el.offsetTop;
+						if(!marqueurs[marque][yBloc])
+							marqueurs[marque][yBloc] = [];
 						marqueur.x = x;
-						marqueurs[marque][y].push(marqueur);
+						marqueur.y = y;
+						marqueurs[marque][yBloc].push(marqueur);
 						break;
 					}
 					if(el === elOffset)
 					{
 						x += el.offsetLeft;
+						y += el.offsetTop;
 						elOffset = el.offsetParent;
 					}
 				}
@@ -325,6 +328,51 @@ var Parcours =
 			for(min = cheminsMarque[0].cout, j = cheminsMarque.length; --j >= 0;)
 				if(cheminsMarque[j].cout <= min)
 					chemins[marque] = cheminsMarque[j];
+		}
+		
+		/*- Tracé des chemins -*/
+		
+		j = 0;
+		var k = 0;
+		var svg = document.getElementById('chemins');
+		var courbe;
+		var ensvg = "http://www.w3.org/2000/svg";
+		
+		while (svg.lastChild)
+			svg.removeChild(svg.lastChild);
+		
+		for(marque in chemins)
+		{
+			chemin = chemins[marque].etapes;
+			
+			/* La courbe passe par chacune de nos étapes. */
+			
+			PiloteBezier.courber(svg, chemins[marque].etapes, Parcours.couleurs[j % Parcours.couleurs.length]+',0.35');
+			
+			/* De plus à chaque étape il nous faut raccrocher au marqueur élu pour être sur le tracé du chemin, ceux qui n'ont pas eu cette chance. */
+			
+			i = 0; // marqueurs et étapes se suivent, simplement le premier est un objet dont les membres représentent l'ordonnée du bloc de texte, le second un tableau indicé classiquement. On va donc parcourir en parallèle les deux, l'un en y, l'autre en i.
+			for(y in marqueurs[marque])
+			{
+				for(k = marqueurs[marque][y].length; --k >= 0;)
+					if(marqueurs[marque][y][k] !== chemin[i]) // Un non-élu.
+					{
+						courbe = document.createElementNS(ensvg, 'line');
+						courbe.setAttributeNS(null, 'fill', 'none');
+						courbe.setAttributeNS(null, 'stroke', 'rgba('+Parcours.couleurs[j % Parcours.couleurs.length]+',0.35)');
+						courbe.setAttributeNS(null, 'stroke-width', 2);
+						courbe.setAttributeNS(null, 'x1', chemin[i].x);
+						courbe.setAttributeNS(null, 'y1', chemin[i].y);
+						courbe.setAttributeNS(null, 'x2', marqueurs[marque][y][k].x);
+						courbe.setAttributeNS(null, 'y2', marqueurs[marque][y][k].y);
+						svg.appendChild(courbe);
+					}
+				++i;
+			}
+			
+			/* Et l'on avance dans les couleurs. */
+			
+			++j;
 		}
 	}
 };

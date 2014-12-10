@@ -508,6 +508,7 @@ $affs[] = implode(', ', $aff);
 				</div>
 <?php
 		echo '<svg id="jonctionlignestemps" style="position: absolute; width: '.(1.5 * $nGroupes + 1).'em; height: 100%; position: absolute;"></svg>'."\n";
+		echo '<svg id="chemins" style="position: absolute; left: 0; top: 0; height: 100%; width: 100%; z-index: -1;"></svg>'."\n";
 		$pasLePremier = false;
 		
 		/* Tri. */
