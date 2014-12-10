@@ -241,6 +241,82 @@ var Parcours =
 		style.type = 'text/css';
 		style.innerHTML = cssMarques;
 		document.getElementsByTagName('head')[0].appendChild(style)
+		
+		/*- Composition des rails entre les marques. -*/
+		
+		/* Nos marqueurs ont déjà été regroupés par fil (même marque). Il nous faut maintenant, à l'intérieur d'un même fil, les répartir par bloc (expérience). */
+		
+		var marqueurs = {}; // marquesPossibles ne possède que les fils, marqueurs sous-classera par bloc.
+		var el, elOffset;
+		var x, y;
+		for(marque in marquesPossibles)
+		{
+			marqueurs[marque] = {};
+			for(j = marquesPossibles[marque].length; --j >= 0;)
+			{
+				marqueur = marquesPossibles[marque][j];
+				x = marqueur.offsetWidth / 2.0;
+				// On remonte jusqu'au bloc conteneur.
+				for(elOffset = el = marqueur; el && el !== el.parentNode && el.getAttributeNS; el = el.parentNode)
+				{
+					if(el.getAttributeNS(null, 'class') == 'projet')
+					{
+						y = el.offsetTop;
+						if(!marqueurs[marque][y])
+							marqueurs[marque][y] = [];
+						marqueur.x = x;
+						marqueurs[marque][y].push(marqueur);
+						break;
+					}
+					if(el === elOffset)
+					{
+						x += el.offsetLeft;
+						elOffset = el.offsetParent;
+					}
+				}
+			}
+			// En théorie ici nos tableaux sont déjà triés, car les marques sont embarquées linéairement, donc celles d'un même bloc ont dû être agrégées en même temps.
+		}
+		
+		/* Pour chaque marque, on va tracer le chemin passant par un marqueur de chaque bloc. */
+		/* Si un bloc comporte précédent comportait plusieurs marqueurs de la même marque, on rattachera le marqueur du bloc actuel à celui du bloc précédent depuis lequel le coût de déplacement horizontal sera minimisé. Ex.: Soient trois blocs A, B, C comportant pour une marque des marqueurs en a0.x = 268 (A), b0.x = 122 et b1.x = 512 (B), c0.x = 268 et c1.x = 514 (C). Première étape: A, un seul bloc (et pas de bloc précédent) => choix d'a0 avec un coût 0 (privilège du premier bloc). Seconde étape: B: deux chemins possibles, a0 -> b0 (coût: 146) ou a0 -> b1 (coût: 244); on garde les deux (toujours une entrée par marqueur du bloc de travail). Étape 3, bloc C: pour arriver en c0, soit a0 -> b0 -> c0 (coût: 146 + 146), soit a0 -> b1 -> c0 (coût: 244 + 146), donc on garde le premier; pour arriver en c1, soit a0 -> b0 -> c1 (146 + 392), soit a0 -> b1 -> c1 (244 + 2), on garde le second. Fin de parcours, on a deux chemins possibles pour le bloc d'arrivée C, de coûts 538 et 246: le gagnant sera a0 -> b1 -> c1 (qui demande un plus gros effort de déplacement au passage A -> B, mais regagne l'avantage grâce au presqu'alignement de b1 et c1). */
+		
+		var chemins, cheminsMarque, cheminsTemp;
+		var chemin;
+		var min;
+		chemins = {};
+		for(marque in marqueurs)
+		{
+			cheminsMarque = [];
+			for(y in marqueurs[marque])
+			{
+				cheminsTemp = [];
+				for(j = marqueurs[marque][y].length; --j >= 0;)
+				{
+					marqueur = marqueurs[marque][y][j];
+					// Pour ce marqueur, on essaie de trouver le chemin (précédent) nous proposant l'arrivée la plus courte.
+					if(!(i = cheminsMarque.length)) // Premier de la lignée.
+						chemin = { cout: 0, etapes: [ ], dernier: marqueur };
+					else
+					{
+						min = -1;
+						for(i = cheminsMarque.length; --i >= 0;)
+							if((x = cheminsMarque[i].cout + Math.abs(cheminsMarque[i].dernier.x - marqueur.x)) < min || min == -1)
+							{
+								chemin = { cout: x, etapes: cheminsMarque[i].etapes, dernier: marqueur };
+								min = x;
+							}
+					}
+					chemin.etapes = chemin.etapes.slice(); // slice() pour être sûrs de repartir d'une copie des étapes du précédent (car un de nos frères peut vouloir tracer son chemin par le même père que nous, donc il faut que l'on préserve le père tel quel jusqu'à ce que tous nos frères aient été parcourus).
+					chemin.etapes.push(marqueur);
+					cheminsTemp[j] = chemin;
+				}
+				cheminsMarque = cheminsTemp;
+			}
+			for(min = cheminsMarque[0].cout, j = cheminsMarque.length; --j >= 0;)
+				if(cheminsMarque[j].cout <= min)
+					chemins[marque] = cheminsMarque[j];
+		}
 	}
 };
 
