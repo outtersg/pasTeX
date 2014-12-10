@@ -193,14 +193,30 @@ LignesTemps.suivreSouris = function(e)
 
 var Parcours =
 {
+	couleurs:
+	[
+		'255, 0, 0',
+		'0, 255, 0',
+		'255, 127, 0',
+		'223, 223, 0',
+		'127, 0, 255',
+		'255, 127, 127',
+		'63, 127, 255'
+	],
 	preparer: function()
+	{
+		Parcours.initialiser();
+		sur(window, 'resize', function(ev) { Parcours.calculer(); });
+		Parcours.calculer();
+	},
+	initialiser: function()
 	{
 		// marque = marqué sans son accent. Nous reste à créer un marqueur par marqué.
 		var marques = document.getElementsByClassName('marque');
 		var marque;
 		var classes, classeMarque;
 		var i, j;
-		var marquesPossibles = {};
+		Parcours.marqueursParMarque = {};
 		var exprMarque = /^marque-/;
 		for(i = 0; i < marques.length; ++i)
 		{
@@ -210,8 +226,8 @@ var Parcours =
 				if(classes[j].match(exprMarque))
 				{
 					classeMarque = classes[j]; // A priori on n'a qu'une seule classe CSS portant la marque.
-					if(!marquesPossibles[classeMarque.replace(exprMarque, '')])
-						marquesPossibles[classeMarque.replace(exprMarque, '')] = [];
+					if(!Parcours.marqueursParMarque[classeMarque.replace(exprMarque, '')])
+						Parcours.marqueursParMarque[classeMarque.replace(exprMarque, '')] = [];
 				}
 			var centreMarqueur = document.createElement('span');
 			centreMarqueur.setAttributeNS(null, 'class', 'centre-marqueur');
@@ -219,42 +235,35 @@ var Parcours =
 			marqueur.setAttributeNS(null, 'class', 'marqueur');
 			centreMarqueur.appendChild(marqueur);
 			marque.appendChild(centreMarqueur);
-			marquesPossibles[classeMarque.replace(exprMarque, '')].push(marqueur);
+			Parcours.marqueursParMarque[classeMarque.replace(exprMarque, '')].push(marqueur);
 		}
-		var couleurs =
-		[
-			'255, 0, 0',
-			'0, 255, 0',
-			'255, 127, 0',
-			'255, 255, 0',
-			'255, 0, 255',
-			'255, 127, 127'
-		];
 		var cssMarques = '';
 		j = 0;
-		for(i in marquesPossibles)
+		for(i in Parcours.marqueursParMarque)
 		{
-			cssMarques += '.marque-'+i+' .marqueur { background: rgba('+couleurs[j % couleurs.length]+', 0.25); }\n';
+			cssMarques += '.marque-'+i+' .marqueur { background: rgba('+Parcours.couleurs[j % Parcours.couleurs.length]+', 0.35); }\n';
 			++j;
 		}
 		var style = document.createElement('style');
 		style.type = 'text/css';
 		style.innerHTML = cssMarques;
 		document.getElementsByTagName('head')[0].appendChild(style)
-		
+	},
+	calculer: function()
+	{
 		/*- Composition des rails entre les marques. -*/
 		
 		/* Nos marqueurs ont déjà été regroupés par fil (même marque). Il nous faut maintenant, à l'intérieur d'un même fil, les répartir par bloc (expérience). */
 		
-		var marqueurs = {}; // marquesPossibles ne possède que les fils, marqueurs sous-classera par bloc.
+		var marqueurs = {}; // Parcours.marqueursParMarque ne possède que les fils, marqueurs sous-classera par bloc.
 		var el, elOffset;
-		var x, y;
-		for(marque in marquesPossibles)
+		var x, y, yBloc;
+		for(marque in Parcours.marqueursParMarque)
 		{
 			marqueurs[marque] = {};
-			for(j = marquesPossibles[marque].length; --j >= 0;)
+			for(j = Parcours.marqueursParMarque[marque].length; --j >= 0;)
 			{
-				marqueur = marquesPossibles[marque][j];
+				marqueur = Parcours.marqueursParMarque[marque][j];
 				x = marqueur.offsetWidth / 2.0;
 				// On remonte jusqu'au bloc conteneur.
 				for(elOffset = el = marqueur; el && el !== el.parentNode && el.getAttributeNS; el = el.parentNode)
