@@ -198,7 +198,7 @@ var Parcours =
 		// marque = marqué sans son accent. Nous reste à créer un marqueur par marqué.
 		var marques = document.getElementsByClassName('marque');
 		var marque;
-		var classes;
+		var classes, classeMarque;
 		var i, j;
 		var marquesPossibles = {};
 		var exprMarque = /^marque-/;
@@ -208,13 +208,18 @@ var Parcours =
 			classes = marque.getAttributeNS(null, 'class').split(/ +/);
 			for(j = classes.length; --j >= 0;)
 				if(classes[j].match(exprMarque))
-					marquesPossibles[classes[j].replace(exprMarque, '')] = 1;
+				{
+					classeMarque = classes[j]; // A priori on n'a qu'une seule classe CSS portant la marque.
+					if(!marquesPossibles[classeMarque.replace(exprMarque, '')])
+						marquesPossibles[classeMarque.replace(exprMarque, '')] = [];
+				}
 			var centreMarqueur = document.createElement('span');
 			centreMarqueur.setAttributeNS(null, 'class', 'centre-marqueur');
 			var marqueur = document.createElement('span');
 			marqueur.setAttributeNS(null, 'class', 'marqueur');
 			centreMarqueur.appendChild(marqueur);
 			marque.appendChild(centreMarqueur);
+			marquesPossibles[classeMarque.replace(exprMarque, '')].push(marqueur);
 		}
 		var couleurs =
 		[
