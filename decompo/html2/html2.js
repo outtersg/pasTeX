@@ -261,7 +261,7 @@ var Parcours =
 		for(marque in Parcours.marqueursParMarque)
 		{
 			marqueurs[marque] = {};
-			for(j = Parcours.marqueursParMarque[marque].length; --j >= 0;)
+			for(j = 0; j < Parcours.marqueursParMarque[marque].length; ++j)
 			{
 				marqueur = Parcours.marqueursParMarque[marque][j];
 				x = marqueur.offsetWidth / 2.0;
