@@ -74,11 +74,96 @@ var PiloteBezier =
 	
 	return {p1:p1, p2:p2};
 	},
+	
+	calculerCourbe: function(etapes)
+	{
+		var i;
+		
+		/* Gestion des cas particuliers. */
+		
+		switch(etapes.length)
+		{
+			case 0:
+			case 1:
+				return [];
+			case 2:
+				var r = [ etapes[0], etapes[1], etapes[0], etapes[1] ];
+				return r;
+		}
+		
+		/* Gros du boulot. */
+		
+		var tx, ty, dy;
+		var p;
+		var pc = [];
+		
+		for(i = 0; ++i < etapes.length - 1;)
+		{
+			p = etapes[i];
+			
+			// La tangente en un point doit être parallèle au segment qui joint les deux points l'entourant (pour aller de A à C via B, on veut qu'à son passage par B la courbe soit parallèle à (AB)).
+			
+			ty = etapes[i + 1].y - etapes[i - 1].y;
+			tx = etapes[i + 1].x - etapes[i - 1].x;
+			
+			// Les points de contrôle partent du point de passage selon cette tangente, sur une hauteur de 0,5 * le dy entre le point et son voisin. Comme on a une présentation verticale (deux points successifs ne peuvent être à la même ordonnée), on est sûrs de n'avoir pas de division par 0.
+			
+			dy = Math.min(p.y - etapes[i - 1].y, etapes[i + 1].y - p.y);
+			
+			//dy = p.y - etapes[i - 1].y;
+			pc.push
+			(
+				{
+					x: p.x - (tx / ty) * (dy * 0.5),
+					y: p.y - (dy * 0.5)
+				}
+			);
+			
+			pc.push(p);
+			
+			//dy = etapes[i + 1].y - p.y;
+			pc.push
+			(
+				{
+					x: p.x + (tx / ty) * (dy * 0.5),
+					y: p.y + (dy * 0.5)
+				}
+			);
+		}
+		
+		// Pour les extrémités, on reprend les points de contrôle de leur successeur / prédécesseur.
+		
+		pc.unshift(pc[0]);
+		pc.unshift(etapes[0]);
+		
+		pc.push(pc[pc.length - 1]);
+		pc.push(etapes[etapes.length - 1]);
+		
+		return pc;
+	},
 
 	courber: function(svg, etapes, couleur)
 	{
 		var ensvg = "http://www.w3.org/2000/svg";
 		var courbe;
+		
+		// Via mon code.
+		if(1)
+		{
+			var pc = PiloteBezier.calculerCourbe(etapes);
+			if(pc.length > 0)
+			{
+				i = 0;
+				d = 'M '+pc[i].x+','+pc[i].y;
+				for(++i; i < pc.length; i += 3)
+					d += ' C '+pc[i].x+','+pc[i].y+' '+pc[i + 1].x+','+pc[i + 1].y+' '+pc[i + 2].x+','+pc[i + 2].y;
+			}
+			else
+				d = '';
+		}
+		// Via bezier-spline.js.
+		else
+		{
 		var x = [];
 		var y = [];
 		var i, j;
@@ -92,14 +177,16 @@ var PiloteBezier =
 		
 		px = PiloteBezier.computeControlPoints(x);
 		py = PiloteBezier.computeControlPoints(y);
+			
+			d = '';
+			for(i = 0; i < etapes.length - 1; ++i)
+				d += ' '+PiloteBezier.path(x[i],y[i],px.p1[i],py.p1[i],px.p2[i],py.p2[i],x[i+1],y[i+1]);
+		}
 		
 		courbe = document.createElementNS(ensvg, 'path');
 		courbe.setAttributeNS(null, 'fill', 'none');
 		courbe.setAttributeNS(null, 'stroke', 'rgba('+couleur+')');
 		courbe.setAttributeNS(null, 'stroke-width', 5);
-		d = '';
-		for(i = 0; i < etapes.length - 1; ++i)
-			d += ' '+PiloteBezier.path(x[i],y[i],px.p1[i],py.p1[i],px.p2[i],py.p2[i],x[i+1],y[i+1]);
 		courbe.setAttributeNS(null, 'd', d);
 		svg.appendChild(courbe);
 	}
