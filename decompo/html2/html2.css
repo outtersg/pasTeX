@@ -110,6 +110,7 @@ td.categorie
 {
 	position: relative;
 	white-space: nowrap; /* Le marqueur étant placé "au centre" de la marque, si cette dernière est multiligne ça nous ennuie car le placement paraîtra curieux. */
+	font-weight: bold;
 }
 
 .centre-marqueur
