@@ -647,12 +647,12 @@ $affs[] = implode(', ', $aff);
 		foreach($donnees->intérêts->domaine as $latechniqueamusante)
 		{
 			if($pasLePremier) echo '<div class="delair"> </div>'."\n"; else $pasLePremier = true;
-			echo '<div class="titreexp">'.htmlspecialchars($latechniqueamusante->nom, ENT_NOQUOTES).'</div>'."\n";
+			echo '<div class="titreexp">'.pasTeX_html($latechniqueamusante->nom).'</div>'."\n";
 			$qqc = false;
 			if(isset($latechniqueamusante->techno))
 				foreach($latechniqueamusante->techno as $aquoicasert)
 				{
-					echo ($qqc ? ', ' : '<div class="exp">').htmlspecialchars($aquoicasert, ENT_NOQUOTES);
+					echo ($qqc ? ', ' : '<div class="exp">').pasTeX_html($aquoicasert);
 					$qqc = true;
 				}
 			if($qqc)
