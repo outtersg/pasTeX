@@ -159,4 +159,9 @@ function pasTeX_descriptionPeriode($d, $f)
 //function pasTeX_maj($chaine) { $r = iconv('UTF-8', 'UTF-8-MAC', $chaine); return iconv('UTF-8-MAC', 'UTF-8', strtoupper($r{0}).substr($r, 1)); }
 function pasTeX_maj($chaine) { return strtoupper($chaine{0}).substr($chaine, 1); }
 
+function pasTeX_html($chaine)
+{
+	return $chaine instanceof Texte ? $chaine->__toString() : htmlspecialchars($chaine, ENT_NOQUOTES);
+}
+
 ?>
