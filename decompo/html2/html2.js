@@ -327,7 +327,10 @@ var Parcours =
 			}
 			for(min = cheminsMarque[0].cout, j = cheminsMarque.length; --j >= 0;)
 				if(cheminsMarque[j].cout <= min)
+				{
 					chemins[marque] = cheminsMarque[j];
+					min = cheminsMarque[j].cout;
+				}
 		}
 		
 		/*- Tracé des chemins -*/
