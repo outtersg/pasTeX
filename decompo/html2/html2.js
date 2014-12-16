@@ -255,6 +255,7 @@ var Parcours =
 		
 		/* Nos marqueurs ont déjà été regroupés par fil (même marque). Il nous faut maintenant, à l'intérieur d'un même fil, les répartir par bloc (expérience). */
 		
+		var svg = document.getElementById('chemins');
 		var marqueurs = {}; // Parcours.marqueursParMarque ne possède que les fils, marqueurs sous-classera par bloc.
 		var el, elOffset;
 		var x, y, yBloc;
@@ -266,16 +267,18 @@ var Parcours =
 				marqueur = Parcours.marqueursParMarque[marque][j];
 				x = marqueur.offsetWidth / 2.0;
 				y = marqueur.offsetHeight / 2.0;
+				yBloc = undefined;
 				// On remonte jusqu'au bloc conteneur.
 				for(elOffset = el = marqueur; el && el !== el.parentNode && el.getAttributeNS; el = el.parentNode)
 				{
 					if(el.getAttributeNS(null, 'class') == 'projet')
-					{
 						yBloc = el.offsetTop;
-						if(!marqueurs[marque][yBloc])
-							marqueurs[marque][yBloc] = [];
+					if(el === svg.parentNode) // Pas de propriété offsetParent sur les SVG. On croise les doigts pour que le parentNode fasse le boulot…
+					{
 						marqueur.x = x;
 						marqueur.y = y;
+						if(!marqueurs[marque][yBloc])
+							marqueurs[marque][yBloc] = [];
 						marqueurs[marque][yBloc].push(marqueur);
 						break;
 					}
@@ -283,6 +286,8 @@ var Parcours =
 					{
 						x += el.offsetLeft;
 						y += el.offsetTop;
+						if(typeof(yBloc) != 'undefined')
+							yBloc += el.offsetTop;
 						elOffset = el.offsetParent;
 					}
 				}
