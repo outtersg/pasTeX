@@ -241,7 +241,7 @@ var Parcours =
 		j = 0;
 		for(i in Parcours.marqueursParMarque)
 		{
-			cssMarques += '.marque-'+i+' .marqueur { background: rgba('+Parcours.couleurs[j % Parcours.couleurs.length]+', 0.35); }\n';
+			cssMarques += '.marque-'+i+' > .centre-marqueur > .marqueur { background: rgba('+Parcours.couleurs[j % Parcours.couleurs.length]+', 0.35); }\n';
 			++j;
 		}
 		var style = document.createElement('style');
