@@ -509,7 +509,7 @@ $affs[] = implode(', ', $aff);
 <?php
 		echo '<svg id="jonctionlignestemps" style="position: absolute; width: '.(1.5 * $nGroupes + 1).'em; height: 100%; position: absolute;"></svg>'."\n";
 		echo '<svg id="chemins" style="position: absolute; left: 0; top: 0; height: 100%; width: 100%; z-index: -1;"></svg>'."\n";
-		$pasLePremier = false;
+		$premier = true;
 		
 		/* Tri. */
 		
@@ -520,8 +520,8 @@ $affs[] = implode(', ', $aff);
 		foreach($positions as $numProjet => $position)
 		{
 			$francheRigolade = $projet = $donnees->expérience->projet[$numProjet];
-			if($pasLePremier) echo '<div class="delair"> </div>'."\n"; else $pasLePremier = true;
-			echo '<div id="p'.$numProjet.'" class="projet" style="margin-left: '.(1.5 * $nGroupes + 1).'em;">'."\n";
+			echo '<div id="p'.$numProjet.'" class="projet'.($premier ? ' projetPremier' : '').'" style="margin-left: '.(1.5 * $nGroupes + 1).'em;">'."\n";
+			if($premier) $premier = false;
 			echo '<div class="dateexp">'.implode('; ', array_map(array($this, 'descriptionPeriode'), $projet->date)).'</div>'."\n";
 			$sociétés = null;
 			echo '<div class="titreexp">';
@@ -643,11 +643,12 @@ $affs[] = implode(', ', $aff);
 		if(!array_key_exists('intérêts', $donnees)) return;
 		
 		$this->commencerSection('Domaines d\'intérêt');
-		$pasLePremier = false;
+		$premier = true;
 		foreach($donnees->intérêts->domaine as $latechniqueamusante)
 		{
-			if($pasLePremier) echo '<div class="delair"> </div>'."\n"; else $pasLePremier = true;
+			echo '<div class="projet'.($premier ? ' projetPremier' : '').'">'."\n";
 			echo '<div class="titreexp">'.pasTeX_html($latechniqueamusante->nom).'</div>'."\n";
+			if($premier) $premier = false;
 			$qqc = false;
 			if(isset($latechniqueamusante->techno))
 				foreach($latechniqueamusante->techno as $aquoicasert)
@@ -657,6 +658,7 @@ $affs[] = implode(', ', $aff);
 				}
 			if($qqc)
 				echo '</div>'."\n";
+			echo '</div>'."\n";
 		}
 		$this->terminerSection();
 	}
@@ -666,7 +668,6 @@ $affs[] = implode(', ', $aff);
 		if(!array_key_exists('loisirs', $donnees)) return;
 		
 		$this->commencerSection('Autres activités et intérêts');
-		$pasLePremier = false;
 		foreach($donnees->loisirs->activité as $ouf)
 			echo '<div class="paraindependant">'.htmlspecialchars($ouf, ENT_NOQUOTES).'</div>'."\n";
 		$this->terminerSection();

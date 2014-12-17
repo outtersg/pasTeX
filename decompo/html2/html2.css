@@ -162,6 +162,16 @@ div.titreexp
 	font-style: bold;
 }
 
+.projet
+{
+	margin-top: 16px;
+}
+
+.projetPremier
+{
+	margin-top: 0;
+}
+
 div.descrexp
 {
 	display: inline;
