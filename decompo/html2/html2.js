@@ -271,7 +271,7 @@ var Parcours =
 				// On remonte jusqu'au bloc conteneur.
 				for(elOffset = el = marqueur; el && el !== el.parentNode && el.getAttributeNS; el = el.parentNode)
 				{
-					if(el.getAttributeNS(null, 'class') == 'projet')
+					if((' '+el.getAttributeNS(null, 'class')+' ').indexOf(' projet ') >= 0)
 						yBloc = el.offsetTop;
 					if(el === svg.parentNode) // Pas de propriété offsetParent sur les SVG. On croise les doigts pour que le parentNode fasse le boulot…
 					{
