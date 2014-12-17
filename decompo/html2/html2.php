@@ -364,6 +364,8 @@ $affs[] = implode(', ', $aff);
 		echo '<title>'.$titre.'</title>';
 		html_meta('link rel="stylesheet" type="text/css" href="decompo/html2/html2.css"');
 		html_corps('onload="LignesTemps.preparer(); Parcours.preparer();"');
+		echo '<div class="corps" style="position: relative;">'."\n";
+		echo '<svg id="chemins" style="position: absolute; left: 0; top: 0; height: 100%; width: 100%;"></svg>'."\n";
 		$this->pondreEntete($donnees);
 		$this->pondreProjets($donnees);
 		$this->pondreEtudes($donnees);
@@ -373,6 +375,7 @@ $affs[] = implode(', ', $aff);
 		$this->pondreAutres($donnees);
 		if(array_key_exists('liens', $params))
 			$this->pondreLiens($donnees, $params['liens']);
+		echo '</div>'."\n";
 		html_fin();
 		
 		return $this;
@@ -508,7 +511,6 @@ $affs[] = implode(', ', $aff);
 				</div>
 <?php
 		echo '<svg id="jonctionlignestemps" style="position: absolute; width: '.(1.5 * $nGroupes + 1).'em; height: 100%; position: absolute;"></svg>'."\n";
-		echo '<svg id="chemins" style="position: absolute; left: 0; top: 0; height: 100%; width: 100%; z-index: -1;"></svg>'."\n";
 		$premier = true;
 		
 		/* Tri. */
