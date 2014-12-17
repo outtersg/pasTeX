@@ -644,7 +644,7 @@ $affs[] = implode(', ', $aff);
 	{
 		if(!array_key_exists('intérêts', $donnees)) return;
 		
-		$this->commencerSection('Domaines d\'intérêt');
+		$this->commencerSection('Domaines d\'expertise'); // Domaines d'intérêt, Domaines de compétences, Compétences, Domaines d'expertise?
 		$premier = true;
 		foreach($donnees->intérêts->domaine as $latechniqueamusante)
 		{
