@@ -37,7 +37,6 @@ div.audessus
 	border: 1px solid #1F1F00;
 	padding: 8px;
 	position: relative;
-	z-index: 2;
 	overflow: hidden;
 }
 
