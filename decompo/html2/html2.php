@@ -367,11 +367,11 @@ $affs[] = implode(', ', $aff);
 		echo '<div class="corps" style="position: relative;">'."\n";
 		echo '<svg id="chemins" style="position: absolute; left: 0; top: 0; height: 100%; width: 100%;"></svg>'."\n";
 		$this->pondreEntete($donnees);
+		$this->pondreInteret($donnees);
 		$this->pondreProjets($donnees);
 		$this->pondreEtudes($donnees);
 		$this->pondreLangues($donnees);
 		$this->pondreConnaissances($donnees);
-		$this->pondreInteret($donnees);
 		$this->pondreAutres($donnees);
 		if(array_key_exists('liens', $params))
 			$this->pondreLiens($donnees, $params['liens']);
