@@ -166,6 +166,40 @@ var PiloteBezier =
 		
 		return pc;
 	},
+	
+	/**
+	 * Descente avec pas mal de verticalités.
+	 */
+	calculerCascade: function(etapes)
+	{
+		var pc = [];
+		var i;
+		var p;
+		
+		for(i = 0; i < etapes.length; ++i)
+		{
+			p = etapes[i];
+			
+			if(i > 0)
+			{
+				pc.push({ x: p.x, y: (p.y * 2 + etapes[i - 1].y * 1) / 3 });
+				pc.push({ x: p.x, y: (p.y * 2 + etapes[i - 1].y * 1) / 3 });
+				pc.push({ x: p.x, y: (p.y * 7 + etapes[i - 1].y * 2) / 9 });
+			}
+			
+			pc.push({ x: p.x, y: p.y, ligne: 1 });
+			
+			if(i < etapes.length - 1)
+			{
+				pc.push({ x: p.x, y: (p.y * 7 + etapes[i + 1].y * 2) / 9, ligne: 1 });
+				pc.push({ x: p.x, y: (p.y * 2 + etapes[i + 1].y * 1) / 3 });
+				pc.push({ x: p.x, y: (p.y * 2 + etapes[i + 1].y * 1) / 3 });
+				pc.push({ x: (p.x + etapes[i + 1].x) / 2, y: (p.y + etapes[i + 1].y) / 2 });
+			}
+		}
+		
+		return pc;
+	},
 
 	courber: function(svg, etapes, couleur)
 	{
