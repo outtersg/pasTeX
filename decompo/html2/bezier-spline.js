@@ -209,7 +209,7 @@ var PiloteBezier =
 		// Via mon code.
 		if(1)
 		{
-			var pc = PiloteBezier.calculerCourbe(etapes);
+			var pc = PiloteBezier.calculerCascade(etapes);
 			if(pc.length > 0)
 			{
 				i = 0;
