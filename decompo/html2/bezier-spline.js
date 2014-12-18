@@ -141,6 +141,31 @@ var PiloteBezier =
 		
 		return pc;
 	},
+	
+	/**
+	 * Descente style bougie (descente rapide, puis ralentissement pour bifurquer vers le point suivant, puis redescente rapide en arrivant dessus).
+	 */
+	calculerBougie: function(etapes)
+	{
+		var pc = [];
+		var i;
+		var p;
+		
+		for(i = 0; i < etapes.length; ++i)
+		{
+			p = etapes[i];
+			
+			if(i > 0)
+				pc.push({ x: p.x, y: (p.y * 2 + etapes[i - 1].y * 1) / 3 });
+			
+			pc.push(p);
+			
+			if(i < etapes.length - 1)
+				pc.push({ x: p.x, y: (p.y * 2 + etapes[i + 1].y * 1) / 3 });
+		}
+		
+		return pc;
+	},
 
 	courber: function(svg, etapes, couleur)
 	{
