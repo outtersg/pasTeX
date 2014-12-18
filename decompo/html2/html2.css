@@ -108,6 +108,7 @@ td.categorie
 .marque
 {
 	position: relative;
+	display: inline-block; /* Si plusieurs marques sont imbriquées, et qu'elles sont en inline, au 2014-12-16 WebKit / Blink merde sur le calcul de l'offsetLeft. Exemple avec: <div class="A">Blabla <span class="marque marque-B">Je fais <span class="marque marque-C">ceci</span></span></div>: B a pour offsetParent A, pour offetLeft 30; C a pour offsetParent B, *mais* pour offsetLeft 70 (= 40 + 30, 40 étant la valeur correcte que reporte d'ailleurs Firefox). */
 	white-space: nowrap; /* Le marqueur étant placé "au centre" de la marque, si cette dernière est multiligne ça nous ennuie car le placement paraîtra curieux. */
 	font-weight: bold;
 }
