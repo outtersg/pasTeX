@@ -215,7 +215,15 @@ var PiloteBezier =
 				i = 0;
 				d = 'M '+pc[i].x+','+pc[i].y;
 				for(++i; i < pc.length; i += 3)
+				{
+					if(pc[i].ligne)
+					{
+						d += ' L '+pc[i].x+','+pc[i].y;
+						i -= 2;
+					}
+					else
 					d += ' C '+pc[i].x+','+pc[i].y+' '+pc[i + 1].x+','+pc[i + 1].y+' '+pc[i + 2].x+','+pc[i + 2].y;
+				}
 			}
 			else
 				d = '';
