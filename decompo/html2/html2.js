@@ -369,7 +369,7 @@ var Parcours =
 						courbe = document.createElementNS(ensvg, 'line');
 						courbe.setAttributeNS(null, 'fill', 'none');
 						courbe.setAttributeNS(null, 'stroke', 'rgba('+Parcours.couleurs[j % Parcours.couleurs.length]+',0.35)');
-						courbe.setAttributeNS(null, 'stroke-width', 2);
+						courbe.setAttributeNS(null, 'stroke-width', 3.5);
 						courbe.setAttributeNS(null, 'x1', chemin[i].x);
 						courbe.setAttributeNS(null, 'y1', chemin[i].y);
 						courbe.setAttributeNS(null, 'x2', marqueurs[marque][y][k].x);
