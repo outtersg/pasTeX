@@ -250,11 +250,70 @@ var PiloteBezier =
 				d += ' '+PiloteBezier.path(x[i],y[i],px.p1[i],py.p1[i],px.p2[i],py.p2[i],x[i+1],y[i+1]);
 		}
 		
+		/* Ajout d'un masque. */
+		/* On poinçonne la courbe afin d'en retirer les disques des marqueurs (sans quoi la couleur de remplissage transparente des marqueurs fait que l'on voit la Bézier courir sous le disque; c'est moche). On espère que notre masque ne sera pas trop coûteux. */
+		
+		PiloteBezier.numMasque = PiloteBezier.numMasque ? PiloteBezier.numMasque + 1 : 1;
+		
+		var defs = document.createElementNS(ensvg, 'defs');
+		var masque = document.createElementNS(ensvg, 'mask');
+		masque.setAttributeNS(null, 'id', 'masque'+PiloteBezier.numMasque);
+		var courbeMasque = document.createElementNS(ensvg, 'path');
+		courbeMasque.setAttributeNS(null, 'fill', 'none');
+		courbeMasque.setAttributeNS(null, 'stroke', 'white');
+		courbeMasque.setAttributeNS(null, 'stroke-width', 5);
+		courbeMasque.setAttributeNS(null, 'd', d);
+		masque.appendChild(courbeMasque);
+		for(i = 0; i < etapes.length; ++i)
+		{
+			var marqueurMasque = document.createElementNS(ensvg, 'circle');
+			var pos = PiloteBezier.coordonneesMarqueur(svg, etapes[i]);
+			marqueurMasque.setAttributeNS(null, 'cx', pos.x);
+			marqueurMasque.setAttributeNS(null, 'cy', pos.y);
+			marqueurMasque.setAttributeNS(null, 'r', pos.r);
+			marqueurMasque.setAttributeNS(null, 'fill', 'black');
+			masque.appendChild(marqueurMasque);
+		}
+		defs.appendChild(masque);
+		svg.appendChild(defs);
+		
+		/* Création de la courbe. */
+		
 		courbe = document.createElementNS(ensvg, 'path');
 		courbe.setAttributeNS(null, 'fill', 'none');
 		courbe.setAttributeNS(null, 'stroke', 'rgba('+couleur+')');
 		courbe.setAttributeNS(null, 'stroke-width', 5);
 		courbe.setAttributeNS(null, 'd', d);
+		courbe.setAttributeNS(null, 'mask', 'url(#masque'+PiloteBezier.numMasque+')'); // La courbe ne doit pas être affichée sous les marqueurs: elle y serait redondante (et avec la transparence, ça se voit).
 		svg.appendChild(courbe);
+		
+		// On recrée aussi nos marqueurs: en DOM avec un border-radius, leur rendu HTML peut différer d'un demi-pixel de celui pour lequel on a calculé la courbe en SVG, ce qui introduit une discontinuïté visuelle du plus mauvais effet.
+		for(i = 0; i < etapes.length; ++i)
+		{
+			var marqueur = document.createElementNS(ensvg, 'circle');
+			var pos = PiloteBezier.coordonneesMarqueur(svg, etapes[i]);
+			marqueur.setAttributeNS(null, 'cx', pos.x);
+			marqueur.setAttributeNS(null, 'cy', pos.y);
+			marqueur.setAttributeNS(null, 'r', pos.r);
+			marqueur.setAttributeNS(null, 'fill', 'rgba('+couleur+')');
+			svg.appendChild(marqueur);
+			
+			etapes[i].setAttributeNS(null, 'style', 'background: rgba(0, 0, 0, 0);');
+		}
+	},
+	
+	coordonneesMarqueur: function(svg, marqueur)
+	{
+		var x = 0, y = 0;
+		var h = marqueur.offsetHeight;
+		
+		while(marqueur !== svg.parentNode && marqueur && marqueur !== marqueur.offsetParent) // Pas de propriété offsetParent sur les SVG. On croise les doigts pour que le parentNode fasse le boulot…
+		{
+			x += marqueur.offsetLeft;
+			y += marqueur.offsetTop;
+			marqueur = marqueur.offsetParent;
+		}
+		
+		return { x: x + h / 2.0, y: y + h / 2.0, r: h / 2.0 };
 	}
 };
