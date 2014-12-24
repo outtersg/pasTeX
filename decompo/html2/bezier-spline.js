@@ -261,7 +261,7 @@ var PiloteBezier =
 		var courbeMasque = document.createElementNS(ensvg, 'path');
 		courbeMasque.setAttributeNS(null, 'fill', 'none');
 		courbeMasque.setAttributeNS(null, 'stroke', 'white');
-		courbeMasque.setAttributeNS(null, 'stroke-width', 5);
+		courbeMasque.setAttributeNS(null, 'stroke-width', '.3em');
 		courbeMasque.setAttributeNS(null, 'd', d);
 		masque.appendChild(courbeMasque);
 		for(i = 0; i < etapes.length; ++i)
@@ -282,7 +282,7 @@ var PiloteBezier =
 		courbe = document.createElementNS(ensvg, 'path');
 		courbe.setAttributeNS(null, 'fill', 'none');
 		courbe.setAttributeNS(null, 'stroke', 'rgba('+couleur+')');
-		courbe.setAttributeNS(null, 'stroke-width', 5);
+		courbe.setAttributeNS(null, 'stroke-width', '.3em');
 		courbe.setAttributeNS(null, 'd', d);
 		courbe.setAttributeNS(null, 'mask', 'url(#masque'+PiloteBezier.numMasque+')'); // La courbe ne doit pas être affichée sous les marqueurs: elle y serait redondante (et avec la transparence, ça se voit).
 		svg.appendChild(courbe);
