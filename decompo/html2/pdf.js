@@ -27,6 +27,126 @@ page.open('cv.html', function(res)
 		phantom.exit(1);
 	}
 	
+	var trouveCesures = function()
+	{
+		var yHaut = function(o)
+		{
+			var y = 0;
+			while(o && o.offsetParent !== o)
+			{
+				y += o.offsetTop;
+				o = o.offsetParent;
+			}
+			return y;
+		};
+		
+		var yBas = function(o)
+		{
+			var y = o.offsetHeight;
+			while(o && o.offsetParent !== o)
+			{
+				y += o.offsetTop;
+				o = o.offsetParent;
+			}
+			return y;
+		};
+		
+		var cesures = [];
+		var sections = document.querySelectorAll('.section');
+		var projets = document.querySelectorAll('.projet');
+		var i;
+		
+		for(i = 0; i < sections.length; ++i)
+		{
+			var y = yHaut(sections[i]);
+			cesures.push([ 'd', y, 's' ]);
+			cesures.push([ 'f', y + sections[i].offsetHeight, 's' ]);
+		}
+		for(i = 0; i < projets.length; ++i)
+		{
+			var y = yHaut(projets[i]);
+			cesures.push([ 'd', y, 'p' ]);
+			cesures.push([ 'f', y + projets[i].offsetHeight, 'p' ]);
+		}
+		cesures.sort(function(a, b) { return a[1] - b[1]; });
+		
+		// On supprime le début des premiers projets (redondants avec le début de la section qui les contient) et la fin des derniers projets.
+		
+		var cesures2;
+		var precedente;
+		
+		cesures2 = [];
+		precedente = 's';
+		for(i = 0; i < cesures.length; ++i)
+		{
+			if(cesures[i][2] != 'p' || precedente == 'p')
+				cesures2.push(cesures[i]);
+			precedente = cesures[i][2];
+		}
+		cesures = cesures2;
+		
+		cesures2 = [];
+		precedente = 's';
+		for(i = cesures.length; --i >= 0;)
+		{
+			if(cesures[i][2] != 'p' || precedente == 'p')
+				cesures2.push(cesures[i]);
+			precedente = cesures[i][2];
+		}
+		cesures = cesures2;
+		cesures.reverse();
+		
+		var corps = document.querySelector('.corps');
+		for(i = 0; i < cesures.length; ++i)
+		{
+			var fils = document.createElement('div');
+			fils.setAttribute('style', 'position: absolute; width: 100%; height: 1px; top: '+(cesures[i][1] - corps.offsetTop)+'px; background: '+(cesures[i][0] == 'f' ? 'red' : 'green')+';');
+			corps.appendChild(fils);
+		}
+		
+		/* Tracé d'une croix à la jonction des pages A4, afin de s'assurer que nous sommes capables de prévoir en pixels où va tomber la césure PDF.
+		corps.style.overflow = 'hidden';
+		var ppp = 150;
+		var pppAff = 147.515;
+		//pppAff = 147.678; // En fait la valeur avec laquelle la croix est bien centrée sur la césure serait plutôt celle-ci. Mais tant pis, car le risque de décaler le texte est bien plus élevé, et la petite erreur sur la hauteur de page estimée est moins grave, c'est juste que la marge basse des pages sera un peu approximative.
+		var pppImpr = 300;
+		var facteurBlague = 1.64157;
+		pppAff /= facteurBlague;
+		pppImpr /= facteurBlague;
+		var cmpp = 2.54;
+		var hauteur = 29.7, largeur = 21, marge = 0;
+		hauteur = 29.7302; largeur = 21.024;
+		var viewportSize = { width: (largeur - 2 * marge) / cmpp * pppAff, height: (hauteur - 2 * marge) / cmpp * pppAff };
+		var paperSize = { width: (largeur / cmpp * pppImpr)+'px', height: (hauteur / cmpp * pppImpr)+'px', margin: (marge / cmpp * pppImpr)+'px' };
+
+		var ensvg = "http://www.w3.org/2000/svg";
+		var svg = document.createElementNS(ensvg, 'svg');
+		svg.setAttribute('style', 'position: absolute; left: 30%; height: 600px; width: 600px; top: '+(3 * (hauteur - 2 * marge) / cmpp * pppAff - corps.offsetTop - 300)+'px;');
+		var courbe;
+		courbe = document.createElementNS(ensvg, 'line');
+		courbe.setAttributeNS(null, 'fill', 'none');
+		courbe.setAttributeNS(null, 'stroke', 'red');
+		courbe.setAttributeNS(null, 'stroke-width', '3px');
+		courbe.setAttributeNS(null, 'x1', 0);
+		courbe.setAttributeNS(null, 'y1', 0);
+		courbe.setAttributeNS(null, 'x2', 600);
+		courbe.setAttributeNS(null, 'y2', 600);
+		svg.appendChild(courbe);
+		courbe = document.createElementNS(ensvg, 'line');
+		courbe.setAttributeNS(null, 'fill', 'none');
+		courbe.setAttributeNS(null, 'stroke', 'red');
+		courbe.setAttributeNS(null, 'stroke-width', '3px');
+		courbe.setAttributeNS(null, 'x1', 600);
+		courbe.setAttributeNS(null, 'y1', 0);
+		courbe.setAttributeNS(null, 'x2', 0);
+		courbe.setAttributeNS(null, 'y2', 600);
+		svg.appendChild(courbe);
+		corps.appendChild(svg);
+		*/
+		
+		return cesures;
+	};
+	
 	window.setTimeout(function()
 	{
 		page.render(pdf+'.png');
