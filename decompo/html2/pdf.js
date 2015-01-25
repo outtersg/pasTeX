@@ -160,5 +160,5 @@ page.open('cv.html', function(res)
 		});
 		page.render(pdf);
 		phantom.exit(0);
-	}, 2000);
+	}, 0);
 });
