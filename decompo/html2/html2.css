@@ -1,6 +1,9 @@
 body
 {
 	font-family: Lato;
+	font-size: 8pt; /* Lato est assez large. */
+	margin: 0;
+	padding: 2em;
 }
 
 div
@@ -11,7 +14,7 @@ div
 
 div.enTete
 {
-	margin: 16px;
+	margin: 0 0 1em 0;
 }
 
 div.titre
@@ -28,7 +31,7 @@ div.nom
 
 div.section
 {
-	margin: 16px;
+	margin: 1em 0;
 	position: relative;
 }
 
@@ -164,7 +167,7 @@ div.titreexp
 
 .projet
 {
-	margin-top: 16px;
+	margin-top: 1em;
 }
 
 .projetPremier
@@ -183,11 +186,6 @@ div.exp
 	margin-left: 24px;
 }
 
-div.delair
-{
-	margin: 16px;
-}
-
 div.soussection
 {
 	margin-top: 24px;
@@ -197,7 +195,7 @@ div.soussection
 
 div.paraindependant
 {
-	margin: 16px;
+	margin: 1em;
 }
 
 img
