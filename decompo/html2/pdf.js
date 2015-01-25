@@ -7,12 +7,14 @@ var pdf = system.args[1];
 
 var ppp = 150; // http://stackoverflow.com/questions/22017746/while-rendering-webpage-to-pdf-using-phantomjs-how-can-i-auto-adjust-my-viewpor
 var pppAff = 147.515; // Saloperie de rendu PDF géré différemment du reste; apparemment voilà le réglage qui me permet d'avoir exactement le même développement des textes sur mon CV (à savoir: les blocs de texte multilignes sont découpés pile au même endroit). Attention: le moindre décalage explose les chemins, car alors le rendu viewportSize est fait avec une largeur (et donc un wrapping) différent du rendu PDF. Or le SVG n'est pas recalculé au moment de l'impression, donc si le wrapping est différent (un pixel suffit parfois à faire passer un mot à la ligne, ce qui rajoute parfois une ligne), le SVG finira en décalage avec le texte. En outre, même le plus précautionneusement du monde, on va avoir un décalage: le SVG est bien imprimé comme fond de son texte, sauf que lorsqu'une ligne de texte atterrit en fin de page, le rendu le décale pour le faire apparaître en début de page suivante, et ne recale pas le SVG correspondant. De page en page, on a un décalage qui augmente (on pourrait le récupérer en imprimant la page 1, calculant jusqu'où elle arrive, décalant l'intégralité du body via un top: -...px, imprimer, etc., puis recoller les pages entre elles). Mais, pour (vraiment) terminer, le rendu des courbes est foiré (leur masque se décale, et finit donc par masquer ce qu'il ne devrait pas, et démasquer ce qu'il devrait masquer). Je ne suis pas satisfait du tout du résultat. Le rendu PNG est parfait… mais non vectoriel (et non découpé page à page).
+pppAff = 147.678;
 var pppImpr = 300;
 var facteurBlague = 1.64157; // En fait si on imprime un certain nombre de pixels à 300 ppp, on récupère un document de 34,47 cm (d'après Aperçu de Mac OS X).
 pppAff /= facteurBlague;
 pppImpr /= facteurBlague;
 var cmpp = 2.54;
 var hauteur = 29.7, largeur = 21, marge = 0; // La marge est gérée comme margin en CSS.
+hauteur = 29.7302; largeur = 21.024; // Dimensions plus exactes.
 // 1: installation automatisée pour.
 // 0: client / internes
 
@@ -149,7 +151,12 @@ page.open('cv.html', function(res)
 	
 	window.setTimeout(function()
 	{
-		page.render(pdf+'.png');
+		var hPage = page.evaluate(function() { return document.querySelector('body').offsetHeight; });
+		var hPageImpr = Math.ceil(pppImpr * (hPage / pppAff + 2 * marge / cmpp));
+		page.paperSize = { width: (largeur / cmpp * pppImpr)+'px', height: hPageImpr+'px', margin: (marge / cmpp * pppImpr)+'px' }; // On doit redéfinir tout l'objet; PhantomJS ne prend pas en compte la modification de la seule height.
+		
+		//page.render(pdf+'.png');
+		
 		// Le rendu PDF introduit des décalages dans les masques, qui font qu'ils ne sont plus bien placés par rapport à leur porteur. Tant pis, on les gicle.
 		page.evaluate(function()
 		{
