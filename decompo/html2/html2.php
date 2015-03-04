@@ -349,20 +349,26 @@ $affs[] = implode(', ', $aff);
 	
 	function decomposer($params, $donnees)
 	{
+		$dossierSortie = false;
+		$cheminSortieHtml = false;
+		
+		if($dossierSortie)
+			ob_start();
+		
 		Texte::$Html = true;
 		
 		$this->params = $params;
 		
 		html_enTete();
 		html_meta('meta http-equiv="Content-Type" content="text/html; charset=UTF-8"'); // IE
-		echo '<script type="text/javascript" src="decompo/html2/html2.js"></script>'."\n";
-		echo '<script type="text/javascript" src="decompo/html2/bezier-spline.js"></script>'."\n";
+		echo '<script type="text/javascript" src="'.($dossierSortie ? '' : 'decompo/html2/').'html2.js"></script>'."\n";
+		echo '<script type="text/javascript" src="'.($dossierSortie ? '' : 'decompo/html2/').'bezier-spline.js"></script>'."\n";
 		if($donnees->perso->nom)
 			$titre = htmlspecialchars($donnees->perso->prénom, ENT_NOQUOTES).' '.htmlspecialchars($donnees->perso->nom, ENT_NOQUOTES);
 		else
 			$titre = 'CV';
 		echo '<title>'.$titre.'</title>';
-		html_meta('link rel="stylesheet" type="text/css" href="decompo/html2/html2.css"');
+		html_meta('link rel="stylesheet" type="text/css" href="'.($dossierSortie ? '' : 'decompo/html2/').'html2.css"');
 		html_corps('onload="LignesTemps.preparer(); Parcours.preparer();"');
 		echo '<div class="corps" style="position: relative;">'."\n";
 		echo '<svg id="chemins" style="position: absolute; left: 0; top: 0; height: 100%; width: 100%;"></svg>'."\n";
@@ -377,6 +383,19 @@ $affs[] = implode(', ', $aff);
 			$this->pondreLiens($donnees, $params['liens']);
 		echo '</div>'."\n";
 		html_fin();
+		
+		if($dossierSortie)
+		{
+			$sortieHtml = ob_get_clean();
+			file_put_contents($cheminSortieHtml, $sortieHtml);
+			
+			copy(dirname(__FILE__).'/html2.css', $dossierSortie.'/html2.css');
+			copy(dirname(__FILE__).'/html2.js', $dossierSortie.'/html2.js');
+			copy(dirname(__FILE__).'/bezier-spline.js', $dossierSortie.'/bezier-spline.js');
+			
+			if(isset($donnees->perso->photo) && file_exists($donnees->perso->photo))
+				copy($donnees->perso->photo, $dossierSortie.'/photo.jpg');
+		}
 		
 		return $this;
 	}
