@@ -98,6 +98,7 @@ page.open('cv.html', function(res)
 		cesures = cesures2;
 		cesures.reverse();
 		
+		/* Tracé d'un trait rouge en dessous de chaque bloc, d'un vert au-dessus de chaque bloc.
 		var corps = document.querySelector('.corps');
 		for(i = 0; i < cesures.length; ++i)
 		{
@@ -105,6 +106,7 @@ page.open('cv.html', function(res)
 			fils.setAttribute('style', 'position: absolute; width: 100%; height: 1px; top: '+(cesures[i][1] - corps.offsetTop)+'px; background: '+(cesures[i][0] == 'f' ? 'red' : 'green')+';');
 			corps.appendChild(fils);
 		}
+		*/
 		
 		/* Tracé d'une croix à la jonction des pages A4, afin de s'assurer que nous sommes capables de prévoir en pixels où va tomber la césure PDF.
 		corps.style.overflow = 'hidden';
