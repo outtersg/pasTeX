@@ -22,6 +22,7 @@
  */
 
  require_once('util/params.inc');
+require_once dirname(__FILE__).'/../../util/processus.php';
 
 /* À FAIRE: inclure un lien, si module il y a, vers la génération d'un PDF
  * correspondant. */
@@ -30,7 +31,25 @@ class Html2
 {
 	function Html2() {}
 	
-	function analyserParams($argv, &$position) { return array(); }
+	function analyserParams($argv, &$position)
+	{
+		$retour = array();
+		while($position < count($argv))
+		{
+			switch($argv[$position])
+			{
+				case 'pdf':
+					$retour['pdf'] = $argv[$position + 1];
+					++$position;
+					break;
+				default:
+					break 2;
+			}
+			++$position;
+		}
+		
+		return $retour;
+	}
 	
 	function analyserChamps($params)
 	{
@@ -351,7 +370,13 @@ $affs[] = implode(', ', $aff);
 	{
 		$dossierSortie = false;
 		$cheminSortieHtml = false;
-		
+		if(isset($params['pdf']))
+		{
+			$cheminSortie = $params['pdf'];
+			$cheminSortieParchemin = $params['pdf'].'.parchemin.pdf';
+			$cheminSortieHtml = $cheminSortie.'.html';
+			$dossierSortie = dirname($cheminSortieHtml);
+		}
 		if($dossierSortie)
 			ob_start();
 		
@@ -395,6 +420,21 @@ $affs[] = implode(', ', $aff);
 			
 			if(isset($donnees->perso->photo) && file_exists($donnees->perso->photo))
 				copy($donnees->perso->photo, $dossierSortie.'/photo.jpg');
+		}
+		
+		if(isset($params['pdf']))
+		{
+			$phantom = new ProcessusCauseur(array('phantomjs', 'decompo/html2/pdf.js', $cheminSortieHtml, $cheminSortieParchemin));
+			$phantom->attendre();
+			$sortiePhantom = trim($phantom->contenuSortie());
+			if(!$sortiePhantom || !preg_match('/^[0-9,]+( [0-9,]+)*$/', $sortiePhantom))
+				fprintf(STDERR, "# phantomjs nous transmet un message inintelligible.");
+			else
+			{
+				$paramsDecoupe = explode(' ', $sortiePhantom);
+				$coupar = new Processus(array_merge(array('/home/gui/src/projets/adochants/couparchemin', $cheminSortieParchemin, $cheminSortie), $paramsDecoupe));
+				$coupar->attendre();
+			}
 		}
 		
 		return $this;
