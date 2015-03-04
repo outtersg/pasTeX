@@ -17,7 +17,7 @@ div.enTete
 	margin: 0 0 1em 0;
 }
 
-div.titre
+.titre
 {
 	color: #1F1F00;
 	font-size: 200%;
@@ -38,12 +38,14 @@ div.section
 div.audessus
 {
 	border: 1px solid #1F1F00;
+	border-bottom-left-radius: 1em;
+	border-top-right-radius: 1em;
 	padding: 8px;
 	position: relative;
 	overflow: hidden;
 }
 
-div.titresection
+.titresection
 {
 	position: absolute;
 	color: #BFBFFF;
@@ -54,6 +56,9 @@ div.titresection
 	right: 0px;
 	width: 100%;
 	top: 0px;
+	
+	margin: 0;
+	font-weight: normal;
 }
 
 .titresection:after
@@ -160,9 +165,10 @@ div.dateexp
 	display: inline;
 }
 
-div.titreexp
+.titreexp
 {
 	font-style: bold;
+	margin: 0;
 }
 
 .projet
@@ -175,7 +181,7 @@ div.titreexp
 	margin-top: 0;
 }
 
-div.descrexp
+.descrexp
 {
 	display: inline;
 	font-style: italic;

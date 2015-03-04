@@ -425,14 +425,10 @@ $affs[] = implode(', ', $aff);
 		 */
 ?>
 	<div class="section<?php if(isset($autresClasses)) echo ' '.$autresClasses; ?>">
-		<?php if(!@$this->params['ie']) { ?>
-		<img src="decompo/html/hd.ocre.png" style="position: absolute; right: 0px; top: 0px; z-index: 3;" alt="décoration"/>
-		<img src="decompo/html/bg.ocre.png" style="position: absolute; left: 0px; bottom: 0px; z-index: 3;" alt="décoration"/>
-		<?php } ?>
 		<div class="audessus">
-			<div class="titresection">
+			<h2 class="titresection">
 				<?php echo $nom ?>
-			</div>
+			</h2>
 <?php
 	}
 	
@@ -500,10 +496,6 @@ $affs[] = implode(', ', $aff);
 		$nom = 'Expérience et Projets';
 ?>
 	<div class="section projets">
-		<?php if(!@$this->params['ie']) { ?>
-		<img src="decompo/html/hd.ocre.png" style="position: absolute; right: 0px; top: 0px; z-index: 3;" alt="décoration"/>
-		<img src="decompo/html/bg.ocre.png" style="position: absolute; left: 0px; bottom: 0px; z-index: 3;" alt="décoration"/>
-		<?php } ?>
 		<div class="audessus">
 			<div class="" style="position: relative;">
 				<div class="titresection">
@@ -649,7 +641,7 @@ $affs[] = implode(', ', $aff);
 		foreach($donnees->intérêts->domaine as $latechniqueamusante)
 		{
 			echo '<div class="projet'.($premier ? ' projetPremier' : '').'">'."\n";
-			echo '<div class="titreexp">'.pasTeX_html($latechniqueamusante->nom).'</div>'."\n";
+			echo '<h3 class="titreexp">'.pasTeX_html($latechniqueamusante->nom).'</h3>'."\n";
 			if($premier) $premier = false;
 			$qqc = false;
 			if(isset($latechniqueamusante->techno))
