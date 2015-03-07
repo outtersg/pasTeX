@@ -459,7 +459,7 @@ $affs[] = implode(', ', $aff);
 		$titre = htmlspecialchars($donnees->titre, ENT_NOQUOTES);
 ?>
 	<div class="enTete">
-		<?php if(isset($donnees->perso->photo) && file_exists($donnees->perso->photo)) echo '<img src="photo.jpg" style="position: absolute; height: 10em; top: 0px; right: 0px;"/>'; ?>
+		<?php if(isset($donnees->perso->photo) && file_exists($donnees->perso->photo)) echo '<img src="photo.jpg" style="position: absolute; height: 8em; top: 0px; right: 0px;"/>'; ?>
 		<div class="nom"><?php echo $prénom.' '.$nom ?></div>
 		<div class="titre"><?php echo $titre ?></div>
 <?php
