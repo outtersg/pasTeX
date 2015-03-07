@@ -207,7 +207,14 @@ var Parcours =
 	couleur: function(num)
 	{
 		var coul = Parcours.couleurs[num % Parcours.couleurs.length];
-		return coul.join(', ')+', 0.35';
+		// Ajustement de l'alpha en fonction du Luma.
+		// http://stackoverflow.com/questions/596216/formula-to-determine-brightness-of-rgb-color
+		if(typeof(coul[3]) == 'undefined')
+		{
+			var luma = (0.299 * coul[0] + 0.587 * coul[1] + 0.114 * coul[2]) / 255; // De toutes les formules, c'est celle qui me convient le mieux.
+			coul[3] = Math.pow((luma + 0.5), 2) / 3; // Et celle-là aussi.
+		}
+		return coul.join(', ');
 	},
 	preparer: function()
 	{
