@@ -356,6 +356,13 @@ var Parcours =
 			
 			/* La courbe passe par chacune de nos étapes. */
 			
+			// On annule les styles posés par nos précédentes passes, afin de repartir de l'état originel.
+			for(i = 0; i < Parcours.marqueursParMarque[marque].length; ++i)
+			{
+				Parcours.marqueursParMarque[marque][i].removeAttributeNS(null, 'style');
+				Parcours.marqueursParMarque[marque][i].setAttributeNS(null, 'class', 'marqueur');
+			}
+			
 			PiloteBezier.courber(svg, chemins[marque].etapes, Parcours.couleurs[j % Parcours.couleurs.length]+',0.35');
 			
 			/* De plus à chaque étape il nous faut raccrocher au marqueur élu pour être sur le tracé du chemin, ceux qui n'ont pas eu cette chance. */
