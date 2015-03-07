@@ -91,9 +91,9 @@ td.categorie
 	width: 0.5em;
 	background: #DFDFFF;
 	/*background: radial-gradient(rgba(255, 255, 255, .25), rgba(0, 0, 255, .25));*/
-	border-top: 1px solid #FFFFFF;
-	border-bottom: 1px solid #FFFFFF;
-	border-radius: 0.5em;
+	border-top: 0.2em solid #FFFFFF;
+	border-bottom: 0.2em solid #FFFFFF;
+	/*border-radius: 0.5em;*/
 }
 
 .projet:hover .afftemps
