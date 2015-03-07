@@ -195,15 +195,20 @@ var Parcours =
 {
 	couleurs:
 	[
-		'255, 0, 0',
-		'0, 255, 0',
-		'255, 127, 0',
-		'223, 223, 0',
-		'127, 0, 255',
-		'255, 127, 127',
-		'63, 127, 255',
-		'191, 127, 0'
+		[ 255, 0, 0 ],
+		[ 0, 255, 0 ],
+		[ 255, 127, 0 ],
+		[ 223, 223, 0 ],
+		[ 127, 0, 255 ],
+		[ 255, 127, 127 ],
+		[ 63, 127, 255 ],
+		[ 191, 127, 0 ]
 	],
+	couleur: function(num)
+	{
+		var coul = Parcours.couleurs[num % Parcours.couleurs.length];
+		return coul.join(', ')+', 0.35';
+	},
 	preparer: function()
 	{
 		Parcours.initialiser();
@@ -242,7 +247,7 @@ var Parcours =
 		j = 0;
 		for(i in Parcours.marqueursParMarque)
 		{
-			cssMarques += '.marque-'+i+' > .centre-marqueur > .marqueur { background: rgba('+Parcours.couleurs[j % Parcours.couleurs.length]+', 0.35); }\n';
+			cssMarques += '.marque-'+i+' > .centre-marqueur > .marqueur { background: rgba('+Parcours.couleur(j)+'); }\n';
 			++j;
 		}
 		var style = document.createElement('style');
@@ -363,7 +368,7 @@ var Parcours =
 				Parcours.marqueursParMarque[marque][i].setAttributeNS(null, 'class', 'marqueur');
 			}
 			
-			PiloteBezier.courber(svg, chemins[marque].etapes, Parcours.couleurs[j % Parcours.couleurs.length]+',0.35');
+			PiloteBezier.courber(svg, chemins[marque].etapes, Parcours.couleur(j));
 			
 			/* De plus à chaque étape il nous faut raccrocher au marqueur élu pour être sur le tracé du chemin, ceux qui n'ont pas eu cette chance. */
 			
@@ -375,7 +380,7 @@ var Parcours =
 					{
 						courbe = document.createElementNS(ensvg, 'line');
 						courbe.setAttributeNS(null, 'fill', 'none');
-						courbe.setAttributeNS(null, 'stroke', 'rgba('+Parcours.couleurs[j % Parcours.couleurs.length]+',0.35)');
+						courbe.setAttributeNS(null, 'stroke', 'rgba('+Parcours.couleur(j)+')');
 						courbe.setAttributeNS(null, 'stroke-width', '.2em');
 						courbe.setAttributeNS(null, 'x1', chemin[i].x);
 						courbe.setAttributeNS(null, 'y1', chemin[i].y);
