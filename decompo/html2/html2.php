@@ -462,6 +462,38 @@ $affs[] = implode(', ', $aff);
 		<?php if(isset($donnees->perso->photo) && file_exists($donnees->perso->photo)) echo '<img src="photo.jpg" style="position: absolute; height: 10em; top: 0px; right: 0px;"/>'; ?>
 		<div class="nom"><?php echo $prénom.' '.$nom ?></div>
 		<div class="titre"><?php echo $titre ?></div>
+<?php
+		if($donnees->perso->naissance)
+		{
+			$maintenant = obtenir_datation(time());
+			$âge = $maintenant[0] - $donnees->perso->naissance[0];
+			for($i = 1; $i < 6; ++$i) // Si l'on est avant la date d'anniversaire, on retire un an.
+				if(($j = $maintenant[$i] - $donnees->perso->naissance[$i]) != 0)
+				{
+					if($j < 0)
+						--$âge;
+					break;
+				}
+			echo '<div>'.$âge.' ans</div>';
+		}
+		if($donnees->perso->mél)
+		{
+			$adrél = htmlspecialchars($donnees->perso->mél);
+			echo '<div>'.$adrél.'</div>';
+		}
+		if($donnees->perso->tél)
+		{
+			$tél = htmlspecialchars($donnees->perso->tél);
+			echo '<div>'.$tél.'</div>';
+		}
+		/* Tout le monde s'en fiche.
+		if($donnees->perso->adresse)
+		{
+			$adresse = implode('<br/>', array_map('htmlspecialchars', get_object_vars($donnees->perso->adresse->données)));
+			echo '<div>'.$adresse.'</div>';
+		}
+		*/
+?>
 	</div>
 <?php
 	}
