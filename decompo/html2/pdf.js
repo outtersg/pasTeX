@@ -3,13 +3,27 @@
 var page = require('webpage').create();
 var system = require('system');
 
-var html = system.args[1];
-var pdf = system.args[2];
+var html;
+var pdf;
+var finesse = 1.0;
+
+for(var i = 0; ++i < system.args.length;)
+{
+	if(/^-[0-9.]+$/.test(system.args[i]))
+		finesse = parseFloat(system.args[i].substr(1));
+	else if(typeof(html) == 'undefined')
+		html = system.args[i];
+	else if(typeof(pdf) == 'undefined')
+		pdf = system.args[i];
+}
 
 var ppp = 150; // http://stackoverflow.com/questions/22017746/while-rendering-webpage-to-pdf-using-phantomjs-how-can-i-auto-adjust-my-viewpor
 var pppAff = 147.515; // Saloperie de rendu PDF géré différemment du reste; apparemment voilà le réglage qui me permet d'avoir exactement le même développement des textes sur mon CV (à savoir: les blocs de texte multilignes sont découpés pile au même endroit). Attention: le moindre décalage explose les chemins, car alors le rendu viewportSize est fait avec une largeur (et donc un wrapping) différent du rendu PDF. Or le SVG n'est pas recalculé au moment de l'impression, donc si le wrapping est différent (un pixel suffit parfois à faire passer un mot à la ligne, ce qui rajoute parfois une ligne), le SVG finira en décalage avec le texte. En outre, même le plus précautionneusement du monde, on va avoir un décalage: le SVG est bien imprimé comme fond de son texte, sauf que lorsqu'une ligne de texte atterrit en fin de page, le rendu le décale pour le faire apparaître en début de page suivante, et ne recale pas le SVG correspondant. De page en page, on a un décalage qui augmente (on pourrait le récupérer en imprimant la page 1, calculant jusqu'où elle arrive, décalant l'intégralité du body via un top: -...px, imprimer, etc., puis recoller les pages entre elles). Mais, pour (vraiment) terminer, le rendu des courbes est foiré (leur masque se décale, et finit donc par masquer ce qu'il ne devrait pas, et démasquer ce qu'il devrait masquer). Je ne suis pas satisfait du tout du résultat. Le rendu PNG est parfait… mais non vectoriel (et non découpé page à page).
 pppAff = 147.678;
 var pppImpr = 300;
+
+pppAff *= finesse; pppImpr *= finesse; // Histoire que les CSS 1px ne soient quand même pas trop épais. Inconvénient: quel que soit le viewportSize, à l'impression Phantom ramène toutes les mesures au paperSize. Donc si l'on veut un A4 où 1px est plus fin que ce que Phantom a l'habitude de prendre comme 1px en A4, il nous faudra imprimer en A3 (et user d'une entourloupe pour repasser le PDF résultant en A4, mais cela devra se faire hors Phantom).
+
 var facteurBlague = 1.64157; // En fait si on imprime un certain nombre de pixels à 300 ppp, on récupère un document de 34,47 cm (d'après Aperçu de Mac OS X).
 pppAff /= facteurBlague;
 pppImpr /= facteurBlague;
@@ -154,6 +168,17 @@ page.open(html, function(res)
 	
 	window.setTimeout(function()
 	{
+		// Si on nous demande une certaine finesse, il faut adapter la taille de police.
+		if(finesse != 1.0)
+			page.evaluate(function(finesse)
+			{
+				var tailleP = window.getComputedStyle(document.querySelector('body'), null).getPropertyValue('font-size');
+				var boutsTaille = /^([0-9.]+)([a-z]*)$/.exec(tailleP);
+				document.querySelector('body').style.fontSize = (boutsTaille[1] * finesse)+boutsTaille[2];
+				// Et il faut recalculer pas mal de choses.
+				Parcours.calculer();
+				LignesTemps.calculer();
+			}, finesse);
 		var hPage = page.evaluate(function() { return document.querySelector('body').offsetHeight; });
 		var hPageImpr = Math.ceil(pppImpr * (hPage / pppAff + 2 * marge / cmpp));
 		page.paperSize = { width: (largeur / cmpp * pppImpr)+'px', height: hPageImpr+'px', margin: (marge / cmpp * pppImpr)+'px' }; // On doit redéfinir tout l'objet; PhantomJS ne prend pas en compte la modification de la seule height.
