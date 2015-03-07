@@ -368,6 +368,8 @@ $affs[] = implode(', ', $aff);
 	
 	function decomposer($params, $donnees)
 	{
+		$finessePdf = 2.0; // L'épaisseur du border minimal sera déterminé par un savant calcul relatif à la page (quoique l'on fasse avec le viewport, phantom ramène la taille d'1px à quelque chose de relatif à la taille du papier, quand il imprime). En outre cela détermine aussi l'épaisseur minimale des traits (phantom arrondit au px le plus proche, pour les border. Donc un border de 0.1em pourra s'afficher comme 1px, et un border de 0.05em… disparaîtra complètement, arrondi à 0px). Du coup si l'on veut avoir du trait fin, il nous faut imprimer sur de l'A3 par exemple puis effectuer une réduction PDF.
+		
 		$dossierSortie = false;
 		$cheminSortieHtml = false;
 		if(isset($params['pdf']))
@@ -424,7 +426,7 @@ $affs[] = implode(', ', $aff);
 		
 		if(isset($params['pdf']))
 		{
-			$phantom = new ProcessusCauseur(array('phantomjs', 'decompo/html2/pdf.js', $cheminSortieHtml, $cheminSortieParchemin));
+			$phantom = new ProcessusCauseur(array('phantomjs', 'decompo/html2/pdf.js', '-'.$finessePdf, $cheminSortieHtml, $cheminSortieParchemin));
 			$phantom->attendre();
 			$sortiePhantom = trim($phantom->contenuSortie());
 			if(!$sortiePhantom || !preg_match('/^[0-9,]+( [0-9,]+)*$/', $sortiePhantom))
@@ -432,8 +434,18 @@ $affs[] = implode(', ', $aff);
 			else
 			{
 				$paramsDecoupe = explode(' ', $sortiePhantom);
+				if($finessePdf != 1.0)
+				{
+					$redim = new Processus(array('/home/gui/src/projets/adochants/tourneetdouble', $cheminSortieParchemin, '-'.(1 / ($finessePdf * $finessePdf)), '-o', $cheminSortie.'.1'));
+					$redim->attendre();
+					$coupar = new Processus(array_merge(array('/home/gui/src/projets/adochants/couparchemin', $cheminSortie.'.1', $cheminSortie), $paramsDecoupe));
+					$coupar->attendre();
+				}
+				else
+				{
 				$coupar = new Processus(array_merge(array('/home/gui/src/projets/adochants/couparchemin', $cheminSortieParchemin, $cheminSortie), $paramsDecoupe));
 				$coupar->attendre();
+				}
 			}
 		}
 		
