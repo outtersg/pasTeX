@@ -200,7 +200,8 @@ var Parcours =
 		[ 255, 127, 0 ],
 		[ 223, 223, 0 ],
 		[ 127, 0, 255 ],
-		[ 255, 127, 127 ],
+		//[ 255, 127, 127 ], // Le rose, avec la correction d'alpha, c'est un peu la même chose que le rouge.
+		[ 127, 159, 127 ],
 		[ 63, 127, 255 ],
 		[ 191, 127, 0 ]
 	],
