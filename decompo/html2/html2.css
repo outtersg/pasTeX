@@ -171,6 +171,18 @@ div.dateexp
 	margin: 0;
 }
 
+.technos .niveau
+{
+	width: 3em;
+	float: left;
+	text-align: right;
+}
+
+.technos .techno
+{
+	margin-left: 3.5em;
+}
+
 .projet
 {
 	margin-top: 1em;
@@ -187,9 +199,15 @@ div.dateexp
 	font-style: italic;
 }
 
-div.exp
+.projets .exp, .projets .techno
 {
-	margin-left: 24px;
+	margin-left: 2em;
+}
+
+.projets .techno
+{
+	font-style: italic;
+	font-size: 80%;
 }
 
 div.soussection

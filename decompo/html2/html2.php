@@ -708,7 +708,7 @@ $affs[] = implode(', ', $aff);
 		
 		$seuils = array(0x0, 0x4, 0x8, 0x10);
 		
-		$this->commencerSection('Connaissances Informatiques');
+		$this->commencerSection('Connaissances Informatiques', 'technos');
 		$prems = true;
 		foreach($donnees->connaissances->catégorie as $catégorie)
 		{
@@ -722,7 +722,8 @@ $affs[] = implode(', ', $aff);
 					{
 						if(!$qqc)
 						{
-							echo '<div>';
+							echo '<div class="niveau">'.str_repeat('•', $i + 1).'</div>';
+							echo '<div class="techno">';
 							$qqc = true;
 						}
 						else
