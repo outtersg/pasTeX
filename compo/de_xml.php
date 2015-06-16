@@ -100,11 +100,14 @@ class CompoAProprietes extends Compo
 		$this->enTableau = $proprietesEnTableau;
 		$this->normal = $proprietesNormales;
 		$this->classes = array();
+		$this->_preservatifsEspaces = array();
 		foreach(array_merge($proprietesNormales, $proprietesEnTableau) as $cle => $valeur)
 			if(is_string($valeur))
 				$this->classes[$cle] = $valeur;
 			else if($valeur === 1)
 				$this->classes[$cle] = $cle;
+			else if($valeur == -1)
+				$this->_preservatifsEspaces[$cle] = 1;
 	}
 
 	function &entrerDans(&$depuis, $nom, $attributs)
@@ -133,6 +136,10 @@ class CompoAProprietes extends Compo
 			$depuis->données->{$nom}[] = &$donnee;
 		else // Sinon c'est une propriété unique de l'objet.
 			$depuis->données->{$nom} = &$donnee;
+		if(isset($this->preserveEspaces))
+			++$this->preserveEspaces;
+		else if(isset($this->_preservatifsEspaces[$nom]))
+			$this->preserveEspaces = 1;
 		return $nouveau;
 	}
 	
@@ -174,6 +181,9 @@ class CompoAProprietes extends Compo
 			else
 				throw new Exception('Application de marqueurs à un truc inconnu');
 		}
+		if(isset($this->preserveEspaces))
+			if(--$this->preserveEspaces <= 0)
+				unset($this->preserveEspaces);
 	}
 	
 	protected $enTableau; // Liste des sous-éléments XML agrégeables en tableau dans cet objet.
@@ -288,11 +298,11 @@ TERMINE
  * coller à la fois, c'est mauvais pour la crâne! */
 class Perso extends CompoAProprietes { function Perso() { $this->CompoAProprietes(array('naissance' => 'CompoDate', 'photo' => 'CompoImage'), array()); } }
 class Intérêts extends CompoAProprietes { function Intérêts() { $this->CompoAProprietes(array(), array('domaine' => 1)); } }
-class Domaine extends CompoAProprietes { function Domaine() { $this->CompoAProprietes(array(), array('techno' => 0)); } }
+class Domaine extends CompoAProprietes { function Domaine() { $this->CompoAProprietes(array(), array('techno' => -1)); } }
 class Loisirs extends CompoAProprietes { function Loisirs() { $this->CompoAProprietes(array(), array('activité' => 0)); } }
 class Formation extends CompoAProprietes { function Formation() { $this->CompoAProprietes(array(), array('études' => 'CompoADates')); } }
 class Expérience extends CompoAProprietes { function Expérience() { $this->CompoAProprietes(array(), array('projet' => 1)); } }
-class Projet extends CompoADatesRepetees { function Projet() { $this->CompoADatesRepetees(array(), array('rôle' => 0, 'lieu' => 0, 'techno' => 0, 'société' => 0, 'tâche' => 0)); } }
+class Projet extends CompoADatesRepetees { function Projet() { $this->CompoADatesRepetees(array(), array('rôle' => 0, 'lieu' => 0, 'techno' => -1, 'société' => 0, 'tâche' => -1)); } }
 class Langues extends CompoAProprietes { function Langues() { $this->CompoAProprietes(array(), array('langue' => 1)); } }
 class Langue extends CompoAProprietes { function Langue() { $this->CompoAProprietes(array(), array('certificat' => 0)); } }
 class Connaissances extends CompoAProprietes { function Connaissances() { $this->CompoAProprietes(array(), array('catégorie' => 1)); } }
