@@ -495,6 +495,8 @@ $affs[] = implode(', ', $aff);
 				}
 			echo '<div>'.$âge.' ans</div>';
 		}
+		if(isset($donnees->perso->état))
+			echo '<div>'.htmlspecialchars($donnees->perso->état).'</div>';
 		if($donnees->perso->mél)
 		{
 			$adrél = htmlspecialchars($donnees->perso->mél);
