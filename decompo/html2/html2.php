@@ -505,13 +505,11 @@ $affs[] = implode(', ', $aff);
 			$tél = htmlspecialchars($donnees->perso->tél);
 			echo '<div>'.$tél.'</div>';
 		}
-		/* Tout le monde s'en fiche.
 		if($donnees->perso->adresse)
 		{
 			$adresse = implode('<br/>', array_map('htmlspecialchars', get_object_vars($donnees->perso->adresse->données)));
 			echo '<div>'.$adresse.'</div>';
 		}
-		*/
 ?>
 	</div>
 <?php
