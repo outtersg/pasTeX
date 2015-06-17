@@ -621,7 +621,7 @@ $affs[] = implode(', ', $aff);
 	<div class="section projets">
 		<div class="audessus">
 			<div class="" style="position: relative;">
-				<div class="titresection">
+				<div class="titresection" style="display: none;"> <!-- La première expérience est déjà bien encombrée par les fils d'ariane de compétences qui lui passent dessous, pour qu'on ajoute aussi le titre de section. -->
 					<?php echo $nom ?>
 				</div>
 <?php
