@@ -237,6 +237,25 @@ $affs[] = implode(', ', $aff);
 		return $milieux;
 	}
 	
+	protected function _triDébuts($expériences)
+	{
+		$tri = array();
+		foreach($expériences as $numProjet => $projet)
+		{
+			$min = null;
+			foreach($projet->date as $moment)
+				if($min > ($date = Date::calculerAvecIndefinis(Date::mef($moment->d), false)) || !isset($min))
+					$min = $date;
+			if(isset($min))
+				$tri[$numProjet] = $min;
+		}
+		asort($tri, SORT_NUMERIC);
+		$num = -1;
+		foreach($tri as & $val)
+			$val = ++$num;
+		return $tri;
+	}
+	
 	protected function _positionsDebroussaillage($expériences, $lignesDeTemps)
 	{
 		$penaliteTraverseeCouche = 20; // Si la flèche joignant le bloc de texte à son segment temporel doit traverser les segments d'autres moments.
@@ -615,6 +634,8 @@ $affs[] = implode(', ', $aff);
 		
 		arsort($positions, SORT_NUMERIC);
 		
+		$positionsDébut = $this->_triDébuts($donnees->expérience->projet);
+		
 		foreach($positions as $numProjet => $position)
 		{
 			$francheRigolade = $projet = $donnees->expérience->projet[$numProjet];
@@ -622,6 +643,8 @@ $affs[] = implode(', ', $aff);
 			if($premier) $premier = false;
 			echo '<div class="dateexp">'.implode('; ', array_map(array($this, 'descriptionPeriode'), $projet->date)).'</div>'."\n";
 			$sociétés = null;
+			if(isset($positionsDébut[$numProjet]))
+				echo '<a name="'.$positionsDébut[$numProjet].'"/>';
 			echo '<div class="titreexp">';
 			if(isset($francheRigolade->société))
 				$sociétés = htmlspecialchars($francheRigolade->société[count($francheRigolade->société) - 1], ENT_NOQUOTES); // Seul le client final nous intéresse.
