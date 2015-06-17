@@ -1,7 +1,6 @@
 body
 {
-	font-family: Lato;
-	font-size: 8pt; /* Lato est assez large. */
+	font: 8pt Lato, sans-serif;
 	margin: 0;
 	padding: 2em;
 }
