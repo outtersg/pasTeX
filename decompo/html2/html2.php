@@ -669,6 +669,8 @@ $affs[] = implode(', ', $aff);
 			
 			echo '</div>'."\n";
 			
+			if(isset($projet->techno))
+				echo '<div class="techno">'.htmlspecialchars(implode(', ', $projet->techno)).'</div>';
 			/* À FAIRE: un machin qui fait que quand on passe la souris par dessus
 			 * un projet, s'affichent les outils et technos utilisés. */
 			echo '</div>'."\n";
