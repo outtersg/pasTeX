@@ -731,7 +731,7 @@ $affs[] = implode(', ', $aff);
 		
 		if(!array_key_exists('connaissances', $donnees)) return;
 		
-		$seuils = array(0x0, 0x4, 0x8, 0x10);
+		$seuils = array(0x0, 0x6, 0x9, 0x10);
 		
 		$this->commencerSection('Connaissances Informatiques', 'technos');
 		$prems = true;
