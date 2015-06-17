@@ -168,6 +168,7 @@ div.dateexp
 {
 	font-style: bold;
 	margin: 0;
+	border-bottom: 1px solid #7F7F7F;
 }
 
 .technos .niveau
