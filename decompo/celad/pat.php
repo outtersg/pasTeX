@@ -1,0 +1,159 @@
+<?php
+
+$t = file_get_contents('php://stdin');
+
+$t = preg_replace_callback
+(
+	array
+	(
+		'#{{ *([^}]*(}[^}][^}]*)*) *}}#',
+	),
+	'r',
+	$t
+);
+
+function r($r)
+{
+	$découpage = array();
+	découpe($r[1], /* & */$découpage);
+	$compil = compile($découpage);
+	
+	$dernier = $compil[count($compil) - 1];
+	$compil[count($compil) - 1] = array('f', 'aff', array($dernier));
+	
+	$r = '<?php '.implode('; ', array_map('rends', $compil)).';'.' ?>';
+	
+	return $r;
+}
+
+function découpe($c, & $découpage)
+{
+	$exprGénérale = '#[.()"]#';
+	$exprChaîne = '#"#';
+	$expr = $exprGénérale;
+	
+	$chaîne = false;
+	
+	while(preg_match($expr, $c, & $r, PREG_OFFSET_CAPTURE))
+	{
+		if($r[0][1] > 0)
+			if($chaîne === false)
+			{
+				if(strlen($sousC = trim(substr($c, 0, $r[0][1]))))
+					$découpage[] = array('id', $sousC);
+			}
+			else
+				$chaîne .= substr($c, 0, $r[0][1]);
+		$c = substr($c, $r[0][1] + strlen($r[0][0]));
+		
+		switch($bout = $r[0][0])
+		{
+			case '"':
+				if($chaîne !== false)
+				{
+					$découpage[] = array('"', $chaîne);
+					$expr = $exprGénérale;
+					$chaîne = false;
+				}
+				else
+				{
+					$expr = $exprChaîne;
+					$chaîne = '';
+				}
+				break;
+			default:
+				$découpage[] = array($bout);
+				break;
+		}
+	}
+	if($chaîne !== false)
+		throw new Exception('Chaîne non terminée');
+	if(strlen(trim($c)))
+		$découpage[] = array('id', trim($c));
+}
+
+function compile($découpage)
+{
+	list($i, $r) = _compile($découpage, 0);
+	return $r;
+}
+
+function _compile($découpage, $i)
+{
+	$compil = array();
+	$courant = null;
+	$courantProfond = & $courant;
+	for(; $i < count($découpage); ++$i)
+	{
+		$bloc = $découpage[$i];
+		switch($bloc[0])
+		{
+			case 'id':
+				$courant = $bloc;
+				$compil[] = $courant;
+				$courantProfond = & $compil[count($compil) - 1];
+				break;
+			case '.':
+				if(!$courant || $courant[0] != 'id')
+					throw new Exception('Impossible de caser un . après un '.($courantProfond ? serialize($courantProfond) : $rien));
+				++$i;
+				if(!isset($découpage[$i]) || $découpage[$i][0] != 'id')
+					throw new Exception('Impossible de caser un '.serialize(isset($découpage[$i]) ? $découpage[$i] : null).' après un '.serialize($découpage[$i - 1]));
+				$courantProfond[2] = $découpage[$i];
+				$courantProfond = & $courantProfond[2];
+				break;
+			case '"':
+				$courant = $bloc;
+				$compil[] = $courant;
+				break;
+			case '(':
+				if(!$courantProfond || $courantProfond[0] != 'id')
+					throw new Exception("Impossible de caser une ( après un ".($courantProfond ? serialize($courantProfond) : null));
+				$courantProfond[0] = 'f';
+				list($i, $compilFonction) = _compile($découpage, $i + 1);
+				$courantProfond[2] = $compilFonction;
+				break;
+			case ')':
+				break 2;
+		}
+	}
+	$r = array();
+	for($j = 0; $j < count($compil); $j = $k)
+	{
+		for($k = $j; $k < count($compil) && $compil[$k][0] != ','; ++$k) {}
+		if($k == $j + 1)
+			$r[] = $compil[$j];
+		else
+			$r[] = array('concat', array_slice($compil, $j, $k - $j));
+	}
+	return array($i, $r);
+}
+
+function rends($bloc, $racine = true)
+{
+	$r = '';
+	switch($bloc[0])
+	{
+		case 'f':
+			$r .= ($racine ? '$rf' : '').'->'.$bloc[1].'(';
+			$r .= implode(', ', array_map('rends', $bloc[2]));
+			$r .= ')';
+			break;
+		case 'id':
+			$r .= ($racine ? '$rv' : '').'->'.$bloc[1];
+			if(isset($bloc[2]))
+				$r .= rends($bloc[2], false);
+			break;
+		case '"':
+			$r .= "'".strtr($bloc[1], array("'" => "\\'"))."'";
+			break;
+		case 'concat':
+			$r .= implode('.', array_map('rends', $bloc[1]));
+			break;
+	}
+	return $r;
+}
+
+echo $t;
+
+?>
