@@ -376,25 +376,15 @@ echo '<?xml version="1.0" encoding="UTF-8"?>'."\n";
 			{% endif %}
 			<text:p text:style-name="P4">{{ cap(implode(": ", [ boulot.nom, boulot.description ])) }} :</text:p>
 			<text:list xml:id="list5360740990981205209" text:style-name="WW8Num2">
+				{% for tâche in boulot.tâche %}
 				<text:list-item>
-					<text:p text:style-name="Taches"/>
+					<text:p text:style-name="Taches">{{ tâche }}</text:p>
 				</text:list-item>
-				<text:list-item>
-					<text:p text:style-name="Taches"/>
-				</text:list-item>
-				<text:list-item>
-					<text:p text:style-name="Taches"/>
-				</text:list-item>
-				<text:list-item>
-					<text:p text:style-name="Taches"/>
-				</text:list-item>
-				<text:list-item>
-					<text:p text:style-name="Taches"/>
-				</text:list-item>
+				{% endfor %}
 			</text:list>
 			<text:p text:style-name="P4"/>
 			<text:h text:style-name="Environnement" text:outline-level="6" text:is-list-header="true">Environnement :
-				<text:tab/>préciser OS, langages, Outils, Réseaux, SGBD, etc…
+				<text:tab/>{{ implode(", ", boulot.techno) }}
 			</text:h>
 			<text:p text:style-name="P4"/>
 			<text:p text:style-name="P4"/>
