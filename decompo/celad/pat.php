@@ -124,9 +124,12 @@ function _compile($découpage, $i)
 	$r = array();
 	for($j = 0; $j < count($compil); $j = $k)
 	{
-		for($k = $j; $k < count($compil) && $compil[$k][0] != ','; ++$k) {}
-		if($k == $j + 1)
+		for($k = $j; $k < count($compil) && in_array($compil[$k][0], array('id', 'f', '"')); ++$k) {}
+		if($k <= $j + 1)
+		{
 			$r[] = $compil[$j];
+			$k = $j + 1; // Avançons de toute manière.
+		}
 		else
 			$r[] = array('concat', array_slice($compil, $j, $k - $j));
 	}
