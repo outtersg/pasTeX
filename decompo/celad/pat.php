@@ -43,7 +43,7 @@ function rstruct($r)
 
 function découpe($c, & $découpage)
 {
-	$exprGénérale = '#[.()", ]#';
+	$exprGénérale = '#[.()", \[\]]#';
 	$exprChaîne = '#"#';
 	$expr = $exprGénérale;
 	
@@ -138,6 +138,16 @@ function _compile($découpage, $i)
 			case '"':
 				$courant = $bloc;
 				$compil[] = $courant;
+				break;
+			case '[':
+				$courant = $bloc;
+				$compil[] = $courant;
+				$courantProfond = & $compil[count($compil) - 1];
+				list($i, $compilFonction) = _compile($découpage, $i + 1);
+				$courantProfond[2] = array();
+				foreach($compilFonction as $sousBloc)
+					if($sousBloc[0] != ',') // En théorie on a pile un bloc sur deux qui est une virgule.
+						$courantProfond[2][] = $sousBloc;
 				break;
 			case '(':
 				if(!$courantProfond || $courantProfond[0] != 'id')
@@ -246,10 +256,40 @@ function rends($bloc, $racine = true)
 					break;
 			}
 			break;
+		case '[':
+			$r .= '__tableau(';
+			$r .= implode(', ', array_map('rendsIsSet', $bloc[2]));
+			$r .= ')';
+			break;
 	}
 	return $r;
 }
 
+function rendsIsSet($bloc)
+{
+	$r = rends($bloc);
+	if($bloc[0] == 'id')
+		$r = 'isset('.$r.') ? '.$r.' : null';
+	return $r;
+}
+
+echo <<<TERMINE
+<?php
+if(!function_exists('__tableau'))
+{
+	function __tableau()
+	{
+		\$t = func_get_args();
+		\$r = array();
+		foreach(\$t as \$e)
+			if(isset(\$e))
+				\$r[] = \$e;
+		return \$r;
+	}
+}
+?>
+TERMINE
+;
 echo $t;
 
 ?>
