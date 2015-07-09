@@ -28,7 +28,7 @@ function r($r)
 
 function découpe($c, & $découpage)
 {
-	$exprGénérale = '#[.()",]#';
+	$exprGénérale = '#[.()", ]#';
 	$exprChaîne = '#"#';
 	$expr = $exprGénérale;
 	
@@ -60,6 +60,8 @@ function découpe($c, & $découpage)
 					$expr = $exprChaîne;
 					$chaîne = '';
 				}
+				break;
+			case ' ':
 				break;
 			default:
 				$découpage[] = array($bout);
