@@ -203,6 +203,9 @@ function rends($bloc, $racine = true)
 			$r .= ')';
 			break;
 		case 'id':
+			if (preg_match('/^[0-9]+$/', $bloc[1]))
+				$r .= $racine ? $bloc[1] : '['.$bloc[1].']';
+			else
 			$r .= ($racine ? '$' : '->').$bloc[1];
 			if(isset($bloc[2]))
 				$r .= rends($bloc[2], false);
