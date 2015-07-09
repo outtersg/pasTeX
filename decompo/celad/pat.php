@@ -94,6 +94,19 @@ function _compile($découpage, $i)
 				$courant = $bloc;
 				$compil[] = $courant;
 				$courantProfond = & $compil[count($compil) - 1];
+				
+				// Mots-clés.
+				
+				switch($courant[1])
+				{
+					case 'in':
+					case 'for':
+					case 'endfor':
+						$courantProfond[0] = 'struct';
+						//if(isset($compil[0][2])) // À faire après.
+						//	throw new Exception('Le mot-clé '.$compil[0][1].' ne peut être utilisé comme identifiant.');
+						break;
+				}
 				break;
 			case '.':
 				if(!$courant || $courant[0] != 'id')
@@ -135,7 +148,33 @@ function _compile($découpage, $i)
 		else
 			$r[] = array('concat', array_slice($compil, $j, $k - $j));
 	}
+	
+	// Structures: mise en forme.
+	
+	for($j = 0; $j < count($r); ++$j)
+		if($r[$j][0] == 'struct')
+			list($j, $r) = _compileStruct($r, $j);
+	
+	// Retour.
+	
 	return array($i, $r);
+}
+
+function _compileStruct($compil, $i)
+{
+	$motClé = $compil[$i][1];
+	switch($motClé)
+	{
+		case 'for':
+			if(!isset($compil[$i + 3]) || $compil[$i + 2][1] != 'in' || $compil[$i + 1][0] != 'id' || isset($compil[$i + 1][2]))
+				throw new Exception('for <var> in <tableau>');
+			$compil[$i][2] = array($compil[$i + 1], $compil[$i + 3]);
+			array_splice($compil, $i + 1, 3);
+			break;
+		case 'endfor':
+			break;
+	}
+	return array($i, $compil);
 }
 
 function rends($bloc, $racine = true)
@@ -158,6 +197,17 @@ function rends($bloc, $racine = true)
 			break;
 		case 'concat':
 			$r .= implode('.', array_map('rends', $bloc[1]));
+			break;
+		case 'struct':
+			switch($bloc[1])
+			{
+				case 'for':
+					$r .= 'foreach('.rends($bloc[2][1]).' as $'.$bloc[2][0][1].') {';
+					break;
+				case 'endfor':
+					$r .= '}';
+					break;
+			}
 			break;
 	}
 	return $r;
