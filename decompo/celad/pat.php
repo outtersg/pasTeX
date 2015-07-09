@@ -4,15 +4,19 @@ $t = file_get_contents('php://stdin');
 
 $t = preg_replace_callback
 (
-	array
-	(
 		'#{{ *([^}]*(}[^}][^}]*)*) *}}#',
-	),
-	'r',
+	'raff',
 	$t
 );
 
-function r($r)
+$t = preg_replace_callback
+(
+	'#{% *([^%]*(%[^}][^%]*)*) *%}#',
+	'rstruct',
+	$t
+);
+
+function raff($r)
 {
 	$découpage = array();
 	découpe($r[1], /* & */$découpage);
@@ -22,6 +26,17 @@ function r($r)
 	$compil[count($compil) - 1] = array('f', 'aff', array($dernier));
 	
 	$r = '<?php '.implode('; ', array_map('rends', $compil)).';'.' ?>';
+	
+	return $r;
+}
+
+function rstruct($r)
+{
+	$découpage = array();
+	découpe($r[1], /* & */$découpage);
+	$compil = compile($découpage);
+	
+	$r = '<?php '.implode('; ', array_map('rends', $compil)).' ?>';
 	
 	return $r;
 }
