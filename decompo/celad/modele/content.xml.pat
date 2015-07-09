@@ -374,7 +374,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>'."\n";
 			<text:p text:style-name="P4">{{ cap(implode(", ", boulot.rôle)) }}.</text:p>
 			<text:p text:style-name="P4"/>
 			{% endif %}
-			<text:p text:style-name="P4">Description du projet et des différentes tâches effectuées :</text:p>
+			<text:p text:style-name="P4">{{ cap(implode(": ", [ boulot.nom, boulot.description ])) }} :</text:p>
 			<text:list xml:id="list5360740990981205209" text:style-name="WW8Num2">
 				<text:list-item>
 					<text:p text:style-name="Taches"/>
