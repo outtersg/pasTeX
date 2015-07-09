@@ -34,7 +34,7 @@ function découpe($c, & $découpage)
 	
 	$chaîne = false;
 	
-	while(preg_match($expr, $c, & $r, PREG_OFFSET_CAPTURE))
+	while(preg_match($expr, $c, $r, PREG_OFFSET_CAPTURE))
 	{
 		if($r[0][1] > 0)
 			if($chaîne === false)
