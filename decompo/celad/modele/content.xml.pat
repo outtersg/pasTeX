@@ -212,7 +212,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>'."\n";
 			</text:sequence-decls>
 			<text:p text:style-name="P15"/>
 			<text:p text:style-name="P12"/>
-			<text:p text:style-name="Titre-Fonction">TITRE ET / OU FONCTION</text:p>
+			<text:p text:style-name="Titre-Fonction">{{ maj(titre) }}</text:p>
 			<text:p text:style-name="Titre-Fonction"/>
 			<text:p text:style-name="Standard"/>
 			<text:p text:style-name="Standard"/>
@@ -232,12 +232,11 @@ echo '<?xml version="1.0" encoding="UTF-8"?>'."\n";
 			</table:table>
 			<text:p text:style-name="Standard"/>
 			<text:p text:style-name="Standard"/>
-			<text:p text:style-name="Formation">Année
-				<text:tab/>Diplôme
+			{% for diplôme in formation.études %}
+			<text:p text:style-name="Formation">{{ diplôme.date.f.0 }}
+				<text:tab/>{{ diplôme.diplôme }}
 			</text:p>
-			<text:p text:style-name="Formation">Année
-				<text:tab/>Diplôme
-			</text:p>
+			{% endfor %}
 			<text:p text:style-name="Standard"/>
 			<text:p text:style-name="Standard"/>
 			<text:p text:style-name="Standard"/>
@@ -368,10 +367,13 @@ echo '<?xml version="1.0" encoding="UTF-8"?>'."\n";
 <?php if(0){ ?>
 			<text:p text:style-name="P5">(Indiquez ici vos expériences + stages en commençant par la plus récente).</text:p>
 <?php } ?>
-			<text:h text:style-name="P16" text:outline-level="5">De mois/année à mois/année à Société – Ville</text:h>
+			{% for boulot in expérience.projet %}
+			<text:h text:style-name="P16" text:outline-level="5">{{ boulot.quand }} à {{ boulot.société }}<?php if(0){ ?>– Ville<? } ?></text:h>
 			<text:p text:style-name="P4"/>
-			<text:p text:style-name="P4">Fonction dans le Service.</text:p>
+			{% if boulot.rôle %}
+			<text:p text:style-name="P4">{{ cap(implode(", ", boulot.rôle)) }}.</text:p>
 			<text:p text:style-name="P4"/>
+			{% endif %}
 			<text:p text:style-name="P4">Description du projet et des différentes tâches effectuées :</text:p>
 			<text:list xml:id="list5360740990981205209" text:style-name="WW8Num2">
 				<text:list-item>
@@ -397,91 +399,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>'."\n";
 			<text:p text:style-name="P4"/>
 			<text:p text:style-name="P4"/>
 			<text:p text:style-name="P4"/>
-			<text:h text:style-name="P16" text:outline-level="5">De mois/année à mois/année à Société – Ville</text:h>
-			<text:p text:style-name="P4"/>
-			<text:p text:style-name="P4">Fonction dans le Service.</text:p>
-			<text:p text:style-name="P4"/>
-			<text:p text:style-name="P4">Description du projet et des différentes tâches effectuées :</text:p>
-			<text:list xml:id="list184052854160385" text:continue-numbering="true" text:style-name="WW8Num2">
-				<text:list-item>
-					<text:p text:style-name="Taches"/>
-				</text:list-item>
-				<text:list-item>
-					<text:p text:style-name="Taches"/>
-				</text:list-item>
-				<text:list-item>
-					<text:p text:style-name="Taches"/>
-				</text:list-item>
-				<text:list-item>
-					<text:p text:style-name="Taches"/>
-				</text:list-item>
-				<text:list-item>
-					<text:p text:style-name="Taches"/>
-				</text:list-item>
-			</text:list>
-			<text:p text:style-name="P4"/>
-			<text:h text:style-name="Environnement" text:outline-level="6" text:is-list-header="true">Environnement :
-				<text:tab/>préciser OS, langages, Outils, Réseaux, SGBD, etc…
-			</text:h>
-			<text:p text:style-name="P4"/>
-			<text:p text:style-name="P4"/>
-			<text:p text:style-name="P4"/>
-			<text:h text:style-name="P16" text:outline-level="5">De mois/année à mois/année à Société – Ville</text:h>
-			<text:p text:style-name="P4"/>
-			<text:p text:style-name="P4">Fonction dans le Service.</text:p>
-			<text:p text:style-name="P4"/>
-			<text:p text:style-name="P4">Description du projet et des différentes tâches effectuées :</text:p>
-			<text:list xml:id="list184052856170102" text:continue-numbering="true" text:style-name="WW8Num2">
-				<text:list-item>
-					<text:p text:style-name="Taches"/>
-				</text:list-item>
-				<text:list-item>
-					<text:p text:style-name="Taches"/>
-				</text:list-item>
-				<text:list-item>
-					<text:p text:style-name="Taches"/>
-				</text:list-item>
-				<text:list-item>
-					<text:p text:style-name="Taches"/>
-				</text:list-item>
-				<text:list-item>
-					<text:p text:style-name="Taches"/>
-				</text:list-item>
-			</text:list>
-			<text:p text:style-name="P4"/>
-			<text:h text:style-name="Environnement" text:outline-level="6" text:is-list-header="true">Environnement :
-				<text:tab/>préciser OS, langages, Outils, Réseaux, SGBD, etc…
-			</text:h>
-			<text:p text:style-name="P13"/>
-			<text:p text:style-name="P13"/>
-			<text:h text:style-name="P16" text:outline-level="5">
-				<text:soft-page-break/>De mois/année à mois/année à Société – Ville
-			</text:h>
-			<text:p text:style-name="P4"/>
-			<text:p text:style-name="P4">Fonction dans le Service.</text:p>
-			<text:p text:style-name="P4"/>
-			<text:p text:style-name="P4">Description du projet et des différentes tâches effectuées :</text:p>
-			<text:list xml:id="list184052858167312" text:continue-numbering="true" text:style-name="WW8Num2">
-				<text:list-item>
-					<text:p text:style-name="Taches"/>
-				</text:list-item>
-				<text:list-item>
-					<text:p text:style-name="Taches"/>
-				</text:list-item>
-				<text:list-item>
-					<text:p text:style-name="Taches"/>
-				</text:list-item>
-				<text:list-item>
-					<text:p text:style-name="Taches"/>
-				</text:list-item>
-				<text:list-item>
-					<text:p text:style-name="Taches"/>
-				</text:list-item>
-			</text:list>
-			<text:p text:style-name="P13"/>
-			<text:h text:style-name="Environnement" text:outline-level="6" text:is-list-header="true">Environnement :
-				<text:tab/>préciser OS, langages, Outils, Réseaux, SGBD, etc…
-			</text:h>
+			{% endfor %}
 <?php if(0){ ?>
 			<text:p text:style-name="P4"/>
 			<text:p text:style-name="P4"/>

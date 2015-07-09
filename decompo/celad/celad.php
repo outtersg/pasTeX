@@ -66,6 +66,33 @@ class Celad
 	
 	public function decomposer($params, $données)
 	{
+		$this->_préparer($données);
+		
+		$this->_params = $params;
+		$nomTemp = tempnam('/tmp', 'temp.openoffice.');
+		$dossierTemp = $nomTemp.'.contenu';
+		$modele = dirname(__FILE__).'/modele';
+		system("cp -R '{$modele}' '{$dossierTemp}'");
+		foreach(array('content', 'styles') as $f)
+		{
+			ob_start();
+			$rf = $this;
+			foreach(get_object_vars($données) as $nom => $val)
+				$$nom = $val;
+			include $modele.'/'.$f.'.xml.php';
+			$content = ob_get_clean();
+			file_put_contents($dossierTemp.'/'.$f.'.xml', $content);
+			unlink($dossierTemp.'/'.$f.'.xml.php');
+			unlink($dossierTemp.'/'.$f.'.xml.pat');
+		}
+		$sortie = @$this->_params['pdf'] ? $nomTemp.'.sortie.odt' : '-';
+		system("( cd '{$dossierTemp}' && ( ( command -v zip > /dev/null && zip -r -q {$sortie} . ) || ( 7za a /tmp/temp.$$.zip . > /dev/null && cat /tmp/temp.$$.zip && rm /tmp/temp.$$.zip ) ) )");
+		if(@$this->_params['pdf']) { ooo_enPDF($sortie); system("rm '{$sortie}'"); }
+		system("rm -R '{$dossierTemp}' '{$nomTemp}'");
+	}
+	
+	protected function _préparer(& $données)
+	{
 		if($données->perso->naissance)
 		{
 			$maintenant = obtenir_datation(time());
@@ -80,26 +107,60 @@ class Celad
 			$données->perso->âge = $âge;
 		}
 		
-		$this->_params = $params;
-		$nomTemp = tempnam('/tmp', 'temp.openoffice.');
-		$dossierTemp = $nomTemp.'.contenu';
-		$modele = dirname(__FILE__).'/modele';
-		system("cp -R '{$modele}' '{$dossierTemp}'");
-		foreach(array('content', 'styles') as $f)
+		foreach($données->expérience->projet as & $projet)
+			if(!isset($projet->société))
+				$projet->société = '(indépendant)';
+			else
+				$projet->société = array_pop($projet->société);
+		
+		$this->_trierProjets($données);
+	}
+	
+	protected function _comparerDatesPivot($a, $b)
+	{
+		return $b->pivot - $a->pivot;
+	}
+	
+	protected function _affichagePériode($p)
+	{
+		return pasTeX_descriptionPeriode(Date::fem($p[0]), Date::fem($p[1]), Periode::$LE | Periode::$CHIFFRES | Periode::$JOUR_INSECABLE);
+	}
+	
+	protected function _trierProjets(& $données)
+	{
+		$maintenant = obtenir_datation(time());
+		foreach($données->expérience->projet as $num => $francheRigolade)
 		{
-			ob_start();
-			$rf = $this;
-			$rv = $données;
-			include $modele.'/'.$f.'.xml.php';
-			$content = ob_get_clean();
-			file_put_contents($dossierTemp.'/'.$f.'.xml', $content);
-			unlink($dossierTemp.'/'.$f.'.xml.php');
-			unlink($dossierTemp.'/'.$f.'.xml.pat');
+			// Calcul du pivot (date centrale, plutôt vers la fin quand même).
+			
+			$moments = array();
+			foreach($francheRigolade->date as $plage)
+			{
+				$f = $plage->f;
+				if($f == array(-1, -1, -1, -1, -1, -1))
+					$f = $maintenant;
+				$moments[] = array($plage->d, $f);
+			}
+			$période = periode_union($moments);
+			$pivot = (2 * Date::calculer($période[1]) + Date::calculer($période[0])) / 3;
+			
+			// Travail au mois (Celad ne s'intéresse pas aux jours), et regroupement.
+			
+			$mois = array();
+			foreach($francheRigolade->date as $plage)
+			{
+				$d = array(2 => null, null, null, null) + Date::mef($plage->d);
+				$f = array(2 => null, null, null, null) + Date::mef($plage->f);
+				$mois[] = array($d, $f);
+			}
+			$mois = Periode::unionSi($mois);
+			
+			// Mise en forme et mémoire de tout ça.
+			
+			$données->expérience->projet[$num]->pivot = $pivot;
+			$données->expérience->projet[$num]->quand = ucfirst(implode(', ', array_map(array($this, '_affichagePériode'), $mois)));
 		}
-		$sortie = @$this->_params['pdf'] ? $nomTemp.'.sortie.odt' : '-';
-		system("( cd '{$dossierTemp}' && ( ( command -v zip > /dev/null && zip -r -q {$sortie} . ) || ( 7za a /tmp/temp.$$.zip . > /dev/null && cat /tmp/temp.$$.zip && rm /tmp/temp.$$.zip ) ) )");
-		if(@$this->_params['pdf']) { ooo_enPDF($sortie); system("rm '{$sortie}'"); }
-		system("rm -R '{$dossierTemp}' '{$nomTemp}'");
+		uasort($données->expérience->projet, array($this, '_comparerDatesPivot'));
 	}
 	
 	public function aff($x)
@@ -110,6 +171,16 @@ class Celad
 	public function maj($x)
 	{
 		return mb_strtoupper($x);
+	}
+	
+	public function cap($x)
+	{
+		return mb_strtoupper(mb_substr($x, 0, 1)).mb_strtolower(mb_substr($x, 1));
+	}
+	
+	public function implode($jointure, $contenu)
+	{
+		return implode($jointure, $contenu);
 	}
 	
 	/* Paramètres:
