@@ -136,7 +136,7 @@ function pasTeX_unionPeriodes($dates)
 	return periode_union($moments);
 }
 
-function pasTeX_descriptionPeriode($d, $f)
+function pasTeX_descriptionPeriode($d, $f, $mode = 0)
 {
 	$null = array(-1, -1, -1, -1, -1, -1);
 	$d == $null && $d = null;
@@ -147,8 +147,8 @@ function pasTeX_descriptionPeriode($d, $f)
 		else
 			return 'jusqu\'à'; /* À FAIRE: jusqu'au éventuellement */
 	if($f === null)
-		return 'depuis '.periode_affDate($d);
-	return periode_aff($d, $f);
+		return 'depuis '.periode_affDate($d, $mode);
+	return periode_aff($d, $f, $mode);
 }
 
 /* Eh oui, messieurs-dames, un langage des années 2000 qui ne gère pas en natif
