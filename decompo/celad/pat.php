@@ -28,7 +28,7 @@ function r($r)
 
 function découpe($c, & $découpage)
 {
-	$exprGénérale = '#[.()"]#';
+	$exprGénérale = '#[.()",]#';
 	$exprChaîne = '#"#';
 	$expr = $exprGénérale;
 	
@@ -102,6 +102,7 @@ function _compile($découpage, $i)
 				$courantProfond[2] = $découpage[$i];
 				$courantProfond = & $courantProfond[2];
 				break;
+			case ',':
 			case '"':
 				$courant = $bloc;
 				$compil[] = $courant;
@@ -111,7 +112,10 @@ function _compile($découpage, $i)
 					throw new Exception("Impossible de caser une ( après un ".($courantProfond ? serialize($courantProfond) : null));
 				$courantProfond[0] = 'f';
 				list($i, $compilFonction) = _compile($découpage, $i + 1);
-				$courantProfond[2] = $compilFonction;
+				$courantProfond[2] = array();
+				foreach($compilFonction as $sousBloc)
+					if($sousBloc[0] != ',') // En théorie on a pile un bloc sur deux qui est une virgule.
+						$courantProfond[2][] = $sousBloc;
 				break;
 			case ')':
 				break 2;
