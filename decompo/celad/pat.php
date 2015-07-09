@@ -117,6 +117,8 @@ function _compile($découpage, $i)
 					case 'in':
 					case 'for':
 					case 'endfor':
+					case 'if':
+					case 'endif':
 						$courantProfond[0] = 'struct';
 						//if(isset($compil[0][2])) // À faire après.
 						//	throw new Exception('Le mot-clé '.$compil[0][1].' ne peut être utilisé comme identifiant.');
@@ -186,7 +188,17 @@ function _compileStruct($compil, $i)
 			$compil[$i][2] = array($compil[$i + 1], $compil[$i + 3]);
 			array_splice($compil, $i + 1, 3);
 			break;
+		case 'if':
+			if(!isset($compil[$i + 1]))
+				throw new Exception('if <cond>');
+			$cond = $compil[$i + 1];
+			if($cond[0] == 'id')
+				$cond = array('f', 'isset', array($cond));
+			$compil[$i][2] = array($cond);
+			array_splice($compil, $i + 1, 1);
+			break;
 		case 'endfor':
+		case 'endif':
 			break;
 	}
 	return array($i, $compil);
@@ -198,6 +210,9 @@ function rends($bloc, $racine = true)
 	switch($bloc[0])
 	{
 		case 'f':
+			if($racine && $bloc[1] == 'isset')
+				$r .= 'isset(';
+			else
 			$r .= ($racine ? '$rf' : '').'->'.$bloc[1].'(';
 			$r .= implode(', ', array_map('rends', $bloc[2]));
 			$r .= ')';
@@ -219,10 +234,14 @@ function rends($bloc, $racine = true)
 		case 'struct':
 			switch($bloc[1])
 			{
+				case 'if':
+					$r .= 'if('.rends($bloc[2][0]).') {';
+					break;
 				case 'for':
 					$r .= 'foreach('.rends($bloc[2][1]).' as $'.$bloc[2][0][1].') {';
 					break;
 				case 'endfor':
+				case 'endif':
 					$r .= '}';
 					break;
 			}
