@@ -1,0 +1,54 @@
+<?php
+/*
+ * Copyright (c) 2015 Guillaume Outters
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
+/**
+ * Le camionneur fait ce que le patron lui demande de faire. On a ici un certain nombre de méthodes que la patron pourra exploiter comme fonctions intégrées.
+ */
+class Camionneur
+{
+	public function aff($x)
+	{
+		echo htmlspecialchars($x);
+	}
+	
+	public function maj($x)
+	{
+		return mb_strtoupper($x);
+	}
+	
+	public function cap($x)
+	{
+		return mb_strtoupper(mb_substr($x, 0, 1)).mb_strtolower(mb_substr($x, 1));
+	}
+	
+	public function substr($x, $d, $f)
+	{
+		return substr($x, $d, $f);
+	}
+	
+	public function implode($jointure, $contenu)
+	{
+		return implode($jointure, $contenu);
+	}
+}
+?>
