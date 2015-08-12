@@ -735,6 +735,14 @@
 								<w:szCs w:val="20"/>
 							</w:rPr>
 						</w:pPr>
+						<w:r>
+							<w:rPr>
+								<w:color w:val="595959" w:themeColor="accent1"/>
+								<w:sz w:val="20"/>
+								<w:szCs w:val="20"/>
+							</w:rPr>
+							<w:t>{{ durée(boulot) }}</w:t>
+						</w:r>
 					</w:p>
 				</w:tc>
 			</w:tr>
