@@ -587,25 +587,7 @@
 								<w:sz w:val="20"/>
 								<w:szCs w:val="20"/>
 							</w:rPr>
-							<w:t>Statut (</w:t>
-						</w:r>
-						<w:proofErr w:type="spellStart"/>
-						<w:r w:rsidRPr="00171EAD">
-							<w:rPr>
-								<w:color w:val="595959" w:themeColor="accent1"/>
-								<w:sz w:val="20"/>
-								<w:szCs w:val="20"/>
-							</w:rPr>
-							<w:t>CdP</w:t>
-						</w:r>
-						<w:proofErr w:type="spellEnd"/>
-						<w:r w:rsidRPr="00171EAD">
-							<w:rPr>
-								<w:color w:val="595959" w:themeColor="accent1"/>
-								<w:sz w:val="20"/>
-								<w:szCs w:val="20"/>
-							</w:rPr>
-							<w:t>, experte, …)</w:t>
+							<w:t>{{ boulot.rôle|", " }}</w:t>
 						</w:r>
 					</w:p>
 				</w:tc>
