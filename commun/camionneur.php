@@ -48,6 +48,11 @@ class Camionneur
 	
 	public function implode($jointure, $contenu)
 	{
+		if(!is_array($contenu))
+			return $contenu;
+		foreach($contenu as $n => $élément)
+			if(!isset($élément))
+				unset($contenu[$n]);
 		return implode($jointure, $contenu);
 	}
 }
