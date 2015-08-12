@@ -123,12 +123,6 @@ class Altran
 			$données->perso->adresse = $adresse;
 		}
 		
-		foreach($données->expérience->projet as & $projet)
-			if(!isset($projet->société))
-				$projet->société = '(indépendant)';
-			else
-				$projet->société = array_pop($projet->société);
-		
 		$this->_trierProjets($données);
 	}
 	
