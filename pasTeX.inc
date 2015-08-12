@@ -151,6 +151,49 @@ function pasTeX_descriptionPeriode($d, $f, $mode = 0)
 	return periode_aff($d, $f, $mode);
 }
 
+function pasTeX_durée($d, $f)
+{
+	$null = array(-1, -1, -1, -1, -1, -1);
+	if($d == $null)
+		return null;
+	$d = Date::calculer($d);
+	if($f == $null)
+		$f = time();
+	else
+		$f = Date::calculer($f);
+	return $f - $d;
+}
+
+function pasTeX_affDurée($secondes)
+{
+	$arrondi = 0.8; // À partir de ce seuil, on considère atteindre l'unité suivante.
+	$unités = array
+	(
+		array(3600 * 24 * 365.24, 'ans', 'an'),
+		array(3600 * 24 * 30, 'mois'),
+		array(3600 * 24, 'j'),
+		array(3600, 'h'),
+		array(60, 'mn'),
+		array(1, 's', 1),
+	);
+	foreach($unités as $unité)
+		if($secondes >= $unité[0] * $arrondi)
+		{
+			$n = $secondes / $unité[0];
+			// Peut-on arrondir notre demi?
+			$nRonds = floor(2 * ($n + 0.5 * (1 - $arrondi))) / 2.0;
+			// Voire, si on dépasse le demi, pourrait-on atteindre l'unité?
+			if($nRonds == floor($n) + 0.5)
+			{
+				$nRonds = floor(2 * ($n + 1 - $arrondi)) / 2.0;
+				// BOn, à partir d'un certain âge, on n'indique plus les demis.
+				if($nRonds >= 4)
+					$nRonds = floor($nRonds);
+			}
+			return strtr($nRonds, '.', ',').' '.($nRonds >= 2 || !isset($unité[2]) ? $unité[1] : $unité[2]);
+		}
+}
+
 /* Eh oui, messieurs-dames, un langage des années 2000 qui ne gère pas en natif
  * l'UTF-8! */
 /* À FAIRE: savoir se servir des spécificités de l'environnement (utf-8-mac,
