@@ -185,7 +185,7 @@ function _compile($découpage, $i)
 	for($j = 0; $j < count($compil); ++$j)
 		if($compil[$j][0] == 'op')
 		{
-			if($j == 0 || !in_array($compil[$j - 1][0], array('id', 'f', '"')))
+			if($j == 0 || !in_array($compil[$j - 1][0], array('id', 'f', '"', '[')))
 				throw new Exception("Opérateur binaire après ".($j > 0 ? "un ".serialize($compil[$j - 1]) : "rien"));
 			if($j == count($compil) - 1 || !in_array($compil[$j + 1][0], array('id', 'f', '"')))
 				throw new Exception("Opérateur binaire précédant ".($j == count($compil) - 1 ? "du vide" : serialize($compil[$j + 1])));
