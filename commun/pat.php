@@ -265,8 +265,6 @@ function _compileStruct($compil, $i)
 			if(!isset($compil[$i + 1]))
 				throw new Exception('if <cond>');
 			$cond = $compil[$i + 1];
-			if($cond[0] == 'id')
-				$cond = array('f', 'isset', array($cond));
 			$compil[$i][2] = array($cond);
 			array_splice($compil, $i + 1, 1);
 			break;
@@ -292,11 +290,14 @@ function rends($bloc, $racine = true)
 			break;
 		case 'id':
 			if (preg_match('/^[0-9]+$/', $bloc[1]))
-				$r .= $racine ? $bloc[1] : '['.$bloc[1].']';
+				$rendu = $racine ? $bloc[1] : '['.$bloc[1].']';
 			else
-			$r .= ($racine ? '$' : '->').$bloc[1];
+			$rendu = ($racine ? '$' : '->').$bloc[1];
 			if(isset($bloc[2]))
-				$r .= rends($bloc[2], false);
+				$rendu .= rends($bloc[2], false);
+			if($racine && substr($rendu, 0, 1) == '$')
+				$rendu = '(isset('.$rendu.') ? '.$rendu.' : null)';
+			$r .= $rendu;
 			break;
 		case '"':
 			$r .= "'".strtr($bloc[1], array("'" => "\\'"))."'";
@@ -321,7 +322,7 @@ function rends($bloc, $racine = true)
 			break;
 		case '[':
 			$r .= '__tableau(';
-			$r .= implode(', ', array_map('rendsIsSet', $bloc[2]));
+			$r .= implode(', ', array_map('rends', $bloc[2]));
 			$r .= ')';
 			break;
 	}
