@@ -55,5 +55,15 @@ class Camionneur
 				unset($contenu[$n]);
 		return implode($jointure, $contenu);
 	}
+	
+	public function opand($x, $y)
+	{
+		return $x && $y;
+	}
+	
+	public function opor($x, $y)
+	{
+		return $x ? $x : $y; // Et non pas $x || $y, qui force le résultat en booléen.
+	}
 }
 ?>

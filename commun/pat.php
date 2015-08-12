@@ -43,7 +43,7 @@ function rstruct($r)
 
 function découpe($c, & $découpage)
 {
-	$exprGénérale = '#[.()", \[\]]#';
+	$exprGénérale = '#[.()", \[\]|]#';
 	$exprChaîne = '#"#';
 	$expr = $exprGénérale;
 	
@@ -123,6 +123,11 @@ function _compile($découpage, $i)
 						//if(isset($compil[0][2])) // À faire après.
 						//	throw new Exception('Le mot-clé '.$compil[0][1].' ne peut être utilisé comme identifiant.');
 						break;
+					case 'or':
+					case 'and':
+						$courantProfond[0] = 'op';
+						$courantProfond[1] = 'op'.$courantProfond[1];
+						break;
 				}
 				break;
 			case '.':
@@ -138,6 +143,13 @@ function _compile($découpage, $i)
 			case '"':
 				$courant = $bloc;
 				$compil[] = $courant;
+				break;
+			case '|':
+				$courant = $bloc;
+				$compil[] = $courant;
+				$courantProfond = & $compil[count($compil) - 1];
+				$courantProfond[1] = $courantProfond[0];
+				$courantProfond[0] = 'op';
 				break;
 			case '[':
 				$courant = $bloc;
@@ -163,6 +175,57 @@ function _compile($découpage, $i)
 				break 2;
 		}
 	}
+	
+	// Opérateurs binaires.
+	
+	for($j = 0; $j < count($compil); ++$j)
+		if($compil[$j][0] == 'op')
+		{
+			if($j == 0 || !in_array($compil[$j - 1][0], array('id', 'f', '"')))
+				throw new Exception("Opérateur binaire après ".($j > 0 ? "un ".serialize($compil[$j - 1]) : "rien"));
+			if($j == count($compil) - 1 || !in_array($compil[$j + 1][0], array('id', 'f', '"')))
+				throw new Exception("Opérateur binaire précédant ".($j == count($compil) - 1 ? "du vide" : serialize($compil[$j + 1])));
+			if($compil[$j][1] == '|')
+			{
+				// Recherche du traiteur.
+				$traiteur = $compil[$j + 1];
+				if($traiteur[0] == '"')
+				{
+					// Cas particulier: tableau|", ", c'est un implode(", ", tableau).
+					$traiteur = array
+					(
+						'f',
+						'implode',
+						array($traiteur, $compil[$j - 1]),
+					);
+				}
+				else
+				{
+					// Pour l'opérateur tube, ce qui suit est une fonction même si ça n'a pas de parenthèses.
+					unset($courantProfond);
+					$courantProfond = & $traiteur;
+					while($courantProfond[0] != 'f' && isset($courantProfond[2]))
+						$courantProfond = & $courantProfond[2];
+					$courantProfond[0] = 'f';
+					$courantProfond[2] = array();
+					// Et l'entrée du tube devient son premier paramètre.
+					array_unshift($courantProfond[2], $compil[$j - 1]);
+				}
+				// Le traiteur devient le point d'entrée dans la compil.
+				array_splice($compil, $j - 1, 3, array($traiteur));
+			}
+			else
+			{
+				$opé = $compil[$j];
+				$opé[0] = 'f'; // Un opérateur binaire, c'est une fonction.
+				$opé[2] = array($compil[$j - 1], $compil[$j + 1]);
+				array_splice($compil, $j - 1, 3, array($opé));
+			}
+			--$j;
+		}
+	
+	// Concaténation.
+	
 	$r = array();
 	for($j = 0; $j < count($compil); $j = $k)
 	{
