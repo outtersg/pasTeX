@@ -161,6 +161,10 @@ function _compile($découpage, $i)
 					if($sousBloc[0] != ',') // En théorie on a pile un bloc sur deux qui est une virgule.
 						$courantProfond[2][] = $sousBloc;
 				break;
+			case ']':
+				// Fin de compil pour ce bloc.
+				// À FAIRE: s'assurer qu'on est bien dans un bloc [, et qu'on a bien terminé tout ce qu'on y avait entamé…
+				break 2;
 			case '(':
 				if(!$courantProfond || $courantProfond[0] != 'id')
 					throw new Exception("Impossible de caser une ( après un ".($courantProfond ? serialize($courantProfond) : null));
