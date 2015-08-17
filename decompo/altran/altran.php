@@ -83,7 +83,7 @@ class Altran
 		{
 			$cheminFinal = substr($patron, 0, -4);
 			ob_start();
-			$rf = new Camionneur;
+			$rf = new Camionneur($this->_zorglub);
 			foreach(get_object_vars($données) as $nom => $val)
 				$$nom = $val;
 			include $cheminFinal.'.php';
