@@ -870,351 +870,14 @@
 				<w:t>Expériences</w:t>
 			</w:r>
 		</w:p>
-		<w:p w:rsidR="00974A7A" w:rsidRPr="00974A7A" w:rsidRDefault="00974A7A" w:rsidP="00B223F1">
-			<w:pPr>
-				<w:pStyle w:val="Titre2"/>
-			</w:pPr>
-			<w:r w:rsidRPr="00974A7A">
-				<w:t>&lt;Client / Entité&gt;</w:t>
-			</w:r>
-		</w:p>
-		<w:p w:rsidR="00974A7A" w:rsidRPr="00974A7A" w:rsidRDefault="00974A7A" w:rsidP="00B223F1">
-			<w:pPr>
-				<w:jc w:val="right"/>
-				<w:rPr>
-					<w:i/>
-					<w:color w:val="595959" w:themeColor="accent1"/>
-					<w:sz w:val="18"/>
-					<w:szCs w:val="18"/>
-				</w:rPr>
-			</w:pPr>
-			<w:r w:rsidRPr="00974A7A">
-				<w:rPr>
-					<w:i/>
-					<w:color w:val="595959" w:themeColor="accent1"/>
-					<w:sz w:val="18"/>
-					<w:szCs w:val="18"/>
-				</w:rPr>
-				<w:t>&lt;durée / année&gt;</w:t>
-			</w:r>
-		</w:p>
-		<w:p w:rsidR="00974A7A" w:rsidRPr="00974A7A" w:rsidRDefault="00974A7A" w:rsidP="00B223F1">
-			<w:pPr>
-				<w:spacing w:before="120" w:after="120"/>
-				<w:ind w:left="3260" w:hanging="3260"/>
-				<w:rPr>
-					<w:color w:val="595959" w:themeColor="accent1"/>
-				</w:rPr>
-			</w:pPr>
-			<w:r w:rsidRPr="00974A7A">
-				<w:rPr>
-					<w:b/>
-					<w:color w:val="595959" w:themeColor="accent1"/>
-				</w:rPr>
-				<w:t>Domaine de compétences</w:t>
-			</w:r>
-			<w:r>
-				<w:rPr>
-					<w:b/>
-					<w:color w:val="595959" w:themeColor="accent1"/>
-				</w:rPr>
-				<w:t> :</w:t>
-			</w:r>
-			<w:r>
-				<w:rPr>
-					<w:color w:val="595959" w:themeColor="accent1"/>
-				</w:rPr>
-				<w:tab/>
-			</w:r>
-			<w:r w:rsidRPr="00974A7A">
-				<w:rPr>
-					<w:color w:val="595959" w:themeColor="accent1"/>
-				</w:rPr>
-				<w:t>conduite de projet, conception, …</w:t>
-			</w:r>
-		</w:p>
-		<w:p w:rsidR="00974A7A" w:rsidRPr="00974A7A" w:rsidRDefault="00974A7A" w:rsidP="00B223F1">
-			<w:pPr>
-				<w:spacing w:before="120" w:after="120"/>
-				<w:ind w:left="3260" w:hanging="3260"/>
-				<w:rPr>
-					<w:color w:val="595959" w:themeColor="accent1"/>
-				</w:rPr>
-			</w:pPr>
-			<w:r w:rsidRPr="00974A7A">
-				<w:rPr>
-					<w:b/>
-					<w:color w:val="595959" w:themeColor="accent1"/>
-				</w:rPr>
-				<w:t>Intitulé de l’intervention</w:t>
-			</w:r>
-			<w:r>
-				<w:rPr>
-					<w:b/>
-					<w:color w:val="595959" w:themeColor="accent1"/>
-				</w:rPr>
-				<w:t> :</w:t>
-			</w:r>
-			<w:r>
-				<w:rPr>
-					<w:color w:val="595959" w:themeColor="accent1"/>
-				</w:rPr>
-				<w:tab/>
-			</w:r>
-			<w:r w:rsidRPr="00974A7A">
-				<w:rPr>
-					<w:color w:val="595959" w:themeColor="accent1"/>
-				</w:rPr>
-				<w:t>standardisation de la configuration SATCOM sur A340, déploiement réseau 3Ge</w:t>
-			</w:r>
-		</w:p>
-		<w:p w:rsidR="00974A7A" w:rsidRPr="00B223F1" w:rsidRDefault="00974A7A" w:rsidP="00B223F1">
-			<w:pPr>
-				<w:pStyle w:val="Titre3"/>
-			</w:pPr>
-			<w:r w:rsidRPr="00B223F1">
-				<w:t>Objectif(s) :</w:t>
-			</w:r>
-		</w:p>
-		<w:p w:rsidR="00974A7A" w:rsidRPr="00B223F1" w:rsidRDefault="00974A7A" w:rsidP="00B223F1">
-			<w:pPr>
-				<w:pStyle w:val="Paragraphedeliste"/>
-				<w:numPr>
-					<w:ilvl w:val="0"/>
-					<w:numId w:val="4"/>
-				</w:numPr>
-				<w:ind w:left="1134" w:hanging="283"/>
-				<w:rPr>
-					<w:color w:val="595959" w:themeColor="accent1"/>
-					<w:sz w:val="20"/>
-					<w:szCs w:val="20"/>
-				</w:rPr>
-			</w:pPr>
-			<w:r w:rsidRPr="00B223F1">
-				<w:rPr>
-					<w:color w:val="595959" w:themeColor="accent1"/>
-					<w:sz w:val="20"/>
-					<w:szCs w:val="20"/>
-				</w:rPr>
-				<w:t>Objectif 1</w:t>
-			</w:r>
-		</w:p>
-		<w:p w:rsidR="00974A7A" w:rsidRPr="00B223F1" w:rsidRDefault="00974A7A" w:rsidP="00B223F1">
-			<w:pPr>
-				<w:pStyle w:val="Paragraphedeliste"/>
-				<w:numPr>
-					<w:ilvl w:val="0"/>
-					<w:numId w:val="4"/>
-				</w:numPr>
-				<w:ind w:left="1134" w:hanging="283"/>
-				<w:rPr>
-					<w:color w:val="595959" w:themeColor="accent1"/>
-					<w:sz w:val="20"/>
-					<w:szCs w:val="20"/>
-				</w:rPr>
-			</w:pPr>
-			<w:r w:rsidRPr="00B223F1">
-				<w:rPr>
-					<w:color w:val="595959" w:themeColor="accent1"/>
-					<w:sz w:val="20"/>
-					<w:szCs w:val="20"/>
-				</w:rPr>
-				<w:t>Objectif xxx</w:t>
-			</w:r>
-		</w:p>
-		<w:p w:rsidR="00974A7A" w:rsidRPr="00B223F1" w:rsidRDefault="00974A7A" w:rsidP="00B223F1">
-			<w:pPr>
-				<w:pStyle w:val="Paragraphedeliste"/>
-				<w:numPr>
-					<w:ilvl w:val="0"/>
-					<w:numId w:val="4"/>
-				</w:numPr>
-				<w:ind w:left="1134" w:hanging="283"/>
-				<w:rPr>
-					<w:color w:val="595959" w:themeColor="accent1"/>
-					<w:sz w:val="20"/>
-					<w:szCs w:val="20"/>
-				</w:rPr>
-			</w:pPr>
-			<w:r w:rsidRPr="00B223F1">
-				<w:rPr>
-					<w:color w:val="595959" w:themeColor="accent1"/>
-					<w:sz w:val="20"/>
-					<w:szCs w:val="20"/>
-				</w:rPr>
-				<w:t>réaliser une soufflerie, standardiser SATCOM, assurer la conformité de modifications de câblage, …</w:t>
-			</w:r>
-		</w:p>
-		<w:p w:rsidR="00974A7A" w:rsidRPr="00974A7A" w:rsidRDefault="00974A7A" w:rsidP="00B223F1">
-			<w:pPr>
-				<w:pStyle w:val="Titre3"/>
-			</w:pPr>
-			<w:r w:rsidRPr="00974A7A">
-				<w:t>Réalisation(s) :</w:t>
-			</w:r>
-		</w:p>
-		<w:p w:rsidR="00974A7A" w:rsidRPr="00B223F1" w:rsidRDefault="00974A7A" w:rsidP="00B223F1">
-			<w:pPr>
-				<w:pStyle w:val="Paragraphedeliste"/>
-				<w:numPr>
-					<w:ilvl w:val="0"/>
-					<w:numId w:val="4"/>
-				</w:numPr>
-				<w:ind w:left="1134" w:hanging="283"/>
-				<w:rPr>
-					<w:color w:val="595959" w:themeColor="accent1"/>
-					<w:sz w:val="20"/>
-					<w:szCs w:val="20"/>
-				</w:rPr>
-			</w:pPr>
-			<w:r w:rsidRPr="00B223F1">
-				<w:rPr>
-					<w:color w:val="595959" w:themeColor="accent1"/>
-					<w:sz w:val="20"/>
-					<w:szCs w:val="20"/>
-				</w:rPr>
-				<w:t>Réalisation 1</w:t>
-			</w:r>
-		</w:p>
-		<w:p w:rsidR="00974A7A" w:rsidRPr="00B223F1" w:rsidRDefault="00974A7A" w:rsidP="00B223F1">
-			<w:pPr>
-				<w:pStyle w:val="Paragraphedeliste"/>
-				<w:numPr>
-					<w:ilvl w:val="0"/>
-					<w:numId w:val="4"/>
-				</w:numPr>
-				<w:ind w:left="1134" w:hanging="283"/>
-				<w:rPr>
-					<w:color w:val="595959" w:themeColor="accent1"/>
-					<w:sz w:val="20"/>
-					<w:szCs w:val="20"/>
-				</w:rPr>
-			</w:pPr>
-			<w:r w:rsidRPr="00B223F1">
-				<w:rPr>
-					<w:color w:val="595959" w:themeColor="accent1"/>
-					<w:sz w:val="20"/>
-					<w:szCs w:val="20"/>
-				</w:rPr>
-				<w:t>Réalisation xxx</w:t>
-			</w:r>
-		</w:p>
-		<w:p w:rsidR="00974A7A" w:rsidRPr="00B223F1" w:rsidRDefault="00974A7A" w:rsidP="00B223F1">
-			<w:pPr>
-				<w:pStyle w:val="Paragraphedeliste"/>
-				<w:numPr>
-					<w:ilvl w:val="0"/>
-					<w:numId w:val="4"/>
-				</w:numPr>
-				<w:ind w:left="1134" w:hanging="283"/>
-				<w:rPr>
-					<w:color w:val="595959" w:themeColor="accent1"/>
-					<w:sz w:val="20"/>
-					<w:szCs w:val="20"/>
-				</w:rPr>
-			</w:pPr>
-			<w:r w:rsidRPr="00B223F1">
-				<w:rPr>
-					<w:color w:val="595959" w:themeColor="accent1"/>
-					<w:sz w:val="20"/>
-					<w:szCs w:val="20"/>
-				</w:rPr>
-				<w:t xml:space="preserve">séances de créativité, étude </w:t>
-			</w:r>
-			<w:proofErr w:type="gramStart"/>
-			<w:r w:rsidRPr="00B223F1">
-				<w:rPr>
-					<w:color w:val="595959" w:themeColor="accent1"/>
-					<w:sz w:val="20"/>
-					<w:szCs w:val="20"/>
-				</w:rPr>
-				<w:t>des moyens, suivi</w:t>
-			</w:r>
-			<w:proofErr w:type="gramEnd"/>
-			<w:r w:rsidRPr="00B223F1">
-				<w:rPr>
-					<w:color w:val="595959" w:themeColor="accent1"/>
-					<w:sz w:val="20"/>
-					<w:szCs w:val="20"/>
-				</w:rPr>
-				<w:t xml:space="preserve"> de réalisation des maquettes, consultation, contractualisation fournisseurs, …</w:t>
-			</w:r>
-		</w:p>
-		<w:p w:rsidR="00974A7A" w:rsidRPr="00B223F1" w:rsidRDefault="00974A7A" w:rsidP="00B223F1">
-			<w:pPr>
-				<w:pStyle w:val="Titre3"/>
-			</w:pPr>
-			<w:r w:rsidRPr="00B223F1">
-				<w:t>Environnement(s) technique(s) :</w:t>
-			</w:r>
-		</w:p>
-		<w:p w:rsidR="00974A7A" w:rsidRPr="00B223F1" w:rsidRDefault="00974A7A" w:rsidP="00B223F1">
-			<w:pPr>
-				<w:pStyle w:val="Paragraphedeliste"/>
-				<w:numPr>
-					<w:ilvl w:val="0"/>
-					<w:numId w:val="4"/>
-				</w:numPr>
-				<w:ind w:left="1134" w:hanging="283"/>
-				<w:rPr>
-					<w:color w:val="595959" w:themeColor="accent1"/>
-					<w:sz w:val="20"/>
-					<w:szCs w:val="20"/>
-				</w:rPr>
-			</w:pPr>
-			<w:r w:rsidRPr="00B223F1">
-				<w:rPr>
-					<w:color w:val="595959" w:themeColor="accent1"/>
-					<w:sz w:val="20"/>
-					<w:szCs w:val="20"/>
-				</w:rPr>
-				<w:t>Système / Langage / Outils / Normes</w:t>
-			</w:r>
-		</w:p>
-		<w:p w:rsidR="00974A7A" w:rsidRPr="00B223F1" w:rsidRDefault="00974A7A" w:rsidP="00B223F1">
-			<w:pPr>
-				<w:pStyle w:val="Paragraphedeliste"/>
-				<w:numPr>
-					<w:ilvl w:val="0"/>
-					<w:numId w:val="4"/>
-				</w:numPr>
-				<w:ind w:left="1134" w:hanging="283"/>
-				<w:rPr>
-					<w:color w:val="595959" w:themeColor="accent1"/>
-					<w:sz w:val="20"/>
-					<w:szCs w:val="20"/>
-				</w:rPr>
-			</w:pPr>
-			<w:r w:rsidRPr="00B223F1">
-				<w:rPr>
-					<w:color w:val="595959" w:themeColor="accent1"/>
-					<w:sz w:val="20"/>
-					<w:szCs w:val="20"/>
-				</w:rPr>
-				<w:t>…</w:t>
-			</w:r>
-		</w:p>
-		<w:p w:rsidR="00CE5B4A" w:rsidRDefault="00CE5B4A">
-			<w:pPr>
-				<w:spacing w:after="200" w:line="276" w:lineRule="auto"/>
-				<w:rPr>
-					<w:color w:val="595959" w:themeColor="accent1"/>
-				</w:rPr>
-			</w:pPr>
-			<w:r>
-				<w:rPr>
-					<w:color w:val="595959" w:themeColor="accent1"/>
-				</w:rPr>
-				<w:br w:type="page"/>
-			</w:r>
-		</w:p>
+		{% for boulot in expérience.projet %}
 		<w:p w:rsidR="00974A7A" w:rsidRPr="00974A7A" w:rsidRDefault="00974A7A" w:rsidP="00B223F1">
 			<w:pPr>
 				<w:pStyle w:val="Titre2"/>
 			</w:pPr>
 			<w:r w:rsidRPr="00974A7A">
 				<w:lastRenderedPageBreak/>
-				<w:t>&lt;Client / Entité&gt;</w:t>
+				<w:t>{{ [ boulot.société|last, boulot.nom ]|" / " }}</w:t>
 			</w:r>
 		</w:p>
 		<w:p w:rsidR="00974A7A" w:rsidRPr="00B223F1" w:rsidRDefault="00974A7A" w:rsidP="00B223F1">
@@ -1234,9 +897,10 @@
 					<w:sz w:val="18"/>
 					<w:szCs w:val="18"/>
 				</w:rPr>
-				<w:t>&lt;durée / année&gt;</w:t>
+				<w:t>{{ durée(boulot)" / "année(boulot) }}</w:t>
 			</w:r>
 		</w:p>
+		{% if boulot.rôle %}
 		<w:p w:rsidR="00974A7A" w:rsidRPr="00B223F1" w:rsidRDefault="00B223F1" w:rsidP="00B223F1">
 			<w:pPr>
 				<w:spacing w:before="120" w:after="120"/>
@@ -1263,9 +927,10 @@
 				<w:rPr>
 					<w:color w:val="595959" w:themeColor="accent1"/>
 				</w:rPr>
-				<w:t>conduite de projet, conception, …</w:t>
+				<w:t>{{ boulot.rôle|", " }}</w:t>
 			</w:r>
 		</w:p>
+		{% endif %}
 		<w:p w:rsidR="00974A7A" w:rsidRPr="00B223F1" w:rsidRDefault="00B223F1" w:rsidP="00B223F1">
 			<w:pPr>
 				<w:spacing w:before="120" w:after="120"/>
@@ -1292,9 +957,10 @@
 				<w:rPr>
 					<w:color w:val="595959" w:themeColor="accent1"/>
 				</w:rPr>
-				<w:t>standardisation de la configuration SATCOM sur A340, déploiement réseau 3Ge</w:t>
+				<w:t>{{ boulot.description }}</w:t>
 			</w:r>
 		</w:p>
+		<!-- Pas d'objectif chez moi
 		<w:p w:rsidR="00974A7A" w:rsidRPr="00974A7A" w:rsidRDefault="00974A7A" w:rsidP="00B223F1">
 			<w:pPr>
 				<w:pStyle w:val="Titre3"/>
@@ -1372,6 +1038,7 @@
 				<w:t>réaliser une soufflerie, standardiser SATCOM, assurer la conformité de modifications de câblage, …</w:t>
 			</w:r>
 		</w:p>
+		-->
 		<w:p w:rsidR="00974A7A" w:rsidRPr="00974A7A" w:rsidRDefault="00974A7A" w:rsidP="00B223F1">
 			<w:pPr>
 				<w:pStyle w:val="Titre3"/>
@@ -1380,6 +1047,7 @@
 				<w:t>Réalisation(s) :</w:t>
 			</w:r>
 		</w:p>
+		{% for tâche in boulot.tâche %}
 		<w:p w:rsidR="00974A7A" w:rsidRPr="00B223F1" w:rsidRDefault="00974A7A" w:rsidP="00B223F1">
 			<w:pPr>
 				<w:pStyle w:val="Paragraphedeliste"/>
@@ -1400,73 +1068,10 @@
 					<w:sz w:val="20"/>
 					<w:szCs w:val="20"/>
 				</w:rPr>
-				<w:t>Réalisation 1</w:t>
+				<w:t xml:space="preserve">{{ tâche }}</w:t>
 			</w:r>
 		</w:p>
-		<w:p w:rsidR="00974A7A" w:rsidRPr="00B223F1" w:rsidRDefault="00974A7A" w:rsidP="00B223F1">
-			<w:pPr>
-				<w:pStyle w:val="Paragraphedeliste"/>
-				<w:numPr>
-					<w:ilvl w:val="0"/>
-					<w:numId w:val="4"/>
-				</w:numPr>
-				<w:ind w:left="1134" w:hanging="283"/>
-				<w:rPr>
-					<w:color w:val="595959" w:themeColor="accent1"/>
-					<w:sz w:val="20"/>
-					<w:szCs w:val="20"/>
-				</w:rPr>
-			</w:pPr>
-			<w:r w:rsidRPr="00B223F1">
-				<w:rPr>
-					<w:color w:val="595959" w:themeColor="accent1"/>
-					<w:sz w:val="20"/>
-					<w:szCs w:val="20"/>
-				</w:rPr>
-				<w:t>Réalisation xxx</w:t>
-			</w:r>
-		</w:p>
-		<w:p w:rsidR="00974A7A" w:rsidRPr="00B223F1" w:rsidRDefault="00974A7A" w:rsidP="00B223F1">
-			<w:pPr>
-				<w:pStyle w:val="Paragraphedeliste"/>
-				<w:numPr>
-					<w:ilvl w:val="0"/>
-					<w:numId w:val="4"/>
-				</w:numPr>
-				<w:ind w:left="1134" w:hanging="283"/>
-				<w:rPr>
-					<w:color w:val="595959" w:themeColor="accent1"/>
-					<w:sz w:val="20"/>
-					<w:szCs w:val="20"/>
-				</w:rPr>
-			</w:pPr>
-			<w:r w:rsidRPr="00B223F1">
-				<w:rPr>
-					<w:color w:val="595959" w:themeColor="accent1"/>
-					<w:sz w:val="20"/>
-					<w:szCs w:val="20"/>
-				</w:rPr>
-				<w:t xml:space="preserve">séances de créativité, étude </w:t>
-			</w:r>
-			<w:proofErr w:type="gramStart"/>
-			<w:r w:rsidRPr="00B223F1">
-				<w:rPr>
-					<w:color w:val="595959" w:themeColor="accent1"/>
-					<w:sz w:val="20"/>
-					<w:szCs w:val="20"/>
-				</w:rPr>
-				<w:t>des moyens, suivi</w:t>
-			</w:r>
-			<w:proofErr w:type="gramEnd"/>
-			<w:r w:rsidRPr="00B223F1">
-				<w:rPr>
-					<w:color w:val="595959" w:themeColor="accent1"/>
-					<w:sz w:val="20"/>
-					<w:szCs w:val="20"/>
-				</w:rPr>
-				<w:t xml:space="preserve"> de réalisation des maquettes, consultation, contractualisation fournisseurs, …</w:t>
-			</w:r>
-		</w:p>
+		{% endfor %}
 		<w:p w:rsidR="00974A7A" w:rsidRPr="00974A7A" w:rsidRDefault="00974A7A" w:rsidP="00B223F1">
 			<w:pPr>
 				<w:pStyle w:val="Titre3"/>
@@ -1475,6 +1080,7 @@
 				<w:t>Environnement(s) technique(s) :</w:t>
 			</w:r>
 		</w:p>
+		{% for techno in boulot.techno %}
 		<w:p w:rsidR="00974A7A" w:rsidRPr="00B223F1" w:rsidRDefault="00974A7A" w:rsidP="00B223F1">
 			<w:pPr>
 				<w:pStyle w:val="Paragraphedeliste"/>
@@ -1495,32 +1101,10 @@
 					<w:sz w:val="20"/>
 					<w:szCs w:val="20"/>
 				</w:rPr>
-				<w:t>Système / Langage / Outils / Normes</w:t>
+				<w:t>{{ techno }}</w:t>
 			</w:r>
 		</w:p>
-		<w:p w:rsidR="00974A7A" w:rsidRPr="00B223F1" w:rsidRDefault="00974A7A" w:rsidP="00B223F1">
-			<w:pPr>
-				<w:pStyle w:val="Paragraphedeliste"/>
-				<w:numPr>
-					<w:ilvl w:val="0"/>
-					<w:numId w:val="4"/>
-				</w:numPr>
-				<w:ind w:left="1134" w:hanging="283"/>
-				<w:rPr>
-					<w:color w:val="595959" w:themeColor="accent1"/>
-					<w:sz w:val="20"/>
-					<w:szCs w:val="20"/>
-				</w:rPr>
-			</w:pPr>
-			<w:r w:rsidRPr="00B223F1">
-				<w:rPr>
-					<w:color w:val="595959" w:themeColor="accent1"/>
-					<w:sz w:val="20"/>
-					<w:szCs w:val="20"/>
-				</w:rPr>
-				<w:t>…</w:t>
-			</w:r>
-		</w:p>
+		{% endfor %}
 		<w:p w:rsidR="00DA1D17" w:rsidRDefault="00DA1D17">
 			<w:pPr>
 				<w:rPr>
@@ -1534,6 +1118,7 @@
 				<w:br w:type="page"/>
 			</w:r>
 		</w:p>
+		{% endfor %}
 		<w:p w:rsidR="00974A7A" w:rsidRPr="00974A7A" w:rsidRDefault="00B223F1" w:rsidP="00B223F1">
 			<w:pPr>
 				<w:pStyle w:val="Titre1"/>
