@@ -71,6 +71,11 @@ class Camionneur
 		return $x ? $x : $y; // Et non pas $x || $y, qui force le résultat en booléen.
 	}
 	
+	public function opdiff($x, $y)
+	{
+		return $x != $y;
+	}
+	
 	public function last($x)
 	{
 		return is_array($x) && count($x) ? end($x) : null;

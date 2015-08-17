@@ -123,6 +123,8 @@ function _compile($découpage, $i)
 						//if(isset($compil[0][2])) // À faire après.
 						//	throw new Exception('Le mot-clé '.$compil[0][1].' ne peut être utilisé comme identifiant.');
 						break;
+					case '!=':
+						$courantProfond[1] = 'diff';
 					case 'or':
 					case 'and':
 						$courantProfond[0] = 'op';
