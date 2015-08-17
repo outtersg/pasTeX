@@ -22,6 +22,7 @@
  */
 
 require_once('pasTeX.inc');
+require_once dirname(__FILE__).'/commun/zorglub.php';
 
 /* La Poule pond un CV comme elle pondrait un œuf. La ponte est sa raison de vivre,
  * ce n'est pas une telle bassesse du destin qui la détournerait de sa vocation. Et
@@ -92,6 +93,8 @@ else
 
 /*- Chargement du filtre -----------------------------------------------------*/
 
+$zorglub = new Zorglub; // Celui-là nous fournira toute la boîte à outils pour calculer tout ce qui nous passe par la tête.
+
 /* À FAIRE: si (en CLI) le compo s'est arrêté sur le mot 'par' ou 'filtre' ou
  * ce que vous voulez, on charge un filtre avant d'attaquer la sortie. Et même
  * plusieurs filtres, pourquoi pas. */
@@ -136,6 +139,9 @@ else
 if($paramsCompo !== null)
 	$donnees = $compo->composer($paramsCompo);
 if($paramsDecompo !== null)
+{
+	$decompo->_zorglub = $zorglub;
 	$decompo->decomposer($paramsDecompo, @$donnees);
+}
 
 ?>
