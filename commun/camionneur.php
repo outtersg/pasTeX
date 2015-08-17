@@ -88,6 +88,11 @@ class Camionneur
 	
 	/*- Propre à Pasτεχ -*/
 	
+	public function date($date)
+	{
+		return Date::aff(Date::mef($date));
+	}
+	
 	public function durée($projet)
 	{
 		return $this->_zorglub->durée($projet);
