@@ -1128,46 +1128,7 @@
 				<w:t>Formations</w:t>
 			</w:r>
 		</w:p>
-		<w:p w:rsidR="00DA1D17" w:rsidRDefault="00974A7A" w:rsidP="00DA1D17">
-			<w:pPr>
-				<w:pStyle w:val="Paragraphedeliste"/>
-				<w:numPr>
-					<w:ilvl w:val="0"/>
-					<w:numId w:val="2"/>
-				</w:numPr>
-				<w:tabs>
-					<w:tab w:val="left" w:pos="2410"/>
-				</w:tabs>
-				<w:rPr>
-					<w:color w:val="595959" w:themeColor="accent1"/>
-				</w:rPr>
-			</w:pPr>
-			<w:r w:rsidRPr="00DA1D17">
-				<w:rPr>
-					<w:b/>
-					<w:color w:val="595959" w:themeColor="accent1"/>
-				</w:rPr>
-				<w:t>Date</w:t>
-			</w:r>
-			<w:r w:rsidRPr="00974A7A">
-				<w:rPr>
-					<w:color w:val="595959" w:themeColor="accent1"/>
-				</w:rPr>
-				<w:tab/>
-				<w:t>Qualification Ecole, diplôme, formation 3ème cycle, autres</w:t>
-			</w:r>
-		</w:p>
-		<w:p w:rsidR="00DA1D17" w:rsidRDefault="00DA1D17" w:rsidP="00DA1D17">
-			<w:pPr>
-				<w:pStyle w:val="Paragraphedeliste"/>
-				<w:tabs>
-					<w:tab w:val="left" w:pos="2410"/>
-				</w:tabs>
-				<w:rPr>
-					<w:color w:val="595959" w:themeColor="accent1"/>
-				</w:rPr>
-			</w:pPr>
-		</w:p>
+		{% for diplôme in formation.études %}
 		<w:p w:rsidR="00DA1D17" w:rsidRDefault="00DA1D17" w:rsidP="00DA1D17">
 			<w:pPr>
 				<w:pStyle w:val="Paragraphedeliste"/>
@@ -1187,20 +1148,14 @@
 					<w:b/>
 					<w:color w:val="595959" w:themeColor="accent1"/>
 				</w:rPr>
-				<w:t>Date</w:t>
+				<w:t>{{ diplôme.date.f|date }}</w:t>
 			</w:r>
 			<w:r w:rsidRPr="00974A7A">
 				<w:rPr>
 					<w:color w:val="595959" w:themeColor="accent1"/>
 				</w:rPr>
 				<w:tab/>
-				<w:t>Qualification Ecole, diplô</w:t>
-			</w:r>
-			<w:r>
-				<w:rPr>
-					<w:color w:val="595959" w:themeColor="accent1"/>
-				</w:rPr>
-				<w:t>me, formation 3ème cycle, autres</w:t>
+				<w:t>{{ diplôme.diplôme }}</w:t>
 			</w:r>
 		</w:p>
 		<w:p w:rsidR="00DA1D17" w:rsidRPr="00DA1D17" w:rsidRDefault="00DA1D17" w:rsidP="00DA1D17">
@@ -1211,6 +1166,7 @@
 				</w:rPr>
 			</w:pPr>
 		</w:p>
+		{% endfor %}
 		<w:p w:rsidR="00974A7A" w:rsidRPr="00974A7A" w:rsidRDefault="00974A7A" w:rsidP="00974A7A">
 			<w:pPr>
 				<w:rPr>
@@ -1240,58 +1196,8 @@
 				<w:t>Langues étrangères</w:t>
 			</w:r>
 		</w:p>
-		<w:p w:rsidR="00974A7A" w:rsidRPr="00DA1D17" w:rsidRDefault="00974A7A" w:rsidP="00DA1D17">
-			<w:pPr>
-				<w:pStyle w:val="Paragraphedeliste"/>
-				<w:numPr>
-					<w:ilvl w:val="0"/>
-					<w:numId w:val="2"/>
-				</w:numPr>
-				<w:tabs>
-					<w:tab w:val="left" w:pos="2410"/>
-				</w:tabs>
-				<w:rPr>
-					<w:color w:val="595959" w:themeColor="accent1"/>
-				</w:rPr>
-			</w:pPr>
-			<w:r w:rsidRPr="00DA1D17">
-				<w:rPr>
-					<w:b/>
-					<w:color w:val="595959" w:themeColor="accent1"/>
-				</w:rPr>
-				<w:t>Langue</w:t>
-			</w:r>
-			<w:r w:rsidRPr="00DA1D17">
-				<w:rPr>
-					<w:b/>
-					<w:color w:val="595959" w:themeColor="accent1"/>
-				</w:rPr>
-				<w:tab/>
-			</w:r>
-			<w:r w:rsidRPr="00DA1D17">
-				<w:rPr>
-					<w:color w:val="595959" w:themeColor="accent1"/>
-				</w:rPr>
-				<w:t>Niveau</w:t>
-			</w:r>
-			<w:r w:rsidR="00DA1D17">
-				<w:rPr>
-					<w:color w:val="595959" w:themeColor="accent1"/>
-				</w:rPr>
-				<w:t> : débutant / intermédiaire / courant / bilingue</w:t>
-			</w:r>
-		</w:p>
-		<w:p w:rsidR="00974A7A" w:rsidRPr="00DA1D17" w:rsidRDefault="00974A7A" w:rsidP="00DA1D17">
-			<w:pPr>
-				<w:pStyle w:val="Paragraphedeliste"/>
-				<w:tabs>
-					<w:tab w:val="left" w:pos="2410"/>
-				</w:tabs>
-				<w:rPr>
-					<w:color w:val="595959" w:themeColor="accent1"/>
-				</w:rPr>
-			</w:pPr>
-		</w:p>
+		{% for langue in langues.langue %}
+		{% if langue.nom != "Français" %}
 		<w:p w:rsidR="00DA1D17" w:rsidRPr="00DA1D17" w:rsidRDefault="00974A7A" w:rsidP="00DA1D17">
 			<w:pPr>
 				<w:pStyle w:val="Paragraphedeliste"/>
@@ -1311,7 +1217,7 @@
 					<w:b/>
 					<w:color w:val="595959" w:themeColor="accent1"/>
 				</w:rPr>
-				<w:t>Langue</w:t>
+				<w:t>{{ langue.nom|cap }}</w:t>
 			</w:r>
 			<w:r w:rsidRPr="00DA1D17">
 				<w:rPr>
@@ -1330,7 +1236,7 @@
 				<w:rPr>
 					<w:color w:val="595959" w:themeColor="accent1"/>
 				</w:rPr>
-				<w:t> : débutant / intermédiaire / courant / bilingue</w:t>
+				<w:t> : {{ langue.niveau|minus }}</w:t>
 			</w:r>
 		</w:p>
 		<w:p w:rsidR="00DA1D17" w:rsidRDefault="00DA1D17" w:rsidP="00DA1D17">
@@ -1344,6 +1250,8 @@
 				</w:rPr>
 			</w:pPr>
 		</w:p>
+		{% endif %}
+		{% endfor %}
 		<w:p w:rsidR="00CE5B4A" w:rsidRPr="00C51EA6" w:rsidRDefault="00CE5B4A">
 			<w:pPr>
 				<w:spacing w:after="200" w:line="276" w:lineRule="auto"/>
