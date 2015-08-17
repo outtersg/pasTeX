@@ -41,6 +41,11 @@ class Camionneur
 		return mb_strtoupper($x);
 	}
 	
+	public function minus($x)
+	{
+		return mb_strtolower($x);
+	}
+	
 	public function cap($x)
 	{
 		return mb_strtoupper(mb_substr($x, 0, 1)).mb_strtolower(mb_substr($x, 1));
