@@ -26,6 +26,11 @@
  */
 class Camionneur
 {
+	public function __construct($zorglub)
+	{
+		$this->_zorglub = $zorglub;
+	}
+	
 	public function aff($x)
 	{
 		echo htmlspecialchars($x);
@@ -75,12 +80,12 @@ class Camionneur
 	
 	public function durée($projet)
 	{
-		$d = 0;
-		if(isset($projet->date))
-			foreach($projet->date as $plage)
-				$d += pasTeX_durée($plage->d, $plage->f);
-		if($d > 0)
-			return pasTeX_affDurée($d);
+		return $this->_zorglub->durée($projet);
+	}
+	
+	public function année($projet)
+	{
+		return $this->_zorglub->année($projet);
 	}
 }
 ?>
