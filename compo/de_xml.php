@@ -86,6 +86,14 @@ class Texte
 	}
 }
 
+class Connaissance
+{
+	public function __construct($niveau)
+	{
+		$this->niveau = $niveau;
+	}
+}
+
 class CompoAProprietes extends Compo
 {
 	/* Prend en paramètre ses deux listes de propriétés (cf. la variable
@@ -126,6 +134,14 @@ class CompoAProprietes extends Compo
 			$nouveau = $this->classes[$nom];
 			$nouveau = new $nouveau();
 			$donnee = &$nouveau->données;
+			if(isset($attributs['p']))
+				$nouveau->poids = $attributs['p'];
+		}
+		else if(isset($attributs['p']))
+		{
+			$nouveau = new Texte;
+			$donnee = & $nouveau;
+			$nouveau->poids = $attributs['p'];
 		}
 		else
 		{
@@ -149,6 +165,11 @@ class CompoAProprietes extends Compo
 		{
 			if(count(get_object_vars($objet)) > 0) return; // Une fois qu'il est devenu un object complet, on ne change pas sa nature. Tant pis pour les données!
 			$objet = null;
+		}
+		else if($objet instanceof Texte)
+		{
+			$objet->texte .= $contenu;
+			return;
 		}
 		$objet = $objet === null ? $contenu : $objet.$contenu;
 	}
@@ -184,6 +205,9 @@ class CompoAProprietes extends Compo
 		if(isset($this->preserveEspaces))
 			if(--$this->preserveEspaces <= 0)
 				unset($this->preserveEspaces);
+		if(is_object($objet) && isset($objet->poids))
+			if(isset($objet->données) && is_object($objet->données))
+				$objet->données->poids = $objet->poids;
 	}
 	
 	protected $enTableau; // Liste des sous-éléments XML agrégeables en tableau dans cet objet.
@@ -314,7 +338,9 @@ class Catégorie extends CompoAProprietes
 	{
 		if($nom == 'connaissance')
 		{
-			$this->courant = null;
+			$this->courant = new Texte;
+			if(isset($attributs['p']))
+				$this->courant->poids = $attributs['p'];
 			$this->niveauCourant = $attributs['niveau'];
 			return $this->courant;
 		}
@@ -325,7 +351,13 @@ class Catégorie extends CompoAProprietes
 	function sortirDe(&$objet, $nom)
 	{
 		if($objet === $this->courant)
-			$this->données->connaissances[$this->courant] = hexdec($this->niveauCourant);
+		{
+			$connaissance = new Connaissance(hexdec($this->niveauCourant));
+			if(isset($objet->poids))
+				$connaissance->poids = $objet->poids;
+			$this->données->maîtrise[$this->courant->texte] = $connaissance;
+			$this->données->connaissances[$this->courant->texte] = hexdec($this->niveauCourant);
+		}
 	}
 	
 	protected $courant;
