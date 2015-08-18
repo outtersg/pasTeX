@@ -95,6 +95,27 @@ else
 
 $zorglub = new Zorglub; // Celui-là nous fournira toute la boîte à outils pour calculer tout ce qui nous passe par la tête.
 
+$pondérera = false;
+while($etPuisQuoiEncore < count($argv))
+{
+	switch($argv[$etPuisQuoiEncore])
+	{
+		case 'profil':
+			if($etPuisQuoiEncore >= count($argv) - 1)
+				break 2;
+			$profil = $argv[$etPuisQuoiEncore + 1];
+			$etPuisQuoiEncore += 2;
+			$zorglub->profil = $profil;
+			$pondérera = true;
+			break;
+		case 'pondéré':
+			$pondérera = true;
+			break;
+		default:
+			break 2;
+	}
+}
+
 /* À FAIRE: si (en CLI) le compo s'est arrêté sur le mot 'par' ou 'filtre' ou
  * ce que vous voulez, on charge un filtre avant d'attaquer la sortie. Et même
  * plusieurs filtres, pourquoi pas. */
@@ -138,6 +159,8 @@ else
 
 if($paramsCompo !== null)
 	$donnees = $compo->composer($paramsCompo);
+if($pondérera)
+	$zorglub->pondérer($donnees);
 if($paramsDecompo !== null)
 {
 	$decompo->_zorglub = $zorglub;
