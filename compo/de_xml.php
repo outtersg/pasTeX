@@ -39,7 +39,7 @@ class Texte
 {
 	public static $Html = false;
 	
-	public function __construct($chaîne)
+	public function __construct($chaîne = '')
 	{
 		$this->texte = $chaîne;
 	}
