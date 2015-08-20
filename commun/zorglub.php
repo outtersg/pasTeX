@@ -55,6 +55,10 @@ class Zorglub
 		
 	/*- Poids ----------------------------------------------------------------*/
 	
+	const BRUT = 0; // Normalisation: aucune (on prend les poids tels quels).
+	const TOTAL_1 = 1; // Normalisation: la somme des poids sur un tableau doit faire 1.
+	const MAX_1 = 2; // Normalisation: le poids maximum sur un tableau est normalisé à 1.
+	
 	/* À FAIRE?: les projets devraient voir leur poids multiplié par leur durée. */
 	
 	public $trier = true;
@@ -114,7 +118,7 @@ class Zorglub
 				fprintf(STDERR, "# Attention, le profil $profil n'est utilisé que $n fois dans votre CV. Est-ce une erreur de frappe?\n");
 	}
 	
-	protected function _pondérerTableau(& $t, $surÉchelle1 = true)
+	protected function _pondérerTableau(& $t, $normalisation = self::MAX_1)
 	{
 		/*- Recherche des poids, selon le profil mentionné -*/
 		
@@ -181,12 +185,16 @@ class Zorglub
 		$total = 0.0;
 		foreach($t as & $e)
 		{
+			if($normalisation == self::TOTAL_1)
 			$total += $e->poids;
+			else if($normalisation == self::MAX_1)
+				if($e->poids > $total)
+					$total = $e->poids;
 		}
 		
 		/*- Mise à l'échelle -*/
 		
-		if($surÉchelle1 && $total)
+		if($normalisation && $total)
 			foreach($t as & $e)
 				$e->poids /= $total;
 		
