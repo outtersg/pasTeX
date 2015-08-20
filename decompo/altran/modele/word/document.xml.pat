@@ -244,6 +244,13 @@
 					<w:color w:val="595959" w:themeColor="accent1"/>
 				</w:rPr>
 			</w:pPr>
+		</w:p>
+		<w:p w:rsidR="00974A7A" w:rsidRPr="00974A7A" w:rsidRDefault="00974A7A" w:rsidP="00974A7A">
+			<w:pPr>
+				<w:rPr>
+					<w:color w:val="595959" w:themeColor="accent1"/>
+				</w:rPr>
+			</w:pPr>
 			<w:r w:rsidRPr="00974A7A">
 				<w:rPr>
 					<w:b/>
