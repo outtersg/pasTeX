@@ -135,7 +135,7 @@ class Zorglub
 		{
 			isset($projet->rôle) && $this->_pondérerTableau($projet->rôle);
 			isset($projet->tâche) && $this->_pondérerTableau($projet->tâche);
-			isset($projet->techno) && $this->_pondérerTableau($projet->techno);
+			isset($projet->techno) && $this->_pondérerTableau($projet->techno, self::TOTAL_1);
 		}
 		if(isset($cv->connaissances->catégorie))
 			foreach($cv->connaissances->catégorie as $catégorie)
