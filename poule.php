@@ -110,6 +110,7 @@ while($etPuisQuoiEncore < count($argv))
 			break;
 		case 'pondéré':
 			$pondérera = true;
+			++$etPuisQuoiEncore;
 			break;
 		default:
 			break 2;
