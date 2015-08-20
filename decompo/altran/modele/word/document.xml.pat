@@ -533,7 +533,7 @@
 						<w:r w:rsidRPr="00171EAD">
 							<w:rPr>
 								<w:b/>
-								<w:color w:val="595959" w:themeColor="accent1"/>
+								<w:color w:val="{{ gris(boulot.couleur) }}"/>
 								<w:sz w:val="20"/>
 								<w:szCs w:val="20"/>
 							</w:rPr>
@@ -554,7 +554,7 @@
 						<w:r w:rsidRPr="00171EAD">
 							<w:rPr>
 								<w:i/>
-								<w:color w:val="595959" w:themeColor="accent1"/>
+								<w:color w:val="{{ gris(boulot.couleur) }}"/>
 								<w:sz w:val="20"/>
 								<w:szCs w:val="20"/>
 							</w:rPr>
@@ -583,7 +583,7 @@
 						</w:pPr>
 						<w:r w:rsidRPr="00171EAD">
 							<w:rPr>
-								<w:color w:val="595959" w:themeColor="accent1"/>
+								<w:color w:val="{{ gris(boulot.couleur) }}"/>
 								<w:sz w:val="20"/>
 								<w:szCs w:val="20"/>
 							</w:rPr>
@@ -639,7 +639,7 @@
 						</w:pPr>
 						<w:r>
 							<w:rPr>
-								<w:color w:val="595959" w:themeColor="accent1"/>
+								<w:color w:val="{{ gris(boulot.couleur) }}"/>
 								<w:sz w:val="20"/>
 								<w:szCs w:val="20"/>
 							</w:rPr>
@@ -737,7 +737,7 @@
 						</w:pPr>
 						<w:r>
 							<w:rPr>
-								<w:color w:val="595959" w:themeColor="accent1"/>
+								<w:color w:val="{{ gris(boulot.couleur) }}"/>
 								<w:sz w:val="20"/>
 								<w:szCs w:val="20"/>
 							</w:rPr>
@@ -835,7 +835,7 @@
 						</w:pPr>
 						<w:r>
 							<w:rPr>
-								<w:color w:val="595959" w:themeColor="accent1"/>
+								<w:color w:val="{{ gris(boulot.couleur) }}"/>
 								<w:sz w:val="20"/>
 								<w:szCs w:val="20"/>
 							</w:rPr>

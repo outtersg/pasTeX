@@ -124,6 +124,8 @@ class Altran
 		}
 		
 		$this->_trierProjets($données);
+		
+		$this->_zorglub->colorer($données->expérience->projet, null, 1.0, 0xbf, 0x3f); // 0x59 max chez eux, mais bon on a certains projets vraiment importants à faire ressortir.
 	}
 	
 	protected function _comparerDatesPivot($a, $b)
