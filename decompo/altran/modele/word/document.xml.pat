@@ -1233,17 +1233,11 @@
 				</w:rPr>
 				<w:tab/>
 			</w:r>
-			<w:r w:rsidR="00DA1D17" w:rsidRPr="00DA1D17">
-				<w:rPr>
-					<w:color w:val="595959" w:themeColor="accent1"/>
-				</w:rPr>
-				<w:t>Niveau</w:t>
-			</w:r>
 			<w:r w:rsidR="00DA1D17">
 				<w:rPr>
 					<w:color w:val="595959" w:themeColor="accent1"/>
 				</w:rPr>
-				<w:t> : {{ langue.niveau|minus }}</w:t>
+				<w:t>{{ langue.niveau|minus }}</w:t>
 			</w:r>
 		</w:p>
 		<w:p w:rsidR="00DA1D17" w:rsidRDefault="00DA1D17" w:rsidP="00DA1D17">
