@@ -179,6 +179,21 @@
 				<w:t><!-- dur -->Souhaits de métiers ou projets : projets de grande ampleur à forte composante technique, requérant des interactions avec l'ensemble des interlocuteurs (des ingénieurs réseau à l'utilisateur final), dans le domaine du service</w:t>
 			</w:r>
 		</w:p>
+		<!-- Word a du mal à recalculer ses références unitaires s'il n'y a pas une référence globale (table des matières) quelque part. Un immense merci à https://social.msdn.microsoft.com/Forums/office/en-US/8eb7e900-c4e1-40d7-85ca-a06f583e97ce/pageref-for-bookmarks-always-1-when-opening-a-document?forum=oxmlsdk -->
+		<w:p>
+			<w:pPr>
+				<w:pStyle w:val="TM1"/>
+			</w:pPr>
+			<w:r>
+				<w:fldChar w:fldCharType="begin" w:dirty="true"/>
+			</w:r>
+			<w:r>
+				<w:instrText xml:space="preserve"> TOC \o "1-1" </w:instrText>
+			</w:r>
+			<w:r>
+				<w:fldChar w:fldCharType="end"/>
+			</w:r>
+		</w:p>
 		<w:p w:rsidR="00DA6837" w:rsidRDefault="00DA6837">
 			<w:pPr>
 				<w:spacing w:after="200" w:line="276" w:lineRule="auto"/>
@@ -516,7 +531,7 @@
 					</w:p>
 				</w:tc>
 			</w:tr>
-			{% for boulot in expérience.projet %}
+			{% for numBoulot:boulot in expérience.projet %}
 			<w:tr w:rsidR="00171EAD" w:rsidTr="00171EAD">
 				<w:tc>
 					<w:tcPr>
@@ -638,6 +653,11 @@
 					</w:tcPr>
 					<w:p w:rsidR="00171EAD" w:rsidRPr="00171EAD" w:rsidRDefault="00171EAD" w:rsidP="0080279F">
 						<w:pPr>
+							<w:tabs>
+								<w:tab w:val="right" w:leader="dot" w:pos="3895"/>
+								<!-- L'inconvénient des pointillés ci-dessus, c'est que si Word ouvre sans recalculer les champs (comportement par défaut d'un document téléchargé), on va se retrouver avec des lignes de pointillés sans aucun numéro de page au bout. -->
+								<!--<w:tab w:val="right" w:pos="3895"/>-->
+							</w:tabs>
 							<w:rPr>
 								<w:color w:val="595959" w:themeColor="accent1"/>
 								<w:sz w:val="20"/>
@@ -651,6 +671,29 @@
 								<w:szCs w:val="20"/>
 							</w:rPr>
 							<w:t>{{ [ boulot.nom, boulot.description ]|" : " }}</w:t>
+						</w:r>
+						<!-- Renvoi à la page -->
+						<w:r>
+							<w:rPr>
+								<w:color w:val="{{ gris(boulot.couleur) }}"/>
+								<w:sz w:val="12"/>
+								<w:szCs w:val="12"/>
+							</w:rPr>
+							<w:tab/>
+						</w:r>
+						<w:r>
+							<w:fldChar w:fldCharType="begin" w:dirty="true"/>
+						</w:r>
+						<w:r>
+							<w:rPr>
+								<w:color w:val="{{ gris(boulot.couleur) }}"/>
+								<w:sz w:val="12"/>
+								<w:szCs w:val="12"/>
+							</w:rPr>
+							<w:instrText xml:space="preserve"> PAGEREF exp{{ numBoulot }} \h </w:instrText>
+						</w:r>
+						<w:r>
+							<w:fldChar w:fldCharType="end"/>
 						</w:r>
 					</w:p>
 				</w:tc>
@@ -877,11 +920,14 @@
 				<w:t>Expériences</w:t>
 			</w:r>
 		</w:p>
-		{% for boulot in expérience.projet %}
+		{% for numBoulot:boulot in expérience.projet %}
 		<w:p w:rsidR="00974A7A" w:rsidRPr="00974A7A" w:rsidRDefault="00974A7A" w:rsidP="00B223F1">
 			<w:pPr>
 				<w:pStyle w:val="Titre2"/>
 			</w:pPr>
+			{% set numSignet = numSignet + 1 %}
+			<w:bookmarkStart w:id="{{ numSignet }}" w:name="exp{{ numBoulot }}"/>
+			<w:bookmarkEnd w:id="{{ numSignet }}"/>
 			<w:r w:rsidRPr="00974A7A">
 				<w:lastRenderedPageBreak/>
 				<w:t>{{ [ boulot.société|last, boulot.nom ]|" / " }}</w:t>
