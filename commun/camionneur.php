@@ -112,5 +112,13 @@ class Camionneur
 	{
 		return $this->_zorglub->année($projet);
 	}
+	
+	/*- Couleur -*/
+	
+	public function gris($surÉchelle255)
+	{
+		$bout = dechex((int)$surÉchelle255);
+		return $bout.$bout.$bout;
+	}
 }
 ?>
