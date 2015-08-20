@@ -124,7 +124,7 @@ class CompoAProprietes extends Compo
 		{
 			if(!isset($this->marqueurs))
 				$this->marqueurs = array();
-			$marqueur = array($attributs['id'], is_string($depuis) ? strlen($depuis) : 0, null);
+			$marqueur = array($attributs['id'], (is_string($depuis) || $depuis instanceof Texte) ? strlen($depuis) : 0, null);
 			$this->marqueurs[] = $marqueur;
 			return $depuis;
 		}
@@ -184,7 +184,7 @@ class CompoAProprietes extends Compo
 				for($numMarqueur = count($this->marqueurs); --$numMarqueur >= 0;)
 					if(!isset($this->marqueurs[$numMarqueur][2])) // Ah, en voilà un qui n'a pas de fin.
 					{
-						$this->marqueurs[$numMarqueur][2] = is_string($objet) ? strlen($objet) : 0;
+						$this->marqueurs[$numMarqueur][2] = (is_string($objet) || $objet instanceof Texte) ? strlen($objet) : 0;
 						return;
 					}
 			throw new Exception('Fermeture d\'un marqueur jamais ouvert');
