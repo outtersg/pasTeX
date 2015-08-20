@@ -103,6 +103,7 @@ class Zorglub
 		$this->_pondérerTableau($cv->expérience->projet);
 		foreach($cv->expérience->projet as $projet)
 		{
+			isset($projet->rôle) && $this->_pondérerTableau($projet->rôle);
 			isset($projet->tâche) && $this->_pondérerTableau($projet->tâche);
 			isset($projet->techno) && $this->_pondérerTableau($projet->techno);
 		}
