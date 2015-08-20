@@ -126,6 +126,9 @@ class Altran
 		$this->_trierProjets($données);
 		
 		$this->_zorglub->colorer($données->expérience->projet, null, 1.0, 0xbf, 0x3f); // 0x59 max chez eux, mais bon on a certains projets vraiment importants à faire ressortir.
+		
+		$données->technos = array_keys(array_slice($this->_zorglub->poidsGlobalTechnos($données), 0, 5));
+		$données->métiers = array_keys(array_slice($this->_zorglub->poidsGlobalMétiers($données), 0, 4));
 	}
 	
 	protected function _comparerDatesPivot($a, $b)

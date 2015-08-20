@@ -64,7 +64,7 @@
 				<w:rPr>
 					<w:color w:val="595959" w:themeColor="accent1"/>
 				</w:rPr>
-				<w:t><!-- dur -->Adresse actuelle : {{ implode(" • ", perso.adresse) }}</w:t>
+				<w:t>Adresse actuelle : {{ implode(" • ", perso.adresse) }}</w:t>
 			</w:r>
 		</w:p>
 		<w:p w:rsidR="00DA6837" w:rsidRDefault="00DA6837">
@@ -303,8 +303,7 @@
 				<w:t>Domaines de compétences</w:t>
 			</w:r>
 		</w:p>
-		<!-- dur -->
-		{% for domaine in [ "DevOps", "automatisation", "performances", "architecture logicielle" ] %}
+		{% for domaine in intérêts.domaine %}
 		<w:p w:rsidR="00974A7A" w:rsidRPr="00974A7A" w:rsidRDefault="00974A7A" w:rsidP="00974A7A">
 			<w:pPr>
 				<w:pStyle w:val="Paragraphedeliste"/>
@@ -320,7 +319,7 @@
 				<w:rPr>
 					<w:color w:val="595959" w:themeColor="accent1"/>
 				</w:rPr>
-				<w:t>{{ domaine }}</w:t>
+				<w:t>{{ domaine.nom }}</w:t>
 			</w:r>
 		</w:p>
 		{% endfor %}
@@ -339,8 +338,7 @@
 				<w:t>Environnements d’interventions</w:t>
 			</w:r>
 		</w:p>
-		<!-- dur -->
-		{% for domaine in [ "télécom", "routier", "défense", "institutionnel" ] %}
+		{% for domaine in métiers %}
 		<w:p w:rsidR="00974A7A" w:rsidRPr="00974A7A" w:rsidRDefault="00974A7A" w:rsidP="00974A7A">
 			<w:pPr>
 				<w:pStyle w:val="Paragraphedeliste"/>
@@ -375,8 +373,7 @@
 				<w:t>Environnements techniques</w:t>
 			</w:r>
 		</w:p>
-		<!-- dur -->
-		{% for domaine in [ "Linux / BSD", "web (PHP)", "shell", "PostgreSQL", "Jenkins" ] %}
+		{% for domaine in technos %}
 		<w:p w:rsidR="00974A7A" w:rsidRPr="00974A7A" w:rsidRDefault="00974A7A" w:rsidP="00974A7A">
 			<w:pPr>
 				<w:pStyle w:val="Paragraphedeliste"/>
