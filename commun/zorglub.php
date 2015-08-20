@@ -118,9 +118,8 @@ class Zorglub
 	{
 		/*- Recherche des poids, selon le profil mentionné -*/
 		
-		$nSansPoids = 0;
-		$poidsMax = 0.8; // En fait poids maximum recensé avant 1. Pour toutes les valeurs indéfinies, on essaiera de les répartir entre cette valeur et 1 (histoire qu'elles soient en dessous du défaut, mais au-dessus de tout poids qui aurait été affecté volontairement "mauvais" à un objet).
-		foreach($t as & $e)
+		$parPoids = array();
+		foreach($t as $num => & $e)
 		{
 			if(isset($e->poids))
 			{
@@ -142,24 +141,46 @@ class Zorglub
 				}
 			}
 			if(!isset($e->poids))
-				++$nSansPoids;
-			else if($poidsMax < $e->poids && $e->poids < 1.0)
-				$poidsMax = $e->poids;
+			{
+				if(is_string($e))
+					$e = new Texte($e);
+				$e->poids = 1.0;
+			}
+			for($nParPoids = count($parPoids); --$nParPoids >= 0;)
+				if($parPoids[$nParPoids][0] >= $e->poids)
+					break;
+			array_splice($parPoids, $nParPoids + 1, 0, array(array($e->poids, $num)));
+		}
+		
+		/*- Différentiation -*/
+		/* Les poids identiques sont légèrement décalés les uns par rapport aux autres afin que les tris qui seront appliqués semblent stables. */
+		
+		if(count($parPoids))
+		{
+			$dernier = end($parPoids);
+			$précédentPoids = 0.0;
+			for($n = count($parPoids); --$n >= 0;)
+			{
+				// Combien de membres successifs ont-ils même poids?
+				for($m = $n; --$m >= 0 && $parPoids[$m][0] == $parPoids[$n][0];) {}
+				if($m < $n - 1) // Plus d'un, il faut donc les départager.
+				{
+					$plagePoids = min(0.2, ($parPoids[$n][0] - $précédentPoids) / 2.0); // On va pouvoir les répartir entre la valeur et la valeur - 0.2… sauf si ça empiéterait sur les "plus petits", auquel cas on essaie de se glisser entre notre valeur "voulue" et l'inférieur immédiat.
+					$précédentPoids = $parPoids[$n][0];
+					++$m;
+					$décrément = $plagePoids / ($n - $m);
+					++$n;
+					while(--$n > $m) // Pas de décrément pour l'élément lui-même, on s'arrête donc en $m + 1.
+						$t[$parPoids[$n][1]]->poids -= ($n - $m) * $décrément;
+				}
+			}
 		}
 		
 		/*- Remplissage des poids absolus -*/
 		
-		$n = 0;
 		$total = 0.0;
 		foreach($t as & $e)
 		{
-			if(!isset($e->poids))
-			{
-				if(is_string($e))
-					$e = new Texte($e);
-				$e->poids = 1.0 - $n * (1.0 - $poidsMax) / $nSansPoids; // Le premier sans poids se voit affecter un poids de 1, le second de mettons 0.98, le suivant de 0.96, puis 0.94, etc. Ainsi ils restent ordonnés les uns par rapport aux autres.
-				++$n;
-			}
 			$total += $e->poids;
 		}
 		
