@@ -81,7 +81,7 @@ class Zorglub
 		}
 		if(isset($cv->connaissances->catégorie))
 			foreach($cv->connaissances->catégorie as $catégorie)
-				isset($catégorie->maîtrise) && $this->_pondérerTableau($catégorie->maîtrise, false);
+				isset($catégorie->maîtrise) && $this->_pondérerTableau($catégorie->maîtrise, self::BRUT, false);
 		if(isset($cv->intérêts->domaine))
 		{
 			$this->_pondérerTableau($cv->intérêts->domaine);
@@ -111,6 +111,19 @@ class Zorglub
 				$this->_ordonnerPoids($projet->techno);
 			}
 		
+		/* Maintenant que les maîtrises ont été réinjectées dans les projets, on peut virer les technos à 0. */
+		
+		if(isset($cv->connaissances->catégorie))
+			foreach($cv->connaissances->catégorie as $catégorie)
+				if(isset($catégorie->maîtrise))
+				{
+					$this->_pondérerTableau($catégorie->maîtrise, self::BRUT);
+					// Au passage, on reflète ce nouveau tri sur les connaissances (tableau simple, maintenu pour compatibilité avec certains vieux décompos).
+					$catégorie->connaissances = array();
+					foreach($catégorie->maîtrise as $nom => $maîtrise)
+						$catégorie->connaissances[$nom] = $maîtrise->niveau;
+				}
+		
 		/*- Alertes -*/
 		
 		foreach($this->_compteursProfils as $profil => $n)
@@ -118,7 +131,7 @@ class Zorglub
 				fprintf(STDERR, "# Attention, le profil $profil n'est utilisé que $n fois dans votre CV. Est-ce une erreur de frappe?\n");
 	}
 	
-	protected function _pondérerTableau(& $t, $normalisation = self::MAX_1)
+	protected function _pondérerTableau(& $t, $normalisation = self::MAX_1, $ordonnerEtCouper = true)
 	{
 		/*- Recherche des poids, selon le profil mentionné -*/
 		
@@ -200,6 +213,7 @@ class Zorglub
 		
 		/*- Présentation -*/
 		
+		if($ordonnerEtCouper)
 		$this->_ordonnerPoids($t);
 	}
 	
