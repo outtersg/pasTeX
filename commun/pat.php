@@ -124,11 +124,18 @@ function _compile($découpage, $i)
 						//	throw new Exception('Le mot-clé '.$compil[0][1].' ne peut être utilisé comme identifiant.');
 						break;
 					case '!=':
-						$courantProfond[1] = 'diff';
 					case 'or':
 					case 'and':
+					case '+':
+					case '-':
+						$corr = array
+						(
+							'!=' => 'diff',
+							'+' => 'plus',
+							'-' => 'moins',
+						);
 						$courantProfond[0] = 'op';
-						$courantProfond[1] = 'op'.$courantProfond[1];
+						$courantProfond[1] = 'op'.(isset($corr[$courantProfond[1]]) ? $corr[$courantProfond[1]] : $courantProfond[1]);
 						break;
 				}
 				break;

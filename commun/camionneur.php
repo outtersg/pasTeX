@@ -76,6 +76,16 @@ class Camionneur
 		return $x ? $x : $y; // Et non pas $x || $y, qui force le résultat en booléen.
 	}
 	
+	public function opplus($x, $y)
+	{
+		return $x + $y;
+	}
+	
+	public function opmoins($x, $y)
+	{
+		return $x - $y;
+	}
+	
 	public function opdiff($x, $y)
 	{
 		return $x != $y;
