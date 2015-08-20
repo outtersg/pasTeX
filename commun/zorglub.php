@@ -63,6 +63,28 @@ class Zorglub
 	
 	public $trier = true;
 	
+	/**
+	 * Replace sur une échelle (type échelle de couleur) les divers éléments en fonction de leur poids.
+	 */
+	public function colorer(& $tableau, $min, $max, $couleurMin = 0.5, $couleurMax = 0.0)
+	{
+		if($min === null)
+			foreach($tableau as $e)
+				if(!isset($min) || $e->poids < $min)
+					$min = $e->poids;
+		if($max === null)
+			foreach($tableau as $e)
+				if(!isset($max) || $e->poids > $max)
+					$max = $e->poids;
+		foreach($tableau as $e)
+			if($e->poids <= $min)
+				$e->couleur = $couleurMin;
+			else if($e->poids >= $max)
+				$e->couleur = $couleurMax;
+			else
+				$e->couleur = $couleurMin + ($couleurMax - $couleurMin) * ($e->poids - $min) / ($max - $min);
+	}
+	
 	public function pondérer($cv)
 	{
 		if(!isset($this->profil))
