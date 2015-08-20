@@ -89,8 +89,6 @@ class Zorglub
 	const TOTAL_1 = 1; // Normalisation: la somme des poids sur un tableau doit faire 1.
 	const MAX_1 = 2; // Normalisation: le poids maximum sur un tableau est normalisé à 1.
 	
-	/* À FAIRE?: les projets devraient voir leur poids multiplié par leur durée. */
-	
 	public $trier = true;
 	
 	/**
@@ -295,6 +293,58 @@ class Zorglub
 	public function _compPoids($x, $y)
 	{
 		return $x->poids >= $y->poids ? -1 : 1;
+	}
+	
+	/*- Poids tempéré par le temps -------------------------------------------*/
+	
+	public function poidsGlobalTechnos($cv)
+	{
+		$poids = array();
+		foreach($cv->expérience->projet as $projet)
+		{
+			$durée = $this->durée($projet, true);
+			$éloignement = $this->obsolescence($projet);
+			$obso = 0.35 * exp(1 - 0.3 * $éloignement);
+			if(isset($projet->techno))
+			{
+				foreach($projet->techno as $techno)
+				{
+					$réf = isset($techno->réf) ? $techno->réf : $techno->__toString();
+					if(!isset($poids[$réf])) $poids[$réf] = 0.0;
+					// Poids ajouté par une techno utilisée sur un projet = produit de:
+					// - pourcentage de la techno sur le projet * importance de la techno mentionnée dans la section "connaissances" (supposé déjà appliqué)
+					// - durée du projet (en fait non: on considère que les projets longs auront un poids approprié)
+					// - poids du projet
+					// - facteur de décrépitude (plus ça fait longtemps que l'on n'est plus sur le projet, moins la techno est d'actualité)
+					// On suppose que les technos projet ont été déjà multipliées par les technos connaissance, et égalisée en mode TOTAL_1.
+					$poids[$réf] += $techno->poids /* * $durée */ * $projet->poids * $obso;
+				}
+			}
+		}
+		
+		arsort($poids, SORT_NUMERIC);
+		
+		return $poids;
+	}
+	
+	public function poidsGlobalMétiers($cv)
+	{
+		$poids = array();
+		foreach($cv->expérience->projet as $projet)
+		{
+			$durée = $this->durée($projet, true);
+			$éloignement = $this->obsolescence($projet);
+			$obso = 0.35 * exp(1 - 0.3 * $éloignement);
+			if(isset($projet->domaine))
+			{
+				isset($poids[$projet->domaine]) || $poids[$projet->domaine] = 0.0;
+				$poids[$projet->domaine] += $projet->poids * $obso;
+			}
+		}
+		
+		arsort($poids, SORT_NUMERIC);
+		
+		return $poids;
 	}
 }
 
