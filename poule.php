@@ -159,7 +159,8 @@ else
 
 if($paramsCompo !== null)
 	$donnees = $compo->composer($paramsCompo);
-if($pondérera)
+if(!$pondérera)
+	$zorglub->trier = false;
 	$zorglub->pondérer($donnees);
 if($paramsDecompo !== null)
 {

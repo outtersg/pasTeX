@@ -57,6 +57,8 @@ class Zorglub
 	
 	/* À FAIRE?: les projets devraient voir leur poids multiplié par leur durée. */
 	
+	public $trier = true;
+	
 	public function pondérer($cv)
 	{
 		if(!isset($this->profil))
@@ -182,6 +184,7 @@ class Zorglub
 		
 		/*- Tri -*/
 		
+		if($this->trier)
 		uasort($t, array($this, '_compPoids'));
 	}
 	
