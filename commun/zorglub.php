@@ -26,12 +26,16 @@
  */
 class Zorglub
 {
-	public function durée($projet)
+	/*- Dates ----------------------------------------------------------------*/
+	
+	public function durée($projet, $brut = false)
 	{
 		$d = 0;
 		if(isset($projet->date))
 			foreach($projet->date as $plage)
 				$d += pasTeX_durée($plage->d, $plage->f);
+		if($brut)
+			return $d;
 		if($d > 0)
 			return pasTeX_affDurée($d);
 	}
