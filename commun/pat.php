@@ -270,8 +270,15 @@ function _compileStruct($compil, $i)
 	{
 		case 'for':
 			if(!isset($compil[$i + 3]) || $compil[$i + 2][1] != 'in' || $compil[$i + 1][0] != 'id' || isset($compil[$i + 1][2]))
-				throw new Exception('for <var> in <tableau>');
-			$compil[$i][2] = array($compil[$i + 1], $compil[$i + 3]);
+				throw new Exception('for [<indice>:]<var> in <tableau>');
+			$var = $compil[$i + 1][1];
+			$index = 'index';
+			if(($posDeuxPoints = strpos($var, ':')) !== false)
+			{
+				$compil[$i + 1][1] = substr($var, $posDeuxPoints + 1);
+				$index = substr($var, 0, $posDeuxPoints);
+			}
+			$compil[$i][2] = array(array('id', $index), $compil[$i + 1], $compil[$i + 3]);
 			array_splice($compil, $i + 1, 3);
 			break;
 		case 'if':
@@ -325,7 +332,7 @@ function rends($bloc, $racine = true)
 					$r .= 'if('.rends($bloc[2][0]).') {';
 					break;
 				case 'for':
-					$r .= 'foreach('.rends($bloc[2][1]).' as $'.$bloc[2][0][1].') {';
+					$r .= 'foreach('.rends($bloc[2][2]).' as $'.$bloc[2][0][1].' => $'.$bloc[2][1][1].') {';
 					break;
 				case 'endfor':
 				case 'endif':
