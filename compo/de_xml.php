@@ -137,11 +137,14 @@ class CompoAProprietes extends Compo
 			if(isset($attributs['p']))
 				$nouveau->poids = $attributs['p'];
 		}
-		else if(isset($attributs['p']))
+		else if(count($attributs))
 		{
 			$nouveau = new Texte;
 			$donnee = & $nouveau;
+			if(isset($attributs['p']))
 			$nouveau->poids = $attributs['p'];
+			if(isset($attributs['ref']))
+				$nouveau->réf = $attributs['ref'];
 		}
 		else
 		{
