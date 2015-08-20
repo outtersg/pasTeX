@@ -53,6 +53,32 @@ class Zorglub
 		return Periode::aff(Date::mef($période[0]), Date::mef($période[1]));
 	}
 	
+	/**
+	 * Nombre d'années depuis lequel le projet s'est terminé.
+	 */
+	public function obsolescence($projet)
+	{
+		if(!isset($projet->date))
+			return 5;
+		$période = pasTeX_unionPeriodes($projet->date);
+		$fin = $période[1];
+		if($fin == array(-1, -1, -1, -1, -1, -1))
+			$années = 0.0;
+		else
+		{
+			// Fin 2012, c'est tout comme le premier janvier 2013.
+			for($i = 6; --$i >= 0;)
+				if($fin[$i] >= 0)
+				{
+					++$fin[$i];
+					break;
+				}
+			$fin = calculer_datation($fin);
+			$années = (time() - $fin) / (3600 * 24 * 365.25);
+		}
+		return $années;
+	}
+	
 	/*- Niveau ---------------------------------------------------------------*/
 	
 	/* À FAIRE: les technos devraient voir leur niveau baisser au fil des années où elles sont délaissées (date dernière mention dans un projet). */
