@@ -114,6 +114,7 @@ function _compile($découpage, $i)
 				
 				switch($courant[1])
 				{
+					case 'set':
 					case 'in':
 					case 'for':
 					case 'endfor':
@@ -122,6 +123,9 @@ function _compile($découpage, $i)
 						$courantProfond[0] = 'struct';
 						//if(isset($compil[0][2])) // À faire après.
 						//	throw new Exception('Le mot-clé '.$compil[0][1].' ne peut être utilisé comme identifiant.');
+						break;
+					case '=':
+						$courantProfond[0] = '=';
 						break;
 					case '!=':
 					case 'or':
@@ -268,6 +272,12 @@ function _compileStruct($compil, $i)
 	$motClé = $compil[$i][1];
 	switch($motClé)
 	{
+		case 'set':
+			if(!isset($compil[$i + 3]) || $compil[$i + 2][0] != '=' || $compil[$i + 1][0] != 'id' || isset($compil[$i + 1][2]))
+				throw new Exception('set <var> = <expr>');
+			$compil[$i][2] = array($compil[$i + 1], $compil[$i + 3]);
+			array_splice($compil, $i + 1, 3);
+			break;
 		case 'for':
 			if(!isset($compil[$i + 3]) || $compil[$i + 2][1] != 'in' || $compil[$i + 1][0] != 'id' || isset($compil[$i + 1][2]))
 				throw new Exception('for [<indice>:]<var> in <tableau>');
@@ -328,6 +338,9 @@ function rends($bloc, $racine = true)
 		case 'struct':
 			switch($bloc[1])
 			{
+				case 'set':
+					$r .= '$'.$bloc[2][0][1].' = '.rends($bloc[2][1]).';';
+					break;
 				case 'if':
 					$r .= 'if('.rends($bloc[2][0]).') {';
 					break;
