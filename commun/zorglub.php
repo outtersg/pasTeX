@@ -104,10 +104,13 @@ class Zorglub
 			if(isset($projet->techno))
 			{
 				foreach($projet->techno as $techno)
-					if(!isset($maîtrises[$techno->__toString()]))
+				{
+					$réf = isset($techno->réf) ? $techno->réf : $techno->__toString();
+					if(!isset($maîtrises[$réf]))
 						fprintf(STDERR, "# Attention, utilisation de la techno $techno, non déclarée dans les connaissances.\n");
 					else
-						$techno->poids *= $maîtrises[$techno->__toString()];
+						$techno->poids *= $maîtrises[$réf] > 0.1 ? $maîtrises[$réf] : 0.1; // On laisse aux technos délaissées une petite chance de figurer dans les projets.
+				}
 				$this->_ordonnerPoids($projet->techno);
 			}
 		
