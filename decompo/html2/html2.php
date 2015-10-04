@@ -46,6 +46,10 @@ class Html2
 					$retour['pdf'] = $argv[$position + 1];
 					++$position;
 					break;
+				case '--intro':
+				case '+intro':
+					$retour['intro'] = true;
+					break;
 				default:
 					break 2;
 			}
@@ -423,6 +427,8 @@ $affs[] = implode(', ', $aff);
 		echo '<div class="corps" style="position: relative;">'."\n";
 		echo '<svg id="chemins" style="position: absolute; left: 0; top: 0; height: 100%; width: 100%;"></svg>'."\n";
 		$this->pondreEntete($donnees);
+		if(isset($params['intro']))
+			$this->pondreIntro($donnees);
 		$this->pondreInteret($donnees);
 		$this->pondreProjets($donnees);
 		$this->pondreEtudes($donnees);
@@ -817,6 +823,16 @@ $affs[] = implode(', ', $aff);
 					echo '</div>';
 			}
 		}
+		$this->terminerSection();
+	}
+	
+	function pondreIntro($données)
+	{
+		if(!array_key_exists('intro', $données)) return;
+		
+		$this->commencerSection('');
+		foreach($données->intro as $intro) break;
+		echo implode('<br/>', array_map('pasTeX_html', explode("\n", $intro)));
 		$this->terminerSection();
 	}
 	
