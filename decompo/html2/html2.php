@@ -38,6 +38,10 @@ class Html2
 		{
 			switch($argv[$position])
 			{
+				case '--respire':
+				case '+respire':
+					$retour['respire'] = true;
+					break;
 				case 'pdf':
 					$retour['pdf'] = $argv[$position + 1];
 					++$position;
@@ -596,7 +600,61 @@ $affs[] = implode(', ', $aff);
 	 */
 	public function _palier($ligne)
 	{
-		return '• '.($ligne instanceof Texte ? $ligne : htmlspecialchars($ligne, ENT_NOQUOTES)).' ';
+		$html = pasTeX_html($ligne);
+		// Pour éviter que la puce soit orpheline, on cherche à agréger au moins $N octets derrière. On va donc créer un span nowrap jusqu'à ce n-ième octet. Bien entendu on ne coupe pas en milieu de mot, ni au milieu d'un sous-span.
+		$N = 20;
+		$pos = 0;
+		$bonnePos = null;
+		$longueurTexte = 0;
+		$bonneLongueurTexte = null;
+		$imbriqués = 0;
+		$tailleHtml = strlen($html);
+		preg_match_all('#(</[^>]*>)|(<[^>]*/>)|(<[^>]*>)|([^ <]+)|( +)#', $html, $corrs, PREG_OFFSET_CAPTURE|PREG_SET_ORDER, $pos);
+		foreach($corrs as $corr)
+		{
+			// isset car https://bugs.php.net/bug.php?id=50887 (cf. page de référence de preg_match).
+			for($i = 6; --$i >= 1;)
+				if(isset($corr[$i]) && $corr[$i][1] = -1)
+					break;
+			switch($i)
+			{
+				// Espace.
+				case 5:
+					// Si l'espace n'est pas dans un sous-élément XML, et se trouve une fois passé le cap des n octets significatifs, alors on a trouvé notre point de césure.
+					if(!isset($bonnePos) && $imbriqués == 0 && $longueurTexte > $N)
+					{
+						$bonnePos = $pos;
+						$bonneLongueurTexte = $longueurTexte;
+					}
+					break;
+				// Mot.
+				case 4:
+					$longueurTexte += strlen($corr[0][0]);
+					break;
+				// Balise ouvrante.
+				case 3:
+					++$imbriqués;
+					break;
+				// Balise auto-fermante.
+				case 2:
+					break;
+				// Balise fermante.
+				case 1:
+					--$imbriqués;
+					break;
+			}
+			$pos = $corr[0][1] + strlen($corr[0][0]);
+		}
+		// Si on n'a pas trouvé à s'insérer, ou si on risque de laisser une orpheline à l'autre bout, on englobe tout.
+		if(!isset($bonnePos) || $bonneLongueurTexte > $longueurTexte - $N)
+			$bonnePos = $tailleHtml;
+		$dEnrobage = $fEnrobage = '';
+		if(isset($this->params['respire']))
+		{
+			$dEnrobage = '<span class="re">';
+			$fEnrobage = '</span>';
+		}
+		return $dEnrobage.'<span class="ml">• '.substr($html, 0, $bonnePos).'</span>'.substr($html, $bonnePos).$fEnrobage.' '; // Un espace pour séparer du • suivant.
 	}
 	
 	function pondreProjets($donnees)

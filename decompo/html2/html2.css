@@ -110,6 +110,25 @@ td.categorie
 	fill: #BFBFDF;
 }
 
+/*- Classiques ---------------------------------------------------------------*/
+
+.ml /* Mono-ligne. */
+{
+	white-space: nowrap;
+}
+
+.re /* respire */
+{
+	/* Encore une pourriture que nous ont produit le W3C. Le modèle ne permet tout simplement pas la fusion des marges horizontales. Les divers essais se sont révélés infructueux:
+	 * - reposer sur la fusion des marges horizontales, pour tout simplement avoir des listes horizontales, dont les éléments sont séparés (entre eux) par un espace donné: ça, ça serait dans un monde idéal où les CSS n'aurait pas été élaboré par le W3C qui est sans doute le comité le moins pragmatique qui ait jamais été constitué.
+	 * - mettre un .respire + .respire { margin-left }: le problème est que même si le second respire passe à la ligne, il récupère une margin-left, gros trou à sa gauche alors qu'il n'y a rien qui l'y oblige.
+	 * - caser entre les <span> un espace surdimensionné pour reposer sur le comportement du HTML (espace = césure possible, et si pas césure ça crée un espace d'un espace entre les deux mots): oui mais voilà pour lui donner une taille de police 400% il lui faut un <span> dédié et du coup il n'est plus considéré comme espace de césure.
+	 * - pre-wrap: dommage, l'espace ne peut pas être "fusionné si en fin de ligne, sinon préservé".
+	 * - margin-right: c'est encore le plus seyant. Même si l'on perd du coup toute cette marge en fin de ligne (un texte qui, sans la marge, aurait pu tenir en bout de ligne, passe à la ligne avec ça).
+	 */
+	margin-right: 2em;
+}
+
 /*- Marqués et marqueurs -----------------------------------------------------*/
 
 .marque
