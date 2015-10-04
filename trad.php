@@ -7,8 +7,17 @@ class Trad
 	public function tourne($argv)
 	{
 		$fichiers = array();
+		$forcer = false;
 		for($i = 0; ++$i < count($argv);)
+			switch($argv[$i])
+			{
+				case '-f':
+					$forcer = true;
+					break;
+				default:
 			$fichiers[] = $argv[$i];
+					break;
+			}
 		
 		foreach(array('.xml', '.trad', '.xml') as $numFichier => $suffixe)
 			if($numFichier < count($fichiers) && substr($fichiers[$numFichier], -strlen($suffixe)) != $suffixe)
@@ -21,7 +30,7 @@ class Trad
 		if(count($fichiers) == 2)
 			$this->_pondsPatron($fichiers[0], $fichiers[1]);
 		else
-			$this->_pondsTrad($fichiers[0], $fichiers[1], $fichiers[2]);
+			$this->_pondsTrad($fichiers[0], $fichiers[1], $fichiers[2], $forcer);
 	}
 	
 	protected function _auSecours()
@@ -58,7 +67,7 @@ class Trad
 		fclose($sortie);
 	}
 	
-	protected function _pondsTrad($source, $trad, $dest)
+	protected function _pondsTrad($source, $trad, $dest, $forcer = false)
 	{
 	
 	}
