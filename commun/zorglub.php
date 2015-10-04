@@ -126,6 +126,8 @@ class Zorglub
 			$this->_pondérerTableau($cv->titre);
 			$cv->titre = array_shift($cv->titre); // Seul le premier nous intéresse (bon, et puis on y est obligés par compatibilité historique).
 		}
+		if(isset($cv->intro))
+			$this->_pondérerTableau($cv->intro);
 		if(isset($cv->formation->études))
 			$this->_pondérerTableau($cv->formation->études);
 		$this->_pondérerTableau($cv->expérience->projet);
