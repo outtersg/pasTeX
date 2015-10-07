@@ -17,3 +17,27 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#: decompo/html2/html2.php:589
+msgid "Études"
+msgstr "Studies"
+
+#: decompo/html2/html2.php:765
+msgid "Langues"
+msgstr "Languages"
+
+#: decompo/html2/html2.php:809
+msgid "Connaissances Informatiques"
+msgstr "Technical knowledge"
+
+#: decompo/html2/html2.php:852
+msgid "Domaines d'expertise"
+msgstr "Expertise fields"
+
+#: decompo/html2/html2.php:877
+msgid "Autres activités et intérêts"
+msgstr "Personal interests"
+
+#: decompo/html2/html2.php:886
+msgid "…"
+msgstr ""
