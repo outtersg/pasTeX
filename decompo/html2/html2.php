@@ -402,6 +402,10 @@ $affs[] = implode(', ', $aff);
 	{
 		$finessePdf = 2.0; // L'épaisseur du border minimal sera déterminé par un savant calcul relatif à la page (quoique l'on fasse avec le viewport, phantom ramène la taille d'1px à quelque chose de relatif à la taille du papier, quand il imprime). En outre cela détermine aussi l'épaisseur minimale des traits (phantom arrondit au px le plus proche, pour les border. Donc un border de 0.1em pourra s'afficher comme 1px, et un border de 0.05em… disparaîtra complètement, arrondi à 0px). Du coup si l'on veut avoir du trait fin, il nous faut imprimer sur de l'A3 par exemple puis effectuer une réduction PDF.
 		
+		// Par défaut, le gabarit de page adopte la langue du CV.
+		if(!isset($params['trad']) && isset($donnees->langue))
+			$params['trad'] = $donnees->langue;
+		
 		$dossierSortie = false;
 		$cheminSortieHtml = false;
 		if(isset($params['pdf']))
