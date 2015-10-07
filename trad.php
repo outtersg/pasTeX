@@ -78,6 +78,12 @@ class Trad
 		fclose($sortie);
 	}
 	
+	public function traduis($source, $trad)
+	{
+		$this->_pondsTrad($source, $trad, null);
+		return $this->_sortie;
+	}
+	
 	protected function _sors($chaîne)
 	{
 		if(is_string($this->_sortie))
