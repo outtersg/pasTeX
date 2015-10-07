@@ -189,7 +189,10 @@ class Trad
 	}
 }
 
+if(!isset($GLOBALS['compo']))
+{
 $t = new Trad;
 $t->tourne($argv);
+}
 
 ?>
