@@ -264,9 +264,26 @@ class De_Xml extends CompoAProprietes
 	
 	function analyserParams($argv, &$position)
 	{
-		if(count($argv) <= $position) { $this->pondreAide(); return null; }
+		$r = array();
+		while(true)
+		{
+			if(count($argv) <= $position && !isset($r['chemin'])) { $this->pondreAide(); return null; }
+			switch($argv[$position])
+			{
+				// trad pourrait être géré comme un filtre, après le chargeur. Sauf que sur du XML, il est plus simple d'appliquer la traduction en amont (texte pur) plutôt que sur la structure en mémoire (objets, sous-objets, attributs, etc.).
+				case 'trad':
+					if($position >= count($argv) - 1) { $this->pondreAide(); return null; }
+					$r['trad'] = $argv[++$position];
+					break;
+				default:
+					// Le premier argument que l'on ne reconnaît pas, après avoir déjà trouvé un chemin, est signe qu'il faut laisser la main.
+					if(isset($r['chemin']))
+						return $r;
+					$r['chemin'] = $argv[$position];
+					break;
+			}
 		++$position; // Pour le bien-être de notre appelant.
-		return array('chemin' => $argv[$position - 1]);
+		}
 	}
 	
 	function analyserChamps($champs)
@@ -297,7 +314,7 @@ class De_Xml extends CompoAProprietes
 	function pondreAide()
 	{
 		fprintf(STDERR, <<<TERMINE
-Utilisation: xml <fichier source>
+Utilisation: xml <fichier source> [trad <langue>]
 
 TERMINE
 		);
@@ -313,7 +330,21 @@ TERMINE
 	function composer($params)
 	{
 		if(!array_key_exists('chemin', $params)) { /* À FAIRE: au secours, au secours, qu'est-ce que je fais, là? */ die; }
-		$this->chargeur->charger($params['chemin'], 'cv', $this);
+		$contenu = null;
+		if(isset($params['trad']))
+		{
+			require_once dirname(__FILE__).'/../trad.php';
+			$t = new Trad;
+			$contenu = file_get_contents($params['chemin']);
+			$cheminTrad = preg_replace('#\.[^.]*$#', '.'.$params['trad'].'.trad', $params['chemin']);
+			if(!file_exists($cheminTrad))
+				throw new Exception($cheminTrad.' introuvable');
+			$contenu = $t->traduis($params['chemin'], $cheminTrad);
+			$langue = $params['trad'];
+		}
+		$this->chargeur->charger($params['chemin'].(isset($langue) ? '(traduit)' : ''), 'cv', $this, false, $contenu);
+		if(isset($langue))
+			$this->données->langue = $langue;
 		return $this->données;
 	}
 	
