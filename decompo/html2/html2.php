@@ -529,6 +529,10 @@ $affs[] = implode(', ', $aff);
 	
 	function commencerSection($nom, $autresClasses = null)
 	{
+		if (isset($this->params['trad'])) {
+			$nom = $this->trad($nom);
+		}
+		
 		/* Secret de fabrication pour les coins: peindre un rectangle de 32x32 en
 		 * couleur de fond, faire un masque tout noir sur lequel on trace un disque
 		 * de 30x30 en blanc; sur l'image, tracer par-dessus un cercle couleur de
@@ -902,6 +906,16 @@ $affs[] = implode(', ', $aff);
 	}
 	
 	protected $params;
+	
+	public function trad($chaîne)
+	{
+		if(!$chaîne)
+			return $chaîne;
+		putenv('LC_ALL='.$this->params['trad']);
+		bindtextdomain('app', dirname(__FILE__).'/../../share/locale');
+		textdomain('app');
+		return gettext($chaîne);
+	}
 }
 
 ?>
