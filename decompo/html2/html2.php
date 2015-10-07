@@ -50,6 +50,11 @@ class Html2
 				case '+intro':
 					$retour['intro'] = true;
 					break;
+				case '--trad':
+				case '+trad':
+					$retour['trad'] = $argv[$position + 1];
+					++$position;
+					break;
 				default:
 					break 2;
 			}
