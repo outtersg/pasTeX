@@ -78,11 +78,20 @@ class Trad
 		fclose($sortie);
 	}
 	
+	protected function _sors($chaîne)
+	{
+		if(is_string($this->_sortie))
+			$this->_sortie .= $chaîne;
+		else
+			fwrite($this->_sortie, $chaîne);
+	}
+	
 	protected function _pondsTrad($source, $trad, $dest, $forcer = false)
 	{
 		$originaux = $this->_analysePosEtAttr($source, true);
 		$traductions = $this->_traductions($trad);
 		
+		if(isset($dest))
 		if(file_exists($dest) && !$forcer)
 			throw new Exception("Le fichier $dest existe déjà, je refuse de l'écraser.");
 		
@@ -90,7 +99,7 @@ class Trad
 		unset($originaux['contenu']);
 		$dernièrePosÉcrite = 0;
 		
-		$sortie = fopen($dest, 'w');
+		$this->_sortie = isset($dest) ? fopen($dest, 'w') : '';
 		foreach($originaux as $élémOriginal)
 		{
 			if(!isset($traductions[$élémOriginal[self::L_BALISE]][$élémOriginal[self::L_CONTENU]]))
@@ -107,13 +116,13 @@ class Trad
 				$chaîneAttrs .= ' '.$attr.'="'.$val.'"';
 			$traduction = '<'.$ptrTraduction[self::L_BALISE].$chaîneAttrs.'>'.$ptrTraduction[self::L_CONTENU].'</'.$ptrTraduction[self::L_BALISE].'>';
 			
-			fwrite($sortie, substr($original, $dernièrePosÉcrite, $élémOriginal[self::L_POS_BLOC] - $dernièrePosÉcrite));
-			fwrite($sortie, $traduction);
+			$this->_sors(substr($original, $dernièrePosÉcrite, $élémOriginal[self::L_POS_BLOC] - $dernièrePosÉcrite));
+			$this->_sors($traduction);
 			
 			$dernièrePosÉcrite = $élémOriginal[self::L_POS_BLOC] + $élémOriginal[self::L_TAILLE_BLOC];
 		}
-		fwrite($sortie, substr($original, $dernièrePosÉcrite));
-		fclose($sortie);
+		$this->_sors(substr($original, $dernièrePosÉcrite));
+		is_string($this->_sortie) || fclose($this->_sortie);
 		
 		/* On liste les traductions qui n'ont pas servi. */
 		/* À FAIRE: un levenshtein pour les mettre en rapport avec les traductions en trop (si la source a bougé). */
