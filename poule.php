@@ -22,6 +22,7 @@
  */
 
 require_once('pasTeX.inc');
+require_once dirname(__FILE__).'/commun/poule.php';
 require_once dirname(__FILE__).'/commun/zorglub.php';
 
 /* La Poule pond un CV comme elle pondrait un œuf. La ponte est sa raison de vivre,
@@ -53,6 +54,10 @@ $etPuisQuoiEncore = 1; // Paramètre à partir duquel la chose peut analyser ses
  */
 
 $params = array_merge($_GET, $_POST);
+
+/*- Application --------------------------------------------------------------*/
+
+$GLOBALS['poule'] = new Poule;
 
 /*- Recherche du compositeur -------------------------------------------------*/
 
