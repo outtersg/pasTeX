@@ -138,17 +138,7 @@ function pasTeX_unionPeriodes($dates)
 
 function pasTeX_descriptionPeriode($d, $f, $mode = 0)
 {
-	$null = array(-1, -1, -1, -1, -1, -1);
-	$d == $null && $d = null;
-	$f == $null && $f = null;
-	if($d === null)
-		if($f === null)
-			return null;
-		else
-			return 'jusqu\'à'; /* À FAIRE: jusqu'au éventuellement */
-	if($f === null)
-		return 'depuis '.periode_affDate($d, $mode);
-	return periode_aff($d, $f, $mode);
+	return $GLOBALS['poule']->dateur->affPériode($d, $f, $mode);
 }
 
 function pasTeX_durée($d, $f)

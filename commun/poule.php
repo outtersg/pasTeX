@@ -21,10 +21,15 @@
  * SOFTWARE.
  */
 
+require_once dirname(__FILE__).'/dateur.php';
+
+use \eu_outters_guillaume\PasTeX\Dateur;
+
 class Poule
 {
 	public function __construct()
 	{
+		$this->dateur = new Dateur;
 	}
 }
 
