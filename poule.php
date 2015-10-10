@@ -164,7 +164,10 @@ else
 	$paramsDecompo = $decompo->analyserChamps(@$paramsDecompo);
 
 if($paramsCompo !== null)
+{
 	$donnees = $compo->composer($paramsCompo);
+	$GLOBALS['poule']->cv($donnees);
+}
 if(!$pondérera)
 	$zorglub->trier = false;
 	$zorglub->pondérer($donnees);

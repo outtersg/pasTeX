@@ -31,6 +31,15 @@ class Poule
 	{
 		$this->dateur = new Dateur;
 	}
+	
+	/**
+	 * Indique à la Poule sur quel CV travailler.
+	 */
+	public function cv($cv)
+	{
+		$langue = isset($cv->langue) ? $cv->langue : null;
+		$this->dateur->langue = $langue;
+	}
 }
 
 ?>
