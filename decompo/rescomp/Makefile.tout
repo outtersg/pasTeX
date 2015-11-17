@@ -1,0 +1,4 @@
+tout.bis: tout
+
+include Makefile.deps
+include Makefile
