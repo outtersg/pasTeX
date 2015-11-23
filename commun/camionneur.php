@@ -66,6 +66,11 @@ class Camionneur
 		return implode($jointure, $contenu);
 	}
 	
+	public function opnot($x)
+	{
+		return !$x;
+	}
+	
 	public function opand($x, $y)
 	{
 		return $x && $y;

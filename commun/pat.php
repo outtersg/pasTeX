@@ -127,6 +127,10 @@ function _compile($découpage, $i)
 					case '=':
 						$courantProfond[0] = '=';
 						break;
+					case '!':
+						$courantProfond[0] = 'op1';
+						$courantProfond[1] = 'opnot';
+						break;
 					case '!=':
 					case 'or':
 					case 'and':
@@ -239,6 +243,15 @@ function _compile($découpage, $i)
 				array_splice($compil, $j - 1, 3, array($opé));
 			}
 			--$j;
+		}
+		else if($compil[$j][0] == 'op1')
+		{
+			if($j == count($compil) - 1 || !in_array($compil[$j + 1][0], array('id', 'f', '"')))
+				throw new Exception("Opérateur unaire précédant ".($j == count($compil) - 1 ? "du vide" : serialize($compil[$j + 1])));
+			$opé = $compil[$j];
+			$opé[0] = 'f'; // Un opérateur binaire, c'est une fonction.
+			$opé[2] = array($compil[$j + 1]);
+			array_splice($compil, $j, 2, array($opé));
 		}
 	
 	// Concaténation.
