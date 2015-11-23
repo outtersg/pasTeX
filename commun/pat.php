@@ -138,6 +138,9 @@ function _compile($découpage, $i)
 					case 'and':
 					case '+':
 					case '-':
+					case '>':
+					case '*':
+					case '/':
 						$corr = array
 						(
 							'!=' => 'diff',
@@ -327,6 +330,14 @@ function rends($bloc, $racine = true, $défaut = 'null')
 	switch($bloc[0])
 	{
 		case 'f':
+			switch($bloc[1])
+			{
+				case 'op*':
+				case 'op/':
+				case 'op>':
+					$r .= rends($bloc[2][0]).' '.substr($bloc[1], 2).' '.rends($bloc[2][1]);
+					break 2;
+			}
 			if($racine && $bloc[1] == 'isset')
 				$r .= 'isset(';
 			else
