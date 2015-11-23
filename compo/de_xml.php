@@ -26,6 +26,8 @@ require_once('util/xml/chargeur.php');
 require_once('util/xml/compo.php');
 require_once('util/xml/composimple.php');
 
+require_once 'util/htopus.php';
+
 class Donnee extends Compo
 {
 	
@@ -96,19 +98,70 @@ class Connaissance
 
 class CompoAProprietes extends Compo
 {
+	protected function _filsDodo($nom, $doc)
+	{
+		if(isset($doc['attrs']['class']))
+			$classe = $doc['attrs']['class'];
+		else if(isset($doc['fils']))
+		{
+			$classe =
+				function_exists('mb_strtoupper')
+				? mb_strtoupper(mb_substr($nom, 0, 1)).mb_substr($nom, 1)
+				: ucfirst($nom);
+			if(!class_exists($classe))
+				$classe = 'CompoAProprietes';
+		}
+		else
+			$classe = null;
+		if($classe)
+		{
+			$doc['_dodo'] = true;
+			$this->classes[$nom] = $classe;
+			$this->args[$nom] = $doc;
+		}
+		if(isset($doc['attrs']['maxOccurs']) && $doc['attrs']['maxOccurs'] == 'unbounded')
+			$this->enTableau[$nom] = true;
+		else
+			$this->normal[$nom] = true;
+		if(isset($doc['attrs']['pre']) && $doc['attrs']['pre'])
+			$this->_preservatifsEspaces[$nom] = true;
+	}
+	
+	protected function _configurerDodo($doc)
+	{
+		if(isset($doc['fils']))
+			foreach($doc['fils'] as $nom => $fils)
+				$this->_filsDodo($nom, $fils);
+				
+	}
+	
+	protected function _configurer($conf)
+	{
+		$d = new Dodo;
+		$this->_configurerDodo($d->lire($conf));
+	}
+	
 	/* Prend en paramètre ses deux listes de propriétés (cf. la variable
 	 * membre associée pour une description); les tableaux sont de la forme
 	 * propriété => nom de classe, pour que la propriété soit gérée par la
 	 * classe ainsi nommée, propriété => 1 pour qu'elle soit gérée par une
 	 * classe du même nom qu'elle (la propriété XML), ou n'importe quoi d'autre
-	 * pour qu'elle soit gérée comme une Donnee. */
-	function CompoAProprietes($proprietesNormales, $proprietesEnTableau)
+	 * pour qu'elle soit gérée comme une Donnee. Le CompoAProprietes se charge
+	 * lui-même du texte hors propriété. */
+	function CompoAProprietes($proprietesNormales, $proprietesEnTableau = null)
 	{
 		$this->données = new Donnee();
-		$this->enTableau = $proprietesEnTableau;
-		$this->normal = $proprietesNormales;
 		$this->classes = array();
 		$this->_preservatifsEspaces = array();
+		
+		if(is_string($proprietesNormales))
+			$this->_configurer($proprietesNormales);
+		else if(isset($proprietesNormales['_dodo']))
+			$this->_configurerDodo($proprietesNormales);
+		else
+		{
+			$this->enTableau = $proprietesEnTableau;
+			$this->normal = $proprietesNormales;
 		foreach(array_merge($proprietesNormales, $proprietesEnTableau) as $cle => $valeur)
 			if(is_string($valeur))
 				$this->classes[$cle] = $valeur;
@@ -116,6 +169,7 @@ class CompoAProprietes extends Compo
 				$this->classes[$cle] = $cle;
 			else if($valeur == -1)
 				$this->_preservatifsEspaces[$cle] = 1;
+		}
 	}
 
 	function &entrerDans(&$depuis, $nom, $attributs)
@@ -132,6 +186,9 @@ class CompoAProprietes extends Compo
 		if(array_key_exists($nom, $this->classes))
 		{
 			$nouveau = $this->classes[$nom];
+			if(isset($this->args[$nom]))
+				$nouveau = new $nouveau($this->args[$nom]);
+			else
 			$nouveau = new $nouveau();
 			$donnee = &$nouveau->données;
 			if(isset($attributs['p']))
