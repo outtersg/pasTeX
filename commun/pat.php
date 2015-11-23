@@ -360,7 +360,7 @@ function rends($bloc, $racine = true, $défaut = 'null')
 					$r .= 'if('.rends($bloc[2][0]).') {';
 					break;
 				case 'for':
-					$r .= 'foreach('.rends($bloc[2][2]).' as $'.$bloc[2][0][1].' => $'.$bloc[2][1][1].') {';
+					$r .= 'foreach('.rends($bloc[2][2], true, 'array()').' as $'.$bloc[2][0][1].' => $'.$bloc[2][1][1].') {';
 					break;
 				case 'endfor':
 				case 'endif':
