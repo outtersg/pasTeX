@@ -79,6 +79,25 @@ class Zorglub
 		return $années;
 	}
 	
+	/*- Tri sur date ---------------------------------------------------------*/
+	
+	public function trierParFin($cv)
+	{
+		foreach($cv->expérience->projet as $numProjet => $projet)
+		{
+			$projet->_min = null;
+			$projet->_max = null;
+			foreach($projet->date as $moment)
+			{
+				if($projet->_min > ($date = Date::calculerAvecIndefinis(Date::mef($moment->d), false)) || !isset($projet->_min))
+					$projet->_min = $date;
+				if($projet->_max < ($date = Date::calculerAvecIndefinis(Date::mef($moment->f), true)) || !isset($projet->_max))
+					$projet->_max = $date;
+			}
+		}
+		uasort($cv->expérience->projet, function($a, $b) {  return $b->_max - $a->_max ? $b->_max - $a->_max : $b->_min - $a->_min; });
+	}
+	
 	/*- Niveau ---------------------------------------------------------------*/
 	
 	/* À FAIRE: les technos devraient voir leur niveau baisser au fil des années où elles sont délaissées (date dernière mention dans un projet). */
