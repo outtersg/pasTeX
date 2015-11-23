@@ -327,6 +327,23 @@ class De_Xml extends CompoAProprietes
 				connaissances:
 				intérêts:
 				loisirs:
+				salaire maxOccurs=unbounded attrs=[type]:
+					brut
+					mois
+					variable
+					participation
+					avantages
+				contraintes:
+					préavis
+					mobilité
+				motivation maxOccurs=unbounded:
+					conservation
+					évolution
+					poste
+					métier
+					entreprise
+					lacunes
+					pourquoi
 TERMINE
 		);
 
