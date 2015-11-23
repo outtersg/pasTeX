@@ -65,6 +65,11 @@ class Camionneur
 				unset($contenu[$n]);
 		return implode($jointure, $contenu);
 	}
+
+	public function round($x)
+	{
+		return round($x);
+	}
 	
 	public function opnot($x)
 	{
