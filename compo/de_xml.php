@@ -315,7 +315,21 @@ class De_Xml extends CompoAProprietes
 {
 	function De_Xml()
 	{
-		$this->CompoAProprietes(array('perso' => 1, 'formation' => 1, 'expérience' => 1, 'langues' => 1, 'connaissances' => 1, 'intérêts' => 1, 'loisirs' => 1), array('titre' => 0, 'intro' => 0));
+		parent::__construct
+		(
+			<<<TERMINE
+				perso:
+				titre maxOccurs=unbounded
+				intro maxOccurs=unbounded
+				formation:
+				expérience:
+				langues:
+				connaissances:
+				intérêts:
+				loisirs:
+TERMINE
+		);
+
 		$this->chargeur = new Chargeur();
 	}
 	
