@@ -103,6 +103,14 @@ class Rescomp
 	
 	protected function _préparer(& $données)
 	{
+		if(isset($données->salaire))
+		{
+			$total = 0;
+			foreach(array('brut', 'variable', 'intéressement', 'participation') as $somme)
+				if(isset($données->salaire->$somme))
+					$total += $données->salaire->$somme;
+			$données->salaire->total = $total;
+		}
 	}
 }
 
