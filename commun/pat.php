@@ -119,6 +119,7 @@ function _compile($découpage, $i)
 					case 'for':
 					case 'endfor':
 					case 'if':
+					case 'else':
 					case 'endif':
 						$courantProfond[0] = 'struct';
 						//if(isset($compil[0][2])) // À faire après.
@@ -313,6 +314,7 @@ function _compileStruct($compil, $i)
 			array_splice($compil, $i + 1, 1);
 			break;
 		case 'endfor':
+		case 'else':
 		case 'endif':
 			break;
 	}
@@ -361,6 +363,9 @@ function rends($bloc, $racine = true, $défaut = 'null')
 					break;
 				case 'for':
 					$r .= 'foreach('.rends($bloc[2][2], true, 'array()').' as $'.$bloc[2][0][1].' => $'.$bloc[2][1][1].') {';
+					break;
+				case 'else':
+					$r .= '} else {';
 					break;
 				case 'endfor':
 				case 'endif':
