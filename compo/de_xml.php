@@ -129,6 +129,7 @@ class CompoAProprietes extends Compo
 	
 	protected function _configurerDodo($doc)
 	{
+		$this->enTableau = array();
 		if(isset($doc['fils']))
 			foreach($doc['fils'] as $nom => $fils)
 				$this->_filsDodo($nom, $fils);
@@ -148,7 +149,7 @@ class CompoAProprietes extends Compo
 	 * classe du même nom qu'elle (la propriété XML), ou n'importe quoi d'autre
 	 * pour qu'elle soit gérée comme une Donnee. Le CompoAProprietes se charge
 	 * lui-même du texte hors propriété. */
-	function CompoAProprietes($proprietesNormales, $proprietesEnTableau = null)
+	function CompoAProprietes($proprietesNormales, $proprietesEnTableau = array())
 	{
 		$this->données = new Donnee();
 		$this->classes = array();
