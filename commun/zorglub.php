@@ -165,6 +165,11 @@ class Zorglub
 			foreach($cv->intérêts->domaine as $domaine)
 				isset($domaine->techno) && $this->_pondérerTableau($domaine->techno);
 		}
+		if(isset($cv->motivation))
+		{
+			$this->_pondérerTableau($cv->motivation);
+			$cv->motivation = $cv->motivation[0];
+		}
 		
 		/*- Calcul du poids des technos -*/
 		
