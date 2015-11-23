@@ -319,7 +319,7 @@ function _compileStruct($compil, $i)
 	return array($i, $compil);
 }
 
-function rends($bloc, $racine = true)
+function rends($bloc, $racine = true, $défaut = 'null')
 {
 	$r = '';
 	switch($bloc[0])
@@ -340,7 +340,8 @@ function rends($bloc, $racine = true)
 			if(isset($bloc[2]))
 				$rendu .= rends($bloc[2], false);
 			if($racine && substr($rendu, 0, 1) == '$')
-				$rendu = '(isset('.$rendu.') ? '.$rendu.' : null)';
+				$rendu = '(isset('.$rendu.') ? '.$rendu.' : '.$défaut.')';
+				//$rendu = '(isset('.$rendu.') ? '.$rendu.' : (isset() && is_object() && method_exists() ? '.$rendu.'() : null))';
 			$r .= $rendu;
 			break;
 		case '"':
@@ -376,11 +377,11 @@ function rends($bloc, $racine = true)
 	return $r;
 }
 
-function rendsIsSet($bloc)
+function rendsIsSet($bloc, $défaut = 'null')
 {
 	$r = rends($bloc);
 	if($bloc[0] == 'id')
-		$r = 'isset('.$r.') ? '.$r.' : null';
+		$r = 'isset('.$r.') ? '.$r.' : '.$défaut;
 	return $r;
 }
 
