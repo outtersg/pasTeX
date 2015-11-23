@@ -328,6 +328,14 @@ class De_Xml extends CompoAProprietes
 				connaissances:
 				intérêts:
 				loisirs:
+				référence maxOccurs=unbounded:
+					prénom
+					nom
+					rôle
+					société
+					mél
+					tél
+					recommandation
 				salaire maxOccurs=unbounded attrs=[type]:
 					brut
 					mois
@@ -335,8 +343,11 @@ class De_Xml extends CompoAProprietes
 					participation
 					avantages
 				contraintes:
+					nonConcurrence
 					préavis
-					mobilité
+					mobilité:
+						régions
+						pays
 				motivation maxOccurs=unbounded:
 					conservation
 					évolution
@@ -345,6 +356,16 @@ class De_Xml extends CompoAProprietes
 					entreprise
 					lacunes
 					pourquoi
+				personnalité:
+					carrière:
+						dominante
+						morale maxOccurs=unbounded
+						marquant maxOccurs=unbounded
+					qualité maxOccurs=unbounded
+					défaut maxOccurs=unbounded:
+						défaut
+						palliatif
+					métaphore class=Métaphore maxOccurs=unbounded
 TERMINE
 		);
 
@@ -449,7 +470,59 @@ class Domaine extends CompoAProprietes { function Domaine() { $this->CompoAPropr
 class Loisirs extends CompoAProprietes { function Loisirs() { $this->CompoAProprietes(array(), array('activité' => 0)); } }
 class Formation extends CompoAProprietes { function Formation() { $this->CompoAProprietes(array(), array('études' => 'CompoADates')); } }
 class Expérience extends CompoAProprietes { function Expérience() { $this->CompoAProprietes(array(), array('projet' => 1)); } }
-class Projet extends CompoADatesRepetees { function Projet() { $this->CompoADatesRepetees(array(), array('rôle' => 0, 'lieu' => 0, 'techno' => -1, 'société' => 0, 'tâche' => -1)); } }
+class Projet extends CompoADatesRepetees { function Projet() { $this->CompoADatesRepetees(array('cadre' => 0, 'typologie' => 0, 'départ' => 0), array('rôle' => 0, 'lieu' => 0, 'techno' => -1, 'société' => 0, 'tâche' => -1, 'morale' => 0, 'marquant' => 0, 'bilan' => 1, 'réal' => 0, 'référence' => 1)); } }
+class Bilan extends CompoAProprietes
+{
+	public function __construct() { $this->CompoAProprietes(array()); }
+
+	public function entrerAvecAttrs($attributs)
+	{
+		$this->données = new Texte;
+		if(isset($attributs['s']))
+			$this->données->signe = $attributs['s'];
+		return $this->données;
+	}
+
+	public function contenuPour(& $objet, $contenu)
+	{
+		$this->données->texte .= $contenu;
+	}
+}
+class Métaphore extends CompoAProprietes
+{
+	public function __construct() { $this->CompoAProprietes(array()); }
+
+	public function entrerAvecAttrs($attributs)
+	{
+		$this->données = new Texte;
+		if(isset($attributs['comme']))
+			$this->données->comme = $attributs['comme'];
+		return $this->données;
+	}
+
+	public function contenuPour(& $objet, $contenu)
+	{
+		$this->données->texte .= $contenu;
+	}
+}
+class Référence extends CompoAProprietes
+{
+	public function __construct()
+	{
+		parent::__construct
+		(
+			<<<TERMINE
+			prénom
+			nom
+			rôle
+			société
+			mél
+			tél
+			recommandation
+TERMINE
+		);
+	}
+}
 class Langues extends CompoAProprietes { function Langues() { $this->CompoAProprietes(array(), array('langue' => 1)); } }
 class Langue extends CompoAProprietes { function Langue() { $this->CompoAProprietes(array(), array('certificat' => 0)); } }
 class Connaissances extends CompoAProprietes { function Connaissances() { $this->CompoAProprietes(array(), array('catégorie' => 1)); } }
