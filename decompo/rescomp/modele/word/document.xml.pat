@@ -863,6 +863,223 @@
 				<w:t>Compétences</w:t>
 			</w:r>
 		</w:p>
+		<w:p>
+			<w:pPr>
+				<w:pStyle w:val="Normal"/>
+				<w:rPr>
+					<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri"/>
+					<w:b/>
+					<w:b/>
+					<w:bCs/>
+					<w:smallCaps/>
+					<w:color w:val="0000FF"/>
+					<w:sz w:val="20"/>
+					<w:szCs w:val="20"/>
+				</w:rPr>
+			</w:pPr>
+			<w:r>
+				<w:rPr>
+					<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri"/>
+					<w:b/>
+					<w:bCs/>
+					<w:smallCaps/>
+					<w:color w:val="0000FF"/>
+					<w:sz w:val="20"/>
+					<w:szCs w:val="20"/>
+				</w:rPr>
+				<mc:AlternateContent>
+					<mc:Choice Requires="wps">
+						<w:drawing>
+							<wp:anchor behindDoc="0" distT="0" distB="0" distL="114300" distR="114300" simplePos="0" locked="0" layoutInCell="1" allowOverlap="1" relativeHeight="63">
+								<wp:simplePos x="0" y="0"/>
+								<wp:positionH relativeFrom="column">
+									<wp:posOffset>4683125</wp:posOffset>
+								</wp:positionH>
+								<wp:positionV relativeFrom="paragraph">
+									<wp:posOffset>121920</wp:posOffset>
+								</wp:positionV>
+								<wp:extent cx="1260000" cy="{{ round(1260000 * perso.photo.h / perso.photo.l) }}"/>
+								<wp:effectExtent l="6350" t="7620" r="10160" b="10795"/>
+								<wp:wrapNone/>
+								<wp:docPr id="5" name="Text Box 7"/>
+								<a:graphic xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main">
+									<a:graphicData uri="http://schemas.microsoft.com/office/word/2010/wordprocessingShape">
+										<wps:wsp>
+											<wps:cNvSpPr/>
+											<wps:spPr>
+												<a:xfrm>
+													<a:off x="0" y="0"/>
+													<a:ext cx="1260000" cy="{{ round(1260000 * perso.photo.h / perso.photo.l) }}"/>
+												</a:xfrm>
+												<a:prstGeom prst="rect">
+													<a:avLst></a:avLst>
+												</a:prstGeom>
+												<a:solidFill>
+													<a:srgbClr val="ffffff"/>
+												</a:solidFill>
+												<a:ln w="9360">
+													<a:solidFill>
+														<a:srgbClr val="000000"/>
+													</a:solidFill>
+													<a:miter/>
+												</a:ln>
+											</wps:spPr>
+											<wps:style>
+												<a:lnRef idx="0"/>
+												<a:fillRef idx="0"/>
+												<a:effectRef idx="0"/>
+												<a:fontRef idx="minor"/>
+											</wps:style>
+											<wps:txbx>
+												<w:txbxContent>
+													<w:p>
+														<w:pPr>
+															<w:pStyle w:val="Contenudecadre"/>
+															<w:jc w:val="center"/>
+															<w:rPr></w:rPr>
+														</w:pPr>
+														<w:r>
+															<w:rPr>
+																<w:rFonts w:cs="Calibri" w:ascii="Calibri" w:hAnsi="Calibri"/>
+																<w:b/>
+																<w:color w:val="7F7F7F"/>
+																<w:sz w:val="20"/>
+																<w:szCs w:val="20"/>
+															</w:rPr>
+															<w:drawing>
+																<wp:inline distT="0" distB="0" distL="0" distR="0">
+																<wp:extent cx="1260000" cy="{{ round(1260000 * perso.photo.h / perso.photo.l) }}"/>
+																<wp:effectExtent l="0" t="0" r="0" b="0"/>
+																<wp:docPr id="7" name="Image1" descr=""></wp:docPr>
+																<wp:cNvGraphicFramePr>
+																	<a:graphicFrameLocks xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main" noChangeAspect="1"/>
+																</wp:cNvGraphicFramePr>
+																<a:graphic xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main">
+																<a:graphicData uri="http://schemas.openxmlformats.org/drawingml/2006/picture">
+																<pic:pic xmlns:pic="http://schemas.openxmlformats.org/drawingml/2006/picture">
+																<pic:nvPicPr>
+																	<pic:cNvPr id="7" name="Image1" descr=""></pic:cNvPr>
+																		<pic:cNvPicPr>
+																			<a:picLocks noChangeAspect="1" noChangeArrowheads="1"/>
+																		</pic:cNvPicPr>
+																	</pic:nvPicPr>
+																<pic:blipFill>
+																<a:blip r:embed="photo"/>
+																<a:stretch>
+																<a:fillRect/>
+																</a:stretch>
+																</pic:blipFill>
+																<pic:spPr bwMode="auto">
+																<a:xfrm>
+																<a:off x="0" y="0"/>
+																<a:ext cx="1260000" cy="{{ round(1260000 * perso.photo.h / perso.photo.l) }}"/>
+																</a:xfrm>
+																<a:prstGeom prst="rect">
+																<a:avLst/>
+																</a:prstGeom>
+																<a:noFill/>
+																<a:ln w="9525">
+																<a:noFill/>
+																<a:miter lim="800000"/>
+																<a:headEnd/>
+																<a:tailEnd/>
+																</a:ln>
+																</pic:spPr>
+																</pic:pic>
+																</a:graphicData>
+																</a:graphic>
+																</wp:inline>
+															</w:drawing>
+														</w:r>
+													</w:p>
+												</w:txbxContent>
+											</wps:txbx>
+											<wps:bodyPr>
+												<a:noAutofit/>
+											</wps:bodyPr>
+										</wps:wsp>
+									</a:graphicData>
+								</a:graphic>
+							</wp:anchor>
+						</w:drawing>
+					</mc:Choice>
+					<mc:Fallback>
+						<w:pict>
+							<v:rect id="shape_0" ID="Text Box 7" fillcolor="white" stroked="t" style="position:absolute;margin-left:368.75pt;margin-top:9.6pt;width:99.15pt;height:127.5pt">
+								<w10:wrap type="square"/>
+								<v:fill type="solid" color2="black" o:detectmouseclick="t"/>
+								<v:stroke color="black" weight="9360" joinstyle="miter" endcap="flat"/>
+								<v:textbox>
+									<w:txbxContent>
+										<w:p>
+											<w:pPr>
+												<w:pStyle w:val="Contenudecadre"/>
+												<w:jc w:val="center"/>
+												<w:rPr></w:rPr>
+											</w:pPr>
+											<w:r>
+												<w:rPr>
+													<w:rFonts w:cs="Calibri" w:ascii="Calibri" w:hAnsi="Calibri"/>
+													<w:b/>
+													<w:color w:val="7F7F7F"/>
+													<w:sz w:val="20"/>
+													<w:szCs w:val="20"/>
+												</w:rPr>
+												<w:drawing>
+													<wp:inline distT="0" distB="0" distL="0" distR="0">
+														<wp:extent cx="1260000" cy="{{ round(1260000 * perso.photo.h / perso.photo.l) }}"/>
+														<wp:effectExtent l="0" t="0" r="0" b="0"/>
+														<wp:docPr id="8" name="Image1" descr=""></wp:docPr>
+														<wp:cNvGraphicFramePr>
+															<a:graphicFrameLocks xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main" noChangeAspect="1"/>
+														</wp:cNvGraphicFramePr>
+														<a:graphic xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main">
+															<a:graphicData uri="http://schemas.openxmlformats.org/drawingml/2006/picture">
+																<pic:pic xmlns:pic="http://schemas.openxmlformats.org/drawingml/2006/picture">
+																<pic:nvPicPr>
+																<pic:cNvPr id="8" name="Image1" descr=""></pic:cNvPr>
+																<pic:cNvPicPr>
+																<a:picLocks noChangeAspect="1" noChangeArrowheads="1"/>
+																</pic:cNvPicPr>
+																</pic:nvPicPr>
+																<pic:blipFill>
+																<a:blip r:embed="photo"/>
+																<a:stretch>
+																<a:fillRect/>
+																</a:stretch>
+																</pic:blipFill>
+																<pic:spPr bwMode="auto">
+																<a:xfrm>
+																<a:off x="0" y="0"/>
+																<a:ext cx="1260000" cy="{{ round(1260000 * perso.photo.h / perso.photo.l) }}"/>
+																</a:xfrm>
+																<a:prstGeom prst="rect">
+																<a:avLst/>
+																</a:prstGeom>
+																<a:noFill/>
+																<a:ln w="9525">
+																<a:noFill/>
+																<a:miter lim="800000"/>
+																<a:headEnd/>
+																<a:tailEnd/>
+																</a:ln>
+																</pic:spPr>
+																</pic:pic>
+															</a:graphicData>
+														</a:graphic>
+													</wp:inline>
+												</w:drawing>
+											</w:r>
+										</w:p>
+									</w:txbxContent>
+								</v:textbox>
+							</v:rect>
+						</w:pict>
+					</mc:Fallback>
+				</mc:AlternateContent>
+			</w:r>
+		</w:p>
+		<!--
 		<w:p w:rsidR="00DA7864" w:rsidRPr="008E56C2" w:rsidRDefault="0032044F" w:rsidP="00DA7864">
 			<w:pPr>
 				<w:rPr>
@@ -1004,6 +1221,7 @@
 				</mc:AlternateContent>
 			</w:r>
 		</w:p>
+		-->
 		<w:p w:rsidR="00DA7864" w:rsidRPr="00DA7864" w:rsidRDefault="00DA7864" w:rsidP="00DA7864">
 			<w:pPr>
 				<w:rPr>
@@ -1255,15 +1473,7 @@
 								<w:sz w:val="20"/>
 								<w:szCs w:val="20"/>
 							</w:rPr>
-							<w:t> :</w:t>
-						</w:r>
-						<w:r w:rsidR="002F2E15">
-							<w:rPr>
-								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
-								<w:sz w:val="20"/>
-								<w:szCs w:val="20"/>
-							</w:rPr>
-							<w:t xml:space="preserve"> </w:t>
+							<w:t xml:space="preserve"> : {{ perso.prénom }}</w:t>
 						</w:r>
 					</w:p>
 					<w:p w:rsidR="00BF1E21" w:rsidRPr="002F2E15" w:rsidRDefault="00BF1E21" w:rsidP="009B5D30">
@@ -1303,7 +1513,7 @@
 								<w:sz w:val="20"/>
 								<w:szCs w:val="20"/>
 							</w:rPr>
-							<w:t> :</w:t>
+							<w:t xml:space="preserve"> : {{ perso.nom }}</w:t>
 						</w:r>
 					</w:p>
 				</w:tc>
@@ -1326,7 +1536,7 @@
 								<w:sz w:val="20"/>
 								<w:szCs w:val="20"/>
 							</w:rPr>
-							<w:t>Age</w:t>
+							<w:t>Âge</w:t>
 						</w:r>
 						<w:r w:rsidRPr="002F2E15">
 							<w:rPr>
@@ -1334,7 +1544,7 @@
 								<w:sz w:val="20"/>
 								<w:szCs w:val="20"/>
 							</w:rPr>
-							<w:t> :</w:t>
+							<w:t xml:space="preserve"> : {{ perso.âge }} ans</w:t>
 						</w:r>
 					</w:p>
 				</w:tc>
@@ -1370,7 +1580,7 @@
 								<w:sz w:val="20"/>
 								<w:szCs w:val="20"/>
 							</w:rPr>
-							<w:t> :</w:t>
+							<w:t xml:space="preserve"> : {{ perso.ddn }}</w:t>
 						</w:r>
 					</w:p>
 					<w:p w:rsidR="00BF1E21" w:rsidRPr="002F2E15" w:rsidRDefault="00BF1E21" w:rsidP="009B5D30">
@@ -1410,7 +1620,7 @@
 								<w:sz w:val="20"/>
 								<w:szCs w:val="20"/>
 							</w:rPr>
-							<w:t> :</w:t>
+							<w:t xml:space="preserve"> : Saint-Cloud (92)</w:t>
 						</w:r>
 					</w:p>
 				</w:tc>
@@ -1441,7 +1651,7 @@
 								<w:sz w:val="20"/>
 								<w:szCs w:val="20"/>
 							</w:rPr>
-							<w:t> :</w:t>
+							<w:t xml:space="preserve"> : France</w:t>
 						</w:r>
 					</w:p>
 				</w:tc>
@@ -1477,7 +1687,7 @@
 								<w:sz w:val="20"/>
 								<w:szCs w:val="20"/>
 							</w:rPr>
-							<w:t> :</w:t>
+							<w:t xml:space="preserve"> : marié</w:t>
 						</w:r>
 					</w:p>
 					<w:p w:rsidR="00BF1E21" w:rsidRPr="002F2E15" w:rsidRDefault="00BF1E21" w:rsidP="009B5D30">
@@ -1517,7 +1727,7 @@
 								<w:sz w:val="20"/>
 								<w:szCs w:val="20"/>
 							</w:rPr>
-							<w:t> :</w:t>
+							<w:t xml:space="preserve"> : Professeur des Écoles</w:t>
 						</w:r>
 					</w:p>
 				</w:tc>
@@ -1548,7 +1758,7 @@
 								<w:sz w:val="20"/>
 								<w:szCs w:val="20"/>
 							</w:rPr>
-							<w:t> :</w:t>
+							<w:t xml:space="preserve"> : 2</w:t>
 						</w:r>
 					</w:p>
 				</w:tc>
@@ -1628,6 +1838,14 @@
 								<w:szCs w:val="20"/>
 							</w:rPr>
 						</w:pPr>
+						<w:r>
+							<w:rPr>
+								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
+								<w:sz w:val="20"/>
+								<w:szCs w:val="20"/>
+							</w:rPr>
+							<w:t xml:space="preserve">24, rue Victor Hugo - 92120 Montrouge</w:t>
+						</w:r>
 					</w:p>
 				</w:tc>
 			</w:tr>
@@ -1659,15 +1877,7 @@
 								<w:sz w:val="20"/>
 								<w:szCs w:val="20"/>
 							</w:rPr>
-							<w:t> :</w:t>
-						</w:r>
-						<w:r w:rsidR="008E56C2" w:rsidRPr="002F2E15">
-							<w:rPr>
-								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
-								<w:sz w:val="20"/>
-								<w:szCs w:val="20"/>
-							</w:rPr>
-							<w:t xml:space="preserve"> </w:t>
+							<w:t xml:space="preserve"> : {{ perso.mél }}</w:t>
 						</w:r>
 					</w:p>
 				</w:tc>
@@ -1776,7 +1986,7 @@
 								<w:sz w:val="20"/>
 								<w:szCs w:val="20"/>
 							</w:rPr>
-							<w:t> :</w:t>
+							<w:t xml:space="preserve"> : {{ perso.tél }}</w:t>
 						</w:r>
 					</w:p>
 					<w:p w:rsidR="00BF1E21" w:rsidRPr="002F2E15" w:rsidRDefault="00BF1E21" w:rsidP="009B5D30">
@@ -2032,7 +2242,7 @@
 								<w:sz w:val="20"/>
 								<w:szCs w:val="20"/>
 							</w:rPr>
-							<w:t>Ecole et lieu</w:t>
+							<w:t>École et lieu</w:t>
 						</w:r>
 					</w:p>
 				</w:tc>
@@ -2081,6 +2291,14 @@
 								<w:szCs w:val="20"/>
 							</w:rPr>
 						</w:pPr>
+						<w:r>
+							<w:rPr>
+								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
+								<w:sz w:val="20"/>
+								<w:szCs w:val="20"/>
+							</w:rPr>
+							<w:t>2001</w:t>
+						</w:r>
 					</w:p>
 				</w:tc>
 				<w:tc>
@@ -2096,6 +2314,14 @@
 								<w:szCs w:val="20"/>
 							</w:rPr>
 						</w:pPr>
+						<w:r>
+							<w:rPr>
+								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
+								<w:sz w:val="20"/>
+								<w:szCs w:val="20"/>
+							</w:rPr>
+							<w:t>Ingénieur</w:t>
+						</w:r>
 					</w:p>
 				</w:tc>
 				<w:tc>
@@ -2111,6 +2337,14 @@
 								<w:szCs w:val="20"/>
 							</w:rPr>
 						</w:pPr>
+						<w:r>
+							<w:rPr>
+								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
+								<w:sz w:val="20"/>
+								<w:szCs w:val="20"/>
+							</w:rPr>
+							<w:t>majeure Informatique</w:t>
+						</w:r>
 					</w:p>
 				</w:tc>
 				<w:tc>
@@ -2128,6 +2362,14 @@
 								<w:szCs w:val="20"/>
 							</w:rPr>
 						</w:pPr>
+						<w:r>
+							<w:rPr>
+								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
+								<w:sz w:val="20"/>
+								<w:szCs w:val="20"/>
+							</w:rPr>
+							<w:t>ESIEE Paris (Noisy-le-Grand, 93)</w:t>
+						</w:r>
 					</w:p>
 				</w:tc>
 				<w:tc>
@@ -2178,6 +2420,7 @@
 									<w:checkBox>
 										<w:sizeAuto/>
 										<w:default w:val="0"/>
+										<w:checked/>
 									</w:checkBox>
 								</w:ffData>
 							</w:fldChar>
@@ -2292,6 +2535,14 @@
 								<w:szCs w:val="20"/>
 							</w:rPr>
 						</w:pPr>
+						<w:r>
+							<w:rPr>
+								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
+								<w:sz w:val="20"/>
+								<w:szCs w:val="20"/>
+							</w:rPr>
+							<w:t>1996</w:t>
+						</w:r>
 					</w:p>
 				</w:tc>
 				<w:tc>
@@ -2307,6 +2558,14 @@
 								<w:szCs w:val="20"/>
 							</w:rPr>
 						</w:pPr>
+						<w:r>
+							<w:rPr>
+								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
+								<w:sz w:val="20"/>
+								<w:szCs w:val="20"/>
+							</w:rPr>
+							<w:t>Baccalauréat</w:t>
+						</w:r>
 					</w:p>
 				</w:tc>
 				<w:tc>
@@ -2322,6 +2581,14 @@
 								<w:szCs w:val="20"/>
 							</w:rPr>
 						</w:pPr>
+						<w:r>
+							<w:rPr>
+								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
+								<w:sz w:val="20"/>
+								<w:szCs w:val="20"/>
+							</w:rPr>
+							<w:t>S option maths</w:t>
+						</w:r>
 					</w:p>
 				</w:tc>
 				<w:tc>
@@ -2340,6 +2607,14 @@
 								<w:szCs w:val="20"/>
 							</w:rPr>
 						</w:pPr>
+						<w:r>
+							<w:rPr>
+								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
+								<w:sz w:val="20"/>
+								<w:szCs w:val="20"/>
+							</w:rPr>
+							<w:t>Saint-Jean-de-Béthune (Versailles, 78)</w:t>
+						</w:r>
 					</w:p>
 				</w:tc>
 			</w:tr>
@@ -2559,7 +2834,7 @@
 								<w:sz w:val="20"/>
 								<w:szCs w:val="20"/>
 							</w:rPr>
-							<w:t>Ecrit*</w:t>
+							<w:t>Écrit*</w:t>
 						</w:r>
 					</w:p>
 				</w:tc>
@@ -2614,6 +2889,14 @@
 								<w:szCs w:val="20"/>
 							</w:rPr>
 						</w:pPr>
+						<w:r>
+							<w:rPr>
+								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
+								<w:sz w:val="20"/>
+								<w:szCs w:val="20"/>
+							</w:rPr>
+							<w:t>Anglais</w:t>
+						</w:r>
 					</w:p>
 				</w:tc>
 				<w:tc>
@@ -2635,6 +2918,14 @@
 								<w:szCs w:val="20"/>
 							</w:rPr>
 						</w:pPr>
+						<w:r>
+							<w:rPr>
+								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
+								<w:sz w:val="20"/>
+								<w:szCs w:val="20"/>
+							</w:rPr>
+							<w:t>A</w:t>
+						</w:r>
 					</w:p>
 				</w:tc>
 				<w:tc>
@@ -2656,6 +2947,14 @@
 								<w:szCs w:val="20"/>
 							</w:rPr>
 						</w:pPr>
+						<w:r>
+							<w:rPr>
+								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
+								<w:sz w:val="20"/>
+								<w:szCs w:val="20"/>
+							</w:rPr>
+							<w:t>A</w:t>
+						</w:r>
 					</w:p>
 				</w:tc>
 				<w:tc>
@@ -2677,6 +2976,14 @@
 								<w:szCs w:val="20"/>
 							</w:rPr>
 						</w:pPr>
+						<w:r>
+							<w:rPr>
+								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
+								<w:sz w:val="20"/>
+								<w:szCs w:val="20"/>
+							</w:rPr>
+							<w:t>A</w:t>
+						</w:r>
 					</w:p>
 				</w:tc>
 			</w:tr>
@@ -2700,6 +3007,14 @@
 								<w:szCs w:val="20"/>
 							</w:rPr>
 						</w:pPr>
+						<w:r>
+							<w:rPr>
+								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
+								<w:sz w:val="20"/>
+								<w:szCs w:val="20"/>
+							</w:rPr>
+							<w:t>Allemand</w:t>
+						</w:r>
 					</w:p>
 				</w:tc>
 				<w:tc>
@@ -2721,6 +3036,14 @@
 								<w:szCs w:val="20"/>
 							</w:rPr>
 						</w:pPr>
+						<w:r>
+							<w:rPr>
+								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
+								<w:sz w:val="20"/>
+								<w:szCs w:val="20"/>
+							</w:rPr>
+							<w:t>B</w:t>
+						</w:r>
 					</w:p>
 				</w:tc>
 				<w:tc>
@@ -2742,6 +3065,14 @@
 								<w:szCs w:val="20"/>
 							</w:rPr>
 						</w:pPr>
+						<w:r>
+							<w:rPr>
+								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
+								<w:sz w:val="20"/>
+								<w:szCs w:val="20"/>
+							</w:rPr>
+							<w:t>B</w:t>
+						</w:r>
 					</w:p>
 				</w:tc>
 				<w:tc>
@@ -2763,6 +3094,14 @@
 								<w:szCs w:val="20"/>
 							</w:rPr>
 						</w:pPr>
+						<w:r>
+							<w:rPr>
+								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
+								<w:sz w:val="20"/>
+								<w:szCs w:val="20"/>
+							</w:rPr>
+							<w:t>C</w:t>
+						</w:r>
 					</w:p>
 				</w:tc>
 			</w:tr>
@@ -2995,15 +3334,7 @@
 					<w:sz w:val="20"/>
 					<w:szCs w:val="20"/>
 				</w:rPr>
-				<w:t>.........................................................................................................................................................................................................................................................................................................................................................................................................</w:t>
-			</w:r>
-			<w:r>
-				<w:rPr>
-					<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
-					<w:sz w:val="20"/>
-					<w:szCs w:val="20"/>
-				</w:rPr>
-				<w:t>............................................................................................................</w:t>
+				<w:t>Passionné avant tout d'informatique, j'apprécie de pouvoir mettre cet outil et mes compétences au service de ma famille, d'amis, de groupes paroissiaux. Mais j'aime aussi les rencontres, les échanges, les discussions, avec des personnes de tous horizons; rencontres naissant d'ailleurs parfois de ces coups de main improvisés, ou d'autres occasions (Conférences Saint Vincent de Paul). Parisien de fait, en carence de calme et de nature, je ne dédaigne pas un bon bol d'air frais (V.T.T., randonnée pyrénéenne, photographie amateur). Belles lettres et bons mots sont aussi pour moi une façon plus intellectuelle de prendre l'air. Enfin, deux petites filles sont venues récemment égayer notre foyer, et nous émerveillent chaque jour. Ce qui, il faut bien le dire, retient notre attention au détriment des activités précédemment citées…</w:t>
 			</w:r>
 		</w:p>
 		<w:p w:rsidR="00B54874" w:rsidRDefault="00B54874" w:rsidP="00B54874">
@@ -3126,7 +3457,7 @@
 								<w:sz w:val="20"/>
 								<w:szCs w:val="20"/>
 							</w:rPr>
-							<w:t>-</w:t>
+							<w:t>- optimiste et confiant</w:t>
 						</w:r>
 					</w:p>
 					<w:p w:rsidR="00657333" w:rsidRPr="008D4C02" w:rsidRDefault="00657333" w:rsidP="002679F3">
@@ -3151,6 +3482,14 @@
 								<w:szCs w:val="20"/>
 							</w:rPr>
 						</w:pPr>
+						<w:r>
+							<w:rPr>
+								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
+								<w:sz w:val="20"/>
+								<w:szCs w:val="20"/>
+							</w:rPr>
+							<w:t>emménageant dans un nouvel appartement, rien ne se fait aussi vite que voulu; qu'importe, en regardant la journée, on peut se dire que les choses ont avancé, cela suffit pour aller dans le bon sens</w:t>
+						</w:r>
 					</w:p>
 				</w:tc>
 			</w:tr>
@@ -3173,7 +3512,7 @@
 								<w:sz w:val="20"/>
 								<w:szCs w:val="20"/>
 							</w:rPr>
-							<w:t>-</w:t>
+							<w:t>- curieux</w:t>
 						</w:r>
 					</w:p>
 					<w:p w:rsidR="00657333" w:rsidRPr="008D4C02" w:rsidRDefault="00657333" w:rsidP="002679F3">
@@ -3198,6 +3537,14 @@
 								<w:szCs w:val="20"/>
 							</w:rPr>
 						</w:pPr>
+						<w:r w:rsidRPr="008D4C02">
+							<w:rPr>
+								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
+								<w:sz w:val="20"/>
+								<w:szCs w:val="20"/>
+							</w:rPr>
+							<w:t>que ce soit un achat de logiciel, de poêle à frire, de yaourt ou de voiture, je n'achète pas avant d'avoir lu moult comparatifs et compris les avantages et les inconvénients de chaque solution</w:t>
+						</w:r>
 					</w:p>
 				</w:tc>
 			</w:tr>
@@ -3220,7 +3567,7 @@
 								<w:sz w:val="20"/>
 								<w:szCs w:val="20"/>
 							</w:rPr>
-							<w:t>-</w:t>
+							<w:t>- bienveillant</w:t>
 						</w:r>
 					</w:p>
 					<w:p w:rsidR="00657333" w:rsidRPr="008D4C02" w:rsidRDefault="00657333" w:rsidP="002679F3">
@@ -3245,6 +3592,14 @@
 								<w:szCs w:val="20"/>
 							</w:rPr>
 						</w:pPr>
+						<w:r w:rsidRPr="008D4C02">
+							<w:rPr>
+								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
+								<w:sz w:val="20"/>
+								<w:szCs w:val="20"/>
+							</w:rPr>
+							<w:t>cette année, je n'ai pas souvenir d'un seul tort qui m'ait été causé directement avec une véritable intention de méchanceté; chacun a eu ses raisons que je peux comprendre ou du moins imaginer</w:t>
+						</w:r>
 					</w:p>
 				</w:tc>
 			</w:tr>
@@ -3306,6 +3661,7 @@
 					</w:p>
 				</w:tc>
 			</w:tr>
+			{% for qualité in personnalité.qualité %}
 			<w:tr w:rsidR="00045D38" w:rsidRPr="000944B1" w:rsidTr="00045D38">
 				<w:tc>
 					<w:tcPr>
@@ -3320,73 +3676,18 @@
 								<w:szCs w:val="20"/>
 							</w:rPr>
 						</w:pPr>
-					</w:p>
-					<w:p w:rsidR="00045D38" w:rsidRPr="008D4C02" w:rsidRDefault="00045D38" w:rsidP="00657333">
-						<w:pPr>
-							<w:jc w:val="center"/>
+						<w:r w:rsidRPr="008D4C02">
 							<w:rPr>
 								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
 								<w:sz w:val="20"/>
 								<w:szCs w:val="20"/>
 							</w:rPr>
-						</w:pPr>
+							<w:t>{{ qualité }}</w:t>
+						</w:r>
 					</w:p>
 				</w:tc>
 			</w:tr>
-			<w:tr w:rsidR="00045D38" w:rsidRPr="000944B1" w:rsidTr="00045D38">
-				<w:tc>
-					<w:tcPr>
-						<w:tcW w:w="8613" w:type="dxa"/>
-					</w:tcPr>
-					<w:p w:rsidR="00045D38" w:rsidRPr="008D4C02" w:rsidRDefault="00045D38" w:rsidP="00657333">
-						<w:pPr>
-							<w:jc w:val="center"/>
-							<w:rPr>
-								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
-								<w:sz w:val="20"/>
-								<w:szCs w:val="20"/>
-							</w:rPr>
-						</w:pPr>
-					</w:p>
-					<w:p w:rsidR="00045D38" w:rsidRPr="008D4C02" w:rsidRDefault="00045D38" w:rsidP="00657333">
-						<w:pPr>
-							<w:jc w:val="center"/>
-							<w:rPr>
-								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
-								<w:sz w:val="20"/>
-								<w:szCs w:val="20"/>
-							</w:rPr>
-						</w:pPr>
-					</w:p>
-				</w:tc>
-			</w:tr>
-			<w:tr w:rsidR="00045D38" w:rsidRPr="000944B1" w:rsidTr="00045D38">
-				<w:tc>
-					<w:tcPr>
-						<w:tcW w:w="8613" w:type="dxa"/>
-					</w:tcPr>
-					<w:p w:rsidR="00045D38" w:rsidRPr="008D4C02" w:rsidRDefault="00045D38" w:rsidP="00657333">
-						<w:pPr>
-							<w:jc w:val="center"/>
-							<w:rPr>
-								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
-								<w:sz w:val="20"/>
-								<w:szCs w:val="20"/>
-							</w:rPr>
-						</w:pPr>
-					</w:p>
-					<w:p w:rsidR="00045D38" w:rsidRPr="008D4C02" w:rsidRDefault="00045D38" w:rsidP="00657333">
-						<w:pPr>
-							<w:jc w:val="center"/>
-							<w:rPr>
-								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
-								<w:sz w:val="20"/>
-								<w:szCs w:val="20"/>
-							</w:rPr>
-						</w:pPr>
-					</w:p>
-				</w:tc>
-			</w:tr>
+			{% endfor %}
 		</w:tbl>
 		<w:p w:rsidR="00657333" w:rsidRPr="002F7A6A" w:rsidRDefault="00657333" w:rsidP="00BF1E21">
 			<w:pPr>
@@ -3474,6 +3775,7 @@
 					</w:p>
 				</w:tc>
 			</w:tr>
+			{% for défaut in personnalité.défaut %}
 			<w:tr w:rsidR="00045D38" w:rsidRPr="00243808" w:rsidTr="00045D38">
 				<w:tc>
 					<w:tcPr>
@@ -3488,6 +3790,14 @@
 								<w:szCs w:val="20"/>
 							</w:rPr>
 						</w:pPr>
+						<w:r>
+							<w:rPr>
+								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
+								<w:sz w:val="20"/>
+								<w:szCs w:val="20"/>
+							</w:rPr>
+							<w:t>{{ défaut.défaut }}</w:t>
+						</w:r>
 					</w:p>
 				</w:tc>
 				<w:tc>
@@ -3503,103 +3813,18 @@
 								<w:szCs w:val="20"/>
 							</w:rPr>
 						</w:pPr>
-					</w:p>
-					<w:p w:rsidR="00045D38" w:rsidRPr="008D4C02" w:rsidRDefault="00045D38" w:rsidP="00D4605B">
-						<w:pPr>
-							<w:jc w:val="center"/>
+						<w:r>
 							<w:rPr>
 								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
 								<w:sz w:val="20"/>
 								<w:szCs w:val="20"/>
 							</w:rPr>
-						</w:pPr>
+							<w:t>{{ défaut.palliatif }}</w:t>
+						</w:r>
 					</w:p>
 				</w:tc>
 			</w:tr>
-			<w:tr w:rsidR="00045D38" w:rsidRPr="00243808" w:rsidTr="00045D38">
-				<w:tc>
-					<w:tcPr>
-						<w:tcW w:w="3679" w:type="dxa"/>
-					</w:tcPr>
-					<w:p w:rsidR="00045D38" w:rsidRPr="008D4C02" w:rsidRDefault="00045D38" w:rsidP="00D4605B">
-						<w:pPr>
-							<w:jc w:val="center"/>
-							<w:rPr>
-								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
-								<w:sz w:val="20"/>
-								<w:szCs w:val="20"/>
-							</w:rPr>
-						</w:pPr>
-					</w:p>
-				</w:tc>
-				<w:tc>
-					<w:tcPr>
-						<w:tcW w:w="4934" w:type="dxa"/>
-					</w:tcPr>
-					<w:p w:rsidR="00045D38" w:rsidRPr="008D4C02" w:rsidRDefault="00045D38" w:rsidP="00D4605B">
-						<w:pPr>
-							<w:jc w:val="center"/>
-							<w:rPr>
-								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
-								<w:sz w:val="20"/>
-								<w:szCs w:val="20"/>
-							</w:rPr>
-						</w:pPr>
-					</w:p>
-					<w:p w:rsidR="00045D38" w:rsidRPr="008D4C02" w:rsidRDefault="00045D38" w:rsidP="00D4605B">
-						<w:pPr>
-							<w:jc w:val="center"/>
-							<w:rPr>
-								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
-								<w:sz w:val="20"/>
-								<w:szCs w:val="20"/>
-							</w:rPr>
-						</w:pPr>
-					</w:p>
-				</w:tc>
-			</w:tr>
-			<w:tr w:rsidR="00045D38" w:rsidRPr="00243808" w:rsidTr="00045D38">
-				<w:tc>
-					<w:tcPr>
-						<w:tcW w:w="3679" w:type="dxa"/>
-					</w:tcPr>
-					<w:p w:rsidR="00045D38" w:rsidRPr="008D4C02" w:rsidRDefault="00045D38" w:rsidP="00D4605B">
-						<w:pPr>
-							<w:jc w:val="center"/>
-							<w:rPr>
-								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
-								<w:sz w:val="20"/>
-								<w:szCs w:val="20"/>
-							</w:rPr>
-						</w:pPr>
-					</w:p>
-				</w:tc>
-				<w:tc>
-					<w:tcPr>
-						<w:tcW w:w="4934" w:type="dxa"/>
-					</w:tcPr>
-					<w:p w:rsidR="00045D38" w:rsidRPr="008D4C02" w:rsidRDefault="00045D38" w:rsidP="00D4605B">
-						<w:pPr>
-							<w:jc w:val="center"/>
-							<w:rPr>
-								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
-								<w:sz w:val="20"/>
-								<w:szCs w:val="20"/>
-							</w:rPr>
-						</w:pPr>
-					</w:p>
-					<w:p w:rsidR="00045D38" w:rsidRPr="008D4C02" w:rsidRDefault="00045D38" w:rsidP="00D4605B">
-						<w:pPr>
-							<w:jc w:val="center"/>
-							<w:rPr>
-								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
-								<w:sz w:val="20"/>
-								<w:szCs w:val="20"/>
-							</w:rPr>
-						</w:pPr>
-					</w:p>
-				</w:tc>
-			</w:tr>
+			{% endfor %}
 		</w:tbl>
 		<w:p w:rsidR="00657333" w:rsidRDefault="00657333" w:rsidP="00BF1E21">
 			<w:pPr>
@@ -3752,6 +3977,7 @@
 					</w:p>
 				</w:tc>
 			</w:tr>
+			{% for méta in personnalité.métaphores %}
 			<w:tr w:rsidR="00657333" w:rsidRPr="000944B1" w:rsidTr="003F3952">
 				<w:tc>
 					<w:tcPr>
@@ -3772,56 +3998,7 @@
 								<w:sz w:val="20"/>
 								<w:szCs w:val="20"/>
 							</w:rPr>
-							<w:t>Une musique</w:t>
-						</w:r>
-					</w:p>
-					<w:p w:rsidR="003F3952" w:rsidRPr="008D4C02" w:rsidRDefault="003F3952" w:rsidP="00657333">
-						<w:pPr>
-							<w:jc w:val="center"/>
-							<w:rPr>
-								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
-								<w:sz w:val="20"/>
-								<w:szCs w:val="20"/>
-							</w:rPr>
-						</w:pPr>
-					</w:p>
-				</w:tc>
-				<w:tc>
-					<w:tcPr>
-						<w:tcW w:w="6378" w:type="dxa"/>
-					</w:tcPr>
-					<w:p w:rsidR="00657333" w:rsidRPr="008D4C02" w:rsidRDefault="00657333" w:rsidP="00F63610">
-						<w:pPr>
-							<w:rPr>
-								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
-								<w:sz w:val="20"/>
-								<w:szCs w:val="20"/>
-							</w:rPr>
-						</w:pPr>
-					</w:p>
-				</w:tc>
-			</w:tr>
-			<w:tr w:rsidR="00657333" w:rsidRPr="000944B1" w:rsidTr="003F3952">
-				<w:tc>
-					<w:tcPr>
-						<w:tcW w:w="2235" w:type="dxa"/>
-					</w:tcPr>
-					<w:p w:rsidR="00657333" w:rsidRPr="008D4C02" w:rsidRDefault="00657333" w:rsidP="00657333">
-						<w:pPr>
-							<w:jc w:val="center"/>
-							<w:rPr>
-								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
-								<w:sz w:val="20"/>
-								<w:szCs w:val="20"/>
-							</w:rPr>
-						</w:pPr>
-						<w:r w:rsidRPr="008D4C02">
-							<w:rPr>
-								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
-								<w:sz w:val="20"/>
-								<w:szCs w:val="20"/>
-							</w:rPr>
-							<w:t>Un climat</w:t>
+							<w:t>{{ méta.libellé }}</w:t>
 						</w:r>
 					</w:p>
 					<w:p w:rsidR="003F3952" w:rsidRPr="008D4C02" w:rsidRDefault="003F3952" w:rsidP="00657333">
@@ -3848,159 +4025,18 @@
 								<w:szCs w:val="20"/>
 							</w:rPr>
 						</w:pPr>
-					</w:p>
-				</w:tc>
-			</w:tr>
-			<w:tr w:rsidR="00657333" w:rsidRPr="000944B1" w:rsidTr="003F3952">
-				<w:tc>
-					<w:tcPr>
-						<w:tcW w:w="2235" w:type="dxa"/>
-					</w:tcPr>
-					<w:p w:rsidR="00657333" w:rsidRPr="008D4C02" w:rsidRDefault="00657333" w:rsidP="00657333">
-						<w:pPr>
-							<w:jc w:val="center"/>
-							<w:rPr>
-								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
-								<w:sz w:val="20"/>
-								<w:szCs w:val="20"/>
-							</w:rPr>
-						</w:pPr>
 						<w:r w:rsidRPr="008D4C02">
 							<w:rPr>
 								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
 								<w:sz w:val="20"/>
 								<w:szCs w:val="20"/>
 							</w:rPr>
-							<w:t>Un véhicule</w:t>
+							<w:t>{{ méta }}</w:t>
 						</w:r>
-					</w:p>
-					<w:p w:rsidR="003F3952" w:rsidRPr="008D4C02" w:rsidRDefault="003F3952" w:rsidP="00657333">
-						<w:pPr>
-							<w:jc w:val="center"/>
-							<w:rPr>
-								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
-								<w:sz w:val="20"/>
-								<w:szCs w:val="20"/>
-							</w:rPr>
-						</w:pPr>
-					</w:p>
-				</w:tc>
-				<w:tc>
-					<w:tcPr>
-						<w:tcW w:w="6378" w:type="dxa"/>
-					</w:tcPr>
-					<w:p w:rsidR="00657333" w:rsidRPr="008D4C02" w:rsidRDefault="00657333" w:rsidP="00657333">
-						<w:pPr>
-							<w:jc w:val="center"/>
-							<w:rPr>
-								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
-								<w:sz w:val="20"/>
-								<w:szCs w:val="20"/>
-							</w:rPr>
-						</w:pPr>
 					</w:p>
 				</w:tc>
 			</w:tr>
-			<w:tr w:rsidR="00657333" w:rsidRPr="000944B1" w:rsidTr="003F3952">
-				<w:tc>
-					<w:tcPr>
-						<w:tcW w:w="2235" w:type="dxa"/>
-					</w:tcPr>
-					<w:p w:rsidR="00657333" w:rsidRPr="008D4C02" w:rsidRDefault="00657333" w:rsidP="00657333">
-						<w:pPr>
-							<w:jc w:val="center"/>
-							<w:rPr>
-								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
-								<w:sz w:val="20"/>
-								<w:szCs w:val="20"/>
-							</w:rPr>
-						</w:pPr>
-						<w:r w:rsidRPr="008D4C02">
-							<w:rPr>
-								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
-								<w:sz w:val="20"/>
-								<w:szCs w:val="20"/>
-							</w:rPr>
-							<w:t>Un plat</w:t>
-						</w:r>
-					</w:p>
-					<w:p w:rsidR="003F3952" w:rsidRPr="008D4C02" w:rsidRDefault="003F3952" w:rsidP="00657333">
-						<w:pPr>
-							<w:jc w:val="center"/>
-							<w:rPr>
-								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
-								<w:sz w:val="20"/>
-								<w:szCs w:val="20"/>
-							</w:rPr>
-						</w:pPr>
-					</w:p>
-				</w:tc>
-				<w:tc>
-					<w:tcPr>
-						<w:tcW w:w="6378" w:type="dxa"/>
-					</w:tcPr>
-					<w:p w:rsidR="00657333" w:rsidRPr="008D4C02" w:rsidRDefault="00657333" w:rsidP="00657333">
-						<w:pPr>
-							<w:jc w:val="center"/>
-							<w:rPr>
-								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
-								<w:sz w:val="20"/>
-								<w:szCs w:val="20"/>
-							</w:rPr>
-						</w:pPr>
-					</w:p>
-				</w:tc>
-			</w:tr>
-			<w:tr w:rsidR="00657333" w:rsidRPr="000944B1" w:rsidTr="003F3952">
-				<w:tc>
-					<w:tcPr>
-						<w:tcW w:w="2235" w:type="dxa"/>
-					</w:tcPr>
-					<w:p w:rsidR="00657333" w:rsidRPr="008D4C02" w:rsidRDefault="00657333" w:rsidP="00657333">
-						<w:pPr>
-							<w:jc w:val="center"/>
-							<w:rPr>
-								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
-								<w:sz w:val="20"/>
-								<w:szCs w:val="20"/>
-							</w:rPr>
-						</w:pPr>
-						<w:r w:rsidRPr="008D4C02">
-							<w:rPr>
-								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
-								<w:sz w:val="20"/>
-								<w:szCs w:val="20"/>
-							</w:rPr>
-							<w:t>Une couleur</w:t>
-						</w:r>
-					</w:p>
-					<w:p w:rsidR="003F3952" w:rsidRPr="008D4C02" w:rsidRDefault="003F3952" w:rsidP="00657333">
-						<w:pPr>
-							<w:jc w:val="center"/>
-							<w:rPr>
-								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
-								<w:sz w:val="20"/>
-								<w:szCs w:val="20"/>
-							</w:rPr>
-						</w:pPr>
-					</w:p>
-				</w:tc>
-				<w:tc>
-					<w:tcPr>
-						<w:tcW w:w="6378" w:type="dxa"/>
-					</w:tcPr>
-					<w:p w:rsidR="00657333" w:rsidRPr="008D4C02" w:rsidRDefault="00657333" w:rsidP="00657333">
-						<w:pPr>
-							<w:jc w:val="center"/>
-							<w:rPr>
-								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
-								<w:sz w:val="20"/>
-								<w:szCs w:val="20"/>
-							</w:rPr>
-						</w:pPr>
-					</w:p>
-				</w:tc>
-			</w:tr>
+			{% endfor %}
 		</w:tbl>
 		<w:p w:rsidR="00657333" w:rsidRPr="002F7A6A" w:rsidRDefault="00657333" w:rsidP="00ED492A">
 			<w:pPr>
@@ -4271,7 +4307,8 @@
 				<w:rPr>
 					<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
 				</w:rPr>
-				<w:t>.............................................................................................................</w:t>
+				<!-- À FAIRE: rendre tout ça générable -->
+				<w:t>Symfony 2 (4 ans), Zend Framework (4 ans), eZ publish (3 ans), jQuery (3 ans)</w:t>
 			</w:r>
 		</w:p>
 		<w:p w:rsidR="0080345A" w:rsidRDefault="0080345A" w:rsidP="007F503D">
@@ -4335,7 +4372,7 @@
 				<w:rPr>
 					<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
 				</w:rPr>
-				<w:t>.............................................................................................................</w:t>
+				<w:t>PHP (12 ans), SQL (12 ans), Java (2 ans), C (5 ans), C++ (2 ans), CSS (10 ans), sh / bash (20 ans), HTML (18 ans), JavaScript (8 ans), XML (5 ans)</w:t>
 			</w:r>
 		</w:p>
 		<w:p w:rsidR="0080345A" w:rsidRDefault="0080345A" w:rsidP="007F503D">
@@ -4398,7 +4435,7 @@
 				<w:rPr>
 					<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
 				</w:rPr>
-				<w:t>.............................................................................................................</w:t>
+				<w:t>FreeBSD (4 ans), Mac OS X (14 ans), Linux (10 ans)</w:t>
 			</w:r>
 		</w:p>
 		<w:p w:rsidR="0080345A" w:rsidRDefault="0080345A" w:rsidP="007F503D">
@@ -4453,7 +4490,7 @@
 				<w:rPr>
 					<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
 				</w:rPr>
-				<w:t>.............................................................................................................</w:t>
+				<w:t>développement sous Unix (gcc, gdb, make, etc.) (20 ans), Apache (13 ans), OpenSSH (10 ans), OpenSSL (3 ans), rsync (2 ans), PHPUnit (2 ans), Exim (3 ans), Subversion (10 ans), PCRE (8 ans), Jenkins (7 ans), nginx (1 an)</w:t>
 			</w:r>
 		</w:p>
 		<w:p w:rsidR="0080345A" w:rsidRDefault="0080345A" w:rsidP="007F503D">
@@ -4502,7 +4539,7 @@
 				<w:rPr>
 					<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
 				</w:rPr>
-				<w:t>.............................................................................................................</w:t>
+				<w:t>PostgreSQL (5 ans), MySQL (2 ans), Oracle (4 ans)</w:t>
 			</w:r>
 		</w:p>
 		<w:p w:rsidR="0080345A" w:rsidRDefault="0080345A" w:rsidP="007F503D">
@@ -4640,13 +4677,14 @@
 				<w:gridCol w:w="1526"/>
 				<w:gridCol w:w="567"/>
 			</w:tblGrid>
-			<w:tr w:rsidR="00F60FE3" w:rsidRPr="0054610C" w:rsidTr="0054610C">
+			{% for affConnaissance:ouiConnaissance in connaissances.demandées.0 %}
+			<w:tr w:rsidR="002625E1" w:rsidRPr="0054610C" w:rsidTr="0054610C">
 				<w:tc>
 					<w:tcPr>
 						<w:tcW w:w="1526" w:type="dxa"/>
 						<w:shd w:val="clear" w:color="auto" w:fill="BFBFBF"/>
 					</w:tcPr>
-					<w:p w:rsidR="00F60FE3" w:rsidRPr="0054610C" w:rsidRDefault="00F60FE3" w:rsidP="0054610C">
+					<w:p w:rsidR="002625E1" w:rsidRPr="0054610C" w:rsidRDefault="002625E1" w:rsidP="0054610C">
 						<w:pPr>
 							<w:rPr>
 								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
@@ -4660,7 +4698,7 @@
 								<w:sz w:val="20"/>
 								<w:szCs w:val="22"/>
 							</w:rPr>
-							<w:t>Symfony2</w:t>
+							<w:t>{{ affConnaissance }}</w:t>
 						</w:r>
 					</w:p>
 				</w:tc>
@@ -4669,7 +4707,7 @@
 						<w:tcW w:w="567" w:type="dxa"/>
 						<w:shd w:val="clear" w:color="auto" w:fill="FFFFFF"/>
 					</w:tcPr>
-					<w:p w:rsidR="00F60FE3" w:rsidRPr="0054610C" w:rsidRDefault="00F60FE3" w:rsidP="0054610C">
+					<w:p w:rsidR="002625E1" w:rsidRPr="0054610C" w:rsidRDefault="002625E1" w:rsidP="0054610C">
 						<w:pPr>
 							<w:rPr>
 								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
@@ -4677,289 +4715,18 @@
 								<w:szCs w:val="22"/>
 							</w:rPr>
 						</w:pPr>
-					</w:p>
-				</w:tc>
-			</w:tr>
-			<w:tr w:rsidR="00F60FE3" w:rsidRPr="0054610C" w:rsidTr="0054610C">
-				<w:tc>
-					<w:tcPr>
-						<w:tcW w:w="1526" w:type="dxa"/>
-						<w:shd w:val="clear" w:color="auto" w:fill="BFBFBF"/>
-					</w:tcPr>
-					<w:p w:rsidR="00F60FE3" w:rsidRPr="0054610C" w:rsidRDefault="00F60FE3" w:rsidP="0054610C">
-						<w:pPr>
+						<w:r>
 							<w:rPr>
 								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
 								<w:sz w:val="20"/>
 								<w:szCs w:val="22"/>
 							</w:rPr>
-						</w:pPr>
-						<w:r w:rsidRPr="0054610C">
-							<w:rPr>
-								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
-								<w:sz w:val="20"/>
-								<w:szCs w:val="22"/>
-							</w:rPr>
-							<w:t>Html5</w:t>
+							<w:t>{% if ouiConnaissance %}oui{% endif %}</w:t>
 						</w:r>
 					</w:p>
 				</w:tc>
-				<w:tc>
-					<w:tcPr>
-						<w:tcW w:w="567" w:type="dxa"/>
-						<w:shd w:val="clear" w:color="auto" w:fill="FFFFFF"/>
-					</w:tcPr>
-					<w:p w:rsidR="00F60FE3" w:rsidRPr="0054610C" w:rsidRDefault="00F60FE3" w:rsidP="0054610C">
-						<w:pPr>
-							<w:rPr>
-								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
-								<w:sz w:val="20"/>
-								<w:szCs w:val="22"/>
-							</w:rPr>
-						</w:pPr>
-					</w:p>
-				</w:tc>
 			</w:tr>
-			<w:tr w:rsidR="00F60FE3" w:rsidRPr="0054610C" w:rsidTr="0054610C">
-				<w:tc>
-					<w:tcPr>
-						<w:tcW w:w="1526" w:type="dxa"/>
-						<w:shd w:val="clear" w:color="auto" w:fill="BFBFBF"/>
-					</w:tcPr>
-					<w:p w:rsidR="00F60FE3" w:rsidRPr="0054610C" w:rsidRDefault="00F60FE3" w:rsidP="0054610C">
-						<w:pPr>
-							<w:rPr>
-								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
-								<w:sz w:val="20"/>
-								<w:szCs w:val="22"/>
-							</w:rPr>
-						</w:pPr>
-						<w:r w:rsidRPr="0054610C">
-							<w:rPr>
-								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
-								<w:sz w:val="20"/>
-								<w:szCs w:val="22"/>
-							</w:rPr>
-							<w:t xml:space="preserve"> CSS3</w:t>
-						</w:r>
-					</w:p>
-				</w:tc>
-				<w:tc>
-					<w:tcPr>
-						<w:tcW w:w="567" w:type="dxa"/>
-						<w:shd w:val="clear" w:color="auto" w:fill="FFFFFF"/>
-					</w:tcPr>
-					<w:p w:rsidR="00F60FE3" w:rsidRPr="0054610C" w:rsidRDefault="00F60FE3" w:rsidP="0054610C">
-						<w:pPr>
-							<w:rPr>
-								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
-								<w:sz w:val="20"/>
-								<w:szCs w:val="22"/>
-							</w:rPr>
-						</w:pPr>
-					</w:p>
-				</w:tc>
-			</w:tr>
-			<w:tr w:rsidR="00F60FE3" w:rsidRPr="0054610C" w:rsidTr="0054610C">
-				<w:tc>
-					<w:tcPr>
-						<w:tcW w:w="1526" w:type="dxa"/>
-						<w:shd w:val="clear" w:color="auto" w:fill="BFBFBF"/>
-					</w:tcPr>
-					<w:p w:rsidR="00F60FE3" w:rsidRPr="0054610C" w:rsidRDefault="00F60FE3" w:rsidP="0054610C">
-						<w:pPr>
-							<w:rPr>
-								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
-								<w:sz w:val="20"/>
-								<w:szCs w:val="22"/>
-							</w:rPr>
-						</w:pPr>
-						<w:r w:rsidRPr="0054610C">
-							<w:rPr>
-								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
-								<w:sz w:val="20"/>
-								<w:szCs w:val="22"/>
-							</w:rPr>
-							<w:t>Javascript</w:t>
-						</w:r>
-					</w:p>
-				</w:tc>
-				<w:tc>
-					<w:tcPr>
-						<w:tcW w:w="567" w:type="dxa"/>
-						<w:shd w:val="clear" w:color="auto" w:fill="FFFFFF"/>
-					</w:tcPr>
-					<w:p w:rsidR="00F60FE3" w:rsidRPr="0054610C" w:rsidRDefault="00F60FE3" w:rsidP="0054610C">
-						<w:pPr>
-							<w:rPr>
-								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
-								<w:sz w:val="20"/>
-								<w:szCs w:val="22"/>
-							</w:rPr>
-						</w:pPr>
-					</w:p>
-				</w:tc>
-			</w:tr>
-			<w:tr w:rsidR="00F60FE3" w:rsidRPr="0054610C" w:rsidTr="0054610C">
-				<w:tc>
-					<w:tcPr>
-						<w:tcW w:w="1526" w:type="dxa"/>
-						<w:shd w:val="clear" w:color="auto" w:fill="BFBFBF"/>
-					</w:tcPr>
-					<w:p w:rsidR="00F60FE3" w:rsidRPr="0054610C" w:rsidRDefault="002625E1" w:rsidP="0054610C">
-						<w:pPr>
-							<w:rPr>
-								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
-								<w:sz w:val="20"/>
-								<w:szCs w:val="22"/>
-							</w:rPr>
-						</w:pPr>
-						<w:r w:rsidRPr="0054610C">
-							<w:rPr>
-								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
-								<w:sz w:val="20"/>
-								<w:szCs w:val="22"/>
-							</w:rPr>
-							<w:t>JQuery</w:t>
-						</w:r>
-					</w:p>
-				</w:tc>
-				<w:tc>
-					<w:tcPr>
-						<w:tcW w:w="567" w:type="dxa"/>
-						<w:shd w:val="clear" w:color="auto" w:fill="FFFFFF"/>
-					</w:tcPr>
-					<w:p w:rsidR="00F60FE3" w:rsidRPr="0054610C" w:rsidRDefault="00F60FE3" w:rsidP="0054610C">
-						<w:pPr>
-							<w:rPr>
-								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
-								<w:sz w:val="20"/>
-								<w:szCs w:val="22"/>
-							</w:rPr>
-						</w:pPr>
-					</w:p>
-				</w:tc>
-			</w:tr>
-			<w:tr w:rsidR="00F60FE3" w:rsidRPr="0054610C" w:rsidTr="0054610C">
-				<w:tc>
-					<w:tcPr>
-						<w:tcW w:w="1526" w:type="dxa"/>
-						<w:shd w:val="clear" w:color="auto" w:fill="BFBFBF"/>
-					</w:tcPr>
-					<w:p w:rsidR="00F60FE3" w:rsidRPr="0054610C" w:rsidRDefault="002625E1" w:rsidP="0054610C">
-						<w:pPr>
-							<w:rPr>
-								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
-								<w:sz w:val="20"/>
-								<w:szCs w:val="22"/>
-							</w:rPr>
-						</w:pPr>
-						<w:r w:rsidRPr="0054610C">
-							<w:rPr>
-								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
-								<w:sz w:val="20"/>
-								<w:szCs w:val="22"/>
-							</w:rPr>
-							<w:t>Linux</w:t>
-						</w:r>
-					</w:p>
-				</w:tc>
-				<w:tc>
-					<w:tcPr>
-						<w:tcW w:w="567" w:type="dxa"/>
-						<w:shd w:val="clear" w:color="auto" w:fill="FFFFFF"/>
-					</w:tcPr>
-					<w:p w:rsidR="00F60FE3" w:rsidRPr="0054610C" w:rsidRDefault="00F60FE3" w:rsidP="0054610C">
-						<w:pPr>
-							<w:rPr>
-								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
-								<w:sz w:val="20"/>
-								<w:szCs w:val="22"/>
-							</w:rPr>
-						</w:pPr>
-					</w:p>
-				</w:tc>
-			</w:tr>
-			<w:tr w:rsidR="00F60FE3" w:rsidRPr="0054610C" w:rsidTr="0054610C">
-				<w:tc>
-					<w:tcPr>
-						<w:tcW w:w="1526" w:type="dxa"/>
-						<w:shd w:val="clear" w:color="auto" w:fill="BFBFBF"/>
-					</w:tcPr>
-					<w:p w:rsidR="00F60FE3" w:rsidRPr="0054610C" w:rsidRDefault="002625E1" w:rsidP="0054610C">
-						<w:pPr>
-							<w:rPr>
-								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
-								<w:sz w:val="20"/>
-								<w:szCs w:val="22"/>
-							</w:rPr>
-						</w:pPr>
-						<w:r w:rsidRPr="0054610C">
-							<w:rPr>
-								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
-								<w:sz w:val="20"/>
-								<w:szCs w:val="22"/>
-							</w:rPr>
-							<w:t>LESS</w:t>
-						</w:r>
-					</w:p>
-				</w:tc>
-				<w:tc>
-					<w:tcPr>
-						<w:tcW w:w="567" w:type="dxa"/>
-						<w:shd w:val="clear" w:color="auto" w:fill="FFFFFF"/>
-					</w:tcPr>
-					<w:p w:rsidR="00F60FE3" w:rsidRPr="0054610C" w:rsidRDefault="00F60FE3" w:rsidP="0054610C">
-						<w:pPr>
-							<w:rPr>
-								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
-								<w:sz w:val="20"/>
-								<w:szCs w:val="22"/>
-							</w:rPr>
-						</w:pPr>
-					</w:p>
-				</w:tc>
-			</w:tr>
-			<w:tr w:rsidR="00F60FE3" w:rsidRPr="0054610C" w:rsidTr="0054610C">
-				<w:tc>
-					<w:tcPr>
-						<w:tcW w:w="1526" w:type="dxa"/>
-						<w:shd w:val="clear" w:color="auto" w:fill="BFBFBF"/>
-					</w:tcPr>
-					<w:p w:rsidR="00F60FE3" w:rsidRPr="0054610C" w:rsidRDefault="002625E1" w:rsidP="0054610C">
-						<w:pPr>
-							<w:rPr>
-								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
-								<w:sz w:val="20"/>
-								<w:szCs w:val="22"/>
-							</w:rPr>
-						</w:pPr>
-						<w:r w:rsidRPr="0054610C">
-							<w:rPr>
-								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
-								<w:sz w:val="20"/>
-								<w:szCs w:val="22"/>
-							</w:rPr>
-							<w:t>Bootstrap</w:t>
-						</w:r>
-					</w:p>
-				</w:tc>
-				<w:tc>
-					<w:tcPr>
-						<w:tcW w:w="567" w:type="dxa"/>
-						<w:shd w:val="clear" w:color="auto" w:fill="FFFFFF"/>
-					</w:tcPr>
-					<w:p w:rsidR="00F60FE3" w:rsidRPr="0054610C" w:rsidRDefault="00F60FE3" w:rsidP="0054610C">
-						<w:pPr>
-							<w:rPr>
-								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
-								<w:sz w:val="20"/>
-								<w:szCs w:val="22"/>
-							</w:rPr>
-						</w:pPr>
-					</w:p>
-				</w:tc>
-			</w:tr>
+			{% endfor %}
 		</w:tbl>
 		<w:p w:rsidR="0054610C" w:rsidRPr="0054610C" w:rsidRDefault="0054610C" w:rsidP="0054610C">
 			<w:pPr>
@@ -4986,6 +4753,7 @@
 				<w:gridCol w:w="1526"/>
 				<w:gridCol w:w="567"/>
 			</w:tblGrid>
+			{% for affConnaissance:ouiConnaissance in connaissances.demandées.1 %}
 			<w:tr w:rsidR="002625E1" w:rsidRPr="0054610C" w:rsidTr="0054610C">
 				<w:tc>
 					<w:tcPr>
@@ -5006,7 +4774,7 @@
 								<w:sz w:val="20"/>
 								<w:szCs w:val="22"/>
 							</w:rPr>
-							<w:t>Nodejs</w:t>
+							<w:t>{{ affConnaissance }}</w:t>
 						</w:r>
 					</w:p>
 				</w:tc>
@@ -5023,289 +4791,18 @@
 								<w:szCs w:val="22"/>
 							</w:rPr>
 						</w:pPr>
-					</w:p>
-				</w:tc>
-			</w:tr>
-			<w:tr w:rsidR="002625E1" w:rsidRPr="0054610C" w:rsidTr="0054610C">
-				<w:tc>
-					<w:tcPr>
-						<w:tcW w:w="1526" w:type="dxa"/>
-						<w:shd w:val="clear" w:color="auto" w:fill="BFBFBF"/>
-					</w:tcPr>
-					<w:p w:rsidR="002625E1" w:rsidRPr="0054610C" w:rsidRDefault="002625E1" w:rsidP="0054610C">
-						<w:pPr>
+						<w:r>
 							<w:rPr>
 								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
 								<w:sz w:val="20"/>
 								<w:szCs w:val="22"/>
 							</w:rPr>
-						</w:pPr>
-						<w:r w:rsidRPr="0054610C">
-							<w:rPr>
-								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
-								<w:sz w:val="20"/>
-								<w:szCs w:val="22"/>
-							</w:rPr>
-							<w:t>Behat</w:t>
+							<w:t>{% if ouiConnaissance %}oui{% endif %}</w:t>
 						</w:r>
 					</w:p>
 				</w:tc>
-				<w:tc>
-					<w:tcPr>
-						<w:tcW w:w="567" w:type="dxa"/>
-						<w:shd w:val="clear" w:color="auto" w:fill="FFFFFF"/>
-					</w:tcPr>
-					<w:p w:rsidR="002625E1" w:rsidRPr="0054610C" w:rsidRDefault="002625E1" w:rsidP="0054610C">
-						<w:pPr>
-							<w:rPr>
-								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
-								<w:sz w:val="20"/>
-								<w:szCs w:val="22"/>
-							</w:rPr>
-						</w:pPr>
-					</w:p>
-				</w:tc>
 			</w:tr>
-			<w:tr w:rsidR="002625E1" w:rsidRPr="0054610C" w:rsidTr="0054610C">
-				<w:tc>
-					<w:tcPr>
-						<w:tcW w:w="1526" w:type="dxa"/>
-						<w:shd w:val="clear" w:color="auto" w:fill="BFBFBF"/>
-					</w:tcPr>
-					<w:p w:rsidR="002625E1" w:rsidRPr="0054610C" w:rsidRDefault="002625E1" w:rsidP="0054610C">
-						<w:pPr>
-							<w:rPr>
-								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
-								<w:sz w:val="20"/>
-								<w:szCs w:val="22"/>
-							</w:rPr>
-						</w:pPr>
-						<w:r w:rsidRPr="0054610C">
-							<w:rPr>
-								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
-								<w:sz w:val="20"/>
-								<w:szCs w:val="22"/>
-							</w:rPr>
-							<w:t>MYSQL</w:t>
-						</w:r>
-					</w:p>
-				</w:tc>
-				<w:tc>
-					<w:tcPr>
-						<w:tcW w:w="567" w:type="dxa"/>
-						<w:shd w:val="clear" w:color="auto" w:fill="FFFFFF"/>
-					</w:tcPr>
-					<w:p w:rsidR="002625E1" w:rsidRPr="0054610C" w:rsidRDefault="002625E1" w:rsidP="0054610C">
-						<w:pPr>
-							<w:rPr>
-								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
-								<w:sz w:val="20"/>
-								<w:szCs w:val="22"/>
-							</w:rPr>
-						</w:pPr>
-					</w:p>
-				</w:tc>
-			</w:tr>
-			<w:tr w:rsidR="002625E1" w:rsidRPr="0054610C" w:rsidTr="0054610C">
-				<w:tc>
-					<w:tcPr>
-						<w:tcW w:w="1526" w:type="dxa"/>
-						<w:shd w:val="clear" w:color="auto" w:fill="BFBFBF"/>
-					</w:tcPr>
-					<w:p w:rsidR="002625E1" w:rsidRPr="0054610C" w:rsidRDefault="002625E1" w:rsidP="0054610C">
-						<w:pPr>
-							<w:rPr>
-								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
-								<w:sz w:val="20"/>
-								<w:szCs w:val="22"/>
-							</w:rPr>
-						</w:pPr>
-						<w:r w:rsidRPr="0054610C">
-							<w:rPr>
-								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
-								<w:sz w:val="20"/>
-								<w:szCs w:val="22"/>
-							</w:rPr>
-							<w:t>VSphere</w:t>
-						</w:r>
-					</w:p>
-				</w:tc>
-				<w:tc>
-					<w:tcPr>
-						<w:tcW w:w="567" w:type="dxa"/>
-						<w:shd w:val="clear" w:color="auto" w:fill="FFFFFF"/>
-					</w:tcPr>
-					<w:p w:rsidR="002625E1" w:rsidRPr="0054610C" w:rsidRDefault="002625E1" w:rsidP="0054610C">
-						<w:pPr>
-							<w:rPr>
-								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
-								<w:sz w:val="20"/>
-								<w:szCs w:val="22"/>
-							</w:rPr>
-						</w:pPr>
-					</w:p>
-				</w:tc>
-			</w:tr>
-			<w:tr w:rsidR="002625E1" w:rsidRPr="0054610C" w:rsidTr="0054610C">
-				<w:tc>
-					<w:tcPr>
-						<w:tcW w:w="1526" w:type="dxa"/>
-						<w:shd w:val="clear" w:color="auto" w:fill="BFBFBF"/>
-					</w:tcPr>
-					<w:p w:rsidR="002625E1" w:rsidRPr="0054610C" w:rsidRDefault="002625E1" w:rsidP="0054610C">
-						<w:pPr>
-							<w:rPr>
-								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
-								<w:sz w:val="20"/>
-								<w:szCs w:val="22"/>
-							</w:rPr>
-						</w:pPr>
-						<w:r w:rsidRPr="0054610C">
-							<w:rPr>
-								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
-								<w:sz w:val="20"/>
-								<w:szCs w:val="22"/>
-							</w:rPr>
-							<w:t>Docker</w:t>
-						</w:r>
-					</w:p>
-				</w:tc>
-				<w:tc>
-					<w:tcPr>
-						<w:tcW w:w="567" w:type="dxa"/>
-						<w:shd w:val="clear" w:color="auto" w:fill="FFFFFF"/>
-					</w:tcPr>
-					<w:p w:rsidR="002625E1" w:rsidRPr="0054610C" w:rsidRDefault="002625E1" w:rsidP="0054610C">
-						<w:pPr>
-							<w:rPr>
-								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
-								<w:sz w:val="20"/>
-								<w:szCs w:val="22"/>
-							</w:rPr>
-						</w:pPr>
-					</w:p>
-				</w:tc>
-			</w:tr>
-			<w:tr w:rsidR="002625E1" w:rsidRPr="0054610C" w:rsidTr="0054610C">
-				<w:tc>
-					<w:tcPr>
-						<w:tcW w:w="1526" w:type="dxa"/>
-						<w:shd w:val="clear" w:color="auto" w:fill="BFBFBF"/>
-					</w:tcPr>
-					<w:p w:rsidR="002625E1" w:rsidRPr="0054610C" w:rsidRDefault="002625E1" w:rsidP="0054610C">
-						<w:pPr>
-							<w:rPr>
-								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
-								<w:sz w:val="20"/>
-								<w:szCs w:val="22"/>
-							</w:rPr>
-						</w:pPr>
-						<w:r w:rsidRPr="0054610C">
-							<w:rPr>
-								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
-								<w:sz w:val="20"/>
-								<w:szCs w:val="22"/>
-							</w:rPr>
-							<w:t>AngularJs</w:t>
-						</w:r>
-					</w:p>
-				</w:tc>
-				<w:tc>
-					<w:tcPr>
-						<w:tcW w:w="567" w:type="dxa"/>
-						<w:shd w:val="clear" w:color="auto" w:fill="FFFFFF"/>
-					</w:tcPr>
-					<w:p w:rsidR="002625E1" w:rsidRPr="0054610C" w:rsidRDefault="002625E1" w:rsidP="0054610C">
-						<w:pPr>
-							<w:rPr>
-								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
-								<w:sz w:val="20"/>
-								<w:szCs w:val="22"/>
-							</w:rPr>
-						</w:pPr>
-					</w:p>
-				</w:tc>
-			</w:tr>
-			<w:tr w:rsidR="002625E1" w:rsidRPr="0054610C" w:rsidTr="0054610C">
-				<w:tc>
-					<w:tcPr>
-						<w:tcW w:w="1526" w:type="dxa"/>
-						<w:shd w:val="clear" w:color="auto" w:fill="BFBFBF"/>
-					</w:tcPr>
-					<w:p w:rsidR="002625E1" w:rsidRPr="0054610C" w:rsidRDefault="002625E1" w:rsidP="0054610C">
-						<w:pPr>
-							<w:rPr>
-								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
-								<w:sz w:val="20"/>
-								<w:szCs w:val="22"/>
-							</w:rPr>
-						</w:pPr>
-						<w:r w:rsidRPr="0054610C">
-							<w:rPr>
-								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
-								<w:sz w:val="20"/>
-								<w:szCs w:val="22"/>
-							</w:rPr>
-							<w:t>ASP Classic</w:t>
-						</w:r>
-					</w:p>
-				</w:tc>
-				<w:tc>
-					<w:tcPr>
-						<w:tcW w:w="567" w:type="dxa"/>
-						<w:shd w:val="clear" w:color="auto" w:fill="FFFFFF"/>
-					</w:tcPr>
-					<w:p w:rsidR="002625E1" w:rsidRPr="0054610C" w:rsidRDefault="002625E1" w:rsidP="0054610C">
-						<w:pPr>
-							<w:rPr>
-								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
-								<w:sz w:val="20"/>
-								<w:szCs w:val="22"/>
-							</w:rPr>
-						</w:pPr>
-					</w:p>
-				</w:tc>
-			</w:tr>
-			<w:tr w:rsidR="002625E1" w:rsidRPr="0054610C" w:rsidTr="0054610C">
-				<w:tc>
-					<w:tcPr>
-						<w:tcW w:w="1526" w:type="dxa"/>
-						<w:shd w:val="clear" w:color="auto" w:fill="BFBFBF"/>
-					</w:tcPr>
-					<w:p w:rsidR="002625E1" w:rsidRPr="0054610C" w:rsidRDefault="002625E1" w:rsidP="0054610C">
-						<w:pPr>
-							<w:rPr>
-								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
-								<w:sz w:val="20"/>
-								<w:szCs w:val="22"/>
-							</w:rPr>
-						</w:pPr>
-						<w:r w:rsidRPr="0054610C">
-							<w:rPr>
-								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
-								<w:sz w:val="20"/>
-								<w:szCs w:val="22"/>
-							</w:rPr>
-							<w:t>API.net MVC</w:t>
-						</w:r>
-					</w:p>
-				</w:tc>
-				<w:tc>
-					<w:tcPr>
-						<w:tcW w:w="567" w:type="dxa"/>
-						<w:shd w:val="clear" w:color="auto" w:fill="FFFFFF"/>
-					</w:tcPr>
-					<w:p w:rsidR="002625E1" w:rsidRPr="0054610C" w:rsidRDefault="002625E1" w:rsidP="0054610C">
-						<w:pPr>
-							<w:rPr>
-								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
-								<w:sz w:val="20"/>
-								<w:szCs w:val="22"/>
-							</w:rPr>
-						</w:pPr>
-					</w:p>
-				</w:tc>
-			</w:tr>
+			{% endfor %}
 		</w:tbl>
 		<w:p w:rsidR="00F60FE3" w:rsidRDefault="00F60FE3" w:rsidP="006E4176">
 			<w:pPr>
@@ -5575,6 +5072,23 @@
 							<w:t> :</w:t>
 						</w:r>
 					</w:p>
+					<w:p w:rsidR="00A67FDE" w:rsidRPr="008D4C02" w:rsidRDefault="00A67FDE" w:rsidP="003C12B7">
+						<w:pPr>
+							<w:rPr>
+								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
+								<w:sz w:val="20"/>
+								<w:szCs w:val="20"/>
+							</w:rPr>
+						</w:pPr>
+						<w:r w:rsidRPr="002F2E15">
+							<w:rPr>
+								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
+								<w:sz w:val="20"/>
+								<w:szCs w:val="20"/>
+							</w:rPr>
+							<w:t>{{ boulot.mois.d }}</w:t>
+						</w:r>
+					</w:p>
 					<w:p w:rsidR="00A67FDE" w:rsidRPr="003473F9" w:rsidRDefault="00A67FDE" w:rsidP="003C12B7">
 						<w:pPr>
 							<w:rPr>
@@ -5606,7 +5120,7 @@
 								<w:sz w:val="20"/>
 								<w:szCs w:val="20"/>
 							</w:rPr>
-							<w:t xml:space="preserve"> </w:t>
+							<w:t xml:space="preserve">{{ boulot.mois.f }}</w:t>
 						</w:r>
 					</w:p>
 				</w:tc>
@@ -5631,9 +5145,31 @@
 								<w:sz w:val="16"/>
 								<w:szCs w:val="16"/>
 							</w:rPr>
-							<w:t xml:space="preserve">{{ boulot.société|last or "(indépendant)" }}{% if boulot.lieu %} ({{ boulot.lieu }}){% endif %} {{ boulot.domaine }}</w:t>
+							<w:t xml:space="preserve">{{ boulot.société|last or "(indépendant)" }}{% if boulot.lieu %} ({{ boulot.lieu }}){% endif %}</w:t>
 						</w:r>
 					</w:p>
+					{% if boulot.domaine %}
+						<w:p>
+							<w:pPr>
+								<w:jc w:val="center"/>
+								<w:rPr>
+									<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
+									<w:sz w:val="16"/>
+									<w:szCs w:val="16"/>
+									<w:i/>
+								</w:rPr>
+							</w:pPr>
+							<w:r>
+								<w:rPr>
+									<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
+									<w:sz w:val="16"/>
+									<w:szCs w:val="16"/>
+									<w:i/>
+								</w:rPr>
+								<w:t xml:space="preserve">{{ boulot.domaine }}</w:t>
+							</w:r>
+						</w:p>
+					{% endif %}
 				</w:tc>
 				<w:tc>
 					<w:tcPr>
@@ -5665,6 +5201,27 @@
 						<w:tcW w:w="3177" w:type="dxa"/>
 						<w:shd w:val="clear" w:color="auto" w:fill="BFBFBF"/>
 					</w:tcPr>
+					<w:p w:rsidR="00A67FDE" w:rsidRPr="00C444EF" w:rsidRDefault="00A67FDE" w:rsidP="000661FA">
+						<w:pPr>
+							<w:jc w:val="center"/>
+							<w:rPr>
+								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
+								<w:sz w:val="16"/>
+								<w:szCs w:val="16"/>
+								<w:highlight w:val="lightGray"/>
+								<w:i/>
+							</w:rPr>
+						</w:pPr>
+						<w:r w:rsidR="003473F9" w:rsidRPr="003473F9">
+							<w:rPr>
+								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
+								<w:sz w:val="16"/>
+								<w:szCs w:val="16"/>
+								<w:i/>
+							</w:rPr>
+							<w:t xml:space="preserve">{{ [ boulot.nom, boulot.description ]|": " }}</w:t>
+						</w:r>
+					</w:p>
 					<w:p w:rsidR="00A67FDE" w:rsidRPr="00C444EF" w:rsidRDefault="00A67FDE" w:rsidP="000661FA">
 						<w:pPr>
 							<w:jc w:val="center"/>
@@ -5757,15 +5314,7 @@
 								<w:sz w:val="16"/>
 								<w:szCs w:val="16"/>
 							</w:rPr>
-							<w:t>(création ou reprise</w:t>
-						</w:r>
-						<w:r w:rsidR="00EB1709" w:rsidRPr="00EB1709">
-							<w:rPr>
-								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
-								<w:sz w:val="16"/>
-								<w:szCs w:val="16"/>
-							</w:rPr>
-							<w:t>) </w:t>
+							<w:t>{{ boulot.cadre }}</w:t>
 						</w:r>
 					</w:p>
 					<w:p w:rsidR="00785EC4" w:rsidRPr="00785EC4" w:rsidRDefault="00785EC4" w:rsidP="00785EC4">
@@ -5819,31 +5368,7 @@
 								<w:sz w:val="16"/>
 								<w:szCs w:val="16"/>
 							</w:rPr>
-							<w:t>(travail équipe, chef de projet, le</w:t>
-						</w:r>
-						<w:r w:rsidR="00C31FD1">
-							<w:rPr>
-								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
-								<w:sz w:val="16"/>
-								<w:szCs w:val="16"/>
-							</w:rPr>
-							<w:t>a</w:t>
-						</w:r>
-						<w:r w:rsidRPr="003473F9">
-							<w:rPr>
-								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
-								<w:sz w:val="16"/>
-								<w:szCs w:val="16"/>
-							</w:rPr>
-							<w:t>d dev, dev autonome</w:t>
-						</w:r>
-						<w:r>
-							<w:rPr>
-								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
-								<w:sz w:val="16"/>
-								<w:szCs w:val="16"/>
-							</w:rPr>
-							<w:t>)</w:t>
+							<w:t>{{ boulot.typologie }}</w:t>
 						</w:r>
 					</w:p>
 				</w:tc>
@@ -5869,6 +5394,24 @@
 								<w:szCs w:val="16"/>
 							</w:rPr>
 							<w:t>Framework/Langages/outils utilisés :</w:t>
+						</w:r>
+					</w:p>
+					<w:p>
+						<w:pPr>
+							<w:jc w:val="center"/>
+							<w:rPr>
+								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
+								<w:sz w:val="16"/>
+								<w:szCs w:val="16"/>
+							</w:rPr>
+						</w:pPr>
+						<w:r w:rsidRPr="003473F9">
+							<w:rPr>
+								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
+								<w:sz w:val="16"/>
+								<w:szCs w:val="16"/>
+							</w:rPr>
+							<w:t xml:space="preserve">{{ boulot.techno|" • " }}</w:t>
 						</w:r>
 					</w:p>
 				</w:tc>
@@ -5898,24 +5441,7 @@
 								<w:sz w:val="20"/>
 								<w:szCs w:val="20"/>
 							</w:rPr>
-							<w:t>Ce que j’ai apprécié / pas apprécié dans ma fonction</w:t>
-						</w:r>
-						<w:r w:rsidR="000661FA">
-							<w:rPr>
-								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
-								<w:b/>
-								<w:sz w:val="20"/>
-								<w:szCs w:val="20"/>
-							</w:rPr>
-							<w:t> </w:t>
-						</w:r>
-						<w:r w:rsidR="000661FA" w:rsidRPr="000661FA">
-							<w:rPr>
-								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
-								<w:sz w:val="20"/>
-								<w:szCs w:val="20"/>
-							</w:rPr>
-							<w:t>:</w:t>
+							<w:t>Ce que j’ai apprécié / pas apprécié dans ma fonction :</w:t>
 						</w:r>
 					</w:p>
 					<w:p w:rsidR="000661FA" w:rsidRPr="000661FA" w:rsidRDefault="000661FA" w:rsidP="00C444EF">
@@ -5927,6 +5453,17 @@
 								<w:szCs w:val="16"/>
 							</w:rPr>
 						</w:pPr>
+						<w:r>
+							<w:rPr>
+								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
+								<w:sz w:val="16"/>
+								<w:szCs w:val="16"/>
+							</w:rPr>
+							{% for numBilan:bilan in boulot.bilan %}
+								{% if numBilan > 0 %}<w:br/>{% endif %}
+								<w:t>{{ bilan.signe }} {{ bilan }}</w:t>
+							{% endfor %}
+						</w:r>
 					</w:p>
 				</w:tc>
 				<w:tc>
@@ -5950,25 +5487,7 @@
 								<w:sz w:val="20"/>
 								<w:szCs w:val="20"/>
 							</w:rPr>
-							<w:t>Réalisations et performance</w:t>
-						</w:r>
-						<w:r w:rsidR="0080345A">
-							<w:rPr>
-								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
-								<w:b/>
-								<w:sz w:val="20"/>
-								<w:szCs w:val="20"/>
-							</w:rPr>
-							<w:t>s</w:t>
-						</w:r>
-						<w:r w:rsidR="00C31FD1">
-							<w:rPr>
-								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
-								<w:b/>
-								<w:sz w:val="20"/>
-								<w:szCs w:val="20"/>
-							</w:rPr>
-							<w:t> :</w:t>
+							<w:t>Réalisations et performances :</w:t>
 						</w:r>
 					</w:p>
 					<w:p w:rsidR="00C444EF" w:rsidRPr="003473F9" w:rsidRDefault="0080345A" w:rsidP="00C444EF">
@@ -5986,31 +5505,7 @@
 								<w:sz w:val="16"/>
 								<w:szCs w:val="20"/>
 							</w:rPr>
-							<w:t>(</w:t>
-						</w:r>
-						<w:r w:rsidR="003473F9" w:rsidRPr="003473F9">
-							<w:rPr>
-								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
-								<w:sz w:val="16"/>
-								<w:szCs w:val="20"/>
-							</w:rPr>
-							<w:t>exemple</w:t>
-						</w:r>
-						<w:r w:rsidR="00C31FD1">
-							<w:rPr>
-								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
-								<w:sz w:val="16"/>
-								<w:szCs w:val="20"/>
-							</w:rPr>
-							<w:t>s</w:t>
-						</w:r>
-						<w:r w:rsidR="003473F9" w:rsidRPr="003473F9">
-							<w:rPr>
-								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
-								<w:sz w:val="16"/>
-								<w:szCs w:val="20"/>
-							</w:rPr>
-							<w:t xml:space="preserve"> de sites et faits notoires que vous souhaitez mettre en avant) </w:t>
+							<w:t xml:space="preserve">{{ boulot.réal|" • " }}</w:t>
 						</w:r>
 					</w:p>
 					<w:p w:rsidR="00A67FDE" w:rsidRPr="000661FA" w:rsidRDefault="00A67FDE" w:rsidP="00A67FDE">
@@ -6064,6 +5559,24 @@
 								<w:szCs w:val="16"/>
 							</w:rPr>
 						</w:pPr>
+					</w:p>
+					<w:p>
+						<w:pPr>
+							<w:jc w:val="center"/>
+							<w:rPr>
+								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
+								<w:sz w:val="16"/>
+								<w:szCs w:val="16"/>
+							</w:rPr>
+						</w:pPr>
+						<w:r w:rsidR="000661FA" w:rsidRPr="000661FA">
+							<w:rPr>
+								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
+								<w:sz w:val="16"/>
+								<w:szCs w:val="16"/>
+							</w:rPr>
+							<w:t>{{ boulot.départ }}</w:t>
+						</w:r>
 					</w:p>
 				</w:tc>
 			</w:tr>
@@ -6492,6 +6005,8 @@
 					</w:p>
 				</w:tc>
 			</w:tr>
+			{% for projet in expérience.projet %}
+				{% for référence in projet.référence %}
 			<w:tr w:rsidR="00DA368E" w:rsidTr="00DA368E">
 				<w:tc>
 					<w:tcPr>
@@ -6499,12 +6014,23 @@
 					</w:tcPr>
 					<w:p w:rsidR="00DA368E" w:rsidRPr="008D4C02" w:rsidRDefault="00DA368E" w:rsidP="00DA368E">
 						<w:pPr>
+							<w:jc w:val="center"/>
 							<w:rPr>
 								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
 								<w:sz w:val="20"/>
 								<w:szCs w:val="20"/>
 							</w:rPr>
 						</w:pPr>
+						<w:r>
+							<w:jc w:val="center"/>
+							<w:rPr>
+								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
+								<w:b/>
+								<w:sz w:val="20"/>
+								<w:szCs w:val="20"/>
+							</w:rPr>
+							<w:t>{{ référence.nom }} / {{ référence.prénom }}</w:t>
+						</w:r>
 					</w:p>
 				</w:tc>
 				<w:tc>
@@ -6520,6 +6046,16 @@
 								<w:szCs w:val="20"/>
 							</w:rPr>
 						</w:pPr>
+						<w:r>
+							<w:jc w:val="center"/>
+							<w:rPr>
+								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
+								<w:b/>
+								<w:sz w:val="20"/>
+								<w:szCs w:val="20"/>
+							</w:rPr>
+							<w:t>{{ référence.rôle }} / {% if référence.société %}{{ référence.société }}{% else %}{{ projet.société|last }}{% endif %}</w:t>
+						</w:r>
 					</w:p>
 				</w:tc>
 				<w:tc>
@@ -6528,15 +6064,28 @@
 					</w:tcPr>
 					<w:p w:rsidR="00DA368E" w:rsidRPr="008D4C02" w:rsidRDefault="00DA368E" w:rsidP="00DA368E">
 						<w:pPr>
+							<w:jc w:val="center"/>
 							<w:rPr>
 								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
 								<w:sz w:val="20"/>
 								<w:szCs w:val="20"/>
 							</w:rPr>
 						</w:pPr>
+						<w:r>
+							<w:jc w:val="center"/>
+							<w:rPr>
+								<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
+								<w:b/>
+								<w:sz w:val="20"/>
+								<w:szCs w:val="20"/>
+							</w:rPr>
+							<w:t>{{ référence.tél }}</w:t>
+						</w:r>
 					</w:p>
 				</w:tc>
 			</w:tr>
+				{% endfor %}
+			{% endfor %}
 		</w:tbl>
 		<w:p w:rsidR="00DA368E" w:rsidRDefault="00DA368E" w:rsidP="00251FAD">
 			<w:pPr>
@@ -6599,6 +6148,7 @@
 				<w:t>Citez, ci-dessous, les expériences les plus marquantes de votre vie professionnelle (qu’elles soient positives ou négatives) et expliquez en quoi elles vous ont marqué :</w:t>
 			</w:r>
 		</w:p>
+		{% for marquant in personnalité.carrière.moraleEtFaitsMarquants %}
 		<w:p w:rsidR="00214233" w:rsidRPr="00704AF0" w:rsidRDefault="00214233" w:rsidP="001A2905">
 			<w:pPr>
 				<w:rPr>
@@ -6622,23 +6172,18 @@
 					<w:szCs w:val="20"/>
 				</w:rPr>
 			</w:pPr>
-		</w:p>
-		<w:p w:rsidR="005E339E" w:rsidRPr="008D4C02" w:rsidRDefault="005E339E" w:rsidP="001A2905">
-			<w:pPr>
-				<w:ind w:left="720"/>
+			<w:r>
 				<w:rPr>
 					<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
 					<w:sz w:val="20"/>
 					<w:szCs w:val="20"/>
 				</w:rPr>
-			</w:pPr>
+				<w:t>{{ marquant }}</w:t>
+			</w:r>
 		</w:p>
+		{% endfor %}
 		<w:p w:rsidR="001A2905" w:rsidRPr="008D4C02" w:rsidRDefault="001A2905" w:rsidP="000661FA">
 			<w:pPr>
-				<w:numPr>
-					<w:ilvl w:val="0"/>
-					<w:numId w:val="27"/>
-				</w:numPr>
 				<w:rPr>
 					<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
 					<w:sz w:val="20"/>
@@ -6721,14 +6266,6 @@
 					<w:szCs w:val="20"/>
 				</w:rPr>
 			</w:pPr>
-			<w:r w:rsidRPr="000661FA">
-				<w:rPr>
-					<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri"/>
-					<w:sz w:val="20"/>
-					<w:szCs w:val="20"/>
-				</w:rPr>
-				<w:tab/>
-			</w:r>
 			<w:r w:rsidRPr="000661FA">
 				<w:rPr>
 					<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri"/>
@@ -8332,8 +7869,15 @@
 					<w:sz w:val="16"/>
 					<w:szCs w:val="16"/>
 				</w:rPr>
-				<w:t xml:space="preserve">{{ contraintes.mobilité.pays }}</w:t>
 			</w:pPr>
+			<w:r>
+				<w:rPr>
+					<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri"/>
+					<w:sz w:val="16"/>
+					<w:szCs w:val="16"/>
+				</w:rPr>
+				<w:t xml:space="preserve">{{ contraintes.mobilité.pays }}</w:t>
+			</w:r>
 		</w:p>
 		<w:p w:rsidR="00251FAD" w:rsidRDefault="00251FAD" w:rsidP="003915A8">
 			<w:pPr>
@@ -8435,23 +7979,7 @@
 					<w:sz w:val="20"/>
 					<w:szCs w:val="20"/>
 				</w:rPr>
-				<w:tab/>
-			</w:r>
-			<w:r>
-				<w:rPr>
-					<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri"/>
-					<w:sz w:val="20"/>
-					<w:szCs w:val="20"/>
-				</w:rPr>
 				<w:t xml:space="preserve">{{ motivation.conservation }}</w:t>
-			</w:r>
-			<w:r>
-				<w:rPr>
-					<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri"/>
-					<w:sz w:val="20"/>
-					<w:szCs w:val="20"/>
-				</w:rPr>
-				<w:tab/>
 			</w:r>
 		</w:p>
 		<w:p w:rsidR="00251FAD" w:rsidRPr="000661FA" w:rsidRDefault="00251FAD" w:rsidP="00251FAD">
@@ -8511,23 +8039,7 @@
 					<w:sz w:val="20"/>
 					<w:szCs w:val="20"/>
 				</w:rPr>
-				<w:tab/>
-			</w:r>
-			<w:r>
-				<w:rPr>
-					<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri"/>
-					<w:sz w:val="20"/>
-					<w:szCs w:val="20"/>
-				</w:rPr>
-				<w:t xml:space="preserve">{{ motivation.évolution }}</w:t>
-			</w:r>
-			<w:r>
-				<w:rPr>
-					<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri"/>
-					<w:sz w:val="20"/>
-					<w:szCs w:val="20"/>
-				</w:rPr>
-				<w:tab/>
+				<w:t>{{ motivation.évolution }}</w:t>
 			</w:r>
 		</w:p>
 		<w:p w:rsidR="00251FAD" w:rsidRPr="000661FA" w:rsidRDefault="00251FAD" w:rsidP="00251FAD">
@@ -8551,7 +8063,7 @@
 				<w:t>Décrivez, en quelques lignes, le poste idéal pour vous :</w:t>
 			</w:r>
 		</w:p>
-		<w:p w:rsidR="00DA648B" w:rsidRPr="000661FA" w:rsidRDefault="00DA648B" w:rsidP="00DA648B">
+		<w:p w:rsidR="00B86F60" w:rsidRPr="000661FA" w:rsidRDefault="00DA648B" w:rsidP="00DA648B">
 			<w:pPr>
 				<w:tabs>
 					<w:tab w:val="left" w:leader="dot" w:pos="0"/>
@@ -8563,14 +8075,6 @@
 					<w:szCs w:val="20"/>
 				</w:rPr>
 			</w:pPr>
-			<w:r w:rsidRPr="000661FA">
-				<w:rPr>
-					<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri"/>
-					<w:sz w:val="20"/>
-					<w:szCs w:val="20"/>
-				</w:rPr>
-				<w:tab/>
-			</w:r>
 			<w:r>
 				<w:rPr>
 					<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri"/>
@@ -8578,14 +8082,6 @@
 					<w:szCs w:val="20"/>
 				</w:rPr>
 				<w:t xml:space="preserve">{{ motivation.poste }}</w:t>
-			</w:r>
-			<w:r>
-				<w:rPr>
-					<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri"/>
-					<w:sz w:val="20"/>
-					<w:szCs w:val="20"/>
-				</w:rPr>
-				<w:tab/>
 			</w:r>
 		</w:p>
 		<w:p w:rsidR="00251FAD" w:rsidRPr="000661FA" w:rsidRDefault="00251FAD" w:rsidP="00251FAD">
@@ -8627,23 +8123,7 @@
 					<w:sz w:val="20"/>
 					<w:szCs w:val="20"/>
 				</w:rPr>
-				<w:tab/>
-			</w:r>
-			<w:r>
-				<w:rPr>
-					<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri"/>
-					<w:sz w:val="20"/>
-					<w:szCs w:val="20"/>
-				</w:rPr>
 				<w:t xml:space="preserve">{{ motivation.entreprise }}</w:t>
-			</w:r>
-			<w:r>
-				<w:rPr>
-					<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri"/>
-					<w:sz w:val="20"/>
-					<w:szCs w:val="20"/>
-				</w:rPr>
-				<w:tab/>
 			</w:r>
 		</w:p>
 		<w:p w:rsidR="005541BE" w:rsidRPr="000661FA" w:rsidRDefault="00C632E4" w:rsidP="00B86F60">
@@ -8665,7 +8145,7 @@
 					<w:sz w:val="20"/>
 					<w:szCs w:val="20"/>
 				</w:rPr>
-				<w:t>Quelle est votre niveau de maitrise du métier concerné (produits et/ou services</w:t>
+				<w:t>Quel est votre niveau de maîtrise du métier concerné (produits et/ou services</w:t>
 			</w:r>
 			<w:r w:rsidR="005239D3" w:rsidRPr="004F6914">
 				<w:rPr>
@@ -8704,23 +8184,7 @@
 					<w:sz w:val="20"/>
 					<w:szCs w:val="20"/>
 				</w:rPr>
-				<w:tab/>
-			</w:r>
-			<w:r>
-				<w:rPr>
-					<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri"/>
-					<w:sz w:val="20"/>
-					<w:szCs w:val="20"/>
-				</w:rPr>
 				<w:t xml:space="preserve">{{ motivation.métier }}</w:t>
-			</w:r>
-			<w:r>
-				<w:rPr>
-					<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri"/>
-					<w:sz w:val="20"/>
-					<w:szCs w:val="20"/>
-				</w:rPr>
-				<w:tab/>
 			</w:r>
 		</w:p>
 		<w:p w:rsidR="00C632E4" w:rsidRPr="000661FA" w:rsidRDefault="005239D3" w:rsidP="00251FAD">
@@ -8822,23 +8286,7 @@
 					<w:sz w:val="20"/>
 					<w:szCs w:val="20"/>
 				</w:rPr>
-				<w:tab/>
-			</w:r>
-			<w:r>
-				<w:rPr>
-					<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri"/>
-					<w:sz w:val="20"/>
-					<w:szCs w:val="20"/>
-				</w:rPr>
 				<w:t xml:space="preserve">{{ motivation.lacunes }}</w:t>
-			</w:r>
-			<w:r>
-				<w:rPr>
-					<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri"/>
-					<w:sz w:val="20"/>
-					<w:szCs w:val="20"/>
-				</w:rPr>
-				<w:tab/>
 			</w:r>
 		</w:p>
 		<w:p w:rsidR="00C632E4" w:rsidRPr="000661FA" w:rsidRDefault="005239D3" w:rsidP="00251FAD">
@@ -8886,23 +8334,7 @@
 					<w:sz w:val="20"/>
 					<w:szCs w:val="20"/>
 				</w:rPr>
-				<w:tab/>
-			</w:r>
-			<w:r>
-				<w:rPr>
-					<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri"/>
-					<w:sz w:val="20"/>
-					<w:szCs w:val="20"/>
-				</w:rPr>
 				<w:t xml:space="preserve">{{ motivation.pourquoi }}</w:t>
-			</w:r>
-			<w:r>
-				<w:rPr>
-					<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri"/>
-					<w:sz w:val="20"/>
-					<w:szCs w:val="20"/>
-				</w:rPr>
-				<w:tab/>
 			</w:r>
 		</w:p>
 		<w:p w:rsidR="00DA648B" w:rsidRPr="00DA648B" w:rsidRDefault="00DA648B" w:rsidP="007C3F5A">
