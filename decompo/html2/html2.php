@@ -43,6 +43,9 @@ class Html2
 				case '+respire':
 					$retour['respire'] = true;
 					break;
+				case '--pages':
+					$prochains[] = 'maxPages';
+					break;
 				case 'pdf':
 					$prochains[] = 'pdf';
 					break;
@@ -405,6 +408,8 @@ $affs[] = implode(', ', $aff);
 	
 	function decomposer($params, $donnees)
 	{
+		/* À FAIRE: si maxPages est défini, chercher par dichotomie le bon paramétrage qui permet d'avoir au maximum maxPages pages. Mais pour le moment, faisons simple, on applique le maximum de réductions. */
+		
 		$finessePdf = 2.0; // L'épaisseur du border minimal sera déterminé par un savant calcul relatif à la page (quoique l'on fasse avec le viewport, phantom ramène la taille d'1px à quelque chose de relatif à la taille du papier, quand il imprime). En outre cela détermine aussi l'épaisseur minimale des traits (phantom arrondit au px le plus proche, pour les border. Donc un border de 0.1em pourra s'afficher comme 1px, et un border de 0.05em… disparaîtra complètement, arrondi à 0px). Du coup si l'on veut avoir du trait fin, il nous faut imprimer sur de l'A3 par exemple puis effectuer une réduction PDF.
 		
 		// Par défaut, le gabarit de page adopte la langue du CV.
@@ -470,6 +475,11 @@ $affs[] = implode(', ', $aff);
 		if(isset($params['pdf']))
 		{
 			$params = array('phantomjs', 'decompo/html2/pdf.js', '-'.$finessePdf, $cheminSortieHtml, $cheminSortieParchemin);
+			if(isset($this->params['maxPages']))
+			{
+				$params[] = '--reductions';
+				$params[] = '*';
+			}
 			$this->_sortiePhantom = null;
 			$phantom = new ProcessusLignes($params, array($this, 'lignePhantom'));
 			$phantom->attendre();
