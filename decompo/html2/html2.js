@@ -422,3 +422,65 @@ sur(window, 'load', function()
 	sur(document.getElementsByClassName('projets')[0], 'mouseover', LignesTemps.suivreSouris);
 	sur(document.getElementsByClassName('projets')[0], 'mouseout', LignesTemps.suivreSouris);
 });
+
+/*- Réductions pour affichage réduit -----------------------------------------*/
+
+var reduirePolices = function(facteur)
+{
+	var tailleP = window.getComputedStyle(document.querySelector('body'), null).getPropertyValue('font-size');
+	var boutsTaille = /^([0-9.]+)([a-z]*)$/.exec(tailleP);
+	document.querySelector('body').style.fontSize = (boutsTaille[1] * facteur)+boutsTaille[2];
+	// Et il faut recalculer pas mal de choses.
+	Parcours.calculer();
+	LignesTemps.calculer();
+};
+
+var reductions =
+{
+	police85: function()
+	{
+		reduirePolices(0.85);
+	},
+	// À FAIRE: repli de certaines expériences selon un seuil calculé en fonction du poids de l'expérience et de sa date de fin d'exercice (à poids égal, les plus récentes remontent plus). L'idée étant de pouvoir placer la barre pour avoir plus de la moitié des expériences affichées, ou plus du tiers, ou plus du quart, etc.
+	// À FAIRE: à l'intérieur d'une expérience, pouvoir masquer certaines tâches via un seuil. Si certaines passent en-dessous du seuil, …
+	repliConnaissances1: function()
+	{
+		var niveaux = document.querySelectorAll('.niveau');
+		var i;
+		for(i = 0; i < niveaux.length; ++i)
+			if(niveaux[i].innerHTML == '•')
+			{
+				niveaux[i].style.display = 'none';
+				niveaux[i].nextSibling.style.display = 'none';
+			}
+	},
+	repliToutesExperiences: function()
+	{
+		document.querySelector('body').className += ' replie';
+	}
+};
+
+var reduire = function(reductionsApplicables)
+{
+	var appliquees = [];
+	var ired, iredapp;
+	var exprs = {};
+	for(iredapp in reductionsApplicables)
+		exprs[iredapp] = new RegExp('^'+reductionsApplicables[iredapp].replace('*', '.*')+'$');
+	// À FAIRE: savoir sortir la liste de toutes les réductions existantes.
+	// À FAIRE: si une réduction de même préfixe (tout sauf les chiffres à la fin) a déjà été joué, ne pas jouer.
+	for(nomReduc in reductions)
+	{
+		for(iredapp in exprs)
+			if(nomReduc.match(exprs[iredapp]))
+			{
+				appliquees.push(nomReduc);
+				reductions[nomReduc].apply(this);
+				break;
+			}
+	}
+	// Un petit recalcul pour bien placer nos lignes de temps et autres.
+	Parcours.calculer();
+	LignesTemps.calculer();
+	return appliquees;
+};
