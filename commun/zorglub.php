@@ -168,7 +168,7 @@ class Zorglub
 		if(isset($cv->motivation))
 		{
 			$this->_pondérerTableau($cv->motivation);
-			$cv->motivation = $cv->motivation[0];
+			$cv->motivation = array_shift($cv->motivation);
 		}
 		
 		/*- Calcul du poids des technos -*/
