@@ -176,12 +176,7 @@ page.open(html, function(res)
 		if(finesse != 1.0)
 			page.evaluate(function(finesse)
 			{
-				var tailleP = window.getComputedStyle(document.querySelector('body'), null).getPropertyValue('font-size');
-				var boutsTaille = /^([0-9.]+)([a-z]*)$/.exec(tailleP);
-				document.querySelector('body').style.fontSize = (boutsTaille[1] * finesse)+boutsTaille[2];
-				// Et il faut recalculer pas mal de choses.
-				Parcours.calculer();
-				LignesTemps.calculer();
+				reduirePolices(finesse);
 			}, finesse);
 		
 		// Application des réductions.
