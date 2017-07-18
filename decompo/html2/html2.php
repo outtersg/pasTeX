@@ -479,14 +479,14 @@ $affs[] = implode(', ', $aff);
 				$paramsDecoupe = explode(' ', $sortiePhantom);
 				if($finessePdf != 1.0)
 				{
-					$redim = new Processus(array('/home/gui/src/projets/adochants/tourneetdouble', $cheminSortieParchemin, '-'.(1 / ($finessePdf * $finessePdf)), '-o', $cheminSortie.'.1'));
+					$redim = new Processus(array(getenv('HOME').'/src/projets/adochants/tourneetdouble', $cheminSortieParchemin, '-'.(1 / ($finessePdf * $finessePdf)), '-o', $cheminSortie.'.1'));
 					$redim->attendre();
-					$coupar = new Processus(array_merge(array('/home/gui/src/projets/adochants/couparchemin', $cheminSortie.'.1', $cheminSortie), $paramsDecoupe));
+					$coupar = new Processus(array_merge(array(getenv('HOME').'/src/projets/adochants/couparchemin', $cheminSortie.'.1', $cheminSortie), $paramsDecoupe));
 					$coupar->attendre();
 				}
 				else
 				{
-				$coupar = new Processus(array_merge(array('/home/gui/src/projets/adochants/couparchemin', $cheminSortieParchemin, $cheminSortie), $paramsDecoupe));
+				$coupar = new Processus(array_merge(array(getenv('HOME').'/src/projets/adochants/couparchemin', $cheminSortieParchemin, $cheminSortie), $paramsDecoupe));
 				$coupar->attendre();
 				}
 			}
