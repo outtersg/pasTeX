@@ -50,7 +50,6 @@ hauteur = 29.7302; largeur = 21.024; // Dimensions plus exactes.
 // 0: client / internes
 
 page.viewportSize = { width: (largeur - 2 * marge) / cmpp * pppAff, height: (hauteur - 2 * marge) / cmpp * pppAff };
-page.paperSize = { width: (largeur / cmpp * pppImpr)+'px', height: (hauteur / cmpp * pppImpr)+'px', margin: (marge / cmpp * pppImpr)+'px' };
 
 page.open(html, function(res)
 {
