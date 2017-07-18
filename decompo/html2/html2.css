@@ -143,6 +143,11 @@ td.categorie
 
 /*- Marqués et marqueurs -----------------------------------------------------*/
 
+.replie #chemins, .replie .marqueurSecondaire
+{
+	display: none;
+}
+
 .marque
 {
 	position: relative;
@@ -230,9 +235,24 @@ div.dateexp
 	font-style: italic;
 }
 
+.replie .projets .exp .t, .replie .projets .techno, .projets .replie .exp .t, .projets .replie .techno
+{
+	display: none;
+}
+
 .projets .exp, .projets .techno
 {
 	margin-left: 2em;
+}
+
+.roles
+{
+	display: none;
+}
+
+.replie .roles
+{
+	display: block;
 }
 
 .projets .techno
