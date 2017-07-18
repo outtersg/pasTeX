@@ -79,6 +79,18 @@ div.audessus
 	background:         linear-gradient(top, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%);
 }
 
+.pdf .titresection
+{
+	/* En compensation du :after qui saute juste après. */
+	color: #DFDFFF;
+}
+
+.pdf .titresection:after
+{
+	/* Le PDF a du mal à faire du dégradé par dessus une police (il nous fait un gros rectangle blanc). On lâche donc l'affaire. */
+	display: none;
+}
+
 td.categorie
 {
 	padding-right: 24px;

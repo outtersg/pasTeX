@@ -195,9 +195,16 @@ page.open(html, function(res)
 		
 		//page.render(pdf+'.png');
 		
-		// Le rendu PDF introduit des décalages dans les masques, qui font qu'ils ne sont plus bien placés par rapport à leur porteur. Tant pis, on les gicle.
+		// Quelques particularités du PDF peuvent être réglées par CSS.
+		
 		page.evaluate(function()
 		{
+			// Une classe pour régler les cas les plus simples.
+			
+			document.querySelector('body').className += ' pdf';
+			
+			// Le rendu PDF introduit des décalages dans les masques, qui font qu'ils ne sont plus bien placés par rapport à leur porteur. Tant pis, on les gicle.
+			
 			var masques = document.querySelectorAll('svg mask');
 			var i;
 			for(i = masques.length; --i >= 0;)
