@@ -6,11 +6,14 @@ var system = require('system');
 var html;
 var pdf;
 var finesse = 1.0;
+var reductions = [];
 
 for(var i = 0; ++i < system.args.length;)
 {
 	if(/^-[0-9.]+$/.test(system.args[i]))
 		finesse = parseFloat(system.args[i].substr(1));
+	else if(system.args[i] == '--reductions')
+		reductions = system.args[++i].split(/, */);
 	else if(typeof(html) == 'undefined')
 		html = system.args[i];
 	else if(typeof(pdf) == 'undefined')
@@ -180,6 +183,17 @@ page.open(html, function(res)
 				Parcours.calculer();
 				LignesTemps.calculer();
 			}, finesse);
+		
+		// Application des réductions.
+		
+		if(reductions.length)
+		{
+			var reductionsAppliquees = page.evaluate(function(reductionsVoulues) { return reduire(reductionsVoulues); }, reductions);
+			console.log("Réductions appliquées: "+reductionsAppliquees.join(', '));
+		}
+		
+		// Ponte!
+		
 		var hPage = page.evaluate(function() { return document.querySelector('body').offsetHeight; });
 		var hPageImpr = Math.ceil(pppImpr * (hPage / pppAff + 2 * marge / cmpp));
 		page.paperSize = { width: (largeur / cmpp * pppImpr)+'px', height: hPageImpr+'px', margin: (marge / cmpp * pppImpr)+'px' }; // On doit redéfinir tout l'objet; PhantomJS ne prend pas en compte la modification de la seule height.
