@@ -469,14 +469,15 @@ $affs[] = implode(', ', $aff);
 		
 		if(isset($params['pdf']))
 		{
-			$phantom = new ProcessusCauseur(array('phantomjs', 'decompo/html2/pdf.js', '-'.$finessePdf, $cheminSortieHtml, $cheminSortieParchemin));
+			$params = array('phantomjs', 'decompo/html2/pdf.js', '-'.$finessePdf, $cheminSortieHtml, $cheminSortieParchemin);
+			$this->_sortiePhantom = null;
+			$phantom = new ProcessusLignes($params, array($this, 'lignePhantom'));
 			$phantom->attendre();
-			$sortiePhantom = trim($phantom->contenuSortie());
-			if(!$sortiePhantom || !preg_match('/^[0-9,]+( [0-9,]+)*$/', $sortiePhantom))
+			if(!$this->_sortiePhantom)
 				fprintf(STDERR, "# phantomjs nous transmet un message inintelligible.");
 			else
 			{
-				$paramsDecoupe = explode(' ', $sortiePhantom);
+				$paramsDecoupe = explode(' ', $this->_sortiePhantom);
 				if($finessePdf != 1.0)
 				{
 					$redim = new Processus(array(getenv('HOME').'/src/projets/adochants/tourneetdouble', $cheminSortieParchemin, '-'.(1 / ($finessePdf * $finessePdf)), '-o', $cheminSortie.'.1'));
@@ -493,6 +494,14 @@ $affs[] = implode(', ', $aff);
 		}
 		
 		return $this;
+	}
+	
+	public function lignePhantom($ligne, $fd)
+	{
+		if($fd == 1 && preg_match('/^decouparchemin [0-9,]+( [0-9,]+)*$/', $ligne))
+			$this->_sortiePhantom = substr($ligne, strpos($ligne, ' ') + 1);
+		else
+			fprintf($fd == 2 ? STDERR : STDIN, "%s\n", $ligne);
 	}
 	
 	function pondreEnTete($donnees)

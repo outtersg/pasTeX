@@ -214,7 +214,7 @@ page.open(html, function(res)
 		for(var i = 1; i < cesures.length - 1; i += 2) // Le premier et le dernier ne nous intéressent pas (une ouverture et une fermeture qui seront confondus avec le haut et le bas de document).
 			paramsCouparchemin += cesures[i][1]+','+cesures[i + 1][1]+' ';
 		paramsCouparchemin += hPage;
-		console.log(paramsCouparchemin);
+		console.log("decouparchemin "+paramsCouparchemin);
 		
 		page.render(pdf);
 		phantom.exit(0);
