@@ -772,7 +772,7 @@ $affs[] = implode(', ', $aff);
 				// À FAIRE: que Parcours.calculer() ignore les trucs planqués.
 				$rôles = array();
 				foreach($projet->rôle as $rôle)
-					$rôles[] = $rôle->__toString();
+					$rôles[] = $rôle instanceof Texte ? $rôle->texte : ''.$rôle;
 				echo '<div class="roles">'.implode('', array_map(array($this, '_palier'), $rôles)).'</div>';
 			}
 			
