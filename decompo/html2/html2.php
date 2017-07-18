@@ -764,7 +764,14 @@ $affs[] = implode(', ', $aff);
 			echo implode('', array_map(array($this, '_palier'), $projet->tâche));
 			echo '</div>';
 			if(isset($projet->rôle))
-				echo '<div class="roles">'.implode('', array_map(array($this, '_palier'), $projet->rôle)).'</div>';
+			{
+				// Les rôles doivent être épurés, sans quoi ils peuvent embarquer des marqueurs, marqueurs qui, même planqués, seront repérés par Parcours.calculer() et donneront donc lieu à un disgracieux détour par le point 0, 0.
+				// À FAIRE: que Parcours.calculer() ignore les trucs planqués.
+				$rôles = array();
+				foreach($projet->rôle as $rôle)
+					$rôles[] = $rôle->__toString();
+				echo '<div class="roles">'.implode('', array_map(array($this, '_palier'), $rôles)).'</div>';
+			}
 			
 			foreach($lignesDeTemps as $numSegment => $segmentDeTemps)
 				if($segmentDeTemps['moment'] == $numProjet)
