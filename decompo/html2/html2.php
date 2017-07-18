@@ -285,8 +285,7 @@ $affs[] = implode(', ', $aff);
 		
 		/* Calcul du poids du texte de chaque moment par rapport à l'ensemble. */
 		
-		// Pour le moment, 1 paragraphe = 1 unité de poids.
-		/* À FAIRE: affiner. Mais sur quel critère? Nombre de caractères? Nombre de lignes? Tout dépend du côté client (polices utilisées, etc.). Idéalement on réaffinerait côté Javascript, à partir de la hauteur réelle de chaque bloc, ce qu'on estime ici. */
+		// Côté PHP, 1 paragraphe = 1 unité de poids. C'est une approximation, en attendant un placement "réel" côté JS, qui lui prendra en compte les polices, etc. Voir LignesTemps.calculerEtRecaler().
 		$poids = array();
 		foreach($lignesDeTemps as $segment)
 			$poids[$segment['moment']] = 1;

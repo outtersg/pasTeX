@@ -36,7 +36,7 @@ LignesTemps.preparer = function()
 	sur(window, 'resize', function(ev) { LignesTemps.calculer(); });
 	/* À FAIRE: aussi le changement de taille de police… tout ce qui change la hauteur de notre conteneur, en fait. */
 	
-	LignesTemps.calculer();
+	LignesTemps.calculerEtRecaler();
 };
 
 LignesTemps.jointureSimple = function(pTexte, pBloc)
@@ -47,7 +47,7 @@ LignesTemps.jointureSimple = function(pTexte, pBloc)
 	return d;
 };
 
-LignesTemps.jointurePotDEchap = function(pTexte, pBloc)
+LignesTemps.jointurePotDEchap = function(pTexte, pBloc, ordonneesResultantes)
 {
 	var enFace = true;
 	var bout = 1; // 0: accolade; 1: pique: 2: puce.
@@ -125,7 +125,48 @@ LignesTemps.jointurePotDEchap = function(pTexte, pBloc)
 			break;
 	}
 	d += ' z';
+	
+	ordonneesResultantes.t = ptT.y;
+	ordonneesResultantes.b.push(viseeB.y);
+	
 	return d;
+};
+
+LignesTemps.calculerEtRecaler = function()
+{
+	LignesTemps.calculer();
+	// Le tracé des appendices entre les blocs d'expérience et leurs lignes de temps peut avoir donné des croisements (ex.: l'évaluation grossière faite en PHP "n caractères doivent donner un bloc de tant d'unités de haut", et les "gros" blocs qui, sans ouverture vers leur ligne de temps, perdu pour perdu, s'installent le plus en face possible de leur ligne de temps, font que le gros bloc en question croise tous les petits blocs qui visent une ouverture précise; autre possibilté: la réduction du CV (masquage de certaines parties) rend caduque le premier placement PHP à coups de conversion "n caractères -> n unités de haut"). On recherche donc ces cas de croisement, et on réordonne les blocs qui peuvent l'être.
+	LignesTemps._replacerExperiences();
+	LignesTemps.calculer();
+};
+
+LignesTemps._replacerExperiences = function()
+{
+	var faites = [];
+	var i;
+	var ordo;
+	var ref;
+	for(iOrdo in LignesTemps.ordonnees)
+	{
+		ordo = LignesTemps.ordonnees[iOrdo];
+		for(i = faites.length; --i >= 0;)
+		{
+			ref = faites[i];
+			// En cas de chevauchement, prime le placement actuel (on essaie d'avoir un tri stable).
+			if(ordo.bmin <= ref.bmax && ref.bmin <= ordo.bmax)
+				if(ordo.t >= ref.t)
+					break;
+			// Si sans ambiguïté on passe après, notre sort est joué.
+			if(ordo.bmin >= ref.bmax)
+				break;
+		}
+		faites.splice(i + 1, 0, ordo);
+	}
+	// Maintenant on recale ceux qui ne sont pas dans l'ordre reconstitué.
+	var papa = faites[0].texte.parentNode;
+	for(i = faites.length; --i >= 1;)
+		if(faites[i].t <= faites[i - 1].t)
+			papa.insertBefore(faites[i - 1].texte, faites[i].texte);
 };
 
 LignesTemps.calculer = function()
@@ -133,11 +174,13 @@ LignesTemps.calculer = function()
 	var svg = document.getElementById('jonctionlignestemps');
 	var ensvg = "http://www.w3.org/2000/svg";
 	
+	var o; // Ordonnées.
 	var i, j, d, pBloc, pTexte;
 	var courbe;
 	
 	var p = function(elem, droite) { var y0 = elem.offsetTop; var y1 = y0 + elem.offsetHeight; return { x: elem.offsetLeft + (droite ? elem.offsetWidth : 0), y0: y0, y1: y1, ym: (y0 + y1) / 2.0 }; }
 
+	this.ordonnees = {};
 	while (svg.lastChild)
 		svg.removeChild(svg.lastChild);
 	
@@ -148,13 +191,22 @@ LignesTemps.calculer = function()
 		courbe.setAttributeNS(null, 'id', 'jonction'+i);
 		d = '';
 		pTexte = p(this.blocs[i][0]);
+		o = { b: [], texte: this.blocs[i][0] };
 		for(j = this.blocs[i].length; --j >= 1;) // Le bloc 0 est le texte, à lier à tous les autres qui sont la représentation graphique.
 		{
 			pBloc = p(this.blocs[i][j], true);
-			d += this.jointurePotDEchap(pTexte, pBloc);
+			d += this.jointurePotDEchap(pTexte, pBloc, o);
 		}
 		courbe.setAttributeNS(null, 'd', d);
 		svg.appendChild(courbe);
+		for(j = o.b.length; --j >= 0;)
+		{
+			if(typeof o.bmin == 'undefined' || o.b[j] < o.bmin)
+				o.bmin = o.b[j];
+			if(typeof o.bmax == 'undefined' || o.b[j] > o.bmax)
+				o.bmax = o.b[j];
+		}
+		this.ordonnees[i] = o;
 	}
 };
 
@@ -431,8 +483,8 @@ var reduirePolices = function(facteur)
 	var boutsTaille = /^([0-9.]+)([a-z]*)$/.exec(tailleP);
 	document.querySelector('body').style.fontSize = (boutsTaille[1] * facteur)+boutsTaille[2];
 	// Et il faut recalculer pas mal de choses.
+	LignesTemps.calculerEtRecaler();
 	Parcours.calculer();
-	LignesTemps.calculer();
 };
 
 var reductions =
@@ -480,7 +532,7 @@ var reduire = function(reductionsApplicables)
 			}
 	}
 	// Un petit recalcul pour bien placer nos lignes de temps et autres.
+	LignesTemps.calculerEtRecaler();
 	Parcours.calculer();
-	LignesTemps.calculer();
 	return appliquees;
 };
