@@ -741,7 +741,11 @@ $affs[] = implode(', ', $aff);
 			echo '</div>'."\n";
 			
 			echo '<div class="exp">';
+			echo '<div class="t">';
 			echo implode('', array_map(array($this, '_palier'), $projet->tâche));
+			echo '</div>';
+			if(isset($projet->rôle))
+				echo '<div class="roles">'.implode('', array_map(array($this, '_palier'), $projet->rôle)).'</div>';
 			
 			foreach($lignesDeTemps as $numSegment => $segmentDeTemps)
 				if($segmentDeTemps['moment'] == $numProjet)
