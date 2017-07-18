@@ -34,6 +34,7 @@ class Html2
 	function analyserParams($argv, &$position)
 	{
 		$retour = array();
+		$prochains = array();
 		while($position < count($argv))
 		{
 			switch($argv[$position])
@@ -43,8 +44,7 @@ class Html2
 					$retour['respire'] = true;
 					break;
 				case 'pdf':
-					$retour['pdf'] = $argv[$position + 1];
-					++$position;
+					$prochains[] = 'pdf';
 					break;
 				case '--intro':
 				case '+intro':
@@ -52,10 +52,15 @@ class Html2
 					break;
 				case '--trad':
 				case '+trad':
-					$retour['trad'] = $argv[$position + 1];
-					++$position;
+					$prochains[] = 'trad';
 					break;
 				default:
+					if(count($prochains))
+					{
+						$prochain = array_pop($prochains);
+						$retour[$prochain] = $argv[$position];
+						continue;
+					}
 					break 2;
 			}
 			++$position;
