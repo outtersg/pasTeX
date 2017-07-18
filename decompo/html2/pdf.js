@@ -20,15 +20,27 @@ for(var i = 0; ++i < system.args.length;)
 		pdf = system.args[i];
 }
 
-var ppp = 150; // http://stackoverflow.com/questions/22017746/while-rendering-webpage-to-pdf-using-phantomjs-how-can-i-auto-adjust-my-viewpor
+var versionPhantom = 2.1;
+
 var pppAff = 147.515; // Saloperie de rendu PDF géré différemment du reste; apparemment voilà le réglage qui me permet d'avoir exactement le même développement des textes sur mon CV (à savoir: les blocs de texte multilignes sont découpés pile au même endroit). Attention: le moindre décalage explose les chemins, car alors le rendu viewportSize est fait avec une largeur (et donc un wrapping) différent du rendu PDF. Or le SVG n'est pas recalculé au moment de l'impression, donc si le wrapping est différent (un pixel suffit parfois à faire passer un mot à la ligne, ce qui rajoute parfois une ligne), le SVG finira en décalage avec le texte. En outre, même le plus précautionneusement du monde, on va avoir un décalage: le SVG est bien imprimé comme fond de son texte, sauf que lorsqu'une ligne de texte atterrit en fin de page, le rendu le décale pour le faire apparaître en début de page suivante, et ne recale pas le SVG correspondant. De page en page, on a un décalage qui augmente (on pourrait le récupérer en imprimant la page 1, calculant jusqu'où elle arrive, décalant l'intégralité du body via un top: -...px, imprimer, etc., puis recoller les pages entre elles). Mais, pour (vraiment) terminer, le rendu des courbes est foiré (leur masque se décale, et finit donc par masquer ce qu'il ne devrait pas, et démasquer ce qu'il devrait masquer). Je ne suis pas satisfait du tout du résultat. Le rendu PNG est parfait… mais non vectoriel (et non découpé page à page).
 pppAff = 147.678;
 pppAff = 147.8; // Marche mieux avec mon CV du 2015-06-16.
 var pppImpr = 300;
+var finessePolice = 1.0;
+// Avec PhantomJS 2.1.1, on a enfin le même ppp entre affichage et impression. Ouf!
+// Donc on peut faire un pppAff = pppImpr;
+// … mais du coup, nos polices étaient taillées pour un pppAff différent. On adaptera donc les polices en fonction.
+if(versionPhantom >= 2)
+{
+	finessePolice = 1.4; // Bon, c'est la valeur qui me permet d'avoir à peu près la même taille dans le résultat qu'en passant par LibreOffice avec même police, même taille.
+	pppAff = pppImpr;
+}
 
 pppAff *= finesse; pppImpr *= finesse; // Histoire que les CSS 1px ne soient quand même pas trop épais. Inconvénient: quel que soit le viewportSize, à l'impression Phantom ramène toutes les mesures au paperSize. Donc si l'on veut un A4 où 1px est plus fin que ce que Phantom a l'habitude de prendre comme 1px en A4, il nous faudra imprimer en A3 (et user d'une entourloupe pour repasser le PDF résultant en A4, mais cela devra se faire hors Phantom).
 
 var facteurBlague = 1.64157; // En fait si on imprime un certain nombre de pixels à 300 ppp, on récupère un document de 34,47 cm (d'après Aperçu de Mac OS X).
+if(versionPhantom >= 2)
+	facteurBlague = 175.22 / 42.048; // Avec PhantomJS 2.1.1, 4966 pixels en 300 ppp, qui devraient nous donner un A2 (42 cm), nous renvoient du 175,22 cm.
 pppAff /= facteurBlague;
 pppImpr /= facteurBlague;
 var cmpp = 2.54;
@@ -172,6 +184,7 @@ page.open(html, function(res)
 	
 	window.setTimeout(function()
 	{
+		finesse /= finessePolice;
 		// Si on nous demande une certaine finesse, il faut adapter la taille de police.
 		if(finesse != 1.0)
 			page.evaluate(function(finesse)
