@@ -35,6 +35,7 @@ class Html2
 	{
 		$retour = array();
 		$prochains = array();
+		$prochains[] = 'cheminSortie';
 		while($position < count($argv))
 		{
 			switch($argv[$position])
@@ -47,7 +48,7 @@ class Html2
 					$prochains[] = 'maxPages';
 					break;
 				case 'pdf':
-					$prochains[] = 'pdf';
+					$retour['pdf'] = true;
 					break;
 				case '--intro':
 				case '+intro':
@@ -420,11 +421,14 @@ $affs[] = implode(', ', $aff);
 		$cheminSortieHtml = false;
 		if(isset($params['pdf']))
 		{
-			$cheminSortie = $params['pdf'];
+			$cheminSortie = $params['cheminSortie'];
 			$cheminSortieParchemin = $params['pdf'].'.parchemin.pdf';
 			$cheminSortieHtml = $cheminSortie.'.html';
-			$dossierSortie = dirname($cheminSortieHtml);
 		}
+		else if(isset($params['cheminSortie']))
+			$cheminSortieHtml = $params['cheminSortie'];
+		if($cheminSortieHtml)
+			$dossierSortie = dirname($cheminSortieHtml);
 		if($dossierSortie)
 			ob_start();
 		
