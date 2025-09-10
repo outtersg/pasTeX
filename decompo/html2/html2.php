@@ -961,6 +961,8 @@ $affs[] = implode(', ', $aff);
 		textdomain('app');
 		return gettext($chaîne);
 	}
+	
+	public $_zorglub;
 }
 
 ?>
