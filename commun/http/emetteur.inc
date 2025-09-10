@@ -398,6 +398,7 @@ class Émetteur extends NavigateurHiérarchique
 	protected $petitÀPetit; // Si true, on n'essaie pas de tout faire en une fois; on fonctionne en AJAX, permettant à chaque appel PHP de ne faire qu'un appel au site Monster, et donc de donner un retour à l'utilisateur dans un délai raisonnable, tout en évitant que PHP ne coupe le script brutalement en considérant qu'il a vécu trop longtemps. 
 	protected $rienPondu;
 	protected $id; // Nom du fichier contenant la classe dérivée.
+	public $_zorglub;
 }
 
 ?>

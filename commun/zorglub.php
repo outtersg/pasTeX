@@ -26,6 +26,8 @@
  */
 class Zorglub
 {
+	public $profil;
+	
 	/*- Dates ----------------------------------------------------------------*/
 	
 	public function durée($projet, $brut = false)
@@ -372,6 +374,8 @@ class Zorglub
 		
 		return $poids;
 	}
+	
+	protected $_compteursProfils;
 }
 
 ?>

@@ -27,6 +27,8 @@ use \eu_outters_guillaume\PasTeX\Dateur;
 
 class Poule
 {
+	public $dateur;
+	
 	public function __construct()
 	{
 		$this->dateur = new Dateur;
