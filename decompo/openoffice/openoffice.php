@@ -182,7 +182,7 @@ TERMINE
 	
 	function pondreEtudes($fichier, $donnees)
 	{
-		if(!array_key_exists('formation', $donnees)) return;
+		if(!isset($donnees->formation)) return;
 fprintf($fichier, <<<TERMINE
 		<text:p text:style-name="Section CV">Études
 		</text:p>
@@ -204,7 +204,7 @@ TERMINE
 	
 	function pondreProjets($fichier, $donnees)
 	{
-		if(!array_key_exists('expérience', $donnees)) return;
+		if(!isset($donnees->expérience)) return;
 fprintf($fichier, <<<TERMINE
 		<text:p text:style-name="Section CV">Culture informatique, Expérience et Projets
 		</text:p>
@@ -261,7 +261,7 @@ TERMINE
 	
 	function pondreLangues($fichier, $donnees)
 	{
-		if(!array_key_exists('langues', $donnees)) return;
+		if(!isset($donnees->langues)) return;
 fprintf($fichier, <<<TERMINE
 		<text:p text:style-name="Section CV">Langues
 		</text:p>
@@ -285,7 +285,7 @@ TERMINE
 	
 	function pondreConnaissances($fichier, $donnees)
 	{
-		if(!array_key_exists('connaissances', $donnees)) return;
+		if(!isset($donnees->connaissances)) return;
 		
 		$seuils = array(0x0, 0x4, 0x8, 0x10);
 		
@@ -324,7 +324,7 @@ TERMINE
 	
 	function pondreInteret($fichier, $donnees)
 	{
-		if(!array_key_exists('intérêts', $donnees)) return;
+		if(!isset($donnees->intérêts)) return;
 		
 fprintf($fichier, <<<TERMINE
 		<text:p text:style-name="Section CV">Domaines d&apos;intérêts
@@ -349,7 +349,7 @@ TERMINE
 
 	function pondreAutres($fichier, $donnees)
 	{
-		if(!array_key_exists('loisirs', $donnees)) return;
+		if(!isset($donnees->loisirs)) return;
 		
 fprintf($fichier, <<<TERMINE
 		<text:p text:style-name="Section CV">Autres activités et intérêts
