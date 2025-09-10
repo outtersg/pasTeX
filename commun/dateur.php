@@ -26,7 +26,7 @@ class Dateur extends \DateurMoinsUn
 	/**
 	 * Sort la chaîne décrivant une période fermée à un bout mais pas l'autre.
 	 */
-	protected function _demiDroite($d, $jusquÀSinonDepuis = false, $mode)
+	protected function _demiDroite($d, $jusquÀSinonDepuis = false, $mode = 0)
 	{
 		$affDate = parent::aff($d, $mode);
 		$langue = isset($this->langue) && isset(self::$CHAÎNES[$this->langue]) ? $this->langue : 'fr';
