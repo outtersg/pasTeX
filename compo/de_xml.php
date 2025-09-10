@@ -28,6 +28,7 @@ require_once('util/xml/composimple.php');
 
 require_once 'util/htopus.php';
 
+#[AllowDynamicProperties]
 class Donnee extends Compo
 {
 	
@@ -40,6 +41,13 @@ class Donnee extends Compo
 class Texte
 {
 	public static $Html = false;
+	
+	public $texte;
+	public $marqueurs;
+	public $poids;
+	public $signe;
+	public $réf;
+	public $comme;
 	
 	public function __construct($chaîne = '')
 	{
@@ -90,6 +98,9 @@ class Texte
 
 class Connaissance
 {
+	public $niveau;
+	public $poids;
+	
 	public function __construct($niveau)
 	{
 		$this->niveau = $niveau;
@@ -271,15 +282,22 @@ class CompoAProprietes extends Compo
 				$objet->données->poids = $objet->poids;
 	}
 	
+	protected $poids;
+	protected $marqueurs;
+	protected $args;
 	protected $enTableau; // Liste des sous-éléments XML agrégeables en tableau dans cet objet.
 	protected $normal; // Liste des sous-éléments XML qui doivent donner une propriété unique de cet objet.
 	protected $classes; // Association d'une classe de Compo à un élément XML.
 	protected $données;
+	protected $preserveEspaces;
+	protected $_preservatifsEspaces;
 }
 
 /* CompoAProprietes connaissant les propriétés particulières 'date' et 'période' */
 class CompoADates extends CompoAProprietes
 {
+	public $poids;
+	
 	public function __construct($proprietesNormales = null, $proprietesEnTableau = null)
 	{
 		$monTableau = array('date' => 'MaDate', 'période' => 1);
@@ -582,6 +600,8 @@ class CompoImage extends Compo
 			echo "# $chemin inexistant.\n";
 		$this->données = $chemin;
 	}
+	
+	protected $_cheminXml;
 }
 
 class CompoDate extends Compo
@@ -613,6 +633,8 @@ class MaDate extends CompoDate
 
 class Période extends CompoSimple
 {
+	public $données;
+	
 	public function __construct()
 	{
 		$this->données = new Donnee();
