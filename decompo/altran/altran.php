@@ -177,5 +177,7 @@ class Altran
 		}
 		uasort($données->expérience->projet, array($this, '_comparerDatesPivot'));
 	}
+	
+	public $_zorglub;
 }
 ?>
