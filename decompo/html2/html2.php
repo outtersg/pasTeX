@@ -777,7 +777,7 @@ $affs[] = implode(', ', $aff);
 			foreach($lignesDeTemps as $numSegment => $segmentDeTemps)
 				if($segmentDeTemps['moment'] == $numProjet)
 				{
-					echo '<div id="p'.$numProjet.'s'.$numSegment.'" class="afftemps" style="top: '.(($maxTemps - $segmentDeTemps['fin']) / ($maxTemps - $minTemps) * 100).'%; height: '.(($segmentDeTemps['fin'] - $segmentDeTemps['debut']) / ($maxTemps - $minTemps) * 100).'%; left: '.(1.5 * $segmentDeTemps['groupe']).'em;">&nbsp;</div>';
+					echo '<a href="#p'.$numProjet.'"><div id="p'.$numProjet.'s'.$numSegment.'" class="afftemps" style="top: '.(($maxTemps - $segmentDeTemps['fin']) / ($maxTemps - $minTemps) * 100).'%; height: '.(($segmentDeTemps['fin'] - $segmentDeTemps['debut']) / ($maxTemps - $minTemps) * 100).'%; left: '.(1.5 * $segmentDeTemps['groupe']).'em;">&nbsp;</div></a>';
 				}
 			
 			echo '</div>'."\n";
