@@ -64,6 +64,8 @@ class Liste
 				$retour[] = $module;
 		return $retour;
 	}
+	
+	public $_zorglub;
 }
 
 ?>
