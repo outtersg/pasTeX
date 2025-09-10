@@ -613,7 +613,7 @@ $affs[] = implode(', ', $aff);
 	
 	function pondreEtudes($donnees)
 	{
-		if(!array_key_exists('formation', $donnees)) return;
+		if(!isset($donnees->formation)) return;
 		
 		$this->commencerSection('Études');
 ?>
@@ -703,7 +703,7 @@ $affs[] = implode(', ', $aff);
 	
 	function pondreProjets($donnees)
 	{
-		if(!array_key_exists('expérience', $donnees)) return;
+		if(!isset($donnees->expérience)) return;
 		
 		$lignesDeTemps = $this->_lignesDeTemps($donnees);
 		$minTemps = $maxTemps = null;
@@ -801,7 +801,7 @@ $affs[] = implode(', ', $aff);
 	
 	function pondreLangues($donnees)
 	{
-		if(!array_key_exists('langues', $donnees)) return;
+		if(!isset($donnees->langues)) return;
 		$this->commencerSection('Langues');
 ?>
 		<table>
@@ -842,7 +842,7 @@ $affs[] = implode(', ', $aff);
 		 * Le span possèdera le texte en contenu principal, et un point rouge centré
 		 * qui indique sa place exacte sur l'échelle des connaissances. */
 		
-		if(!array_key_exists('connaissances', $donnees)) return;
+		if(!isset($donnees->connaissances)) return;
 		
 		$seuils = array(0x0, 0x6, 0x9, 0x10);
 		
@@ -877,7 +877,7 @@ $affs[] = implode(', ', $aff);
 	
 	function pondreIntro($données)
 	{
-		if(!array_key_exists('intro', $données)) return;
+		if(!isset($données->intro)) return;
 		
 		$this->commencerSection('');
 		foreach($données->intro as $intro) break;
@@ -887,7 +887,7 @@ $affs[] = implode(', ', $aff);
 	
 	function pondreInteret($donnees)
 	{
-		if(!array_key_exists('intérêts', $donnees)) return;
+		if(!isset($donnees->intérêts)) return;
 		
 		$this->commencerSection('Domaines d\'expertise'); // Domaines d'intérêt, Domaines de compétences, Compétences, Domaines d'expertise?
 		$premier = true;
@@ -912,7 +912,7 @@ $affs[] = implode(', ', $aff);
 
 	function pondreAutres($donnees)
 	{
-		if(!array_key_exists('loisirs', $donnees)) return;
+		if(!isset($donnees->loisirs)) return;
 		
 		$this->commencerSection('Autres activités et intérêts');
 		foreach($donnees->loisirs->activité as $ouf)
