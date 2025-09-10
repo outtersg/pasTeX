@@ -349,6 +349,7 @@ class Html
 	}
 	
 	protected $params;
+	public $_zorglub;
 }
 
 ?>
