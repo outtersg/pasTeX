@@ -140,7 +140,7 @@ class Html
 	
 	function pondreEtudes($donnees)
 	{
-		if(!array_key_exists('formation', $donnees)) return;
+		if(!isset($donnees->formation)) return;
 		
 		$this->commencerSection('Études');
 ?>
@@ -163,7 +163,7 @@ class Html
 	
 	function pondreProjets($donnees)
 	{
-		if(!array_key_exists('expérience', $donnees)) return;
+		if(!isset($donnees->expérience)) return;
 		
 		$this->commencerSection('Expérience et Projets');
 		$pasLePremier = false;
@@ -211,7 +211,7 @@ class Html
 	
 	function pondreLangues($donnees)
 	{
-		if(!array_key_exists('langues', $donnees)) return;
+		if(!isset($donnees->langues)) return;
 		$this->commencerSection('Langues');
 ?>
 		<table>
@@ -252,7 +252,7 @@ class Html
 		 * Le span possèdera le texte en contenu principal, et un point rouge centré
 		 * qui indique sa place exacte sur l'échelle des connaissances. */
 		
-		if(!array_key_exists('connaissances', $donnees)) return;
+		if(!isset($donnees->connaissances)) return;
 		
 		$seuils = array(0x0, 0x4, 0x8, 0x10);
 		
@@ -286,7 +286,7 @@ class Html
 	
 	function pondreInteret($donnees)
 	{
-		if(!array_key_exists('intérêts', $donnees)) return;
+		if(!isset($donnees->intérêts)) return;
 		
 		$this->commencerSection('Domaines d\'intérêt');
 		$pasLePremier = false;
@@ -309,7 +309,7 @@ class Html
 
 	function pondreAutres($donnees)
 	{
-		if(!array_key_exists('loisirs', $donnees)) return;
+		if(!isset($donnees->loisirs)) return;
 		
 		$this->commencerSection('Autres activités et intérêts');
 		$pasLePremier = false;
