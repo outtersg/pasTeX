@@ -105,7 +105,7 @@ TERMINE
 	
 	function pondreEtudes($fichier, $donnees)
 	{
-		if(!array_key_exists('formation', $donnees)) return;
+		if(!isset($donnees->formation)) return;
 fprintf($fichier, <<<TERMINE
 		<text:p text:style-name="CV Intitulé">Formation</text:p>
 TERMINE
@@ -116,7 +116,7 @@ TERMINE
 	
 	function pondreProjets($fichier, $donnees)
 	{
-		if(!array_key_exists('expérience', $donnees)) return;
+		if(!isset($donnees->expérience)) return;
 		
 		fprintf($fichier, '<text:p text:style-name="CV Intitulé">Expérience Professionnelle</text:p>');
 		foreach($donnees->expérience->projet as $francheRigolade)
@@ -194,7 +194,7 @@ TERMINE
 	 * chose, seule diffère leur façon de récupérer leur texte. */
 	function pondreLangues($fichier, $donnees)
 	{
-		if(!array_key_exists('langues', $donnees)) return;
+		if(!isset($donnees->langues)) return;
 fprintf($fichier, <<<TERMINE
 		<text:p text:style-name="CV Intitulé">Langues</text:p>
 TERMINE
@@ -218,7 +218,7 @@ TERMINE
 	
 	function pondreConnaissances($fichier, $donnees)
 	{
-		if(!array_key_exists('connaissances', $donnees)) return;
+		if(!isset($donnees->connaissances)) return;
 		
 fprintf($fichier, <<<TERMINE
 		<text:p text:style-name="CV Intitulé">Compétences Techniques</text:p>
@@ -245,7 +245,7 @@ TERMINE
 	
 	function pondreInteret($fichier, $donnees)
 	{
-		if(!array_key_exists('intérêts', $donnees)) return;
+		if(!isset($donnees->intérêts)) return;
 		
 fprintf($fichier, <<<TERMINE
 		<text:p text:style-name="CV Intitulé">Centres d'intérêt</text:p>
