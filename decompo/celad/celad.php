@@ -437,5 +437,6 @@ TERMINE
 	}
 	
 	protected $_params;
+	public $_zorglub;
 }
 ?>
