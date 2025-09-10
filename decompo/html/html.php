@@ -28,8 +28,6 @@
 
 class Html
 {
-	function Html() {}
-	
 	function analyserParams($argv, &$position) { return array(); }
 	
 	function analyserChamps($params)

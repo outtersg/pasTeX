@@ -149,7 +149,7 @@ class CompoAProprietes extends Compo
 	 * classe du même nom qu'elle (la propriété XML), ou n'importe quoi d'autre
 	 * pour qu'elle soit gérée comme une Donnee. Le CompoAProprietes se charge
 	 * lui-même du texte hors propriété. */
-	function CompoAProprietes($proprietesNormales, $proprietesEnTableau = array())
+	public function __construct($proprietesNormales, $proprietesEnTableau = array())
 	{
 		$this->données = new Donnee();
 		$this->classes = array();
@@ -280,10 +280,10 @@ class CompoAProprietes extends Compo
 /* CompoAProprietes connaissant les propriétés particulières 'date' et 'période' */
 class CompoADates extends CompoAProprietes
 {
-	function CompoADates($proprietesNormales = null, $proprietesEnTableau = null)
+	public function __construct($proprietesNormales = null, $proprietesEnTableau = null)
 	{
 		$monTableau = array('date' => 'MaDate', 'période' => 1);
-		$this->CompoAProprietes($proprietesNormales === null ? $monTableau : array_merge($proprietesNormales, $monTableau), $proprietesEnTableau === null ? array() : $proprietesEnTableau);
+		parent::__construct($proprietesNormales === null ? $monTableau : array_merge($proprietesNormales, $monTableau), $proprietesEnTableau === null ? array() : $proprietesEnTableau);
 	}
 
 	function &entrerDans(&$depuis, $nom, $attributs)
@@ -305,16 +305,16 @@ class CompoADates extends CompoAProprietes
 /* Comme un CompoADates, sauf qu'il peut avoir plusieurs périodes de suite */
 class CompoADatesRepetees extends CompoADates
 {
-	function CompoADatesRepetees($proprietesNormales = null, $proprietesEnTableau = null)
+	public function __construct($proprietesNormales = null, $proprietesEnTableau = null)
 	{
 		$monTableau = array('date' => 'MaDate', 'période' => 1);
-		$this->CompoAProprietes($proprietesNormales === null ? array() : $proprietesNormales, $proprietesEnTableau === null ? $monTableau : array_merge($proprietesEnTableau, $monTableau));
+		parent::__construct($proprietesNormales === null ? array() : $proprietesNormales, $proprietesEnTableau === null ? $monTableau : array_merge($proprietesEnTableau, $monTableau));
 	}
 }
 
 class De_Xml extends CompoAProprietes
 {
-	function De_Xml()
+	public function __construct()
 	{
 		parent::__construct
 		(
@@ -464,16 +464,16 @@ TERMINE
 /* À FAIRE: un constructeur qui prenne tout ce bazar en un seul tableau avec des
  * sous-tableaux de sous-tableaux, mais s'il-vous-plaît, pas tant de copier-
  * coller à la fois, c'est mauvais pour la crâne! */
-class Perso extends CompoAProprietes { function Perso() { $this->CompoAProprietes(array('naissance' => 'CompoDate', 'photo' => 'CompoImage'), array()); } }
-class Intérêts extends CompoAProprietes { function Intérêts() { $this->CompoAProprietes(array(), array('domaine' => 1)); } }
-class Domaine extends CompoAProprietes { function Domaine() { $this->CompoAProprietes(array(), array('techno' => -1)); } }
-class Loisirs extends CompoAProprietes { function Loisirs() { $this->CompoAProprietes(array(), array('activité' => 0)); } }
-class Formation extends CompoAProprietes { function Formation() { $this->CompoAProprietes(array(), array('études' => 'CompoADates')); } }
-class Expérience extends CompoAProprietes { function Expérience() { $this->CompoAProprietes(array(), array('projet' => 1)); } }
-class Projet extends CompoADatesRepetees { function Projet() { $this->CompoADatesRepetees(array('cadre' => 0, 'typologie' => 0, 'départ' => 0), array('rôle' => 0, 'lieu' => 0, 'techno' => -1, 'société' => 0, 'tâche' => -1, 'morale' => 0, 'marquant' => 0, 'bilan' => 1, 'réal' => 0, 'référence' => 1)); } }
+class Perso extends CompoAProprietes { public function __construct() { parent::__construct(array('naissance' => 'CompoDate', 'photo' => 'CompoImage'), array()); } }
+class Intérêts extends CompoAProprietes { public function __construct() { parent::__construct(array(), array('domaine' => 1)); } }
+class Domaine extends CompoAProprietes { public function __construct() { parent::__construct(array(), array('techno' => -1)); } }
+class Loisirs extends CompoAProprietes { public function __construct() { parent::__construct(array(), array('activité' => 0)); } }
+class Formation extends CompoAProprietes { public function __construct() { parent::__construct(array(), array('études' => 'CompoADates')); } }
+class Expérience extends CompoAProprietes { public function __construct() { parent::__construct(array(), array('projet' => 1)); } }
+class Projet extends CompoADatesRepetees { public function __construct() { parent::__construct(array('cadre' => 0, 'typologie' => 0, 'départ' => 0), array('rôle' => 0, 'lieu' => 0, 'techno' => -1, 'société' => 0, 'tâche' => -1, 'morale' => 0, 'marquant' => 0, 'bilan' => 1, 'réal' => 0, 'référence' => 1)); } }
 class Bilan extends CompoAProprietes
 {
-	public function __construct() { $this->CompoAProprietes(array()); }
+	public function __construct() { parent::__construct(array()); }
 
 	public function entrerAvecAttrs($attributs)
 	{
@@ -490,7 +490,7 @@ class Bilan extends CompoAProprietes
 }
 class Métaphore extends CompoAProprietes
 {
-	public function __construct() { $this->CompoAProprietes(array()); }
+	public function __construct() { parent::__construct(array()); }
 
 	public function entrerAvecAttrs($attributs)
 	{
@@ -523,12 +523,12 @@ TERMINE
 		);
 	}
 }
-class Langues extends CompoAProprietes { function Langues() { $this->CompoAProprietes(array(), array('langue' => 1)); } }
-class Langue extends CompoAProprietes { function Langue() { $this->CompoAProprietes(array(), array('certificat' => 0)); } }
-class Connaissances extends CompoAProprietes { function Connaissances() { $this->CompoAProprietes(array(), array('catégorie' => 1)); } }
+class Langues extends CompoAProprietes { public function __construct() { parent::__construct(array(), array('langue' => 1)); } }
+class Langue extends CompoAProprietes { public function __construct() { parent::__construct(array(), array('certificat' => 0)); } }
+class Connaissances extends CompoAProprietes { public function __construct() { parent::__construct(array(), array('catégorie' => 1)); } }
 class Catégorie extends CompoAProprietes
 {
-	function Catégorie() { $this->CompoAProprietes(array(), array('catégorie' => 1)); }
+	public function __construct() { parent::__construct(array(), array('catégorie' => 1)); }
 	
 	function &entrerDans(&$depuis, $nom, $attributs)
 	{
@@ -586,8 +586,6 @@ class CompoImage extends Compo
 
 class CompoDate extends Compo
 {
-	function CompoDate() {}
-	
 	function contenuPour(&$objet, $contenu)
 	{
 		$this->données = $this->données === null ? $contenu : $this->données.$contenu;
@@ -603,8 +601,6 @@ class CompoDate extends Compo
 
 class MaDate extends CompoDate
 {
-	function MaDate()  { $this->CompoDate(); }
-	
 	function sortir()
 	{
 		parent::sortir();
@@ -617,7 +613,11 @@ class MaDate extends CompoDate
 
 class Période extends CompoSimple
 {
-	function Période() { $this->données = new Donnee(); $this->CompoSimple(array('entre' => &$this->données->d, 'et' => &$this->données->f)); }
+	public function __construct()
+	{
+		$this->données = new Donnee();
+		parent::__construct(array('entre' => &$this->données->d, 'et' => &$this->données->f));
+	}
 	
 	function contenuPour(&$objet, $contenu)
 	{

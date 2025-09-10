@@ -32,7 +32,7 @@ require_once('util/navigateur.inc');
 
 class Émetteur extends NavigateurHiérarchique
 {
-	function Émetteur($quisuisje) { $this->id = $quisuisje; $this->etape = -1; $this->petitÀPetit = true; $this->rienPondu = true; }
+	public function __construct($quisuisje) { $this->id = $quisuisje; $this->etape = -1; $this->petitÀPetit = true; $this->rienPondu = true; }
 	
 	function preparerSession()
 	{

@@ -25,8 +25,6 @@ require_once('util/module.inc');
 
 class De_Liste
 {
-	function De_Liste() {}
-	
 	function analyserParams($argv, &$position)
 	{
 		echo 'Modules de chargement installés:'."\n";

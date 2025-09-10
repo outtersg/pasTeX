@@ -29,7 +29,7 @@ require_once('commun/http/formu.inc');
 
 class Monster extends Émetteur
 {
-	function Monster() { $this->Émetteur('monster'); }
+	public function __construct() { parent::__construct('monster'); }
 	
 	function analyserParams($argv, &$position)
 	{

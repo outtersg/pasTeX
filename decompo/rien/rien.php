@@ -23,7 +23,6 @@
 
 class Rien
 {
-	function Rien() {}
 	function analyserParams($argv, &$position) { return array(); }
 	function analyserChamps($params) { return array(); }
 	function decomposer($params, $donnees) { return $this; }

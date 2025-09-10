@@ -29,7 +29,7 @@ require_once('commun/http/formu.inc');
 
 class Smile extends Émetteur
 {
-	function Smile() { $this->Émetteur('smile'); }
+	public function __construct() { parent::__construct('smile'); }
 	
 	function analyserParams($argv, &$position)
 	{

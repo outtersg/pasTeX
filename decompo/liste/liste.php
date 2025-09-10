@@ -25,8 +25,6 @@ require_once('util/module.inc');
 
 class Liste
 {
-	function Liste() {}
-	
 	function analyserParams($argv, &$position)
 	{
 		echo 'Modules d\'export installés:'."\n";

@@ -28,11 +28,6 @@ require_once('commun/ooo/ooo.inc');
 
 class OpenOffice
 {
-	function OpenOffice()
-	{
-	
-	}
-	
 	function analyserParams($argv, &$position)
 	{
 		$retour = array();

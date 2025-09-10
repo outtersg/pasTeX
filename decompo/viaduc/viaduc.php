@@ -29,7 +29,7 @@ require_once('commun/http/formu.inc');
 
 class Viaduc extends Émetteur
 {
-	function Viaduc() { $this->Émetteur('viaduc'); }
+	public function __construct() { parent::__construct('viaduc'); }
 	
 	function analyserParams($argv, &$position)
 	{

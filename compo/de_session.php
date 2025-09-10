@@ -23,8 +23,6 @@
 
 class De_Session
 {
-	function De_Session() {}
-	
 	function analyserParams($argv, &$position) { return array(); }
 	function analyserChamps($params) { return $params; }
 	

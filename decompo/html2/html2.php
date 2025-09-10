@@ -29,8 +29,6 @@ require_once dirname(__FILE__).'/../../util/processus.php';
 
 class Html2
 {
-	function Html2() {}
-	
 	function analyserParams($argv, &$position)
 	{
 		$retour = array();
