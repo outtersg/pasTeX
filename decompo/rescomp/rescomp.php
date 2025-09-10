@@ -255,6 +255,8 @@ class Rescomp
 			$données->perso->ddn = periode_affDate($données->perso->naissance);
 		}
 	}
+	
+	public $_zorglub;
 }
 
 ?>
