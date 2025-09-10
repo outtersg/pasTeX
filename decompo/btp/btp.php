@@ -81,13 +81,13 @@ TERMINE
 		$totale = $donnees->perso->prénom.' '.$donnees->perso->nom;
 		if(strlen($totale) > 0)
 		{
-			$initiales = $totale{0}.'.';
+			$initiales = $totale[0].'.';
 			for($i = 0; $i < strlen($totale) - 1; ++$i)
-				switch($totale{$i})
+				switch($totale[$i])
 				{
 					case ' ':
 					case '-':
-						$initiales .= $totale{$i}.htmlspecialchars($totale{$i + 1}, ENT_NOQUOTES).'.';
+						$initiales .= $totale[$i].htmlspecialchars($totale[$i + 1], ENT_NOQUOTES).'.';
 						break;
 				}
 		}

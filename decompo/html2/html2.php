@@ -63,7 +63,7 @@ class Html2
 					{
 						$prochain = array_pop($prochains);
 						$retour[$prochain] = $argv[$position];
-						continue;
+						break;
 					}
 					break 2;
 			}
@@ -937,7 +937,7 @@ $affs[] = implode(', ', $aff);
 				$params['decompo'][$url] = $voulu['p'];
 				$params['decompo'][$url][] = 1;
 				$url = params_decomposer(null, $params, 0);
-				if($url{0} == '&') $url = substr($url, 1);
+				if($url[0] == '&') $url = substr($url, 1);
 				$url = basename($_SERVER['PHP_SELF']).'?'.$url;
 			}
 			else if(array_key_exists('u', $voulu))

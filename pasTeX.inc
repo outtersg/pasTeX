@@ -188,9 +188,9 @@ function pasTeX_affDurée($secondes)
  * l'UTF-8! */
 /* À FAIRE: savoir se servir des spécificités de l'environnement (utf-8-mac,
  * mb_string, etc., s'ils sont présents). */
-//function pasTeX_maj($chaine) { return mb_strtoupper($chaine{0}).substr($chaine, 1); }
-//function pasTeX_maj($chaine) { $r = iconv('UTF-8', 'UTF-8-MAC', $chaine); return iconv('UTF-8-MAC', 'UTF-8', strtoupper($r{0}).substr($r, 1)); }
-function pasTeX_maj($chaine) { return strtoupper($chaine{0}).substr($chaine, 1); }
+//function pasTeX_maj($chaine) { return mb_strtoupper($chaine[0]).substr($chaine, 1); }
+//function pasTeX_maj($chaine) { $r = iconv('UTF-8', 'UTF-8-MAC', $chaine); return iconv('UTF-8-MAC', 'UTF-8', strtoupper($r[0]).substr($r, 1)); }
+function pasTeX_maj($chaine) { return ucfirst($chaine); }
 
 function pasTeX_html($chaine)
 {
