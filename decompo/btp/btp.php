@@ -266,5 +266,7 @@ TERMINE
 			fprintf($fichier, '</text:p>');
 		}
 	}
+	
+	public $_zorglub;
 }
 ?>
