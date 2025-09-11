@@ -223,7 +223,11 @@ class CompoAProprietes extends Compo
 		if(array_key_exists($nom, $this->enTableau)) // On est en train de nous constituer un tableau de ces propriétés (propriété multi-valuée).
 			$depuis->données->{$nom}[] = &$donnee;
 		else // Sinon c'est une propriété unique de l'objet.
+		{
+			if(!isset($depuis)) $depuis = new stdClass;
+			if(!isset($depuis->données)) $depuis->données = new stdClass;
 			$depuis->données->{$nom} = &$donnee;
+		}
 		if(isset($this->preserveEspaces))
 			++$this->preserveEspaces;
 		else if(isset($this->_preservatifsEspaces[$nom]))
