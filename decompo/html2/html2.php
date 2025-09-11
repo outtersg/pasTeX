@@ -438,7 +438,7 @@ $affs[] = implode(', ', $aff);
 		echo '<script type="text/javascript" src="'.($dossierSortie ? '' : 'decompo/html2/').'html2.js"></script>'."\n";
 		echo '<script type="text/javascript" src="'.($dossierSortie ? '' : 'decompo/html2/').'bezier-spline.js"></script>'."\n";
 		if($donnees->perso->nom)
-			$titre = htmlspecialchars($donnees->perso->prénom, ENT_NOQUOTES).' '.htmlspecialchars($donnees->perso->nom, ENT_NOQUOTES);
+			$titre = pasTeX_html($donnees->perso->prénom.' '.$donnees->perso->nom);
 		else
 			$titre = 'CV';
 		echo '<title>'.$titre.'</title>';
@@ -517,9 +517,9 @@ $affs[] = implode(', ', $aff);
 	
 	function pondreEnTete($donnees)
 	{
-		$prénom = htmlspecialchars($donnees->perso->prénom, ENT_NOQUOTES);
-		$nom = htmlspecialchars($donnees->perso->nom, ENT_NOQUOTES);
-		$titre = htmlspecialchars($donnees->titre, ENT_NOQUOTES);
+		$prénom = pasTeX_html($donnees->perso->prénom);
+		$nom = pasTeX_html($donnees->perso->nom);
+		$titre = pasTeX_html($donnees->titre);
 ?>
 	<div class="enTete">
 		<?php if(isset($donnees->perso->photo) && file_exists($donnees->perso->photo)) echo '<img src="photo.jpg" style="position: absolute; height: 8em; top: 0px; right: 0px;"/>'; ?>
@@ -540,20 +540,20 @@ $affs[] = implode(', ', $aff);
 			echo '<div>'.$âge.' ans</div>';
 		}
 		if(isset($donnees->perso->état))
-			echo '<div>'.htmlspecialchars($donnees->perso->état).'</div>';
+			echo '<div>'.pasTeX_html($donnees->perso->état).'</div>';
 		if($donnees->perso->mél)
 		{
-			$adrél = htmlspecialchars($donnees->perso->mél);
+			$adrél = pasTeX_html($donnees->perso->mél);
 			echo '<div>'.$adrél.'</div>';
 		}
 		if($donnees->perso->tél)
 		{
-			$tél = htmlspecialchars($donnees->perso->tél);
+			$tél = pasTeX_html($donnees->perso->tél);
 			echo '<div>'.$tél.'</div>';
 		}
 		if($donnees->perso->adresse)
 		{
-			$adresse = implode('<br/>', array_map('htmlspecialchars', get_object_vars($donnees->perso->adresse->données)));
+			$adresse = implode('<br/>', array_map('pasTeX_html', get_object_vars($donnees->perso->adresse->données)));
 			echo '<div>'.$adresse.'</div>';
 		}
 ?>
@@ -624,7 +624,7 @@ $affs[] = implode(', ', $aff);
 ?>
 			<tr>
 				<td class="categorie"><?php echo pasTeX_descriptionPeriode($pépère->date->d, $pépère->date->f) ?></td>
-				<td><?php echo htmlspecialchars($pépère->diplôme, ENT_NOQUOTES) ?></td>
+				<td><?php echo pasTeX_html($pépère->diplôme) ?></td>
 			</tr>
 <?php
 		}
@@ -749,15 +749,15 @@ $affs[] = implode(', ', $aff);
 				echo '<a name="'.$positionsDébut[$numProjet].'"/>';
 			echo '<div class="titreexp">';
 			if(isset($francheRigolade->société))
-				$sociétés = htmlspecialchars($francheRigolade->société[count($francheRigolade->société) - 1], ENT_NOQUOTES); // Seul le client final nous intéresse.
+				$sociétés = pasTeX_html($francheRigolade->société[count($francheRigolade->société) - 1]); // Seul le client final nous intéresse.
 				//foreach(array_slice($francheRigolade->société, 1) as $société)
 				//{
-				//	$société = htmlspecialchars($société, ENT_NOQUOTES);
+				//	$société = pasTeX_html($société);
 				//	$sociétés = $sociétés === null ? $société : $sociétés.', '.$société;
 				//}
-			isset($projet->nom) && $sociétés = htmlspecialchars($projet->nom, ENT_NOQUOTES).($sociétés ? ' ('.$sociétés.')' : '');
+			isset($projet->nom) && $sociétés = pasTeX_html($projet->nom).($sociétés ? ' ('.$sociétés.')' : '');
 			if($sociétés) echo '<h3>'.$sociétés.'</h3>';
-			if(isset($projet->description)) echo '<div class="descrexp">'.htmlspecialchars($sociétés ? ': '.$projet->description : pasTeX_maj($projet->description), ENT_NOQUOTES).'</div>'."\n";
+			if(isset($projet->description)) echo '<div class="descrexp">'.pasTeX_html($sociétés ? ': '.$projet->description : pasTeX_maj($projet->description)).'</div>'."\n";
 			echo '</div>'."\n";
 			
 			echo '<div class="exp">';
@@ -783,7 +783,7 @@ $affs[] = implode(', ', $aff);
 			echo '</div>'."\n";
 			
 			if(isset($projet->techno))
-				echo '<div class="techno">'.htmlspecialchars(implode(', ', $projet->techno)).'</div>';
+				echo '<div class="techno">'.pasTeX_html(implode(', ', $projet->techno)).'</div>';
 			/* À FAIRE: un machin qui fait que quand on passe la souris par dessus
 			 * un projet, s'affichent les outils et technos utilisés. */
 			echo '</div>'."\n";
@@ -810,15 +810,15 @@ $affs[] = implode(', ', $aff);
 		{
 ?>
 			<tr>
-				<td class="categorie"><?php echo htmlspecialchars($chat->nom, ENT_NOQUOTES) ?></td>
+				<td class="categorie"><?php echo pasTeX_html($chat->nom) ?></td>
 				<td>
 <?php
-			echo htmlspecialchars($chat->niveau, ENT_NOQUOTES);
+			echo pasTeX_html($chat->niveau);
 			$qqc = false;
 			if(isset($chat->certificat) && count($chat->certificat) > 0)
 			{
 				foreach($chat->certificat as $certif)
-					echo ($qqc ? ', ' : ' (').htmlspecialchars($certif, ENT_NOQUOTES);
+					echo ($qqc ? ', ' : ' (').pasTeX_html($certif);
 				echo ')';
 			}
 ?>
@@ -850,7 +850,7 @@ $affs[] = implode(', ', $aff);
 		$prems = true;
 		foreach($donnees->connaissances->catégorie as $catégorie)
 		{
-			echo '<div class="soussection"'.($prems ? ' style="margin-top: 0px"' : '').'>'.htmlspecialchars($catégorie->nom, ENT_NOQUOTES).'</div>'."\n";
+			echo '<div class="soussection"'.($prems ? ' style="margin-top: 0px"' : '').'>'.pasTeX_html($catégorie->nom).'</div>'."\n";
 			$prems = false;
 			for($i = count($seuils) - 1; --$i >= 0;)
 			{
@@ -866,7 +866,7 @@ $affs[] = implode(', ', $aff);
 						}
 						else
 							echo ', ';
-						echo htmlspecialchars($nom, ENT_NOQUOTES);
+						echo pasTeX_html($nom);
 					}
 				if($qqc)
 					echo '</div>';
@@ -916,7 +916,7 @@ $affs[] = implode(', ', $aff);
 		
 		$this->commencerSection('Autres activités et intérêts');
 		foreach($donnees->loisirs->activité as $ouf)
-			echo '<div class="paraindependant">'.htmlspecialchars($ouf, ENT_NOQUOTES).'</div>'."\n";
+			echo '<div class="paraindependant">'.pasTeX_html($ouf).'</div>'."\n";
 		$this->terminerSection();
 		
 	}
@@ -940,11 +940,11 @@ $affs[] = implode(', ', $aff);
 			}
 			else if(array_key_exists('u', $voulu))
 				$url = $voulu['u'];
-			$url = htmlspecialchars($url);
+			$url = pasTeX_html($url);
 			echo '<td><div><a href="';
 			if(array_key_exists('i', $voulu))
-				echo $url.'"><img src="'.htmlspecialchars($voulu['i']).'" alt=""/></a></div><div><a href="';
-			echo $url.'">'.htmlspecialchars($voulu['n']).'</a></div></td>';
+				echo $url.'"><img src="'.pasTeX_html($voulu['i']).'" alt=""/></a></div><div><a href="';
+			echo $url.'">'.pasTeX_html($voulu['n']).'</a></div></td>';
 		}
 		echo '</tr></table></div>';
 		$this->terminerSection();
