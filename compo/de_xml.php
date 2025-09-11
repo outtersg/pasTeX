@@ -28,6 +28,11 @@ require_once('util/xml/composimple.php');
 
 require_once 'util/htopus.php';
 
+const M_ID    = 0;
+const M_DÉBUT = 1;
+const M_FIN   = 2;
+const M_URL   = 3;
+
 #[AllowDynamicProperties]
 class Donnee extends Compo
 {
@@ -64,14 +69,22 @@ class Texte
 				// On va mettre sur pied d'égalité débuts et fins de marqueurs, en faisant figurer ces dernières comme marqueurs false: on transforme le tableau [ [ id, début, fin ] ] en [ [ id, début, fin ], [ false, fin ] ].
 				$marqueurs = $this->marqueurs;
 				foreach($this->marqueurs as $marqueur)
-					$marqueurs[] = array(false, $marqueur[2], $marqueur[1]);
+					$marqueurs[] = array(false, $marqueur[M_FIN], $marqueur[M_DÉBUT], $marqueur[M_URL]);
 				usort($marqueurs, array($this, 'comparePosMarqueurs'));
 			}
 			$html = '';
 			$pos = strlen($this->texte);
 			foreach($marqueurs as $marqueur)
 			{
-				$html = ($marqueur[0] === false ? '</span>' : '<span class="marque marque-'.$marqueur[0].'">').htmlspecialchars(substr($this->texte, $marqueur[1], $pos - $marqueur[1]), ENT_NOQUOTES).$html;
+				if($marqueur[M_ID] === false)
+					$balise = $marqueur[M_URL] ? '</a>' : '</span>';
+				else
+				{
+					$balise = $marqueur[M_URL] ? '<a href="'.$marqueur[M_URL].'"' : '<span';
+					if(isset($marqueur[M_ID])) $balise .= ' class="marque marque-'.$marqueur[0].'"';
+					$balise .= '>';
+				}
+				$html = $balise.htmlspecialchars(substr($this->texte, $marqueur[M_DÉBUT], $pos - $marqueur[M_DÉBUT]), ENT_NOQUOTES).$html;
 				$pos = $marqueur[1];
 			}
 			$html = htmlspecialchars(substr($this->texte, 0, $pos), ENT_NOQUOTES).$html;
@@ -190,7 +203,14 @@ class CompoAProprietes extends Compo
 		{
 			if(!isset($this->marqueurs))
 				$this->marqueurs = array();
-			$marqueur = array($attributs['id'], (is_string($depuis) || $depuis instanceof Texte) ? strlen($depuis) : 0, null);
+			$urls = array_intersect_key($attributs, array('href' => 1, 'url' => 1, 'u' => 1)); // Par cohérence avec le HTML (href) mais aussi nos liens (u comme URL).
+			$marqueur = array
+			(
+				M_ID => isset($attributs['id']) ? $attributs['id'] : null,
+				M_DÉBUT => (is_string($depuis) || $depuis instanceof Texte) ? strlen($depuis) : 0,
+				M_FIN => null,
+				M_URL => array_shift($urls),
+			);
 			$this->marqueurs[] = $marqueur;
 			return $depuis;
 		}
