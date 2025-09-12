@@ -419,7 +419,7 @@ $affs[] = implode(', ', $aff);
 		if(isset($params['pdf']))
 		{
 			$cheminSortie = $params['cheminSortie'];
-			$cheminSortieParchemin = $params['pdf'].'.parchemin.pdf';
+			$cheminSortieParchemin = $cheminSortie.'.parchemin.pdf';
 			$cheminSortieHtml = $cheminSortie.'.html';
 		}
 		else if(isset($params['cheminSortie']))
@@ -488,23 +488,30 @@ $affs[] = implode(', ', $aff);
 				fprintf(STDERR, "# phantomjs nous transmet un message inintelligible.");
 			else
 			{
+				$utilsPdf = getenv('HOME').'/src/projets/adochants';
 				$paramsDecoupe = explode(' ', $this->_sortiePhantom);
 				if($finessePdf != 1.0)
-				{
-					$redim = new Processus(array(getenv('HOME').'/src/projets/adochants/tourneetdouble', $cheminSortieParchemin, '-'.(1 / ($finessePdf * $finessePdf)), '-o', $cheminSortie.'.1'));
-					$redim->attendre();
-					$coupar = new Processus(array_merge(array(getenv('HOME').'/src/projets/adochants/couparchemin', $cheminSortie.'.1', $cheminSortie), $paramsDecoupe));
-					$coupar->attendre();
-				}
-				else
-				{
-				$coupar = new Processus(array_merge(array(getenv('HOME').'/src/projets/adochants/couparchemin', $cheminSortieParchemin, $cheminSortie), $paramsDecoupe));
-				$coupar->attendre();
-				}
+					if($this->_lancer(array($utilsPdf.'/tourneetdouble', $cheminSortieParchemin, '-'.(1 / ($finessePdf * $finessePdf)), '-o', $cheminSortie.'.1')))
+						$cheminSortieParchemin = $cheminSortie.'.1';
+				$this->_lancer(array_merge(array($utilsPdf.'/couparchemin', $cheminSortieParchemin, $cheminSortie), $paramsDecoupe));
 			}
 		}
 		
 		return $this;
+	}
+	
+	protected function _lancer($commande)
+	{
+		$processus = new ProcessusLignes($commande, array($this, 'ligneProcessus'));
+		if(($r = $processus->attendre()))
+			fprintf(STDERR, "[31m# Sortie en erreur %d de:[0m\n  %s\n", $r, implode(' ', $commande));
+		return $r == 0;
+	}
+	
+	public function ligneProcessus($ligne, $fd, $finDeLigne)
+	{
+		if(!strlen($ligne.$finDeLigne)) return; // La notification de fin de flux ne nous intéresse pas.
+		fprintf($fd == 2 ? STDERR : STDOUT, "%s\n", $ligne);
 	}
 	
 	public function lignePhantom($ligne, $fd)
@@ -512,7 +519,7 @@ $affs[] = implode(', ', $aff);
 		if($fd == 1 && preg_match('/^decouparchemin [0-9,]+( [0-9,]+)*$/', $ligne))
 			$this->_sortiePhantom = substr($ligne, strpos($ligne, ' ') + 1);
 		else
-			fprintf($fd == 2 ? STDERR : STDIN, "%s\n", $ligne);
+			fprintf($fd == 2 ? STDERR : STDOUT, "%s\n", $ligne);
 	}
 	
 	function pondreEnTete($donnees)
@@ -963,6 +970,7 @@ $affs[] = implode(', ', $aff);
 	}
 	
 	public $_zorglub;
+	protected $_sortiePhantom;
 }
 
 ?>
