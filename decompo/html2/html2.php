@@ -482,6 +482,7 @@ $affs[] = implode(', ', $aff);
 				$params[] = '*';
 			}
 			$this->_sortiePhantom = null;
+			fprintf(STDERR, "[90m%s[0m\n", implode(' ', $params));
 			$phantom = new ProcessusLignes($params, array($this, 'lignePhantom'));
 			$phantom->attendre();
 			if(!$this->_sortiePhantom)
@@ -505,6 +506,7 @@ $affs[] = implode(', ', $aff);
 	
 	protected function _lancer($commande)
 	{
+		fprintf(STDERR, "[90m%s[0m\n", implode(' ', $commande));
 		$processus = new ProcessusLignes($commande, array($this, 'ligneProcessus'));
 		if(($r = $processus->attendre()))
 			fprintf(STDERR, "[31m# Sortie en erreur %d de:[0m\n  %s\n", $r, implode(' ', $commande));
