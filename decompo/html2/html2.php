@@ -446,8 +446,9 @@ $affs[] = implode(', ', $aff);
 		html_corps('onload="LignesTemps.preparer(); Parcours.preparer();"');
 		echo '<div class="corps" style="position: relative;">'."\n";
 		echo '<svg id="chemins" style="position: absolute; left: 0; top: 0; height: 100%; width: 100%;"></svg>'."\n";
+		if(!isset($params['intro']))
+			unset($donnees->intro);
 		$this->pondreEntete($donnees);
-		if(isset($params['intro']))
 			$this->pondreIntro($donnees);
 		$this->pondreInteret($donnees);
 		$this->pondreProjets($donnees);
@@ -529,15 +530,19 @@ $affs[] = implode(', ', $aff);
 	
 	function pondreEnTete($donnees)
 	{
+		$tricot = 1; // Présentation TRI-COlonnes de Tête (contact / titre & intro / photo), sinon bicot (titre & contact / photo; l'éventuelle intro constituant un paragraphe du corps).
+		
 		$prénom = pasTeX_html($donnees->perso->prénom);
 		$nom = pasTeX_html($donnees->perso->nom);
-		$titre = pasTeX_html($donnees->titre);
+		$titre = '<div class="titre">'.pasTeX_html($donnees->titre).'</div>';
 ?>
-	<div class="enTete">
+	<div class="enTete<?php if($tricot) echo ' tricot'; ?>">
 		<?php if(isset($donnees->perso->photo) && file_exists($donnees->perso->photo)) echo '<img src="photo.jpg" style="position: absolute; height: 8em; top: 0px; right: 0px;"/>'; ?>
 		<div class="nom"><?php echo $prénom.' '.$nom ?></div>
-		<div class="titre"><?php echo $titre ?></div>
+		<div class="contact">
 <?php
+		if(!$tricot)
+			echo $titre."\n";
 		if($donnees->perso->naissance)
 		{
 			$maintenant = obtenir_datation(time());
@@ -569,6 +574,17 @@ $affs[] = implode(', ', $aff);
 			echo '<div>'.$adresse.'</div>';
 		}
 ?>
+		</div>
+		<?php
+			if($tricot)
+			{
+				echo '<div class="coltitre">'."\n";
+				echo $titre."\n";
+				$this->pondreIntro($donnees);
+				unset($donnees->intro); // Plus la peine de la réafficher depuis le corps de CV.
+				echo '</div>'."\n";
+			}
+		?>
 	</div>
 <?php
 	}

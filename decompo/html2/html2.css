@@ -22,6 +22,30 @@ div.enTete
 	font-size: 200%;
 }
 
+/*--- Tri-colonnes en tête ---*/
+
+/* clearfix */
+.tricot .nom:after,
+.tricot:after
+{
+	content: "";
+	display: table;
+	clear: both;
+}
+
+.tricot .contact
+{
+	float: left;
+}
+
+.tricot .coltitre
+{
+	float: left;
+	margin: 3em 2em 0 2em;
+	width: 70%; /* Valeur empirique qui laisse, même en grossissant, de la place pour le bloc contact à gauche et la photo à droite. */
+	text-align: center;
+}
+
 div.nom
 {
 	color: #1F1F00;
