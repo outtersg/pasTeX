@@ -491,8 +491,11 @@ $affs[] = implode(', ', $aff);
 				$utilsPdf = getenv('HOME').'/src/projets/adochants';
 				$paramsDecoupe = explode(' ', $this->_sortiePhantom);
 				if($finessePdf != 1.0)
-					if($this->_lancer(array($utilsPdf.'/tourneetdouble', $cheminSortieParchemin, '-'.(1 / ($finessePdf * $finessePdf)), '-o', $cheminSortie.'.1')))
-						$cheminSortieParchemin = $cheminSortie.'.1';
+				{
+					$cs2 = preg_replace('/\.pdf$/i', '', $cheminSortie).'.1.pdf';
+					if($this->_lancer(array($utilsPdf.'/tourneetdouble', $cheminSortieParchemin, '-'.(1 / ($finessePdf * $finessePdf)), '-o', $cs2)))
+						$cheminSortieParchemin = $cs2;
+				}
 				$this->_lancer(array_merge(array($utilsPdf.'/couparchemin', $cheminSortieParchemin, $cheminSortie), $paramsDecoupe));
 			}
 		}
