@@ -535,14 +535,19 @@ $affs[] = implode(', ', $aff);
 		$prénom = pasTeX_html($donnees->perso->prénom);
 		$nom = pasTeX_html($donnees->perso->nom);
 		$titre = '<div class="titre">'.pasTeX_html($donnees->titre).'</div>';
+		// Notons que la classe CSS tripot est l'équivalent de tricot mais en flex… sauf que PhantomJS (utilisé pour la génération PDF) ne gère pas. Donc tricot.
 ?>
 	<div class="enTete<?php if($tricot) echo ' tricot'; ?>">
 		<?php if(isset($donnees->perso->photo) && file_exists($donnees->perso->photo)) echo '<img src="'.basename($donnees->perso->photo).'" class="photo"/>'; ?>
+		<div class="qui">
 		<div class="nom"><?php echo $prénom.' '.$nom ?></div>
-		<div class="contact">
 <?php
 		if(!$tricot)
 			echo $titre."\n";
+?>
+			<div class="sousnom">
+				<div class="contact">
+<?php
 		if($donnees->perso->naissance)
 		{
 			$maintenant = obtenir_datation(time());
@@ -585,6 +590,8 @@ $affs[] = implode(', ', $aff);
 				echo '</div>'."\n";
 			}
 		?>
+			</div>
+		</div>
 	</div>
 <?php
 	}

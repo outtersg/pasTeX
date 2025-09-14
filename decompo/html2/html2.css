@@ -33,6 +33,27 @@ div.enTete
 
 /*--- Tri-colonnes en tête ---*/
 
+/* .tripot (TRI-COlonnes de Tête) est une première tentative, en bidouilles à la sauce 2010.
+ * .tripot (TRI-POsitions de Tête) est la version flex
+ */
+
+.tripot, .tripot .qui, .tripot .sousnom
+{
+	display: flex;
+}
+.tripot .qui { flex-direction: column; }
+
+.tripot .photo
+{
+	position: static;
+	order: 2;
+}
+.tripot .qui {
+	flex-grow: 1;
+	display: flex;
+	flex-direction: column;
+}
+
 /* clearfix */
 .tricot .nom:after,
 .tricot:after
@@ -47,12 +68,46 @@ div.enTete
 	float: left;
 }
 
+.tripot .coltitre
+{
+	flex-grow: 1;
+}
 .tricot .coltitre
 {
 	float: left;
-	margin: 3em 2em 0 2em;
 	width: 70%; /* Valeur empirique qui laisse, même en grossissant, de la place pour le bloc contact à gauche et la photo à droite. */
+}
+
+.tricot .coltitre,
+.tripot .coltitre
+{
+	margin: 3em 2em 0 2em;
 	text-align: center;
+}
+
+.tripot div.audessus,
+.tricot div.audessus
+{
+	border: none;
+	font-style: italic;
+	font-size: 120%;
+	/*
+	 color: #7F7F7F;
+	 color: #007F00;
+	 */
+	color: #3F3F7F;
+}
+
+.tripot div.audessus:before,
+.tricot div.audessus:before
+{
+	content: "« ";
+}
+
+.tripot div.audessus:after,
+.tricot div.audessus:after
+{
+	content: " »";
 }
 
 div.nom
