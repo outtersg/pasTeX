@@ -216,6 +216,22 @@ td.categorie
 	fill: #BFBFDF;
 }
 
+#annees
+{
+	pointer-events: none;
+	color: rgba(255, 0, 127, .1);
+}
+
+.annee
+{
+	position: absolute;
+	left: 0;
+	right: 0;
+	font-size: 300%; /* À FAIRE: une font-size pour que 4 chiffres prennent la largeur dispo */
+	text-align: center;
+	/*margin-top: -0.5em;*//* Ne marche pas trop, en grossissant la police on réalise que le line-height ne vaut pas exactement 1em, donc on perd notre centrage vertical. On va finalement reposer sur le calcul fait en JS et collé dans un <style>. */
+}
+
 /*- Classiques ---------------------------------------------------------------*/
 
 .ml /* Mono-ligne. */

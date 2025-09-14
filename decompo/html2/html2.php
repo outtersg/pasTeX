@@ -757,7 +757,7 @@ $affs[] = implode(', ', $aff);
 ?>
 	<div class="section projets">
 		<div class="audessus">
-			<div class="" style="position: relative;">
+			<div id="temporel" style="position: relative;">
 				<div class="titresection" style="display: none;"> <!-- La première expérience est déjà bien encombrée par les fils d'ariane de compétences qui lui passent dessous, pour qu'on ajoute aussi le titre de section. -->
 					<?php echo $nom ?>
 				</div>
@@ -828,8 +828,20 @@ $affs[] = implode(', ', $aff);
 			$segmentsParLigne[$segmentDeTemps['moment']][] = "'p".$segmentDeTemps['moment']."s$numSegment'";
 		foreach($segmentsParLigne as $numProjet => & $refLibelleMoment)
 			$refLibelleMoment = "p$numProjet:['p$numProjet',".implode(',', $refLibelleMoment).']';
+		// On place les années en pourcentage de la durée couverte par le CV:
+		$ans = array();
+		for($sAn = mktime(0, 0, 0, 1, 1, $an = (int)date('Y', $maxTemps)); $sAn >= $minTemps; $sAn = mktime(0, 0, 0, 1, 1, --$an))
+			$ans[$an] = ($maxTemps - $sAn) / ($maxTemps - $minTemps);
 		echo '<script type="text/javascript">LignesTemps.blocs = {'.implode(',', $segmentsParLigne).'};</script>';
 		echo '<svg style="pointer-events: none; position: absolute; top: 0; width: '.(1.5 * $nGroupes + 1).'em; height: 100%; position: absolute;"><use id="jonctionAuDessus"/></svg>'."\n";
+?>
+				<script type="text/javascript">
+					LignesTemps.ans = <?php echo json_encode($ans); ?>;
+					LignesTemps.nGroupes = <?php echo $nGroupes; ?>;
+				</script>
+				<div id="annees">
+				</div>
+<?php
 		echo '</div>'."\n";
 		$this->terminerSection();
 	}

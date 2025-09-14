@@ -25,6 +25,7 @@ var enxlink = 'http://www.w3.org/1999/xlink';
 var LignesTemps = {};
 
 LignesTemps.blocs = [];
+LignesTemps.ans = [];
 
 LignesTemps.preparer = function()
 {
@@ -184,6 +185,44 @@ LignesTemps.calculer = function()
 	while (svg.lastChild)
 		svg.removeChild(svg.lastChild);
 	
+	var han = 0; // Hauteur AN.
+	i = 1;
+	for(an in this.ans)
+	{
+		han += i * this.ans[an];
+		if((i -= 2) < -1) break;
+	}
+	var style = document.createElement('style');
+	style.type = 'text/css';
+	var largeurGroupes = 1.5 * this.nGroupes - 1; // Chaque groupe étant affiché sur 0.5em + 1em de marge à droite, la largeur totale est 1,5 em - 1 em puisqu'on ignore la marge droite du dernier groupe.
+	// largeurGroupes pour .annee: on divise par 3 pour contrebalancer le font-size: 100%.
+	style.innerHTML = '.annee { height: '+(100 * han)+'%; line-height: '+(100 * han)+'%; width: '+(largeurGroupes / 3)+'em; }';
+	document.head.appendChild(style);
+	
+	var annees = document.getElementById('annees');
+	while(annees.lastChild)
+		annees.removeChild(annees.lastChild);
+	for(an in this.ans)
+	{
+		var l = document.createElementNS(ensvg, 'line');
+		l.setAttributeNS(null, 'x1', '0');
+		l.setAttributeNS(null, 'x2', largeurGroupes+'em');
+		l.setAttributeNS(null, 'y1', (100 * this.ans[an])+'%');
+		l.setAttributeNS(null, 'y2', (100 * this.ans[an])+'%');
+		l.setAttributeNS(null, 'stroke', 'rgba(255, 0, 127, .5)'); // Moins de transparence que le libellé (cf. le .css) car on est à l'arrière-plan, sur un trait fin.
+		svg.appendChild(l);
+		
+		// Pour que le libellé soit lisible, on ne le met pas en SVG:
+		//   <text x="50%" dominant-baseline="middle" y="6%" text-anchor="middle" font-size="3em">2025</text>
+		// car il apparaît dessous complètement masqué.
+		
+		var ban = document.createElement('div');
+		ban.className = 'annee';
+		ban.appendChild(document.createTextNode(an));
+		ban.style.top = (100 * (this.ans[an] - 0.5 * han))+'%';
+		annees.appendChild(ban);
+	}
+		
 	for(i in this.blocs)
 	{
 		courbe = document.createElementNS(ensvg, 'path');
