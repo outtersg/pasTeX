@@ -475,6 +475,14 @@ sur(window, 'load', function()
 	sur(document.getElementsByClassName('projets')[0], 'mouseout', LignesTemps.suivreSouris);
 });
 
+/*- Peaufinages JS des CSS ---------------------------------------------------*/
+
+sur(window, 'load', function()
+{
+	var lc = document.getElementsByClassName('contact')[0].clientWidth;
+	document.getElementsByClassName('coltitre')[0].style.setProperty('--largeur-contact', lc+'px');
+});
+
 /*- Réductions pour affichage réduit -----------------------------------------*/
 
 var reduirePolices = function(facteur)

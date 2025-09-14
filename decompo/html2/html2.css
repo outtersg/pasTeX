@@ -27,7 +27,7 @@ div.enTete
 .photo
 {
 	position: absolute;
-	height: 8em;
+	width: 6em;
 	top: 0px; right: 0px;
 }
 
@@ -76,6 +76,8 @@ div.enTete
 {
 	float: left;
 	width: 70%; /* Valeur empirique qui laisse, même en grossissant, de la place pour le bloc contact à gauche et la photo à droite. */
+	--largeur-contact: 15em;
+	width: calc(100% - var(--largeur-contact) - 6em - 4em); /* 100% - largeur bloc contact - largeur photo - largeur marges gauche et droite */
 }
 
 .tricot .coltitre,
