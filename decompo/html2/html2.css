@@ -314,6 +314,12 @@ div.dateexp
 .titreexp h3
 {
 	display: inline;
+	color: #7F7F7F;
+}
+
+.titreexp h3 .role
+{
+	color: #000;
 }
 
 .titreexp

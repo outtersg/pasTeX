@@ -776,6 +776,10 @@ $affs[] = implode(', ', $aff);
 		foreach($positions as $numProjet => $position)
 		{
 			$francheRigolade = $projet = $donnees->expérience->projet[$numProjet];
+			$rôles = array();
+			if(isset($projet->rôle))
+				foreach($projet->rôle as $rôle)
+					$rôles[] = $rôle instanceof Texte ? $rôle->texte : ''.$rôle;
 			echo '<div id="p'.$numProjet.'" class="projet'.($premier ? ' projetPremier' : '').'" style="margin-left: '.(1.5 * $nGroupes + 1).'em;">'."\n";
 			if($premier) $premier = false;
 			echo '<div class="dateexp">'.implode('; ', array_map(array($this, 'descriptionPeriode'), $projet->date)).'</div>'."\n";
@@ -783,16 +787,26 @@ $affs[] = implode(', ', $aff);
 			if(isset($positionsDébut[$numProjet]))
 				echo '<a name="'.$positionsDébut[$numProjet].'"/>';
 			echo '<div class="titreexp">';
+			$titrables = array();
 			if(isset($francheRigolade->société))
+			{
 				$sociétés = pasTeX_html($francheRigolade->société[count($francheRigolade->société) - 1]); // Seul le client final nous intéresse.
 				//foreach(array_slice($francheRigolade->société, 1) as $société)
 				//{
 				//	$société = pasTeX_html($société);
 				//	$sociétés = $sociétés === null ? $société : $sociétés.', '.$société;
 				//}
+			/* Finalement le nom du projet moi ça me fait plaisir mais tout le monde s'en fiche.
+			 * À coller peut-être en tout petit quelque part pour référer rapidement à un nom en entretien?
 			isset($projet->nom) && $sociétés = pasTeX_html($projet->nom).($sociétés ? ' ('.$sociétés.')' : '');
-			if($sociétés) echo '<h3>'.$sociétés.'</h3>';
-			if(isset($projet->description)) echo '<div class="descrexp">'.pasTeX_html($sociétés ? ': '.$projet->description : pasTeX_maj($projet->description)).'</div>'."\n";
+			*/
+				$titrables[] = '<span class="entrep">'.$sociétés.'</span>';
+			}
+			if(isset($projet->description))
+				$titrables[] = '<span class="role">'.pasTeX_maj($projet->description).'</span>';
+			if(count($titrables)) echo '<h3>'.implode(' - ', $titrables).'</h3>';
+			if(isset($projet->rôle))
+				echo '<div class="descrexp">'.(count($titrables) ? ': ' : '').implode(', ', $rôles).'</div>'."\n";
 			echo '</div>'."\n";
 			
 			echo '<div class="exp">';
@@ -803,10 +817,8 @@ $affs[] = implode(', ', $aff);
 			{
 				// Les rôles doivent être épurés, sans quoi ils peuvent embarquer des marqueurs, marqueurs qui, même planqués, seront repérés par Parcours.calculer() et donneront donc lieu à un disgracieux détour par le point 0, 0.
 				// À FAIRE: que Parcours.calculer() ignore les trucs planqués.
-				$rôles = array();
-				foreach($projet->rôle as $rôle)
-					$rôles[] = $rôle instanceof Texte ? $rôle->texte : ''.$rôle;
-				echo '<div class="roles">'.implode('', array_map(array($this, '_palier'), $rôles)).'</div>';
+				// Finalement pas les rôles. On les colle avec les $sociétés.
+				//echo '<div class="roles">'.implode('', array_map(array($this, '_palier'), $rôles)).'</div>';
 			}
 			
 			foreach($lignesDeTemps as $numSegment => $segmentDeTemps)
