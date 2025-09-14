@@ -537,7 +537,7 @@ $affs[] = implode(', ', $aff);
 		$titre = '<div class="titre">'.pasTeX_html($donnees->titre).'</div>';
 ?>
 	<div class="enTete<?php if($tricot) echo ' tricot'; ?>">
-		<?php if(isset($donnees->perso->photo) && file_exists($donnees->perso->photo)) echo '<img src="photo.jpg" style="position: absolute; height: 8em; top: 0px; right: 0px;"/>'; ?>
+		<?php if(isset($donnees->perso->photo) && file_exists($donnees->perso->photo)) echo '<img src="photo.jpg" class="photo"/>'; ?>
 		<div class="nom"><?php echo $prénom.' '.$nom ?></div>
 		<div class="contact">
 <?php

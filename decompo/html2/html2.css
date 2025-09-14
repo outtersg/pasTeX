@@ -24,6 +24,13 @@ div.enTete
 	font-size: 200%;
 }
 
+.photo
+{
+	position: absolute;
+	height: 8em;
+	top: 0px; right: 0px;
+}
+
 /*--- Tri-colonnes en tête ---*/
 
 /* clearfix */
