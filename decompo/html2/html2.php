@@ -471,7 +471,7 @@ $affs[] = implode(', ', $aff);
 			copy(dirname(__FILE__).'/bezier-spline.js', $dossierSortie.'/bezier-spline.js');
 			
 			if(isset($donnees->perso->photo) && file_exists($donnees->perso->photo))
-				copy($donnees->perso->photo, $dossierSortie.'/photo.jpg');
+				copy($donnees->perso->photo, $dossierSortie.'/'.basename($donnees->perso->photo));
 		}
 		
 		if(isset($params['pdf']))
@@ -537,7 +537,7 @@ $affs[] = implode(', ', $aff);
 		$titre = '<div class="titre">'.pasTeX_html($donnees->titre).'</div>';
 ?>
 	<div class="enTete<?php if($tricot) echo ' tricot'; ?>">
-		<?php if(isset($donnees->perso->photo) && file_exists($donnees->perso->photo)) echo '<img src="photo.jpg" class="photo"/>'; ?>
+		<?php if(isset($donnees->perso->photo) && file_exists($donnees->perso->photo)) echo '<img src="'.basename($donnees->perso->photo).'" class="photo"/>'; ?>
 		<div class="nom"><?php echo $prénom.' '.$nom ?></div>
 		<div class="contact">
 <?php
