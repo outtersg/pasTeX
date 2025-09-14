@@ -11,6 +11,8 @@ div
 	margin: 0px;
 }
 
+/*- En-tête ------------------------------------------------------------------*/
+
 div.enTete
 {
 	margin: 0 0 1em 0;
@@ -51,6 +53,8 @@ div.nom
 	color: #1F1F00;
 	font-size: 200%;
 }
+
+/*- Corps --------------------------------------------------------------------*/
 
 div.section
 {
@@ -119,6 +123,8 @@ td.categorie
 {
 	padding-right: 24px;
 }
+
+/*- Lien entre une expérience et la ligne de temps la matérialisant ----------*/
 
 .afftemps
 {
