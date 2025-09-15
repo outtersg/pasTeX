@@ -313,7 +313,7 @@ class CompoAProprietes extends Compo
 	protected $normal; // Liste des sous-éléments XML qui doivent donner une propriété unique de cet objet.
 	protected $classes; // Association d'une classe de Compo à un élément XML.
 	protected $données;
-	protected $preserveEspaces;
+	public $preserveEspaces; // public pour le Chargeur puisse consulter.
 	protected $_preservatifsEspaces;
 }
 
