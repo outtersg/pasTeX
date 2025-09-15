@@ -811,6 +811,7 @@ $affs[] = implode(', ', $aff);
 			
 			echo '<div class="exp">';
 			echo '<div class="t">';
+			if(isset($projet->tâche))
 			echo implode('', array_map(array($this, '_palier'), $projet->tâche));
 			echo '</div>';
 			if(isset($projet->rôle))
