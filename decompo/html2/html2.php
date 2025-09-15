@@ -116,7 +116,7 @@ class Html2
 			$periodes[$num] = periode_union($moments[$num]);
 			$incompatibilites[$num] = array();
 			for($i = $num; --$i >= 0;)
-				if(periode_seChevauchent($moments[$num], $moments[$i], 0.3))
+				if(isset($moments[$i]) && periode_seChevauchent($moments[$num], $moments[$i], 0.3))
 				{
 					$incompatibilites[$num][$i] = true;
 					$incompatibilites[$i][$num] = true;
