@@ -223,6 +223,8 @@ class CompoAProprietes extends Compo
 			else
 			$nouveau = new $nouveau();
 			$donnee = &$nouveau->données;
+			if(isset($attributs['id']))
+				$nouveau->id = $attributs['id'];
 			if(isset($attributs['p']))
 				$nouveau->poids = $attributs['p'];
 		}
@@ -305,9 +307,11 @@ class CompoAProprietes extends Compo
 			if(isset($objet->données) && is_object($objet->données))
 			{
 				if(isset($objet->poids)) $objet->données->poids = $objet->poids;
+				if(isset($objet->id))    $objet->données->id = $objet->id;
 			}
 	}
 	
+	protected $id;
 	protected $poids;
 	protected $marqueurs;
 	protected $args;
