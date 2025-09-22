@@ -222,7 +222,6 @@ class Zorglub
 	{
 		/*- Recherche des poids, selon le profil mentionné -*/
 		
-		$parPoids = array();
 		foreach($t as $num => & $e)
 		{
 			if(isset($e->poids))
@@ -250,14 +249,22 @@ class Zorglub
 					$e = new Texte($e);
 				$e->poids = 1.0;
 			}
+		}
+		
+		unset($e);
+		
+		/*- Différenciation -*/
+		/* Les poids identiques sont légèrement décalés les uns par rapport aux autres afin que les tris qui seront appliqués semblent stables. */
+		/* À FAIRE?: un poids centre de gravité, pour que, de deux expériences de même poids, la plus ancienne (qui était probablement en fin de comète lorsque la seconde a émergé) soit classée plus bas. */
+		
+		$parPoids = array();
+		foreach($t as $num => $e)
+		{
 			for($nParPoids = count($parPoids); --$nParPoids >= 0;)
 				if($parPoids[$nParPoids][0] >= $e->poids)
 					break;
 			array_splice($parPoids, $nParPoids + 1, 0, array(array($e->poids, $num)));
 		}
-		
-		/*- Différentiation -*/
-		/* Les poids identiques sont légèrement décalés les uns par rapport aux autres afin que les tris qui seront appliqués semblent stables. */
 		
 		if(count($parPoids))
 		{
