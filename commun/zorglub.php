@@ -232,7 +232,7 @@ class Zorglub
 				if(is_string($e->poids))
 				{
 					$poids = null;
-					preg_match_all('#(?:([^= ]*)=)?([-.0-9]*) #', $e->poids.' ', $r);
+					preg_match_all('#(?:([^= ]*)[=:])?([-.0-9]*) #', $e->poids.' ', $r);
 					foreach($r[2] as $n => $val)
 					{
 						if((!$r[1][$n] && !isset($poids)) || $this->profil == $r[1][$n]) // Si l'on n'a as encore trouvé de poids spécifique au profil, ou si le profil du poids regardé est celui pour lequel on travaille.
