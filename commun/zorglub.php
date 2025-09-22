@@ -235,6 +235,12 @@ class Zorglub
 					preg_match_all('#(?:([^= ]*)[=:])?([-.0-9]*) #', $e->poids.' ', $r);
 					foreach($r[2] as $n => $val)
 					{
+						/* A-t-on une expression complexe, avec des opérations booléennes ou des références à poids non encore calculés? */
+						if(preg_match('/\W/', $r[1][$n]))
+						{
+							$poids = new Poids($this, $r[1][$n], $r); /* À FAIRE: en fait à terme tout devrait passer par là (et le constructeur de Poids se charger du preg_match). */
+							break;
+						}
 						if((!$r[1][$n] && !isset($poids)) || $this->profil == $r[1][$n]) // Si l'on n'a as encore trouvé de poids spécifique au profil, ou si le profil du poids regardé est celui pour lequel on travaille.
 							$poids = $val;
 						// On compte aussi les poids par profil.
@@ -255,6 +261,15 @@ class Zorglub
 		}
 		
 		unset($e);
+		
+		/*- Résolution des poids interdépendants -*/
+		
+		foreach($t as $num => $e)
+		{
+			if(isset($e->poids) && is_object($e->poids))
+				/* À FAIRE: probablement conserver quelque part l'expression originelle, pour éventuellement la restituer sous forme JavaScript des fois qu'un jour je dynamise le choix d'un profil côté client. */
+				$e->poids = $e->poids->val();
+		}
 		
 		/*- Différenciation -*/
 		/* Les poids identiques sont légèrement décalés les uns par rapport aux autres afin que les tris qui seront appliqués semblent stables. */
@@ -386,6 +401,92 @@ class Zorglub
 	}
 	
 	protected $_compteursProfils;
+}
+
+class Poids
+{
+	public function __construct($z, $orig, $bouts)
+	{
+		$this->_z = $z;
+		$this->_orig = $orig;
+		$ppo = $ppi = array(); // Petits Poids ordonnés, Petits Poids initiaux.
+		foreach($bouts[1] as $num => $expr)
+		{
+			$poids = $bouts[2][$num];
+			// Analyse lexicale: on s'assure de n'avoir que des bouts dont on sait quoi faire…
+			preg_match_all('@(?<id>#\w+)|(?<param>[^\W0-9]\w*)@', $expr, $r);
+			// … et que, bout à bout, ils couvrent bien toute la chaîne (pas de caractère inconnu au milieu).
+			$t = 0;
+			foreach($r[0] as $bout)
+				$t += strlen($bout);
+			if($t != strlen($expr))
+			{
+				fprintf(STDERR, "[31mImpossible de reconnaître l'expression: %s[0m\n", $expr);
+				return;
+			}
+			/* À FAIRE: analyse grammaticale */
+			$pp = array($r, strlen($poids) ? (int)$poids : 1.0);
+			// Cas particulier: si la condition est vide, on placera l'élément en bout de chaîne (uniquement utilisé si aucune expression conditionnelle ne répond auparavant).
+			// Résidu du format p="<valeur par défaut> <si profil 1>:<valeur pour profil>"
+			if(strlen($orig))
+				$ppo[] = $pp;
+			else
+				$ppi[] = $pp;
+		}
+		// Cas par défaut: si pas de poids, le poids vaut 1.
+		if(!count($ppi)) $ppi[] = array(array(), 1.0);
+		$this->_pp = array_merge($ppo, $ppi);
+	}
+	
+	public function val()
+	{
+		if($this->_valise)
+			throw new Exception('Boucle détectée dans l\'évaluation du poids: '.$this->_orig);
+		$this->_valise = true;
+		
+		foreach($this->_pp as $pp)
+		{
+			/* Le premier qui marche valide. */
+			
+			// Pas de filtre? On a atteint la règle par défaut, on renvoit immédiatement son contenu.
+			if(!count($pp[0]))
+				return $pp[1];
+			/* À FAIRE: gérer des règles plus complexes, avec opérations booléennes et comparaisons de seuil */
+			if(count($pp[0][0]) > 1)
+				throw new Exception('Impossible d\'évaluer l\'expression '.$this->_orig.' comportant plusieurs références adjacentes');
+			/* À FAIRE: gérer plus que les identifiants commençant par un # ou les profils commençant par tout le reste. */
+			foreach($pp[0][0] as $id)
+				if($id[0] == '#')
+				{
+					if(!isset($this->_z->ids[$id]))
+						throw new Exception('L\'expression '.$this->_orig.' dépend de '.$id.' qui ne correspond à aucun identifiant connu');
+					if(is_object($val = $this->_z->ids[$id]->poids))
+						$val = $val->val();
+					if($val)
+					{
+						$val = $pp[1];
+						break;
+					}
+				}
+				else
+				{
+					if($this->_z->profil == $id[0])
+					{
+						$val = $pp[1];
+						break;
+					}
+				}
+		}
+		
+		$this->_valise = false;
+		
+		return $val;
+	}
+	
+	protected $_z;
+	protected $_orig;
+	protected $_pp; // Petits Poids, nos sous-éléments.
+	protected $_valise; // Attention, VALeur Indisponible car Subissant son Évaluation.
 }
 
 ?>
