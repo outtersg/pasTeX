@@ -27,6 +27,8 @@
 class Zorglub
 {
 	public $profil;
+	/** Liste d'objets dotés d'un poids public */
+	public $ids = array();
 	
 	/*- Dates ----------------------------------------------------------------*/
 	
@@ -224,6 +226,7 @@ class Zorglub
 		
 		foreach($t as $num => & $e)
 		{
+			if(isset($e->id)) $this->ids['#'.$e->id] = $e;
 			if(isset($e->poids))
 			{
 				if(is_string($e->poids))
