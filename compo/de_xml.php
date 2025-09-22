@@ -301,9 +301,11 @@ class CompoAProprietes extends Compo
 		if(isset($this->preserveEspaces))
 			if(--$this->preserveEspaces <= 0)
 				unset($this->preserveEspaces);
-		if(is_object($objet) && isset($objet->poids))
+		if(is_object($objet))
 			if(isset($objet->données) && is_object($objet->données))
-				$objet->données->poids = $objet->poids;
+			{
+				if(isset($objet->poids)) $objet->données->poids = $objet->poids;
+			}
 	}
 	
 	protected $poids;
