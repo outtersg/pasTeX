@@ -194,7 +194,10 @@ function pasTeX_maj($chaine) { return ucfirst($chaine); }
 
 function pasTeX_html($chaine)
 {
-	return $chaine instanceof Texte ? $chaine->__toString() : htmlspecialchars($chaine, ENT_NOQUOTES);
+	$chaine = $chaine instanceof Texte ? $chaine->__toString() : htmlspecialchars($chaine, ENT_NOQUOTES);
+	if(strpos(trim($chaine), "\n"))
+		$chaine = implode('<br/>', explode("\n", $chaine));
+	return $chaine;
 }
 
 ?>

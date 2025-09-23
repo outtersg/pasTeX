@@ -941,7 +941,7 @@ $affs[] = implode(', ', $aff);
 		
 		$this->commencerSection('');
 		foreach($données->intro as $intro) break;
-		echo implode('<br/>', array_map('pasTeX_html', explode("\n", $intro)));
+		echo pasTeX_html($intro);
 		$this->terminerSection();
 	}
 	
