@@ -465,7 +465,7 @@ class Poids
 					if($val)
 					{
 						$val = $pp[1];
-						break;
+						break 2;
 					}
 				}
 				else
@@ -473,7 +473,7 @@ class Poids
 					if($this->_z->profil == $id[0])
 					{
 						$val = $pp[1];
-						break;
+						break 2;
 					}
 				}
 		}
