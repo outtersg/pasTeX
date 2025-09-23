@@ -77,10 +77,10 @@ class Texte
 			foreach($marqueurs as $marqueur)
 			{
 				if($marqueur[M_ID] === false)
-					$balise = $marqueur[M_URL] ? '</a>' : '</span>';
+					$balise = $marqueur[M_URL] ? '</a>' : '</strong>';
 				else
 				{
-					$balise = $marqueur[M_URL] ? '<a href="'.$marqueur[M_URL].'"' : '<span';
+					$balise = $marqueur[M_URL] ? '<a href="'.$marqueur[M_URL].'"' : '<strong';
 					if(isset($marqueur[M_ID])) $balise .= ' class="marque marque-'.$marqueur[0].'"';
 					$balise .= '>';
 				}
