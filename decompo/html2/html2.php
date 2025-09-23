@@ -939,8 +939,8 @@ $affs[] = implode(', ', $aff);
 	{
 		if(!isset($données->intro)) return;
 		
-		$this->commencerSection('');
 		foreach($données->intro as $intro) break;
+		$this->commencerSection('', strlen($intro) < 0x100 && strpos($intro, '«') === false ? 'court' : '');
 		echo pasTeX_html($intro);
 		$this->terminerSection();
 	}

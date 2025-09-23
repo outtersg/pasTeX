@@ -106,14 +106,14 @@ div.enTete
 	color: #3F3F7F;
 }
 
-.tripot div.audessus:before,
-.tricot div.audessus:before
+.tripot .court div.audessus:before,
+.tricot .court div.audessus:before
 {
 	content: "« ";
 }
 
-.tripot div.audessus:after,
-.tricot div.audessus:after
+.tripot .court div.audessus:after,
+.tricot .court div.audessus:after
 {
 	content: " »";
 }
